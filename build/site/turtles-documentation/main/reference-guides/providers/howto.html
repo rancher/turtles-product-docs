@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: Turtles Documentation</title>
+    <meta name="generator" content="Antora 3.1.9">
+    <link rel="stylesheet" href="../../../../_/css/site.css">
+<link rel="stylesheet" href="../../../../_/css/search.css">
+<link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="../../../../_/css/font-styles.css">
+<link rel="stylesheet" href="../../../../_/fonts/css/all.css">
+<link rel="stylesheet" href="../../../../_/css/site-extra.css">
+<link rel="stylesheet" href="../../../../_/css/vendor/tabs.css">
+<!-- <link rel="preconnect" href="https://fonts.gstatic.com"> -->
+<link href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css" rel="stylesheet">
+<!-- <link href="https://fonts.googleapis.com/css?family=Montserrat|Roboto&display=swap" rel="stylesheet"> -->
+<link rel="stylesheet" href="../../../../_/css/vendor/light.css">
+<script src="/docserv/res/lightheaded/analytics.js"
+        type="text/javascript"></script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <div class="navbar-item">
+        <a class=" navbar-logo" href="https://documentation.suse.com/suma/"><img class="logo"
+            src="../../../../_/img/logo.svg" /></a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link"><img src="../../../../_/img/resources.png" class="langIcon Resurces" alt="Resources"
+              title="Resources"></div>
+          <div class="navbar-dropdown">
+            <!--  <div class="navbar-item"><strong>Resources</strong></div> -->
+            <a class="navbar-item" href="https://github.com/uyuni-project/uyuni-docs"><i
+                class="fab fa-github"></i>&nbsp;uyuni-docs</a>
+            <a class="navbar-item" href="https://github.com/uyuni-project/uyuni-docs/issues"><i
+                class="fab fa-github"></i>&nbsp;Report Issue</a>
+            <a class="navbar-item" href="https://github.com/uyuni-project/uyuni-docs/wiki"><i
+                class="fas fa-user-edit"></i>&nbsp;Contribute</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link"><img src="../../../../_/img/language.png" class="langIcon Language" alt="Language"
+              title="Language"></div>
+          <div class="navbar-dropdown">
+            <!--  </div><div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> -->
+            <a role="button" class="navbar-item" id="en" onclick="selectLanguage(this.id)"><img
+                src="../../../../_/img/engFlag.svg" class="langIcon english">&nbsp;English</a>
+            <!-- LANGUAGESELECTOR -->
+          </div>
+        </div>
+        <div class="navbar-item">
+          <a href="https://twitter.com/SUSE">
+            <img class="x-logo" src="../../../../_/img/x-logo-white.png">
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <!--   <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+          </span>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+          </span>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+          </span>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+          </span>
+        </div>
+      </div> -->
+    </div>
+  </nav>
+</header><div class="body">
+<div class="nav-container" data-component="turtles-documentation" data-version="main">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../../index.html">Turtles Documentation</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Getting Started</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">Install Rancher Turtles</span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">Your first cluster</span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">Using ClusterClass</span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Reference Guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">Architecture</span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">CAPI Providers</span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">Test suite</span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Tasks</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">Cluster API Operator</span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">Maintenance</span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">Provider Certification</span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-text">Developer Guide</span>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-text">Reference</span>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-text">Security</span>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Turtles Documentation</span>
+    <span class="version">v0.11</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../../index.html">Turtles Documentation</a></div>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../index.html">v0.11</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+</nav>
+<div class="edit-this-page"><a href="file:///Users/ssingh/Features/conversions/RancherTurtlesProductSite/turtles-product-docs/modules/ROOT/pages/reference-guides/providers/howto.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';</p>
+</div>
+</div>
+</div>
+<h1 id="_create_import_a_cluster_using_capi_providers" class="sect0"><a class="anchor" href="#_create_import_a_cluster_using_capi_providers"></a>Create &amp; import a cluster using CAPI providers</h1>
+<div class="openblock partintro">
+<div class="content">
+<div class="paragraph">
+<p>This guide goes over the process of creating and importing CAPI clusters with a selection of the officially certified providers.</p>
+</div>
+<div class="paragraph">
+<p>Keep in mind that most Cluster API Providers are upstream projects maintained by the Kubernetes open-source community.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_prerequisites"><a class="anchor" href="#_prerequisites"></a>Prerequisites</h2>
+<div class="sectionbody">
+<div id="_tabs_1" class="openblock tabs is-loading">
+<div class="content">
+<div class="ulist tablist">
+<ul>
+<li id="_tabs_1_tab_aws_rke2" class="tab">
+<p>Tab AWS RKE2</p>
+</li>
+<li id="_tabs_1_tab_aws_kubeadm" class="tab">
+<p>Tab AWS Kubeadm</p>
+</li>
+<li id="_tabs_1_tab_docker_kubeadm" class="tab">
+<p>Tab Docker Kubeadm</p>
+</li>
+</ul>
+</div>
+<div id="_tabs_1_tab_aws_rke2--panel" class="tabpanel" aria-labelledby="_tabs_1_tab_aws_rke2">
+<div class="ulist">
+<ul>
+<li>
+<p>Rancher Manager cluster with Rancher Turtles installed - Cluster API Providers: you can find a guide on how to install a provider using the <code>CAPIProvider</code> resource [here](../../tasks/capi-operator/basic_cluster_api_provider_installation.md) - [Infrastructure provider for AWS](<a href="https://github.com/kubernetes-sigs/cluster-api-provider-aws/" class="bare">https://github.com/kubernetes-sigs/cluster-api-provider-aws/</a>) - [Bootstrap/Control Plane provider for RKE2](<a href="https://github.com/rancher/cluster-api-provider-rke2" class="bare">https://github.com/rancher/cluster-api-provider-rke2</a>) - <strong>clusterctl</strong> CLI - see [install clusterctl from CAPI book](<a href="https://cluster-api.sigs.k8s.io/user/quick-start#install-clusterctl" class="bare">https://cluster-api.sigs.k8s.io/user/quick-start#install-clusterctl</a>)</p>
+</li>
+</ul>
+</div>
+</div>
+<div id="_tabs_1_tab_aws_kubeadm--panel" class="tabpanel" aria-labelledby="_tabs_1_tab_aws_kubeadm">
+<div class="ulist">
+<ul>
+<li>
+<p>Rancher Manager cluster with Rancher Turtles installed - Cluster API Providers: you can find a guide on how to install a provider using the <code>CAPIProvider</code> resource [here](../../tasks/capi-operator/basic_cluster_api_provider_installation.md) - [Infrastructure provider for AWS](<a href="https://github.com/kubernetes-sigs/cluster-api-provider-aws/" class="bare">https://github.com/kubernetes-sigs/cluster-api-provider-aws/</a>) - [Bootstrap/Control Plane provider for Kubeadm](<a href="https://github.com/kubernetes-sigs/cluster-api" class="bare">https://github.com/kubernetes-sigs/cluster-api</a>) - <strong>clusterctl</strong> CLI - see [install clusterctl from CAPI book](<a href="https://cluster-api.sigs.k8s.io/user/quick-start#install-clusterctl" class="bare">https://cluster-api.sigs.k8s.io/user/quick-start#install-clusterctl</a>)</p>
+</li>
+</ul>
+</div>
+</div>
+<div id="_tabs_1_tab_docker_kubeadm--panel" class="tabpanel" aria-labelledby="_tabs_1_tab_docker_kubeadm">
+<div class="ulist">
+<ul>
+<li>
+<p>Rancher Manager cluster with Rancher Turtles installed - Cluster API Providers: you can find a guide on how to install a provider using the <code>CAPIProvider</code> resource [here](../../tasks/capi-operator/basic_cluster_api_provider_installation.md) - [Infrastructure provider for Docker](<a href="https://github.com/kubernetes-sigs/cluster-api" class="bare">https://github.com/kubernetes-sigs/cluster-api</a>) - [Bootstrap/Control Plane provider for Kubeadm](<a href="https://github.com/kubernetes-sigs/cluster-api" class="bare">https://github.com/kubernetes-sigs/cluster-api</a>) - <strong>clusterctl</strong> CLI - see [install clusterctl from CAPI book](<a href="https://cluster-api.sigs.k8s.io/user/quick-start#install-clusterctl" class="bare">https://cluster-api.sigs.k8s.io/user/quick-start#install-clusterctl</a>)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_your_cluster_definition"><a class="anchor" href="#_create_your_cluster_definition"></a>Create Your Cluster Definition</h2>
+<div class="sectionbody">
+<div id="_tabs_2" class="openblock tabs is-loading">
+<div class="content">
+<div class="ulist tablist">
+<ul>
+<li id="_tabs_2_tab_aws_rke2" class="tab">
+<p>Tab AWS RKE2</p>
+</li>
+<li id="_tabs_2_tab_aws_kubeadm" class="tab">
+<p>Tab AWS Kubeadm</p>
+</li>
+<li id="_tabs_2_tab_docker_kubeadm" class="tab">
+<p>Tab Docker Kubeadm</p>
+</li>
+</ul>
+</div>
+<div id="_tabs_2_tab_aws_rke2--panel" class="tabpanel" aria-labelledby="_tabs_2_tab_aws_rke2">
+<div class="paragraph">
+<p>Before creating an AWS+RKE2 workload cluster, it is required to build an AMI for the RKE2 version that is going to be installed on the cluster. You can follow the steps in the [RKE2 image-builder README](<a href="https://github.com/rancher/cluster-api-provider-rke2/tree/main/image-builder#aws" class="bare">https://github.com/rancher/cluster-api-provider-rke2/tree/main/image-builder#aws</a>) to build the AMI. We recommend you refer to the CAPRKE2 repository where you can find a [samples folder](<a href="https://github.com/rancher/cluster-api-provider-rke2/tree/main/samples/aws" class="bare">https://github.com/rancher/cluster-api-provider-rke2/tree/main/samples/aws</a>) with different CAPA+CAPRKE2 cluster configurations that can be used to provision downstream clusters. The [internal folder](<a href="https://github.com/rancher/cluster-api-provider-rke2/tree/main/samples/aws/internal" class="bare">https://github.com/rancher/cluster-api-provider-rke2/tree/main/samples/aws/internal</a>) contains cluster templates to deploy an RKE2 cluster on AWS using the internal cloud provider, and the [external folder](<a href="https://github.com/rancher/cluster-api-provider-rke2/tree/main/samples/aws/external" class="bare">https://github.com/rancher/cluster-api-provider-rke2/tree/main/samples/aws/external</a>) contains the cluster templates to deploy a cluster with the external cloud provider. We will use the <code>internal</code> one for this guide, however the same steps apply for <code>external</code>. To generate the YAML for the cluster, do the following: 1. Open a terminal and run the following: <code><code>bash export CONTROL_PLANE_MACHINE_COUNT=3 export WORKER_MACHINE_COUNT=3 export RKE2_VERSION=v1.30.3+rke2r1 export AWS_NODE_MACHINE_TYPE=t3a.large export AWS_CONTROL_PLANE_MACHINE_TYPE=t3a.large export AWS_SSH_KEY_NAME="aws-ssh-key" export AWS_REGION="aws-region" export AWS_AMI_ID="ami-id" clusterctl generate cluster cluster1 \ --from <a href="https://github.com/rancher/cluster-api-provider-rke2/blob/main/samples/aws/internal/cluster-template.yaml" class="bare">https://github.com/rancher/cluster-api-provider-rke2/blob/main/samples/aws/internal/cluster-template.yaml</a> \ &gt; cluster1.yaml </code></code> 2. View <strong>cluster1.yaml</strong> and examine the resulting yaml file. You can make any changes you want as well. &gt; The Cluster API quickstart guide contains more detail. Read the steps related to this section [here](<a href="https://cluster-api.sigs.k8s.io/user/quick-start.html#required-configuration-for-common-providers" class="bare">https://cluster-api.sigs.k8s.io/user/quick-start.html#required-configuration-for-common-providers</a>). 3. Create the cluster using kubectl <code><code>bash kubectl create -f cluster1.yaml </code></code></p>
+</div>
+</div>
+<div id="_tabs_2_tab_aws_kubeadm--panel" class="tabpanel" aria-labelledby="_tabs_2_tab_aws_kubeadm">
+<div class="paragraph">
+<p>To generate the YAML for the cluster, do the following: 1. Open a terminal and run the following: <code><code>bash export KUBERNETES_VERSION=v1.30 export AWS_REGION=eu-west-2 export AWS_INSTANCE_TYPE=t3.medium clusterctl generate cluster cluster1 \ --from <a href="https://raw.githubusercontent.com/rancher-sandbox/rancher-turtles-fleet-example/templates/capa.yaml" class="bare">https://raw.githubusercontent.com/rancher-sandbox/rancher-turtles-fleet-example/templates/capa.yaml</a> \ &gt; cluster1.yaml </code></code> 2. View <strong>cluster1.yaml</strong> to ensure there are no tokens (i.e. SSH keys or cloud credentials). You can make any changes you want as well. &gt; The Cluster API quickstart guide contains more detail. Read the steps related to this section [here](<a href="https://cluster-api.sigs.k8s.io/user/quick-start.html#required-configuration-for-common-providers" class="bare">https://cluster-api.sigs.k8s.io/user/quick-start.html#required-configuration-for-common-providers</a>). 3. Create the cluster using kubectl <code><code>bash kubectl create -f cluster1.yaml </code></code></p>
+</div>
+</div>
+<div id="_tabs_2_tab_docker_kubeadm--panel" class="tabpanel" aria-labelledby="_tabs_2_tab_docker_kubeadm">
+<div class="paragraph">
+<p>To generate the YAML for the cluster, do the following: 1. Open a terminal and run the following: <code><code>bash export CONTROL_PLANE_MACHINE_COUNT=1 export WORKER_MACHINE_COUNT=1 export KUBERNETES_VERSION=v1.30.0 clusterctl generate cluster cluster1 \ --from <a href="https://raw.githubusercontent.com/rancher-sandbox/rancher-turtles-fleet-example/templates/docker-kubeadm.yaml" class="bare">https://raw.githubusercontent.com/rancher-sandbox/rancher-turtles-fleet-example/templates/docker-kubeadm.yaml</a> \ &gt; cluster1.yaml </code></code> 2. View <strong>cluster1.yaml</strong> to ensure there are no tokens. You can make any changes you want as well. &gt; The Cluster API quickstart guide contains more detail. Read the steps related to this section [here](<a href="https://cluster-api.sigs.k8s.io/user/quick-start.html#required-configuration-for-common-providers" class="bare">https://cluster-api.sigs.k8s.io/user/quick-start.html#required-configuration-for-common-providers</a>). 3. Create the cluster using kubectl <code><code>bash kubectl create -f cluster1.yaml </code></code></p>
+</div>
+</div>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>After your cluster is provisioned, you can check functionality of the workload cluster using <code>clusterctl</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">clusterctl describe cluster cluster1</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Remember that clusters are namespaced resources. These examples provision clusters in the <code>default</code> namespace, but you will need to provide yours if using a different one.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_mark_namespace_or_cluster_for_auto_import"><a class="anchor" href="#_mark_namespace_or_cluster_for_auto_import"></a>Mark Namespace or Cluster for Auto-Import</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To automatically import a CAPI cluster into Rancher Manager, there are 2 options:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Label a namespace so all clusters contained in it are imported.</p>
+</li>
+<li>
+<p>Label an individual cluster definition so that it&#8217;s imported.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Labeling a namespace:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl label namespace default cluster-api.cattle.io/rancher-auto-import=true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Labeling an individual cluster definition:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl label cluster.cluster.x-k8s.io -n default cluster1 cluster-api.cattle.io/rancher-auto-import=true</code></pre>
+</div>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>© 2024 SUSE LLC</p>
+</footer><script src="../../../../_/js/site.js"></script>
+<script async src="../../../../_/js/vendor/highlight.js"></script>
+<script src="../../../../_/js/vendor/langSelection.js"></script>
+<script async src="../../../../_/js/vendor/tabs.js"></script>
+
+
+  </body>
+</html>

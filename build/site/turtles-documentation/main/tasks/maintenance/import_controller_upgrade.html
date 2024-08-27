@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Upgrade Turtles import controller :: Turtles Documentation</title>
+    <meta name="generator" content="Antora 3.1.9">
+    <link rel="stylesheet" href="../../../../_/css/site.css">
+<link rel="stylesheet" href="../../../../_/css/search.css">
+<link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="../../../../_/css/font-styles.css">
+<link rel="stylesheet" href="../../../../_/fonts/css/all.css">
+<link rel="stylesheet" href="../../../../_/css/site-extra.css">
+<link rel="stylesheet" href="../../../../_/css/vendor/tabs.css">
+<!-- <link rel="preconnect" href="https://fonts.gstatic.com"> -->
+<link href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css" rel="stylesheet">
+<!-- <link href="https://fonts.googleapis.com/css?family=Montserrat|Roboto&display=swap" rel="stylesheet"> -->
+<link rel="stylesheet" href="../../../../_/css/vendor/light.css">
+<script src="/docserv/res/lightheaded/analytics.js"
+        type="text/javascript"></script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <div class="navbar-item">
+        <a class=" navbar-logo" href="https://documentation.suse.com/suma/"><img class="logo"
+            src="../../../../_/img/logo.svg" /></a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link"><img src="../../../../_/img/resources.png" class="langIcon Resurces" alt="Resources"
+              title="Resources"></div>
+          <div class="navbar-dropdown">
+            <!--  <div class="navbar-item"><strong>Resources</strong></div> -->
+            <a class="navbar-item" href="https://github.com/uyuni-project/uyuni-docs"><i
+                class="fab fa-github"></i>&nbsp;uyuni-docs</a>
+            <a class="navbar-item" href="https://github.com/uyuni-project/uyuni-docs/issues"><i
+                class="fab fa-github"></i>&nbsp;Report Issue</a>
+            <a class="navbar-item" href="https://github.com/uyuni-project/uyuni-docs/wiki"><i
+                class="fas fa-user-edit"></i>&nbsp;Contribute</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link"><img src="../../../../_/img/language.png" class="langIcon Language" alt="Language"
+              title="Language"></div>
+          <div class="navbar-dropdown">
+            <!--  </div><div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> -->
+            <a role="button" class="navbar-item" id="en" onclick="selectLanguage(this.id)"><img
+                src="../../../../_/img/engFlag.svg" class="langIcon english">&nbsp;English</a>
+            <!-- LANGUAGESELECTOR -->
+          </div>
+        </div>
+        <div class="navbar-item">
+          <a href="https://twitter.com/SUSE">
+            <img class="x-logo" src="../../../../_/img/x-logo-white.png">
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <!--   <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+          </span>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+          </span>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+          </span>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+          </span>
+        </div>
+      </div> -->
+    </div>
+  </nav>
+</header><div class="body">
+<div class="nav-container" data-component="turtles-documentation" data-version="main">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../../index.html">Turtles Documentation</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Getting Started</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">Install Rancher Turtles</span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">Your first cluster</span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">Using ClusterClass</span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Reference Guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">Architecture</span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">CAPI Providers</span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">Test suite</span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Tasks</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">Cluster API Operator</span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">Maintenance</span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">Provider Certification</span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-text">Developer Guide</span>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-text">Reference</span>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-text">Security</span>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Turtles Documentation</span>
+    <span class="version">v0.11</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../../index.html">Turtles Documentation</a></div>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../index.html">v0.11</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../index.html">Turtles Documentation</a></li>
+    <li><a href="import_controller_upgrade.html">Upgrade Turtles import controller</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///Users/ssingh/Features/conversions/RancherTurtlesProductSite/turtles-product-docs/modules/ROOT/pages/tasks/maintenance/import_controller_upgrade.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Upgrade Turtles import controller</h1>
+<div class="sect1">
+<h2 id="_context"><a class="anchor" href="#_context"></a>Context</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When Turtles imports a CAPI cluster into Rancher, a number of Kubernetes resources must be created to represent the CAPI cluster in Rancher. The main resource is the one representing the CAPI cluster as a Rancher cluster, so it can be viewed and managed via Rancher:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>clusters.provisioning.cattle.io</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We also call this resource a <code>v1</code> cluster. If you were using Turtles before <code>v0.9.0</code>, the default import controller was based on generating this resource for every CAPI cluster that is imported into Rancher. The controller we will be migrating to was disabled behind a feature gate <code>managementv3_cluster</code>.</p>
+</div>
+<div class="paragraph">
+<p>Starting with Turtles <code>v0.9.0</code>, the <code>v3</code> import controller is no longer behind a feature gate and represents the default import logic. This means we are moving to a different strategy for importing clusters, and switching to creating a different type of Rancher cluster resource:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>clusters.management.cattle.io</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Which you may also see referred to as <code>v3</code> cluster.</p>
+</div>
+<div class="paragraph">
+<p>Migrating from one controller to the other should be transparent but you will need to prepare your already imported clusters for migration to prevent the new controller from duplicating resources. To make the migration procedure even easier, you can use the provided <a href="#using-the-migration-script---per-namespace">migration script</a> which will let you specify the namespace where your imported clusters exist and will migrate them automatically. If you prefer, you can <a href="#manually-editing-resources---per-cluster">apply changes to resources manually</a> per cluster via kubectl.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Both cluster resources previously described are required to represent any Rancher clusters. This controller update only means that we&#8217;ll be creating one from Turtles and Rancher will take care of provisioning the other.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_using_the_migration_script_per_namespace"><a class="anchor" href="#_using_the_migration_script_per_namespace"></a>Using the migration script - per namespace</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This method provides an automated process to migrate clusters in batches per namespace. To prepare your imported CAPI clusters for migration via <a href="https://github.com/rancher/turtles/tree/main/scripts/import-controller-migration.sh">migration script</a>, you need to follow the steps below:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Select the namespace where your imported clusters are deployed.</p>
+</li>
+<li>
+<p>Pass the namespace as argument to the migration script: this will prepare <strong>ALL</strong> CAPI clusters in the namespace for migration. If you want to migrate each cluster independently, we recommend following the <a href="#manually-editing-resources---per-cluster">manual procedure</a>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./import_controller_migration.sh &lt;cluster-ns&gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>You can pass as many namespaces as arguments as you need.</p>
+</li>
+<li>
+<p>Before proceeding, you will be prompted for confirmation on the namespaces you provided.</p>
+</li>
+<li>
+<p>For each namespace, it automatically fetches <code>v1</code> CAPI clusters that are not already migrated (an annotation is set on the resource after it is successfully prepared for migration).</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>v1</code> clusters include a reference to <code>v3</code> clusters via the <code>status.clusterName</code> field.</p>
+</li>
+<li>
+<p>Labels <code>cluster-api.cattle.io/capi-cluster-owner</code> and <code>cluster-api.cattle.io/capi-cluster-owner-ns</code> are added to <code>v3</code> cluster.</p>
+</li>
+<li>
+<p>After successfully adding labels on <code>v3</code> cluster resource, <code>v1</code> cluster is annotated as migrated via <code>cluster-api.cattle.io/migrated=true</code>.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_manually_editing_resources_per_cluster"><a class="anchor" href="#_manually_editing_resources_per_cluster"></a>Manually editing resources - per cluster</h2>
+<div class="sectionbody">
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Caution"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Note that manually editing Kubernetes resources may cause unexpected failures due to wrong or missing values. If you are not confident with <code>kubectl</code> and interacting with the Kubernetes API and its resources, we recommend opting for the <a href="#using-the-migration-script---per-namespace">scripted migration</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The requirement for migrating imported clusters is setting the labels used by the new controller on the <code>clusters.management.cattle.io</code> (v3) cluster resource. It is important to mark <code>v1</code> clusters as migrated after adding the labels, as this is the method that prevents the new controller from duplicating Rancher cluster resources.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Select the cluster/s you would like to prepare for migration. We&#8217;ll use <code>cluster1</code> as an example for this guide.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>We can list the CAPI cluster resource <code>clusters.cluster.x-k8s.io</code>. We need to provide the corresponding namespace as this is a namespaced resource.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"> kubectl get clusters.cluster.x-k8s.io -n capi-ns</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In our example we can see <code>cluster1</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"> NAMESPACE         NAME             PHASE         AGE    VERSION
+ capi-ns         cluster1         Provisioned     6d1h</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>This CAPI cluster, when imported to Rancher, becomes linked to a Rancher cluster resource, represented by both <code>clusters.provisioning.cattle.io</code> and <code>clusters.management.cattle.io</code>. For now we&#8217;re interested in <code>clusters.provisioning.cattle.io</code> or <code>v1</code> cluster.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"> kubectl get clusters.provisioning.cattle.io -n capi-ns</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And we get the Rancher cluster that Turtles generated to represent the CAPI cluster. You can see that the <code>-capi</code> suffix is added to the resource name, which effectively allows us to filter CAPI clusters from all Rancher clusters (which may be provisioned using other mechanisms).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"> NAME               READY   KUBECONFIG
+ cluster1-capi</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>v3</code> cluster resources are assigned a randomly generated name and we need to find the resource that is linked to the <code>v1</code> cluster we retrieved in the previous step. We will do this by exploring the values of the resource, specifically <code>status.clusterName</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl get clusters.provisioning.cattle.io -n capi-ns cluster1-capi -o jsonpath='{.status.clusterName}'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The resource we get is <code>c-m-xyz1a2b3</code>, which is the one we&#8217;ll be labelling.</p>
+</div>
+</li>
+<li>
+<p>Now that we know what resource to label, we can focus on what labels are required. These labels are used by the new controller to watch cluster resources.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cluster-api.cattle.io/capi-cluster-owner        # name of the cluster
+cluster-api.cattle.io/capi-cluster-owner-ns     # name of the namespace where the cluster lives</code></pre>
+</div>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Caution"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Note that the <code>-capi</code> suffix must be stripped when assigning cluster name to <code>cluster-api.cattle.io/capi-cluster-owner</code></p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Edit resource and apply labels.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"> kubectl label clusters.management.cattle.io c-m-xyz1a2b3 cluster-api.cattle.io/capi-cluster-owner=cluster1
+ kubectl label clusters.management.cattle.io c-m-xyz1a2b3 cluster-api.cattle.io/capi-cluster-owner-ns=capi-ns</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>You can now validate that the changes have been successfully applied.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"> kubectl get clusters.management.cattle.io c-m-xyz1a2b3 -o jsonpath='{.metadata.labels}'</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>After the <code>clusters.management.cattle.io</code> <code>v3</code> resource has been updated, it is very important to mark the <code>clusters.provisioning.cattle.io</code> <code>v1</code> resource as migrated, so the controller behaves as expected. We do this by adding the annotation <code>cluster-api.cattle.io/migrated</code></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl annotate clusters.provisioning.cattle.io -n capi-ns cluster1-capi cluster-api.cattle.io/migrated=true</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>© 2024 SUSE LLC</p>
+</footer><script src="../../../../_/js/site.js"></script>
+<script async src="../../../../_/js/vendor/highlight.js"></script>
+<script src="../../../../_/js/vendor/langSelection.js"></script>
+<script async src="../../../../_/js/vendor/tabs.js"></script>
+
+
+  </body>
+</html>

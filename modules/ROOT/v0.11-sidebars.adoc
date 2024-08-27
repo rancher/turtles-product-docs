@@ -1,0 +1,15 @@
+* Getting Started
+** Install Rancher Turtles
+** Your first cluster
+** Using ClusterClass
+* Reference Guides
+** Architecture
+** CAPI Providers
+** Test suite
+* Tasks
+** Cluster API Operator
+** Maintenance
+** Provider Certification
+* Developer Guide
+* Reference
+* Security

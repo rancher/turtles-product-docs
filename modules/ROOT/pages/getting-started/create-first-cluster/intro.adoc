@@ -1,0 +1,9 @@
+= Introduction
+:sidebar_position: 1
+
+Everything you need to know about creating and importing your first CAPI cluster with Rancher Turtles.
+
+Choose one of the following options:
+
+* xref:using_fleet.adoc[If you are using Fleet]
+* xref:using_kubectl.adoc[If you want to use kubectl]
