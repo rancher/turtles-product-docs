@@ -8,20 +8,29 @@ content:
     - url: ./
       branches: [main]
 
-ui:
-  bundle:
-    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
-    snapshot: true
-  supplemental_files: ./susecom-2023
-
-# Description: SUSE UI bundle which needs to be configured
 #ui:
 #  bundle:
-#    url: https://github.com/rancher/product-docs-ui/blob/main/build/ui-bundle.zip?raw=true
+#    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
 #    snapshot: true
-#  supplemental_files: ./product-docs-supplemental-files
+#  supplemental_files: ./susecom-2023
+
+# Description: SUSE UI bundle which needs to be configured
+ui:
+  bundle:
+    url: https://github.com/rancher/product-docs-ui/blob/main/build/ui-bundle.zip?raw=true
+    snapshot: true
+  supplemental_files: ./product-docs-supplemental-files
 
 asciidoc:
+  attributes:
+    page-pagination: ''
+    page-toclevels: 4@
   extensions:
-  - '@asciidoctor/tabs'
-  - asciidoctor-kroki
+    - asciidoctor-kroki
+    - '@asciidoctor/tabs'
+antora:
+  extensions:
+  - require: '@antora/lunr-extension'
+
+output:
+  dir: build/site

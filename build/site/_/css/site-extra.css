@@ -11,6 +11,14 @@ i.fa[title='Warning:'] {
   font-family: inherit;
 }
 
+i.fa[title='Caution:'] {
+  font-family: inherit;
+}
+
+i.fa[title='Tip:'] {
+  font-family: inherit;
+}
+
 /* icons for pdfs and archive */
 .fa-file-pdf {
   color: #00c081;
@@ -307,6 +315,10 @@ img.langIcon.korea {
   cursor: pointer;
 }
 
+#zh {
+  cursor: pointer;
+}
+
 #en {
   cursor: pointer;
 }
@@ -482,14 +494,63 @@ tr:nth-child(even) {
   border-color: #192072;
 }
 
+.doc .admonitionblock td.icon i.icon-note {
+  background: none;
+}
+
 .doc .admonitionblock.note .icon {
   float: left;
   height: 36px;
   margin-top: 40px;
   margin-left: 1.5rem;
-  padding-left: 1rem;
+  padding-top: 0.4rem;
+  padding-left: 0.4rem;
   /* padding-right: 3rem; */
   background-image: url(../img/icon-note.svg);
+  background-color: unset;
+  background-repeat: no-repeat;
+}
+
+.admonitionblock.tip {
+  border-style: solid;
+  border-color: #41af46;
+}
+
+.doc .admonitionblock td.icon i.icon-tip {
+  background: none;
+}
+
+.doc .admonitionblock.tip .icon {
+  float: left;
+  height: 36px;
+  margin-top: 40px;
+  margin-left: 1.5rem;
+  padding-top: 0.4rem;
+  padding-left: 0.4rem;
+  /* padding-right: 3rem; */
+  background-image: url(../img/icon-tip.svg);
+  background-color: unset;
+  background-repeat: no-repeat;
+}
+
+.admonitionblock.caution {
+  border-style: solid;
+  border-color: #a0439c;
+}
+
+.doc .admonitionblock td.icon i.icon-caution {
+  background: none;
+}
+
+.doc .admonitionblock.caution .icon {
+  float: left;
+  height: 36px;
+  margin-top: 40px;
+  margin-left: 1.5rem;
+  padding-top: 0.4rem;
+  padding-left: 0.4rem;
+  /* padding-right: 3rem; */
+  background-image: url(../img/caution.svg);
   background-color: unset;
   background-repeat: no-repeat;
 }
@@ -516,13 +577,18 @@ tr:nth-child(even) {
   border-color: #2453ff;
 }
 
+.doc .admonitionblock td.icon i.icon-important {
+  background: none;
+}
+
 .doc .admonitionblock.important .icon {
   float: left;
   height: 36px;
   margin-top: 40px;
   margin-left: 1.5rem;
-  padding-left: 1rem;
-  background-image: url(../img/important.svg);
+  padding-top: 0.4rem;
+  padding-left: 0.4rem;
+  background-image: url(../img/icon-important.svg);
   background-color: unset;
   background-repeat: no-repeat;
 }
@@ -533,12 +599,17 @@ tr:nth-child(even) {
   border-color: #fe7c3f;
 }
 
+.doc .admonitionblock td.icon i.icon-warning {
+  background: none;
+}
+
 .doc .admonitionblock.warning .icon {
   float: left;
   height: 36px;
   margin-top: 40px;
   margin-left: 1.5rem;
-  padding-left: 1rem;
+  padding-top: 0.4rem;
+  padding-left: 0.4rem;
   background-image: url(../img/warning.svg);
   background-color: unset;
   background-repeat: no-repeat;

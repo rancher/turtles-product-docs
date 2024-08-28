@@ -1,0 +1,18 @@
+* Getting Started
+** xref:getting-started/intro.adoc[Introduction]
+** xref:getting-started/rancher.adoc[Rancher Setup]
+** Install Rancher Turtles
+*** xref:getting-started/install-rancher-turtles/using_rancher_dashboard.adoc[Via Rancher Dashboard]
+** Your first cluster
+** Using ClusterClass
+* Reference Guides
+** Architecture
+** CAPI Providers
+** Test suite
+* Tasks
+** Cluster API Operator
+** Maintenance
+** Provider Certification
+* Developer Guide
+* Reference
+* Security
