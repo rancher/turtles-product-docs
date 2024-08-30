@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>CAPIProvider Resource :: Turtles Documentation</title>
+    <meta name="generator" content="Antora 3.1.9">
+    <link rel="stylesheet" href="../../../../_/css/site.css">
+<link rel="stylesheet" href="../../../../_/css/search.css">
+<link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="../../../../_/css/font-styles.css">
+<link rel="stylesheet" href="../../../../_/fonts/css/all.css">
+<link rel="stylesheet" href="../../../../_/css/site-extra.css">
+<link rel="stylesheet" href="../../../../_/css/vendor/tabs.css">
+<!-- <link rel="preconnect" href="https://fonts.gstatic.com"> -->
+<link href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css" rel="stylesheet">
+<!-- <link href="https://fonts.googleapis.com/css?family=Montserrat|Roboto&display=swap" rel="stylesheet"> -->
+<link rel="stylesheet" href="../../../../_/css/vendor/light.css">
+<script src="/docserv/res/lightheaded/analytics.js"
+        type="text/javascript"></script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <div class="navbar-item">
+        <a class=" navbar-logo" href="https://documentation.suse.com/suma/"><img class="logo"
+            src="../../../../_/img/logo.svg" /></a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link"><img src="../../../../_/img/resources.png" class="langIcon Resurces" alt="Resources"
+              title="Resources"></div>
+          <div class="navbar-dropdown">
+            <!--  <div class="navbar-item"><strong>Resources</strong></div> -->
+            <a class="navbar-item" href="https://github.com/uyuni-project/uyuni-docs"><i
+                class="fab fa-github"></i>&nbsp;uyuni-docs</a>
+            <a class="navbar-item" href="https://github.com/uyuni-project/uyuni-docs/issues"><i
+                class="fab fa-github"></i>&nbsp;Report Issue</a>
+            <a class="navbar-item" href="https://github.com/uyuni-project/uyuni-docs/wiki"><i
+                class="fas fa-user-edit"></i>&nbsp;Contribute</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link"><img src="../../../../_/img/language.png" class="langIcon Language" alt="Language"
+              title="Language"></div>
+          <div class="navbar-dropdown">
+            <!--  </div><div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> -->
+            <a role="button" class="navbar-item" id="en" onclick="selectLanguage(this.id)"><img
+                src="../../../../_/img/engFlag.svg" class="langIcon english">&nbsp;English</a>
+            <!-- LANGUAGESELECTOR -->
+          </div>
+        </div>
+        <div class="navbar-item">
+          <a href="https://twitter.com/SUSE">
+            <img class="x-logo" src="../../../../_/img/x-logo-white.png">
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <!--   <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+          </span>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+          </span>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+          </span>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+          </span>
+        </div>
+      </div> -->
+    </div>
+  </nav>
+</header><div class="body">
+<div class="nav-container" data-component="turtles-documentation" data-version="main">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../../index.html">Turtles Documentation</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Getting Started</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#getting-started/intro.adoc">Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../getting-started/rancher.html">Rancher Setup</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Install Rancher Turtles</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../getting-started/install-rancher-turtles/using_rancher_dashboard.html">Via Rancher Dashboard</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">Your first cluster</span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">Using ClusterClass</span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Reference Guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">Architecture</span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">CAPI Providers</span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">Test suite</span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Tasks</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">Cluster API Operator</span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">Maintenance</span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">Provider Certification</span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-text">Developer Guide</span>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-text">Reference</span>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-text">Security</span>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Turtles Documentation</span>
+    <span class="version">v0.11</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../../index.html">Turtles Documentation</a></div>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../index.html">v0.11</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../index.html">Turtles Documentation</a></li>
+    <li><a href="capiprovider_resource.html">CAPIProvider Resource</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///Users/ssingh/Features/conversions/RancherTurtlesProductSite/turtles-product-docs/modules/ROOT/pages/tasks/capi-operator/capiprovider_resource.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">CAPIProvider Resource</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>CAPIProvider</code> resource allows managing Cluster API Operator manifests in a declarative way. It is used to provision and configure Cluster API providers like AWS, vSphere etc.</p>
+</div>
+<div class="paragraph">
+<p><code>CAPIProvider</code> follows a GitOps model - the spec fields are declarative user inputs. The controller only updates status.</p>
+</div>
+<div class="paragraph">
+<p>Every field provided by the upstream CAPI Operator resource for the desired <code>spec.type</code> is also available in the spec of the <code>CAPIProvider</code> resouce. Feel free to refer to upstream configuration <a href="https://cluster-api-operator.sigs.k8s.io/03_topics/02_configuration/">guides</a> for advanced scenarios.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/rancher/turtles/blob/main/docs/adr/0007-rancher-turtles-public-api.md">ARD</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_usage"><a class="anchor" href="#_usage"></a>Usage</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To use the <code>CAPIProvider</code> resource:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create a <code>CAPIProvider</code> resource with the desired provider name, type, credentials, configuration, and features.</p>
+</li>
+<li>
+<p>The <code>CAPIProvider</code> controller will handle templating the required Cluster API Operator manifests based on the <code>CAPIProvider</code> spec.</p>
+</li>
+<li>
+<p>The status field on the <code>CAPIProvider</code> resource will reflect the state of the generated manifests.</p>
+</li>
+<li>
+<p>Manage the <code>CAPIProvider</code> object declaratively to apply changes to the generated provider manifests.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Here is an example <code>CAPIProvider</code> manifest:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: aws-infra
+  namespace: default
+spec:
+  name: aws
+  type: infrastructure
+  credentials:
+    rancherCloudCredential: aws-creds # Rancher credentials secret for AWS
+  configSecret:
+    name: aws-config
+  features:
+    clusterResourceSet: true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will generate an AWS infrastructure provider with the supplied mapping for rancher credential secret and custom enabled features.</p>
+</div>
+<div class="paragraph">
+<p>The <code>CAPIProvider</code> controller will own all the generated provider resources, allowing garbage collection by deleting the <code>CAPIProvider</code> object.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_specification"><a class="anchor" href="#_specification"></a>Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The key fields in the <code>CAPIProvider</code> spec are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>name</code> - Name of the provider (aws, vsphere etc). Inherited from <code>metadata.name</code> if is not specified.</p>
+</li>
+<li>
+<p><code>type</code> - Kind of provider resource (infrastructure, controlplane etc)</p>
+</li>
+<li>
+<p><code>credentials</code> - Source credentials for provider specification</p>
+</li>
+<li>
+<p><code>configSecret</code> - Name of the provider config secret, where the variables and synced credential will be stored. By default if not specified, will inherit the name of the <code>CAPIProvider</code> resource</p>
+</li>
+<li>
+<p><code>features</code> - Enabled provider features</p>
+</li>
+<li>
+<p><code>variables</code> - Variables is a map of environment variables to add to the content of the <code>configSecret</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Full documentation on the CAPIProvider resource - <a href="https://doc.crds.dev/github.com/rancher/turtles/turtles-capi.cattle.io/CAPIProvider/v1alpha1@v0.5.0">here</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_deletion"><a class="anchor" href="#_deletion"></a>Deletion</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When a <code>CAPIProvider</code> resource is deleted, the kubernetes garbage collection will clean up all the generated provider resources that it owns. This includes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Cluster API Operator resource instance</p>
+</li>
+<li>
+<p>Secret referenced by the <code>configSecret</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>© 2024 SUSE LLC</p>
+</footer><script src="../../../../_/js/site.js"></script>
+<script async src="../../../../_/js/vendor/highlight.js"></script>
+<script src="../../../../_/js/vendor/langSelection.js"></script>
+<script async src="../../../../_/js/vendor/tabs.js"></script>
+
+
+  </body>
+</html>

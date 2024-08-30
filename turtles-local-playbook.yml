@@ -1,0 +1,30 @@
+site:
+  title: Turtles Documentation
+  url: /
+  start_page: main@turtles-documentation::index.adoc
+
+content:
+  sources:
+    - url: ./
+      branches: [main]
+
+# Description: SUSE UI bundle
+ui:
+  bundle:
+    url: https://github.com/rancher/product-docs-ui/blob/main/build/ui-bundle.zip?raw=true
+    snapshot: true
+  supplemental_files: ./product-docs-supplemental-files
+
+asciidoc:
+  attributes:
+    page-pagination: ''
+    page-toclevels: 4@
+  extensions:
+    - asciidoctor-kroki
+    - '@asciidoctor/tabs'
+antora:
+  extensions:
+  - require: '@antora/lunr-extension'
+
+output:
+  dir: build/site

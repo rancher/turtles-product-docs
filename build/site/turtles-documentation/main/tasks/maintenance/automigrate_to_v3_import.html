@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Auto-migration to v3 cluster import :: Turtles Documentation</title>
+    <meta name="generator" content="Antora 3.1.9">
+    <link rel="stylesheet" href="../../../../_/css/site.css">
+<link rel="stylesheet" href="../../../../_/css/search.css">
+<link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="../../../../_/css/font-styles.css">
+<link rel="stylesheet" href="../../../../_/fonts/css/all.css">
+<link rel="stylesheet" href="../../../../_/css/site-extra.css">
+<link rel="stylesheet" href="../../../../_/css/vendor/tabs.css">
+<!-- <link rel="preconnect" href="https://fonts.gstatic.com"> -->
+<link href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css" rel="stylesheet">
+<!-- <link href="https://fonts.googleapis.com/css?family=Montserrat|Roboto&display=swap" rel="stylesheet"> -->
+<link rel="stylesheet" href="../../../../_/css/vendor/light.css">
+<script src="/docserv/res/lightheaded/analytics.js"
+        type="text/javascript"></script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <div class="navbar-item">
+        <a class=" navbar-logo" href="https://documentation.suse.com/suma/"><img class="logo"
+            src="../../../../_/img/logo.svg" /></a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link"><img src="../../../../_/img/resources.png" class="langIcon Resurces" alt="Resources"
+              title="Resources"></div>
+          <div class="navbar-dropdown">
+            <!--  <div class="navbar-item"><strong>Resources</strong></div> -->
+            <a class="navbar-item" href="https://github.com/uyuni-project/uyuni-docs"><i
+                class="fab fa-github"></i>&nbsp;uyuni-docs</a>
+            <a class="navbar-item" href="https://github.com/uyuni-project/uyuni-docs/issues"><i
+                class="fab fa-github"></i>&nbsp;Report Issue</a>
+            <a class="navbar-item" href="https://github.com/uyuni-project/uyuni-docs/wiki"><i
+                class="fas fa-user-edit"></i>&nbsp;Contribute</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link"><img src="../../../../_/img/language.png" class="langIcon Language" alt="Language"
+              title="Language"></div>
+          <div class="navbar-dropdown">
+            <!--  </div><div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> -->
+            <a role="button" class="navbar-item" id="en" onclick="selectLanguage(this.id)"><img
+                src="../../../../_/img/engFlag.svg" class="langIcon english">&nbsp;English</a>
+            <!-- LANGUAGESELECTOR -->
+          </div>
+        </div>
+        <div class="navbar-item">
+          <a href="https://twitter.com/SUSE">
+            <img class="x-logo" src="../../../../_/img/x-logo-white.png">
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <!--   <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+          </span>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+          </span>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+          </span>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+          </span>
+        </div>
+      </div> -->
+    </div>
+  </nav>
+</header><div class="body">
+<div class="nav-container" data-component="turtles-documentation" data-version="main">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../../index.html">Turtles Documentation</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Getting Started</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#getting-started/intro.adoc">Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../getting-started/rancher.html">Rancher Setup</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Install Rancher Turtles</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../getting-started/install-rancher-turtles/using_rancher_dashboard.html">Via Rancher Dashboard</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">Your first cluster</span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">Using ClusterClass</span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Reference Guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">Architecture</span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">CAPI Providers</span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">Test suite</span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Tasks</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">Cluster API Operator</span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">Maintenance</span>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <span class="nav-text">Provider Certification</span>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-text">Developer Guide</span>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-text">Reference</span>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <span class="nav-text">Security</span>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Turtles Documentation</span>
+    <span class="version">v0.11</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../../index.html">Turtles Documentation</a></div>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../index.html">v0.11</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../index.html">Turtles Documentation</a></li>
+    <li><a href="automigrate_to_v3_import.html">Auto-migration to v3 cluster import</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///Users/ssingh/Features/conversions/RancherTurtlesProductSite/turtles-product-docs/modules/ROOT/pages/tasks/maintenance/automigrate_to_v3_import.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Auto-migration to v3 cluster import</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Caution"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Please read the step described in <a href="./import_controller_upgrade.adoc#context">import controller upgrade</a>, and consider how you want to perform your migration. Feature described here will automatically migrate all old clusters in one go, replacing them with v3 cluster objects.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_context"><a class="anchor" href="#_context"></a>Context</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The goal of the feature is to enable an automatic migration path for users still using v1 cluster import functionality or those currently migrating to v3 clusters. To achieve this, Turtles provides a separate feature flag named <code>managementv3-cluster-migration</code>. This option is <strong>disabled</strong> by default, but can be enabled during installation by enabling both checkmarks from the list:</p>
+</div>
+<div class="imageblock unresolved">
+<div class="content">
+<img src="image.png" alt="automigrate feature">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_functionality"><a class="anchor" href="#_functionality"></a>Functionality</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The intended behavior for this feature flag is described in the <a href="https://github.com/rancher/turtles/blob/main/docs/adr/0011-v1-to-v3-migration.md">ADR</a>. In summary, when enabled, this flag ensures that cluster imports are not duplicated during upgrade to <code>management/v3</code> or downgrade from <code>management/v3</code> back to <code>provisioning/v1</code>. This prevents duplication of cluster imports and automatically re-imports previously imported CAPI cluster definitions.</p>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>© 2024 SUSE LLC</p>
+</footer><script src="../../../../_/js/site.js"></script>
+<script async src="../../../../_/js/vendor/highlight.js"></script>
+<script src="../../../../_/js/vendor/langSelection.js"></script>
+<script async src="../../../../_/js/vendor/tabs.js"></script>
+
+
+  </body>
+</html>
