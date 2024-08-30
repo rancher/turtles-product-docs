@@ -5,20 +5,20 @@
 
 [cols=14*]
 |===
-| link:glossary.adoc#a[A]
-| link:glossary.adoc#b[B]
-| link:glossary.adoc#c[C]
-| link:glossary.adoc#f[F]
-| link:glossary.adoc#i[I]
-| link:glossary.adoc#k[K]
-| link:glossary.adoc#m[M]
-| link:glossary.adoc#n[N]
-| link:glossary.adoc#o[O]
-| link:glossary.adoc#p[P]
-| link:glossary.adoc#r[R]
-| link:glossary.adoc#s[S]
-| link:glossary.adoc#t[T]
-| link:glossary.adoc#w[W]
+| xref:./glossary.adoc#_a[A]
+| xref:./glossary.adoc#_b[B]
+| xref:./glossary.adoc#_c[C]
+| xref:./glossary.adoc#_f[F]
+| xref:./glossary.adoc#_i[I]
+| xref:./glossary.adoc#_k[K]
+| xref:./glossary.adoc#_m[M]
+| xref:./glossary.adoc#_n[N]
+| xref:./glossary.adoc#_o[O]
+| xref:./glossary.adoc#_p[P]
+| xref:./glossary.adoc#_r[R]
+| xref:./glossary.adoc#_s[S]
+| xref:./glossary.adoc#_t[T]
+| xref:./glossary.adoc#_w[W]
 |===
 
 == A
@@ -97,7 +97,7 @@ A full Kubernetes deployment. See Management Cluster and Workload Cluster.
 === ClusterClass
 
 A collection of templates that define a topology (control plane and workers) to be used to continuously reconcile one or more Clusters.
-See xref:../getting-started/cluster-class/create_cluster.adoc[ClusterClass]
+See xref:./../getting-started/cluster-class/create_cluster.adoc[ClusterClass]
 
 === Cluster API
 
@@ -105,7 +105,7 @@ Or *Cluster API project*
 
 The Cluster API is a sub-project of the SIG-cluster-lifecycle. It is also used to refer to the software components, APIs, and community that produce them.
 
-See <<core-provider,core provider>>
+See <<_core_provider,core provider>>
 
 === Cluster API Operator
 
@@ -119,7 +119,7 @@ The Cluster API Operator is a sub-project of the SIG-cluster-lifecycle. It is de
 
 === Control plane
 
-The set of Kubernetes services that form the basis of a cluster. See also https://kubernetes.io/docs/concepts/#kubernetes-control-plane There are two variants:
+The set of Kubernetes services that form the basis of a cluster. See also https://kubernetes.io/docs/concepts/#_kubernetes-control-plane There are two variants:
 
 * *Self-provisioned*: A Kubernetes control plane consisting of pods or machines wholly managed by a single Cluster API deployment.
 * *External* or *Managed*: A control plane offered and controlled by some system other than Cluster API (e.g., GKE, AKS, EKS, IKS).
@@ -136,7 +136,7 @@ Refers to a <<provider,provider>> that implements Cluster API core controllers; 
 consider that the first project that must be deployed in a management Cluster is Cluster API itself, it should be clear why
 the Cluster API project is also referred to as the core provider.
 
-See <<cluster-api,CAPI>>.
+See <<_cluster_api,CAPI>>.
 
 == F
 
