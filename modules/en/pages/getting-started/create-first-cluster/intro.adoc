@@ -5,5 +5,5 @@ Everything you need to know about creating and importing your first CAPI cluster
 
 Choose one of the following options:
 
-* xref:using_fleet.adoc[If you are using Fleet]
-* xref:using_kubectl.adoc[If you want to use kubectl]
+* xref:getting-started/create-first-cluster/using_fleet.adoc[If you are using Fleet]
+* xref:getting-started/create-first-cluster/using_kubectl.adoc[If you want to use kubectl]

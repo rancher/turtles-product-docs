@@ -3,11 +3,26 @@
 ** xref:getting-started/rancher.adoc[Rancher Setup]
 ** Install Rancher Turtles
 *** xref:getting-started/install-rancher-turtles/using_rancher_dashboard.adoc[Via Rancher Dashboard]
+*** xref:getting-started/install-rancher-turtles/using_helm.adoc[Via Helm Install]
 ** Your first cluster
+*** xref:getting-started/create-first-cluster/intro.adoc[Introduction]
+*** xref:getting-started/create-first-cluster/using_fleet.adoc[Create & import your first cluster using Fleet]
+*** xref:getting-started/create-first-cluster/using_kubectl.adoc[Create & Import Your First Cluster Using kubectl]
 ** Using ClusterClass
+*** xref:getting-started/cluster-class/intro.adoc[Introduction]
+*** xref:getting-started/cluster-class/create_cluster.adoc[Create a cluster using Fleet]
+** xref:getting-started/air-gapped-environment.adoc[Air-gapped environment]
+** xref:getting-started/uninstall_turtles.adoc[Uninstall Rancher Turtles]
 * Reference Guides
 ** Architecture
+*** xref:reference-guides/architecture/intro.adoc[Introduction]
+*** xref:reference-guides/architecture/components.adoc[Components]
+*** xref:reference-guides/architecture/deployment.adoc[Deployment Scenarios]
+** xref:reference-guides/rancher-turtles-chart/values.adoc[Chart configuration]
 ** CAPI Providers
+*** xref:reference-guides/architecture/intro.adoc[Certified CAPI Providers]
+*** xref:reference-guides/architecture/intro.adoc[Create & import a cluster using CAPI providers]
+*** xref:reference-guides/architecture/intro.adoc[Cluster API Addon Provider Fleet]
 ** Test suite
 * Tasks
 ** Cluster API Operator
