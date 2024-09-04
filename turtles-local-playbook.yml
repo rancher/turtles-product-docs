@@ -1,5 +1,5 @@
 site:
-  title: Turtles Documentation
+  title: Cluster-API
   url: /
   start_page: main@turtles-documentation::index.adoc
 
@@ -19,8 +19,8 @@ asciidoc:
   attributes:
     page-pagination: ''
     page-toclevels: 4@
+    tabs-sync-option: ''
   extensions:
-    - asciidoctor-kroki
     - '@asciidoctor/tabs'
 antora:
   extensions:

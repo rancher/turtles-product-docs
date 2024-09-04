@@ -1,6 +1,6 @@
 = Introduction
 
-[CAUTION]
+[WARNING]
 ====
 Starting with Turtles `v0.9.0`, the process used for importing CAPI clusters into Rancher is now based on a different controller logic. If you are a new user of Turtles, you can proceed normally and simply install the extension. If you have been using previous versions of Turtles and are upgrading to `v0.9.0`, we recommend you take a look at the migration mechanisms and their implications:
 
@@ -41,7 +41,7 @@ This demo shows how to use the Rancher UI to install Rancher Turtles, create/imp
 
 | Cluster API Operator
 | `>=v0.12.0`
-| Using xref:./install-rancher-turtles/using_rancher_dashboard.adoc[Rancher UI] (recommended) or https://github.com/kubernetes-sigs/cluster-api-operator/blob/main/docs/README.md#method-2-use-helm-charts[Helm install] (for development use cases)
+| Using xref:./getting-started/install-rancher-turtles/using_rancher_dashboard.adoc[Rancher UI] (recommended) or https://github.com/kubernetes-sigs/cluster-api-operator/blob/main/docs/README.md#method-2-use-helm-charts[Helm install] (for development use cases)
 
 | Cluster API
 | `v1.7.3`
@@ -49,7 +49,7 @@ This demo shows how to use the Rancher UI to install Rancher Turtles, create/imp
 
 | Rancher Turtles
 | `>v0.11.0`
-| Using xref:./install-rancher-turtles/using_rancher_dashboard.adoc[Rancher UI] (recommended) or xref:./install-rancher-turtles/using_helm.adoc[Helm install] (for advanced use cases)
+| Using xref:./getting-started/install-rancher-turtles/using_rancher_dashboard.adoc[Rancher UI] (recommended) or xref:./getting-started/install-rancher-turtles/using_helm.adoc[Helm install] (for advanced use cases)
 |===
 
 == Reference Guides

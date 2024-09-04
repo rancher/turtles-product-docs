@@ -28,7 +28,7 @@ If you would like to understand how Rancher Turtles works and what the architect
 
 [NOTE]
 ====
-If uninstalling, you can refer to xref:../uninstall_turtles.adoc[Uninstalling Rancher Turtles]
+If uninstalling, you can refer to xref:../getting-started/uninstall_turtles.adoc[Uninstalling Rancher Turtles]
 ====
 
 

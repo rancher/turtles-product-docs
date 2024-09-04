@@ -18,23 +18,27 @@ This section describes how to install `Cluster API Operator` in the Kubernetes c
 To install `Cluster API Operator` with version `1.7.3` of the `CAPI` + `Docker` provider using helm, follow these steps:
 
 . Add the Helm repository for the `Cluster API Operator`:
-```bash
++
+[,bash]
+----
 helm repo add capi-operator https://kubernetes-sigs.github.io/cluster-api-operator
 helm repo add jetstack https://charts.jetstack.io
-
 ----
-2. Update the Helm repository:
-```bash
++
+. Update the Helm repository:
++
+[,bash]
+----
 helm repo update
 ----
-
++
 . Install the Cert-Manager:
 +
 [,bash]
 ----
 helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --set installCRDs=true
 ----
-
++
 . Install the `Cluster API Operator`:
 +
 [,bash]
@@ -95,8 +99,6 @@ The cluster is now ready to install Rancher Turtles. The default behavior when i
 ====
 For more fine-grained control of the providers and other components installed with CAPI, see the xref:../tasks/capi-operator/add_infrastructure_provider.adoc[Add the infrastructure provider] section.
 ====
-
-''
 
 === Install Rancher Turtles without `Cluster API Operator` as a Helm dependency
 
