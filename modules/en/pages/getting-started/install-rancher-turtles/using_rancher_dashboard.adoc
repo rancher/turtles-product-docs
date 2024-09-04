@@ -7,7 +7,7 @@ Via Rancher UI, and just by adding the Turtles repository, we can easily let Ran
 
 [CAUTION]
 ====
-In case you need to review the list of prerequisites (including `cert-manager`), you can refer to link:../intro.adoc#prerequisites[this table].
+In case you need to review the list of prerequisites (including `cert-manager`), you can refer to link:./intro.adoc#_prerequisites[this table].
 ====
 
 
@@ -26,7 +26,7 @@ If you would like to understand how Rancher Turtles works and what the architect
 
 [NOTE]
 ====
-If uninstalling, you can refer to xref:../uninstall_turtles.adoc[Uninstalling Rancher Turtles]
+If uninstalling, you can refer to xref:../getting-started/uninstall_turtles.adoc[Uninstalling Rancher Turtles]
 ====
 
 
@@ -51,7 +51,7 @@ Rancher will select not to install Turtles into a https://ranchermanager.docs.ra
 ====
 
 
-image::./install-turtles-from-ui.gif[install-turtles-from-ui]
+image::install-turtles-from-ui.gif[install-turtles-from-ui]
 
 This will use the default values for the Helm chart, which are good for most installations. If your configuration requires overriding some of these defaults, you can either specify the values during installation from Rancher UI or, alternatively, you can opt for the xref:./using_helm.adoc[manual installation via Helm]. And, if you are interested on learning more about the available values, you can check the xref:../../reference-guides/rancher-turtles-chart/values.adoc[reference guide].
 
@@ -61,4 +61,4 @@ The installation may take a few minutes and, when it finishes, you will be able 
 * `rancher-turtles-system/rancher-turtles-cluster-api-operator`
 * `capi-system/capi-controller-manager`
 
-image::./deployments-turtles.png[deployments-turtles]
+image::deployments-turtles.png[deployments-turtles]
