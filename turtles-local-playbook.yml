@@ -1,12 +1,12 @@
 site:
   title: Cluster-API
   url: /
-  start_page: main@turtles-documentation::index.adoc
+  start_page: v0.11@turtles-documentation:en:index.adoc
 
 content:
   sources:
     - url: ./
-      branches: [main]
+      start_paths: [versions/v0.11]
 
 # Description: SUSE UI bundle
 ui:

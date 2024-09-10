@@ -3,4 +3,4 @@ docs/
 node_modules/
 build/
 .vscode/
-.DS_Store/
+.DS_Store
