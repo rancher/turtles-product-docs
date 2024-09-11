@@ -5,23 +5,23 @@
 
 // DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE
 
-* <<how-to-get-involved,How to get involved?>>
-* <<submitting-prs,Submitting PRs>>
- ** <<choosing-something-to-work-on,Choosing something to work on>>
- ** <<developing-rancher-turtles,Developing rancher-turtles>>
- ** <<asking-for-help,Asking for help>>
- ** <<pr-submission-guidelines,PR submission guidelines>>
-  *** <<commit-message-formatting,Commit message formatting>>
-* <<opening-issues,Opening Issues>>
-* <<how-the-maintainers-process-contributions,How the Maintainers process contributions>>
- ** <<prioritizing-issues,Prioritizing issues>>
- ** <<reviewing-prs,Reviewing PRs>>
-* <<adrs-architectural-decision-records,ADRs (Architectural Decision Records)>>
- ** <<process,Process>>
+* <<_how_to_get_involved,How to get involved?>>
+* <<_submitting_prs,Submitting PRs>>
+ ** <<_choosing_something_to_work_on,Choosing something to work on>>
+ ** <<_developing_rancher_turtles,Developing rancher-turtles>>
+ ** <<_asking_for_help,Asking for help>>
+ ** <<_pr_submission_guidelines,PR submission guidelines>>
+  *** <<_commit_message_formatting,Commit message formatting>>
+* <<_opening_issues,Opening Issues>>
+* <<_how_the_maintainers_process_contributions,How the Maintainers process contributions>>
+ ** <<_prioritizing_issues,Prioritizing issues>>
+ ** <<_reviewing_prs,Reviewing PRs>>
+* <<_adrs_architectural_decision_records,ADRs (Architectural Decision Records)>>
+ ** <<_process,Process>>
 
 // END doctoc generated TOC please keep comment here to allow auto update
 
-Thank you for taking the time to contribute to Rancher CAPI extension https://github.com/rancher?q=turtles&type=all&language=&sort=[projects] :heart:
+Thank you for taking the time to contribute to Rancher CAPI extension https://github.com/rancher?q=turtles&type=all&language=&sort=[projects].
 
 Improvements to all areas of the project; from code, to documentation;
 from bug reports to feature design and UI enhancement are gratefully welcome.
@@ -31,7 +31,7 @@ and how to get involved in development as smoothly as possible.
 Reading docs is often tedious, so let's put the important contributing rule
 right at the top: *Always be kind!*
 
-Looking forward to seeing your contributions in the repo! :sparkles:
+Looking forward to seeing your contributions in the repo!
 
 == How to get involved?
 
@@ -39,7 +39,7 @@ We'd love to accept your patches in pretty much all areas of projects developmen
 
 If you're a new to the project and want to help, but don't know where to start, here is a non-exhaustive list of ways you can help out:
 
-. Submit a <<submitting-prs,Pull Request>> :rocket:
+. Submit a <<_submitting_prs,Pull Request>> :rocket:
 +
 Beyond fixing bugs and submitting new features, there are other things you can submit
  which, while less flashy, will be deeply appreciated by all who interact with the codebase:
@@ -50,9 +50,9 @@ Beyond fixing bugs and submitting new features, there are other things you can s
  ** Adding a new UI functionality!
 
 +
-(See also <<choosing-something-to-work-on,Choosing something to work on>> below.)
+(See also <<_choosing_something_to_work_on,Choosing something to work on>> below.)
 
-. Open an <<opening-issues,issue>> :interrobang:
+. Open an <<_opening_issues,issue>> :interrobang:
 +
 We have 2 forms of issues: bug reports and feature requests. If you are not sure which category you need, just make the best guess and provide as much information as possible.
 
@@ -112,7 +112,7 @@ there is a _lot_ of assumed knowledge which is very often taken for granted. Thi
 something we could all get better at, so don't be shy in asking for what you need
 to do great work :smile:.
 +
-See more on <<asking-for-help,asking for help>> below!
+See more on <<_asking_for_help,asking for help>> below!
 
 * https://github.com/search?q=org%3Agithub%2Francher+repo%3Arancher%2Fturtles+repo%3Arancher%2Fcapi-ui-extension+repo%3Arancher%2Fturtles-docs+is%3Aopen+label%3A%22help+wanted%22+&type=issues&ref=advsearch[`help wanted` issues]
 are for those a little more familiar with the code base, but should still be accessible enough
@@ -227,7 +227,7 @@ These priority categories have been inspired by https://github.com/kubernetes/co
 Other labels include:
 
 * https://github.com/rancher/turtles/labels/adr-required[`adr-required`]:
-Indicates that the issue or PR contains a decision that needs to be documented in a <<adrs-architectural-decision-records,ADR>> _before_
+Indicates that the issue or PR contains a decision that needs to be documented in a <<_adrs_architectural_decision_records,ADR>> _before_
 it can be worked on.
 * https://github.com/rancher/turtles/labels/needs-investigation[`needs-investigation`]:  There is currently insufficient information to either categorize properly,
 or to understand and implement a solution. This could be because the issue opener did
@@ -242,14 +242,14 @@ should also feel free to keep an eye on things and provide their own thoughts an
 High-value and/or high priority contributions will be processed as quickly as possible,
 while lower priority or nice-to-have things may take a little longer to get approved.
 
-To help facilitate a smoother and faster review, follow the guidelines <<pr-submission-guidelines,above>>.
+To help facilitate a smoother and faster review, follow the guidelines <<_pr_submission_guidelines,above>>.
 Submissions which do not meet standards will be de-prioritised for review.
 
 == ADRs (Architectural Decision Records)
 
 [NOTE]
 ====
-Please feel free to skip <<adrs-architectural-decision-records,this>> and <<process,sub-section>> below, since they are only relevant to the https://github.com/rancher/turtles[rancher-turtles] repository.
+Please feel free to skip <<_adrs_architectural_decision_records,this>> and <<process,sub-section>> below, since they are only relevant to the https://github.com/rancher/turtles[rancher-turtles] repository.
 ====
 
 
