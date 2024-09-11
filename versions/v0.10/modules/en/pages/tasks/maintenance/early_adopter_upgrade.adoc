@@ -60,7 +60,7 @@ kubectl delete mutatingwebhookconfigurations.admissionregistration.k8s.io capi-m
 
 [TIP]
 ====
-If you are not going to continue using the extension then do the next step, instead go to the <<re-enable-embedded-capi,re-enable embedded CAPI>> section.
+If you are not going to continue using the extension then do the next step, instead go to the <<_re_enable_embedded_capi,re-enable embedded CAPI>> section.
 ====
 
 

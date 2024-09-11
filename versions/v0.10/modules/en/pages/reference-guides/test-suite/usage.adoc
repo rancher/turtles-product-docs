@@ -33,7 +33,7 @@ NGROK_AUTHTOKEN: ""
 
 Using this configuration, during environment creation, the Rancher instance will be configured to be accessible via your `ngrok` endpoint and downstream clusters will be able to communicate with it.
 
-The <<other-options,Other options>> section contains more information on what you can configure before execution.
+The <<_other_options,Other options>> section contains more information on what you can configure before execution.
 
 [discrete]
 === Basic Workflow

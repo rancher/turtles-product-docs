@@ -70,7 +70,7 @@ We have 2 forms of issues: bug reports and feature requests. If you are not sure
 These guides aim to help you write issues in a way which will ensure that they are processed
 as quickly as possible.
 
-_See below for <<prioritizing-issues,how issues are prioritized>>_.
+_See below for <<_prioritizing_issues,how issues are prioritized>>_.
 
 *General rules*:
 
@@ -249,7 +249,7 @@ Submissions which do not meet standards will be de-prioritised for review.
 
 [NOTE]
 ====
-Please feel free to skip <<_adrs_architectural_decision_records,this>> and <<process,sub-section>> below, since they are only relevant to the https://github.com/rancher/turtles[rancher-turtles] repository.
+Please feel free to skip <<_adrs_architectural_decision_records,this>> and <<_process,sub-section>> below, since they are only relevant to the https://github.com/rancher/turtles[rancher-turtles] repository.
 ====
 
 
