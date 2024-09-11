@@ -11,7 +11,7 @@
 
 . Clone the https://github.com/rancher/turtles[Rancher Turtles] repository locally
 . Create *tilt-settings.yaml*:
-
++
 [,yaml]
 ----
 {
@@ -25,10 +25,10 @@
     }
 }
 ----
-
++
 . Open a terminal in the root of the Rancher Turtles repository
 . Run the following:
-
++
 [,bash]
 ----
 make dev-env
@@ -36,9 +36,9 @@ make dev-env
 # Or if you want to use a custom hostname for Rancher
 RANCHER_HOSTNAME=my.customhost.dev make dev-env
 ----
-
++
 . When tilt has started, open a new terminal and start ngrok or inlets
-
++
 [,bash]
 ----
 kubectl port-forward --namespace cattle-system svc/rancher 10000:443
