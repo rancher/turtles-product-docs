@@ -1,5 +1,4 @@
 = Guidelines
-:sidebar_position: 1
 
 // START doctoc generated TOC please keep comment here to allow auto update
 
@@ -39,7 +38,7 @@ We'd love to accept your patches in pretty much all areas of projects developmen
 
 If you're a new to the project and want to help, but don't know where to start, here is a non-exhaustive list of ways you can help out:
 
-. Submit a <<_submitting_prs,Pull Request>> :rocket:
+. Submit a <<_submitting_prs,Pull Request>>
 +
 Beyond fixing bugs and submitting new features, there are other things you can submit
  which, while less flashy, will be deeply appreciated by all who interact with the codebase:
@@ -52,7 +51,7 @@ Beyond fixing bugs and submitting new features, there are other things you can s
 +
 (See also <<_choosing_something_to_work_on,Choosing something to work on>> below.)
 
-. Open an <<_opening_issues,issue>> :interrobang:
+. Open an <<_opening_issues,issue>>
 +
 We have 2 forms of issues: bug reports and feature requests. If you are not sure which category you need, just make the best guess and provide as much information as possible.
 
@@ -63,7 +62,7 @@ We have 2 forms of issues: bug reports and feature requests. If you are not sure
   If you are seeking to take on a bigger challenge or a more experienced contributor, check out https://github.com/rancher/turtles/issues?q=is%3Aopen+is%3Aissue+label%3Akind%2Ffeature[`feature requests`].
 * extension UI? Take a look at https://github.com/rancher/capi-ui-extension[`open`] or
   https://github.com/rancher/capi-ui-extension/labels/help-wanted[`help wanted` issues].
-* maybe, user-docs? :nerd_face: Then, jump straight into https://github.com/rancher/turtles-docs/issues[`open` issues] in the docs repository.
+* maybe, user-docs? Then, jump straight into https://github.com/rancher/turtles-docs/issues[`open` issues] in the docs repository.
 
 == Opening Issues
 
@@ -88,7 +87,7 @@ _See below for <<_prioritizing_issues,how issues are prioritized>>_.
   The faster something can be read, the faster it can be dealt with.
 . Keep it civil. Yes, it is annoying when things don't work, but it is way more fun helping out
   someone who is not... the worst. Remember that conversing via text exacerbates
-  everyone's negativity bias, so throw in some emoji when in doubt :+1: :smiley: :rocket: :tada:.
+  everyone's negativity bias, so throw in some emoji when in doubt.
 
 == Submitting PRs
 
@@ -96,7 +95,7 @@ _See below for <<_prioritizing_issues,how issues are prioritized>>_.
 
 If you are here to ask for help or request some new behaviour, this
 is the section for you. We have curated a set of issues for anyone who simply
-wants to build up their open-source cred :muscle:.
+wants to build up their open-source cred.
 
 * Issues labelled https://github.com/search?q=org%3Agithub%2Francher+repo%3Arancher%2Fturtles+repo%3Arancher%2Fcapi-ui-extension+repo%3Arancher%2Fturtles-docs+is%3Aopen+label%3A%22good+first+issue%22+&type=issues&ref=advsearch[`good first issues`]
 should be accessible to folks new to the repos, as well as to open source in general.
@@ -110,7 +109,7 @@ If you have come across an issue tagged with `good first issue` which you think 
 like to claim but isn't 100% clear, please ask for more info! When people write issues
 there is a _lot_ of assumed knowledge which is very often taken for granted. This is
 something we could all get better at, so don't be shy in asking for what you need
-to do great work :smile:.
+to do great work.
 +
 See more on <<_asking_for_help,asking for help>> below!
 
