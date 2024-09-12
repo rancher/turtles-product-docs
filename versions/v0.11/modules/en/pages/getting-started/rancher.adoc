@@ -25,6 +25,6 @@ helm install rancher rancher-stable/rancher
     --wait
 ----
 
-Replace `<rancher-hostname>` with the actual hostname of your `Rancher` server and use the `--version` option to specify the version of `Rancher` you want to install. In this case, use the link:../getting-started/intro.adoc#prerequisites[recommended] `Rancher` version for `Rancher Turtles`.
+Replace `<rancher-hostname>` with the actual hostname of your `Rancher` server and use the `--version` option to specify the version of `Rancher` you want to install. In this case, use the xref:../index.adoc#_prerequisites[recommended] `Rancher` version for `Rancher Turtles`.
 
 You are now ready to install and use Rancher Turtles! 🎉
