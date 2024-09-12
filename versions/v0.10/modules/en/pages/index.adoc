@@ -35,7 +35,7 @@ This demo shows how to use the Rancher UI to install Rancher Turtles, create/imp
 
 | Rancher
 | `>=2.9.0`
-| Using https://ranchermanager.docs.rancher.com/pages-for-subheaders/install-upgrade-on-a-kubernetes-cluster#install-the-rancher-helm-chart[helm based] installation on any kubernetes cluster directly or on a newly created https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/install-upgrade-on-a-kubernetes-cluster/rancher-on-amazon-eks[Amazon], https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/install-upgrade-on-a-kubernetes-cluster/rancher-on-aks[Azure] or https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/install-upgrade-on-a-kubernetes-cluster/rancher-on-gke[Google] service based options. Additional feature gate link:./rancher.adoc#installing-rancher[modifications] are required.
+| Using https://ranchermanager.docs.rancher.com/pages-for-subheaders/install-upgrade-on-a-kubernetes-cluster#install-the-rancher-helm-chart[helm based] installation on any kubernetes cluster directly or on a newly created https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/install-upgrade-on-a-kubernetes-cluster/rancher-on-amazon-eks[Amazon], https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/install-upgrade-on-a-kubernetes-cluster/rancher-on-aks[Azure] or https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/install-upgrade-on-a-kubernetes-cluster/rancher-on-gke[Google] service based options. Additional feature gate xref:./getting-started/rancher.adoc#_installing_rancher[modifications] are required.
 
 | Cert-manager
 | `>=v1.15.2`
@@ -57,14 +57,14 @@ This demo shows how to use the Rancher UI to install Rancher Turtles, create/imp
 == Reference Guides
 
 This section focuses on implementation details including
-link:./reference-guides/architecture/intro[architecture], how Rancher Turtles integrates with Rancher, and link:./reference-guides/rancher-turtles-chart/values[Helm Chart configuration values].
+xref:./reference-guides/architecture/intro.adoc[architecture], how Rancher Turtles integrates with Rancher, and xref:./reference-guides/rancher-turtles-chart/values.adoc[Helm Chart configuration values].
 
 == Tasks
 
-In this section we cover additional link:./tasks/intro[operational tasks] including basic `CAPIProvider` link:./tasks/capi-operator/basic_cluster_api_provider_installation[installation], an link:./tasks/capi-operator/add_infrastructure_provider[example] AWS infrastructure provider install using `CAPIProvider`, and link:./tasks/maintenance/early_adopter_upgrade[upgrade instructions] for early adopters of Rancher Turtles.
+In this section we cover additional xref:./tasks/intro.adoc[operational tasks] including basic `CAPIProvider` xref:./tasks/capi-operator/basic_cluster_api_provider_installation.adoc[installation], an xref:./tasks/capi-operator/add_infrastructure_provider.adoc[example] AWS infrastructure provider install using `CAPIProvider`, and xref:./tasks/maintenance/early_adopter_upgrade.adoc[upgrade instructions] for early adopters of Rancher Turtles.
 
 == Security
 
 Rancher Turtles meets https://slsa.dev/spec/v1.0/levels#build-l3[SLSA Level 3] requirements as an appropriate hardened build platform, with consistent build processes, and provenance distribution. This section contains more information on security-related topics:
 
-* link:./security/slsa[SLSA]
+* xref:./security/slsa.adoc[SLSA]
