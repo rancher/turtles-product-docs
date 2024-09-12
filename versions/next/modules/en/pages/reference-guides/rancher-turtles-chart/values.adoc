@@ -11,7 +11,7 @@ For the up-to-date content of `values.yaml` source file, refer to the https://gi
 
 When installing Rancher Turtles using the official Helm chart, it is possible to configure a number of feature flags. This is a comprehensive list of the available values and their usage:
 
-[,yaml]
+[source,yaml]
 ----
 rancherTurtles:
   features:
@@ -43,7 +43,7 @@ A full set of available values for the `Cluster API Operator` can be found in th
 
 Currently the available set of values for the `cluster-api-operator` setup in the `rancher-turtles`:
 
-[,yaml]
+[source,yaml]
 ----
 cluster-api-operator:
   enabled: true # indicates if CAPI operator should be installed (default: true)

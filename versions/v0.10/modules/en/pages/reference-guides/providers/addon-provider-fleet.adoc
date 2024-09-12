@@ -1,7 +1,6 @@
 = Cluster API Addon Provider Fleet
-:sidebar_position: 2
 
-== Owerview
+== Overview
 
 Cluster API Add-on Provider for `Fleet` (CAAPF) is a Cluster API (CAPI) provider that provides integration with https://fleet.rancher.io/[`Fleet`] to enable the easy deployment of applications to a CAPI provisioned cluster.
 
@@ -12,7 +11,7 @@ Cluster API Add-on Provider for `Fleet` (CAAPF) is a Cluster API (CAPI) provider
 
 This allows a user to specify either a https://fleet.rancher.io/ref-bundle[`Bundle`] resource with raw application workloads, or https://fleet.rancher.io/ref-gitrepo[`GitRepo`] to install applications from git. Each of the resources can provide https://fleet.rancher.io/gitrepo-targets#defining-targets[`targets`] with any combination of:
 
-[,yaml]
+[source,yaml]
 ----
   targets:
   - clusterGroup: <cluster-class-name> # If the cluster is created from cluster-class
@@ -21,7 +20,7 @@ This allows a user to specify either a https://fleet.rancher.io/ref-bundle[`Bund
 
 Additionally, `CAAPF` automatically propagates `CAPI` cluster labels to the `Fleet` cluster resource, so user can specify a target matching common cluster label with:
 
-[,yaml]
+[source,yaml]
 ----
   targets:
   - clusterSelector: <label selector for the cluster instances, inherited from CAPI clusters>

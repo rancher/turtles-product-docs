@@ -49,7 +49,7 @@ There are 2 options to provide the configuration. The first is using the Rancher
 . Create a new file called *repo.yaml*
 . Add the following contents to the new file:
 
-[,yaml]
+[source,yaml]
 ----
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
@@ -66,7 +66,7 @@ spec:
 
 . Apply the file to the Rancher Manager cluster using *kubectl*:
 
-[,bash]
+[source,bash]
 ----
 kubectl apply -f repo.yaml
 ----
@@ -110,7 +110,7 @@ Now the classes have been imported its possible to use them with cluster definit
 . Create a new file called *repo.yaml*
 . Add the following contents to the new file:
 
-[,yaml]
+[source,yaml]
 ----
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
@@ -127,7 +127,7 @@ spec:
 
 . Apply the file to the Rancher Manager cluster using *kubectl*:
 
-[,bash]
+[source,bash]
 ----
 kubectl apply -f repo.yaml
 ----

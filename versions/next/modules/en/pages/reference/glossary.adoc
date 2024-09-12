@@ -46,7 +46,7 @@ A temporary cluster that is used to provision a Target Management cluster.
 
 === Bootstrap provider
 
-Refers to a <<provider,provider>> that implements a solution for the <<bootstrap,bootstrap>> process.
+Refers to a <<_provider,provider>> that implements a solution for the <<_bootstrap,bootstrap>> process.
 
 == C
 
@@ -84,11 +84,11 @@ Cluster API Provider Azure
 
 === CAPI Provider
 
-A public API that facilitates provisioning and operations over the <<cluster-api-operator,CAPI Operator>> and <<cluster-api,Cluster API>> resources.
+A public API that facilitates provisioning and operations over the <<_cluster_api_operator,CAPI Operator>> and <<_cluster_api,Cluster API>> resources.
 
 === Child Cluster
 
-Term commonly used interchangeably with the <<workload-cluster,workload cluster>>.
+Term commonly used interchangeably with the <<_workload_cluster,workload cluster>>.
 
 === Cluster
 
@@ -115,7 +115,7 @@ The Cluster API Operator is a sub-project of the SIG-cluster-lifecycle. It is de
 
 === Cluster API Provider RKE2
 
-<<caprke2,Cluster API Provider RKE2>> is a combination of two provider types: a Cluster API Control Plane Provider for provisioning Kubernetes control plane nodes and a Cluster API Bootstrap Provider for bootstrapping Kubernetes on a machine where <<rke2,RKE2>> is used as the Kubernetes distro.
+<<_caprke2,Cluster API Provider RKE2>> is a combination of two provider types: a Cluster API Control Plane Provider for provisioning Kubernetes control plane nodes and a Cluster API Bootstrap Provider for bootstrapping Kubernetes on a machine where <<_rke2,RKE2>> is used as the Kubernetes distro.
 
 === Control plane
 
@@ -126,15 +126,13 @@ The set of Kubernetes services that form the basis of a cluster. See also https:
 
 === Control plane provider
 
-Refers to a <<provider,provider>> that implements a solution for the management of a Kubernetes <<control-plane,control plane>>.
+Refers to a <<_provider,provider>> that implements a solution for the management of a Kubernetes <<_control_plane,control plane>>.
 
-See <<caprke2,CAPRRKE2>>, <<kcp,KCP>>.
+See <<_caprke2,CAPRRKE2>>, <<_kcp,KCP>>.
 
 === Core provider
 
-Refers to a <<provider,provider>> that implements Cluster API core controllers; if you
-consider that the first project that must be deployed in a management Cluster is Cluster API itself, it should be clear why
-the Cluster API project is also referred to as the core provider.
+Refers to a <<_provider,provider>> that implements Cluster API core controllers; if you consider that the first project that must be deployed in a management Cluster is Cluster API itself, it should be clear why the Cluster API project is also referred to as the core provider.
 
 See <<_cluster_api,CAPI>>.
 
@@ -148,13 +146,13 @@ A container management and deployment engine designed to offer users more contro
 
 === Infrastructure provider
 
-Refers to a <<provider,provider>> that implements provisioning of infrastructure/computational resources required by
+Refers to a <<_provider,provider>> that implements provisioning of infrastructure/computational resources required by
 the Cluster or by Machines (e.g. VMs, networking, etc.).
 Clouds infrastructure providers include AWS, Azure, or Google; while VMware, MAAS, or metal3.io can be defined as bare metal providers.
 
 === IPAM provider
 
-Refers to a <<provider,provider>> that allows Cluster API to interact with IPAM solutions.
+Refers to a <<_provider,provider>> that allows Cluster API to interact with IPAM solutions.
 IPAM provider's interaction with Cluster API is based on the `IPAddressClaim` and `IPAddress` API types.
 
 == K
@@ -195,7 +193,7 @@ Managed Kubernetes refers to any Kubernetes cluster provisioning and maintenance
 
 === Managed Topology
 
-See <<topology,Topology>>
+See <<_topology,Topology>>
 
 === Management cluster
 
@@ -227,24 +225,24 @@ The pivot process is also used for deleting a management cluster and could also 
 
 Or *Cluster API provider*
 
-This term was originally used as abbreviation for <<infrastructure-provider,Infrastructure provider>>, but currently it is used
+This term was originally used as abbreviation for <<_infrastructure_provider,Infrastructure provider>>, but currently it is used
 to refer to any project that can be deployed and provides functionality to the Cluster API management Cluster.
 
-See <<bootstrap-provider,Bootstrap provider>>, <<control-plane-provider,Control plane provider>>, <<core-provider,Core provider>>,
-<<infrastructure-provider,Infrastructure provider>>, <<ipam-provider,IPAM provider>>, <<runtime-extension-provider,Runtime extension provider>>.
+See <<_bootstrap_provider,Bootstrap provider>>, <<_control_plane_provider,Control plane provider>>, <<_core_provider,Core provider>>,
+<<_infrastructure_provider,Infrastructure provider>>, <<_ipam_provider,IPAM provider>>, <<_runtime_extension_provider,Runtime extension provider>>.
 
 === Provider components
 
-Refers to the YAML artifact published as part of the release process for <<provider,providers>>;
+Refers to the YAML artifact published as part of the release process for <<_provider,providers>>;
 it usually includes Custom Resource Definitions (CRDs), Deployments (to run the controller manager), RBAC, etc.
 
 In some cases, the same expression is used to refer to the instances of above components deployed in a management cluster.
 
-See <<provider-repository,Provider repository>>
+See <<_provider_repository,Provider repository>>
 
 === Provider repository
 
-Refers to the location where the YAML for <<provider-components,provider components>> are hosted; usually a provider repository hosts
+Refers to the location where the YAML for <<_provider_components,provider components>> are hosted; usually a provider repository hosts
 many version of provider components, one for each released version.
 
 == R
@@ -259,11 +257,11 @@ A component deployed by Rancher in each Kubernetes cluster it manages. Its prima
 
 === Rancher Manager
 
-The Rancher Manager (or Rancher Server) is where the Rancher UI and API are hosted, and it communicates with managed clusters through components like the <<rancher-cluster-agent,Rancher Cluster Agent>>. It allows users to manage their Kubernetes clusters, applications, and Rancher-specific resources such as Catalogs, Users, Global Roles, and more.
+The Rancher Manager (or Rancher Server) is where the Rancher UI and API are hosted, and it communicates with managed clusters through components like the <<_rancher_cluster_agent,Rancher Cluster Agent>>. It allows users to manage their Kubernetes clusters, applications, and Rancher-specific resources such as Catalogs, Users, Global Roles, and more.
 
 === Rancher Turtles
 
-A <<kubernetes-operator,Kubernetes operator>> that provides integration between Rancher Manager and Cluster API (CAPI) with the aim of bringing full CAPI support to Rancher.
+A <<_kubernetes_operator,Kubernetes operator>> that provides integration between Rancher Manager and Cluster API (CAPI) with the aim of bringing full CAPI support to Rancher.
 
 === RKE2
 
@@ -275,7 +273,7 @@ An external component which is part of a system built on top of Cluster API that
 
 === Runtime Extension provider
 
-Refers to a <<provider,provider>> that implements one or more <<runtime-extension,runtime extensions>>.
+Refers to a <<_provider,provider>> that implements one or more <<_runtime_extension,runtime extensions>>.
 
 == S
 
@@ -290,20 +288,20 @@ is running as a static pod.
 
 === Server
 
-The infrastructure that backs a <<machine,Machine Resource>>, typically either a cloud instance, virtual machine, or physical host.
+The infrastructure that backs a <<_machine,Machine Resource>>, typically either a cloud instance, virtual machine, or physical host.
 
 == T
 
 === Topology
 
-A field in the Cluster object spec that allows defining and managing the shape of the Cluster's control plane and worker machines from a single point of control. The Cluster's topology is based on a <<clusterclass,ClusterClass>>.
+A field in the Cluster object spec that allows defining and managing the shape of the Cluster's control plane and worker machines from a single point of control. The Cluster's topology is based on a <<_clusterclass,ClusterClass>>.
 Sometimes it is also referred as a managed topology.
 
-See <<clusterclass,ClusterClass>>
+See <<_clusterclass,ClusterClass>>
 
 === Turtles
 
-Refers to <<rancher-turtles,Rancher Turtles>>
+Refers to <<_rancher_turtles,Rancher Turtles>>
 
 == W
 
@@ -315,4 +313,4 @@ A cluster created by a ClusterAPI controller, which is _not_ a bootstrap cluster
 
 A collection of templates that define a set of worker nodes in the cluster. A ClusterClass contains zero or more WorkerClass definitions.
 
-See <<clusterclass,ClusterClass>>
+See <<_clusterclass,ClusterClass>>

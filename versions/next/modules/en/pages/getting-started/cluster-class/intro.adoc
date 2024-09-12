@@ -15,7 +15,7 @@ To use ClusterClass it needs to be enabled for core Cluster API and any provider
 
 The Rancher Turtles Helm chart will set this variable by default when its installed. However, when enabling additional providers you will have to ensure `CLUSTER_TOPOLGY` is set in the providers secret. For example:
 
-[,yaml]
+[source,yaml]
 ----
 apiVersion: v1
 kind: Secret
@@ -29,7 +29,7 @@ stringData:
 
 Which can then be referenced from a provider declaration. For example:
 
-[,yaml]
+[source,yaml]
 ----
 apiVersion: operator.cluster.x-k8s.io/v1alpha1
 kind: InfrastructureProvider

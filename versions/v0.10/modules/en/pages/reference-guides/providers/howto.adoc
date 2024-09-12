@@ -1,8 +1,4 @@
 :doctype: book
-:sidebar_position: 0
-
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 = Create & import a cluster using CAPI providers
 
@@ -14,41 +10,137 @@ Keep in mind that most Cluster API Providers are upstream projects maintained by
 
 [tabs]
 ======
-Tab AWS RKE2::
+AWS RKE2::
 +
-- Rancher Manager cluster with Rancher Turtles installed - Cluster API Providers: you can find a guide on how to install a provider using the `CAPIProvider` resource [here](../../tasks/capi-operator/basic_cluster_api_provider_installation.md) - [Infrastructure provider for AWS](https://github.com/kubernetes-sigs/cluster-api-provider-aws/) - [Bootstrap/Control Plane provider for RKE2](https://github.com/rancher/cluster-api-provider-rke2) - **clusterctl** CLI - see [install clusterctl from CAPI book](https://cluster-api.sigs.k8s.io/user/quick-start#install-clusterctl) 
+* Rancher Manager cluster with Rancher Turtles installed 
+* Cluster API Providers: you can find a guide on how to install a provider using the `CAPIProvider` resource xref:../tasks/capi-operator/basic_cluster_api_provider_installation.adoc[here]
+** https://github.com/kubernetes-sigs/cluster-api-provider-aws/[Infrastructure provider for AWS] 
+** https://github.com/rancher/cluster-api-provider-rke2[Bootstrap/Control Plane provider for RKE2] 
+* **clusterctl** CLI - see https://cluster-api.sigs.k8s.io/user/quick-start#install-clusterctl[install clusterctl from CAPI book] 
 
-Tab AWS Kubeadm::
+AWS Kubeadm::
 +
-- Rancher Manager cluster with Rancher Turtles installed - Cluster API Providers: you can find a guide on how to install a provider using the `CAPIProvider` resource [here](../../tasks/capi-operator/basic_cluster_api_provider_installation.md) - [Infrastructure provider for AWS](https://github.com/kubernetes-sigs/cluster-api-provider-aws/) - [Bootstrap/Control Plane provider for Kubeadm](https://github.com/kubernetes-sigs/cluster-api) - **clusterctl** CLI - see [install clusterctl from CAPI book](https://cluster-api.sigs.k8s.io/user/quick-start#install-clusterctl) 
+* Rancher Manager cluster with Rancher Turtles installed 
+* Cluster API Providers: you can find a guide on how to install a provider using the `CAPIProvider` resource xref:../tasks/capi-operator/basic_cluster_api_provider_installation.adoc[here]
+** https://github.com/kubernetes-sigs/cluster-api-provider-aws/[Infrastructure provider for AWS] 
+** https://github.com/kubernetes-sigs/cluster-api[Bootstrap/Control Plane provider for Kubeadm] 
+* **clusterctl** CLI - see https://cluster-api.sigs.k8s.io/user/quick-start#install-clusterctl[install clusterctl from CAPI book] 
 
-Tab Docker Kubeadm::
+Docker Kubeadm::
 +
-- Rancher Manager cluster with Rancher Turtles installed - Cluster API Providers: you can find a guide on how to install a provider using the `CAPIProvider` resource [here](../../tasks/capi-operator/basic_cluster_api_provider_installation.md) - [Infrastructure provider for Docker](https://github.com/kubernetes-sigs/cluster-api) - [Bootstrap/Control Plane provider for Kubeadm](https://github.com/kubernetes-sigs/cluster-api) - **clusterctl** CLI - see [install clusterctl from CAPI book](https://cluster-api.sigs.k8s.io/user/quick-start#install-clusterctl)
+* Rancher Manager cluster with Rancher Turtles installed 
+* Cluster API Providers: you can find a guide on how to install a provider using the `CAPIProvider` resource xref:../tasks/capi-operator/basic_cluster_api_provider_installation.adoc[here]
+** https://github.com/kubernetes-sigs/cluster-api[Infrastructure provider for Docker] 
+** https://github.com/kubernetes-sigs/cluster-api[Bootstrap/Control Plane provider for Kubeadm] 
+* **clusterctl** CLI - see https://cluster-api.sigs.k8s.io/user/quick-start#install-clusterctl[install clusterctl from CAPI book]
 ======
 
 == Create Your Cluster Definition
 
 [tabs]
 ======
-Tab AWS RKE2::
+AWS RKE2::
 +
-Before creating an AWS+RKE2 workload cluster, it is required to build an AMI for the RKE2 version that is going to be installed on the cluster. You can follow the steps in the [RKE2 image-builder README](https://github.com/rancher/cluster-api-provider-rke2/tree/main/image-builder#aws) to build the AMI. We recommend you refer to the CAPRKE2 repository where you can find a [samples folder](https://github.com/rancher/cluster-api-provider-rke2/tree/main/samples/aws) with different CAPA+CAPRKE2 cluster configurations that can be used to provision downstream clusters. The [internal folder](https://github.com/rancher/cluster-api-provider-rke2/tree/main/samples/aws/internal) contains cluster templates to deploy an RKE2 cluster on AWS using the internal cloud provider, and the [external folder](https://github.com/rancher/cluster-api-provider-rke2/tree/main/samples/aws/external) contains the cluster templates to deploy a cluster with the external cloud provider. We will use the `internal` one for this guide, however the same steps apply for `external`. To generate the YAML for the cluster, do the following: 1. Open a terminal and run the following: ```bash export CONTROL_PLANE_MACHINE_COUNT=3 export WORKER_MACHINE_COUNT=3 export RKE2_VERSION=v1.30.3+rke2r1 export AWS_NODE_MACHINE_TYPE=t3a.large export AWS_CONTROL_PLANE_MACHINE_TYPE=t3a.large export AWS_SSH_KEY_NAME="aws-ssh-key" export AWS_REGION="aws-region" export AWS_AMI_ID="ami-id" clusterctl generate cluster cluster1 \ --from https://github.com/rancher/cluster-api-provider-rke2/blob/main/samples/aws/internal/cluster-template.yaml \ > cluster1.yaml ``` 2. View **cluster1.yaml** and examine the resulting yaml file. You can make any changes you want as well. > The Cluster API quickstart guide contains more detail. Read the steps related to this section [here](https://cluster-api.sigs.k8s.io/user/quick-start.html#required-configuration-for-common-providers). 3. Create the cluster using kubectl ```bash kubectl create -f cluster1.yaml ``` 
+Before creating an AWS+RKE2 workload cluster, it is required to build an AMI for the RKE2 version that is going to be installed on the cluster. You can follow the steps in the https://github.com/rancher/cluster-api-provider-rke2/tree/main/image-builder#aws[RKE2 image-builder README] to build the AMI. 
++
+We recommend you refer to the CAPRKE2 repository where you can find a https://github.com/rancher/cluster-api-provider-rke2/tree/main/samples/aws[samples folder] with different CAPA+CAPRKE2 cluster configurations that can be used to provision downstream clusters. The https://github.com/rancher/cluster-api-provider-rke2/tree/main/samples/aws/internal[internal folder] contains cluster templates to deploy an RKE2 cluster on AWS using the internal cloud provider, and the https://github.com/rancher/cluster-api-provider-rke2/tree/main/samples/aws/external[external folder] contains the cluster templates to deploy a cluster with the external cloud provider. 
++
+We will use the `internal` one for this guide, however the same steps apply for `external`. 
++
+To generate the YAML for the cluster, do the following:
++
+. Open a terminal and run the following: 
++
+[source,bash]
+----
+export CONTROL_PLANE_MACHINE_COUNT=3
+export WORKER_MACHINE_COUNT=3
+export RKE2_VERSION=v1.26.0+rke2r1
+export AWS_NODE_MACHINE_TYPE=t3a.large
+export AWS_CONTROL_PLANE_MACHINE_TYPE=t3a.large
+export AWS_SSH_KEY_NAME="aws-ssh-key"
+export AWS_REGION="aws-region"
+export AWS_AMI_ID="ami-id"
 
-Tab AWS Kubeadm::
+clusterctl generate cluster cluster1 \
+--from https://github.com/rancher/cluster-api-provider-rke2/blob/main/samples/aws/internal/cluster-template.yaml \
+> cluster1.yaml
+----
 +
-To generate the YAML for the cluster, do the following: 1. Open a terminal and run the following: ```bash export KUBERNETES_VERSION=v1.30 export AWS_REGION=eu-west-2 export AWS_INSTANCE_TYPE=t3.medium clusterctl generate cluster cluster1 \ --from https://raw.githubusercontent.com/rancher-sandbox/rancher-turtles-fleet-example/templates/capa.yaml \ > cluster1.yaml ``` 2. View **cluster1.yaml** to ensure there are no tokens (i.e. SSH keys or cloud credentials). You can make any changes you want as well. > The Cluster API quickstart guide contains more detail. Read the steps related to this section [here](https://cluster-api.sigs.k8s.io/user/quick-start.html#required-configuration-for-common-providers). 3. Create the cluster using kubectl ```bash kubectl create -f cluster1.yaml ``` 
+. View **cluster1.yaml** and examine the resulting yaml file. You can make any changes you want as well.
++
+> The Cluster API quickstart guide contains more detail. Read the steps related to this section https://cluster-api.sigs.k8s.io/user/quick-start.html#required-configuration-for-common-providers[here].
 
-Tab Docker Kubeadm::
+. Create the cluster using kubectl
 +
-To generate the YAML for the cluster, do the following: 1. Open a terminal and run the following: ```bash export CONTROL_PLANE_MACHINE_COUNT=1 export WORKER_MACHINE_COUNT=1 export KUBERNETES_VERSION=v1.30.0 clusterctl generate cluster cluster1 \ --from https://raw.githubusercontent.com/rancher-sandbox/rancher-turtles-fleet-example/templates/docker-kubeadm.yaml \ > cluster1.yaml ``` 2. View **cluster1.yaml** to ensure there are no tokens. You can make any changes you want as well. > The Cluster API quickstart guide contains more detail. Read the steps related to this section [here](https://cluster-api.sigs.k8s.io/user/quick-start.html#required-configuration-for-common-providers). 3. Create the cluster using kubectl ```bash kubectl create -f cluster1.yaml ```
+[source,bash]
+----
+bash kubectl create -f cluster1.yaml
+----
+
+AWS Kubeadm::
++
+To generate the YAML for the cluster, do the following:
++
+. Open a terminal and run the following:
++
+[source,bash]
+----
+export KUBERNETES_VERSION=v1.28
+export AWS_REGION=eu-west-2
+export AWS_INSTANCE_TYPE=t3.medium
+
+clusterctl generate cluster cluster1 \
+--from https://raw.githubusercontent.com/rancher-sandbox/rancher-turtles-fleet-example/templates/capa.yaml \
+> cluster1.yaml
+----
++
+. View **cluster1.yaml** to ensure there are no tokens (i.e. SSH keys or cloud credentials). You can make any changes you want as well. 
++
+> The Cluster API quickstart guide contains more detail. Read the steps related to this section https://cluster-api.sigs.k8s.io/user/quick-start.html#required-configuration-for-common-providers[here]. 
+ 
+. Create the cluster using kubectl
++
+[source,bash]
+----
+ kubectl create -f cluster1.yaml
+----
+
+Docker Kubeadm::
++
+To generate the YAML for the cluster, do the following:
++
+. Open a terminal and run the following:
++
+[source,bash]
+----
+export CONTROL_PLANE_MACHINE_COUNT=1
+export WORKER_MACHINE_COUNT=1
+export KUBERNETES_VERSION=v1.26.4
+
+clusterctl generate cluster cluster1 \
+--from https://raw.githubusercontent.com/rancher-sandbox/rancher-turtles-fleet-example/templates/docker-kubeadm.yaml \
+> cluster1.yaml
+----
++
+. View **cluster1.yaml** to ensure there are no tokens. You can make any changes you want as well.
++
+> The Cluster API quickstart guide contains more detail. Read the steps related to this section https://cluster-api.sigs.k8s.io/user/quick-start.html#required-configuration-for-common-providers[here]. 
+
+. Create the cluster using kubectl
++
+[source,bash]
+----
+kubectl create -f cluster1.yaml 
+----
+
 ======
 
 [TIP]
 ====
 After your cluster is provisioned, you can check functionality of the workload cluster using `clusterctl`:
 
-[,bash]
+[source,bash]
 ----
 clusterctl describe cluster cluster1
 ----
@@ -66,14 +158,14 @@ To automatically import a CAPI cluster into Rancher Manager, there are 2 options
 
 Labeling a namespace:
 
-[,bash]
+[source,bash]
 ----
 kubectl label namespace default cluster-api.cattle.io/rancher-auto-import=true
 ----
 
 Labeling an individual cluster definition:
 
-[,bash]
+[source,bash]
 ----
 kubectl label cluster.cluster.x-k8s.io -n default cluster1 cluster-api.cattle.io/rancher-auto-import=true
 ----

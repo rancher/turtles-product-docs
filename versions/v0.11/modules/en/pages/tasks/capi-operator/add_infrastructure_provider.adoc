@@ -1,5 +1,4 @@
 = Installing AWS Infrastructure Provider using CAPIProvider resource
-:sidebar_position: 3
 
 This section describes how to install the AWS `InfrastructureProvider` via `CAPIProvider`, which is responsible for managing Cluster API AWS CRDs and the Cluster API AWS controller.
 
@@ -11,7 +10,7 @@ This section describes how to install the raw AWS `InfrastructureProvider`, whic
 
 _Example:_
 
-[,yaml]
+[source,yaml]
 ----
 ---
 apiVersion: v1
@@ -43,12 +42,11 @@ spec:
     syncPeriod: "5m"
 ----
 
-[discrete]
-=== Deleting providers
+== Deleting providers
 
 To remove the installed providers and all related Kubernetes objects just delete the following CRs:
 
-[,bash]
+[source,bash]
 ----
 kubectl delete coreprovider cluster-api
 kubectl delete infrastructureprovider aws

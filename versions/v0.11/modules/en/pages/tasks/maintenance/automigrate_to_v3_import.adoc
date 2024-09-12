@@ -3,7 +3,7 @@
 
 [CAUTION]
 ====
-Please read the step described in link:./import_controller_upgrade.adoc#context[import controller upgrade], and consider how you want to perform your migration. Feature described here will automatically migrate all old clusters in one go, replacing them with v3 cluster objects.
+Please read the step described in xref:./import_controller_upgrade.adoc#context[import controller upgrade], and consider how you want to perform your migration. Feature described here will automatically migrate all old clusters in one go, replacing them with v3 cluster objects.
 ====
 
 

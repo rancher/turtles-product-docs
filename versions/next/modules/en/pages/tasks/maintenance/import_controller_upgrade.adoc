@@ -19,7 +19,7 @@ clusters.management.cattle.io
 
 Which you may also see referred to as `v3` cluster.
 
-Migrating from one controller to the other should be transparent but you will need to prepare your already imported clusters for migration to prevent the new controller from duplicating resources. To make the migration procedure even easier, you can use the provided <<using-the-migration-script---per-namespace,migration script>> which will let you specify the namespace where your imported clusters exist and will migrate them automatically. If you prefer, you can <<manually-editing-resources---per-cluster,apply changes to resources manually>> per cluster via kubectl.
+Migrating from one controller to the other should be transparent but you will need to prepare your already imported clusters for migration to prevent the new controller from duplicating resources. To make the migration procedure even easier, you can use the provided <<_using_the_migration_script_per_namespace,migration script>> which will let you specify the namespace where your imported clusters exist and will migrate them automatically. If you prefer, you can <<_manually_editing_resources_per_cluster,apply changes to resources manually>> per cluster via kubectl.
 
 [NOTE]
 ====
@@ -32,9 +32,9 @@ Both cluster resources previously described are required to represent any Ranche
 This method provides an automated process to migrate clusters in batches per namespace. To prepare your imported CAPI clusters for migration via https://github.com/rancher/turtles/tree/main/scripts/import-controller-migration.sh[migration script], you need to follow the steps below:
 
 . Select the namespace where your imported clusters are deployed.
-. Pass the namespace as argument to the migration script: this will prepare *ALL* CAPI clusters in the namespace for migration. If you want to migrate each cluster independently, we recommend following the <<manually-editing-resources---per-cluster,manual procedure>>.
+. Pass the namespace as argument to the migration script: this will prepare *ALL* CAPI clusters in the namespace for migration. If you want to migrate each cluster independently, we recommend following the <<_manually_editing_resources_per_cluster,manual procedure>>.
 +
-[,bash]
+[source,bash]
 ----
 ./import_controller_migration.sh <cluster-ns>
 ----
@@ -50,7 +50,7 @@ This method provides an automated process to migrate clusters in batches per nam
 
 [CAUTION]
 ====
-Note that manually editing Kubernetes resources may cause unexpected failures due to wrong or missing values. If you are not confident with `kubectl` and interacting with the Kubernetes API and its resources, we recommend opting for the <<using-the-migration-script---per-namespace,scripted migration>>.
+Note that manually editing Kubernetes resources may cause unexpected failures due to wrong or missing values. If you are not confident with `kubectl` and interacting with the Kubernetes API and its resources, we recommend opting for the <<_using_the_migration_script_per_namespace,scripted migration>>.
 ====
 
 
@@ -59,14 +59,14 @@ The requirement for migrating imported clusters is setting the labels used by th
 . Select the cluster/s you would like to prepare for migration. We'll use `cluster1` as an example for this guide.
  ** We can list the CAPI cluster resource `clusters.cluster.x-k8s.io`. We need to provide the corresponding namespace as this is a namespaced resource.
 +
-[,bash]
+[source,bash]
 ----
  kubectl get clusters.cluster.x-k8s.io -n capi-ns
 ----
 +
 In our example we can see `cluster1`:
 +
-[,bash]
+[source,bash]
 ----
  NAMESPACE         NAME             PHASE         AGE    VERSION
  capi-ns         cluster1         Provisioned     6d1h
@@ -74,21 +74,21 @@ In our example we can see `cluster1`:
 
  ** This CAPI cluster, when imported to Rancher, becomes linked to a Rancher cluster resource, represented by both `clusters.provisioning.cattle.io` and `clusters.management.cattle.io`. For now we're interested in `clusters.provisioning.cattle.io` or `v1` cluster.
 +
-[,bash]
+[source,bash]
 ----
  kubectl get clusters.provisioning.cattle.io -n capi-ns
 ----
 +
 And we get the Rancher cluster that Turtles generated to represent the CAPI cluster. You can see that the `-capi` suffix is added to the resource name, which effectively allows us to filter CAPI clusters from all Rancher clusters (which may be provisioned using other mechanisms).
 +
-[,bash]
+[source,bash]
 ----
  NAME               READY   KUBECONFIG
  cluster1-capi
 ----
 . `v3` cluster resources are assigned a randomly generated name and we need to find the resource that is linked to the `v1` cluster we retrieved in the previous step. We will do this by exploring the values of the resource, specifically `status.clusterName`.
 +
-[,bash]
+[source,bash]
 ----
 kubectl get clusters.provisioning.cattle.io -n capi-ns cluster1-capi -o jsonpath='{.status.clusterName}'
 ----
@@ -97,7 +97,7 @@ The resource we get is `c-m-xyz1a2b3`, which is the one we'll be labelling.
 
 . Now that we know what resource to label, we can focus on what labels are required. These labels are used by the new controller to watch cluster resources.
 +
-[,bash]
+[source,bash]
 ----
 cluster-api.cattle.io/capi-cluster-owner        # name of the cluster
 cluster-api.cattle.io/capi-cluster-owner-ns     # name of the namespace where the cluster lives
@@ -111,7 +111,7 @@ Note that the `-capi` suffix must be stripped when assigning cluster name to `cl
 
  a. Edit resource and apply labels.
 +
-[,bash]
+[source,bash]
 ----
  kubectl label clusters.management.cattle.io c-m-xyz1a2b3 cluster-api.cattle.io/capi-cluster-owner=cluster1
  kubectl label clusters.management.cattle.io c-m-xyz1a2b3 cluster-api.cattle.io/capi-cluster-owner-ns=capi-ns
@@ -119,14 +119,14 @@ Note that the `-capi` suffix must be stripped when assigning cluster name to `cl
 +
 b. You can now validate that the changes have been successfully applied.
 +
-[,bash]
+[source,bash]
 ----
  kubectl get clusters.management.cattle.io c-m-xyz1a2b3 -o jsonpath='{.metadata.labels}'
 ----
 
 . After the `clusters.management.cattle.io` `v3` resource has been updated, it is very important to mark the `clusters.provisioning.cattle.io` `v1` resource as migrated, so the controller behaves as expected. We do this by adding the annotation `cluster-api.cattle.io/migrated`
 +
-[,bash]
+[source,bash]
 ----
 kubectl annotate clusters.provisioning.cattle.io -n capi-ns cluster1-capi cluster-api.cattle.io/migrated=true
 ----

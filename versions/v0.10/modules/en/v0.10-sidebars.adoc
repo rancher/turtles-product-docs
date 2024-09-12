@@ -23,9 +23,6 @@
 *** xref:reference-guides/providers/certified.adoc[Certified CAPI Providers]
 *** xref:reference-guides/providers/howto.adoc[Create & import a cluster using CAPI providers]
 *** xref:reference-guides/providers/addon-provider-fleet.adoc[Cluster API Addon Provider Fleet]
-** Test suite
-*** xref:reference-guides/test-suite/intro.adoc[Introduction]
-*** xref:reference-guides/test-suite/usage.adoc[Test suite guide]
 * Tasks
 ** xref:tasks/intro.adoc[Introduction]
 ** Cluster API Operator
@@ -37,9 +34,6 @@
 *** xref:tasks/maintenance/early_adopter_upgrade.adoc[Upgrade Instructions for Early Adopters]
 *** xref:tasks/maintenance/import_controller_upgrade.adoc[Upgrade Turtles import controller]
 *** xref:tasks/maintenance/automigrate_to_v3_import.adoc[Auto-migration to v3 cluster import]
-** Provider Certification
-*** xref:tasks/provider-certification/intro.adoc[What is a Certified Provider?]
-*** xref:tasks/provider-certification/process.adoc[Provider Certification Guide]
 * Developer Guide
 ** xref:developer-guide/intro.adoc[Introduction]
 ** xref:developer-guide/install_capi_operator.adoc[Installing Cluster API Operator]
