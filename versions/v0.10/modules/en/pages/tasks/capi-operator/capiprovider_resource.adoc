@@ -20,7 +20,7 @@ To use the `CAPIProvider` resource:
 
 Here is an example `CAPIProvider` manifest:
 
-[,yaml]
+[source,yaml]
 ----
 apiVersion: turtles-capi.cattle.io/v1alpha1
 kind: CAPIProvider

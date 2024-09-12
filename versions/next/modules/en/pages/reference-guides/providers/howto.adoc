@@ -138,7 +138,7 @@ kubectl create -f cluster1.yaml
 ====
 After your cluster is provisioned, you can check functionality of the workload cluster using `clusterctl`:
 
-[,bash]
+[source,bash]
 ----
 clusterctl describe cluster cluster1
 ----
@@ -156,14 +156,14 @@ To automatically import a CAPI cluster into Rancher Manager, there are 2 options
 
 Labeling a namespace:
 
-[,bash]
+[source,bash]
 ----
 kubectl label namespace default cluster-api.cattle.io/rancher-auto-import=true
 ----
 
 Labeling an individual cluster definition:
 
-[,bash]
+[source,bash]
 ----
 kubectl label cluster.cluster.x-k8s.io -n default cluster1 cluster-api.cattle.io/rancher-auto-import=true
 ----

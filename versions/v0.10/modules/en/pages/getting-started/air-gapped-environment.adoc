@@ -24,7 +24,7 @@ As an admin, I need to fetch the vSphere provider (CAPV) components from within 
 
 In this example, there is a ConfigMap in the `capv-system` namespace that defines the components and metadata of the provider. It can be created manually or by running the following commands:
 
-[,bash]
+[source,bash]
 ----
 # Get the file contents from the GitHub release
 curl -L https://github.com/kubernetes-sigs/cluster-api-provider-vsphere/releases/download/v1.8.5/infrastructure-components.yaml -o components.yaml
@@ -36,7 +36,7 @@ kubectl create configmap v1.8.5 --namespace=capv-system --from-file=components=c
 
 This command example would need to be adapted to the provider and version you want to use. The resulting config map will look similar to the example below:
 
-[,yaml]
+[source,yaml]
 ----
 apiVersion: v1
 kind: ConfigMap
@@ -56,7 +56,7 @@ A *CAPIProvider* resource will need to be created to represent the vSphere infra
 
 Since the provider's version is marked as `v1.8.5`, the operator uses the components information from the ConfigMap with matching label to install the vSphere provider.
 
-[,yaml]
+[source,yaml]
 ----
 apiVersion: turtles-capi.cattle.io/v1alpha1
 kind: CAPIProvider
@@ -93,21 +93,21 @@ For example, you have two files: `components.yaml` and `metadata.yaml`. To creat
 
 . Archive components.yaml using `gzip` cli tool
 
-[,sh]
+[source,sh]
 ----
 gzip -c components.yaml > components.gz
 ----
 
 . Create a ConfigMap manifest from the archived data
 
-[,sh]
+[source,sh]
 ----
 kubectl create configmap v1.8.5 --namespace=capv-system --from-file=components=components.gz --from-file=metadata=metadata.yaml --dry-run=client -o yaml > configmap.yaml
 ----
 
 . Edit the file by adding "provider.cluster.x-k8s.io/compressed: true" annotation
 
-[,sh]
+[source,sh]
 ----
 yq eval -i '.metadata.annotations += {"provider.cluster.x-k8s.io/compressed": "true"}' configmap.yaml
 ----
@@ -116,14 +116,14 @@ NOTE: without this annotation operator won't be able to determine if the data is
 
 . Add labels that will be used to match the ConfigMap in `fetchConfig` section of the provider
 
-[,sh]
+[source,sh]
 ----
 yq eval -i '.metadata.labels += {"my-label": "label-value"}' configmap.yaml
 ----
 
 . Create a ConfigMap in your kubernetes cluster using kubectl
 
-[,sh]
+[source,sh]
 ----
 kubectl create -f configmap.yaml
 ----

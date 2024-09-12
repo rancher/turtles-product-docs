@@ -15,7 +15,7 @@ To generate the YAML for the cluster, do the following (assuming the Docker infr
 
 . Open a terminal and run the following:
 
-[,bash]
+[source,bash]
 ----
 export CONTROL_PLANE_MACHINE_COUNT=1
 export WORKER_MACHINE_COUNT=1
@@ -34,7 +34,7 @@ ____
 
 . Create the cluster using kubectl
 
-[,bash]
+[source,bash]
 ----
 kubectl create -f cluster1.yaml
 ----
@@ -48,14 +48,14 @@ To automatically import a CAPI cluster into Rancher Manager, there are 2 options
 
 Labeling a namespace:
 
-[,bash]
+[source,bash]
 ----
 kubectl label namespace default cluster-api.cattle.io/rancher-auto-import=true
 ----
 
 Labeling an individual cluster definition:
 
-[,bash]
+[source,bash]
 ----
 kubectl label cluster.cluster.x-k8s.io cluster1 cluster-api.cattle.io/rancher-auto-import=true
 ----

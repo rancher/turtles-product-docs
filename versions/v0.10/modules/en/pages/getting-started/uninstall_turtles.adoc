@@ -16,7 +16,7 @@ To simplify uninstalling Rancher Turtles (via Rancher Manager or helm command), 
 
 To uninstall the Rancher Turtles Extension use the following helm command:
 
-[,bash]
+[source,bash]
 ----
 helm uninstall -n rancher-turtles-system rancher-turtles --cascade foreground --wait
 ----
@@ -42,7 +42,7 @@ spec:
 `
 . Use `kubectl` to apply the `feature.yaml` file to the cluster:
 +
-[,bash]
+[source,bash]
 ----
 kubectl apply -f feature.yaml
 ----

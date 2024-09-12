@@ -139,7 +139,7 @@ sure of your approach, you can open a https://github.blog/2019-02-14-introducing
 . Push your changes to the branch on your fork and submit a pull request to the original repository
 against the `main` branch.
 
-[,bash]
+[source,bash]
 ----
 git push <remote-name> <feature-name>
 ----
@@ -180,7 +180,7 @@ to note what you discovered and how you solved it.
 
 The format can be described more formally as follows:
 
-[,text]
+[source,text]
 ----
 <short title for what changed>
 <BLANK LINE>

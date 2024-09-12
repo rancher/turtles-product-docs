@@ -31,7 +31,7 @@ To generate the YAML for the cluster do the following (assuming the Docker infra
 
 . Open a terminal and run the following:
 
-[,bash]
+[source,bash]
 ----
 export CONTROL_PLANE_MACHINE_COUNT=1
 export WORKER_MACHINE_COUNT=1
@@ -57,7 +57,7 @@ The Cluster API quickstart guide contains more detail. Read the steps related to
 . Move the *cluster1.yaml* file you generated in the last section to the *clusters* folder.
 . Create a file called *fleet.yaml* in the root and add the following contents
 
-[,yaml]
+[source,yaml]
 ----
 namespace: default
 ----
@@ -86,7 +86,7 @@ This walkthrough will use the first option of importing all clusters in a namesp
 . Open a terminal
 . Label the default namespace in your Rancher Manager cluster:
 
-[,bash]
+[source,bash]
 ----
 kubectl label namespace default cluster-api.cattle.io/rancher-auto-import=true
 ----
@@ -124,7 +124,7 @@ image:gh_clone.png[git clone url]
 . Create a new file called *repo.yaml*
 . Add the following contents to the new file:
 
-[,yaml]
+[source,yaml]
 ----
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
@@ -139,7 +139,7 @@ spec:
 
 . Apply the file to the Rancher Manager cluster using *kubectl*:
 
-[,bash]
+[source,bash]
 ----
 kubectl apply -f repo.yaml
 ----

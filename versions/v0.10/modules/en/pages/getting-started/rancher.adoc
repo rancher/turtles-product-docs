@@ -15,7 +15,7 @@ Make sure to follow one of the official https://ranchermanager.docs.rancher.com/
 
 Here's a minimal configuration example of a command to install `Rancher`:
 
-[,bash]
+[source,bash]
 ----
 helm install rancher rancher-stable/rancher
     --namespace cattle-system

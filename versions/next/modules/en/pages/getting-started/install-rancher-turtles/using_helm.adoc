@@ -37,7 +37,7 @@ If uninstalling, you can refer to xref:../getting-started/uninstall_turtles.adoc
 
 The `rancher-turtles` chart is available in https://rancher.github.io/turtles and this Helm repository must be added before proceeding with the installation:
 
-[,bash]
+[source,bash]
 ----
 helm repo add turtles https://rancher.github.io/turtles
 helm repo update
@@ -45,7 +45,7 @@ helm repo update
 
 As mentioned before, installing Rancher Turtles requires the https://github.com/kubernetes-sigs/cluster-api-operator[Cluster API Operator] and the Helm chart can handle its installation automatically with a minimum set of flags:
 
-[,bash]
+[source,bash]
 ----
 helm install rancher-turtles turtles/rancher-turtles --version v0.11.0 \
     -n rancher-turtles-system \
@@ -70,7 +70,7 @@ This is the basic, recommended configuration, which manages the creation of a se
 
 If you need to override the default behavior and use an existing secret (or add custom environment variables), you can pass the secret name helm flag. In this case, as a user, you are in charge of managing the secret creation and its content, including the minimum required features: `CLUSTER_TOPOLOGY`, `EXP_CLUSTER_RESOURCE_SET` and `EXP_MACHINE_POOL` enabled.
 
-[,bash]
+[source,bash]
 ----
 helm install ...
     # Passing secret name and namespace for additional environment variables

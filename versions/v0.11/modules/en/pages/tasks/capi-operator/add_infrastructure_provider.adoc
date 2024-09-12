@@ -10,7 +10,7 @@ This section describes how to install the raw AWS `InfrastructureProvider`, whic
 
 _Example:_
 
-[,yaml]
+[source,yaml]
 ----
 ---
 apiVersion: v1
@@ -46,7 +46,7 @@ spec:
 
 To remove the installed providers and all related Kubernetes objects just delete the following CRs:
 
-[,bash]
+[source,bash]
 ----
 kubectl delete coreprovider cluster-api
 kubectl delete infrastructureprovider aws
