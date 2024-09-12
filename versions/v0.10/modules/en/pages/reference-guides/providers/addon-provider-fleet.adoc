@@ -1,7 +1,6 @@
 = Cluster API Addon Provider Fleet
-:sidebar_position: 2
 
-== Owerview
+== Overview
 
 Cluster API Add-on Provider for `Fleet` (CAAPF) is a Cluster API (CAPI) provider that provides integration with https://fleet.rancher.io/[`Fleet`] to enable the easy deployment of applications to a CAPI provisioned cluster.
 

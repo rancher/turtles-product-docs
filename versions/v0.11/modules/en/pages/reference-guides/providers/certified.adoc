@@ -1,5 +1,4 @@
 = Certified CAPI Providers
-:sidebar_position: 1
 
 Remember that most Cluster API Providers are upstream projects maintained by the Kubernetes open-source community.
 
@@ -58,5 +57,6 @@ This is a list of the officially certified CAPI Providers by Turtles. These prov
 
 This is a list of providers that are in an advanced state of development and will soon become certified.
 
-| Platform        | Code Name                      | Provider Type            | Docs                     |
-|------------|----------------------|------------------|------------------|
+|===
+| Platform | Code Name | Provider Type | Docs
+|===
