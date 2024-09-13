@@ -32,14 +32,18 @@ Remember that, if you use a different name for the installation or a different n
 Once uninstalled, Rancher's `embedded-cluster-api` feature must be re-enabled:
 
 . Create a `feature.yaml` file, with `embedded-cluster-api` set to true:
-`yaml title="feature.yaml"
++
+.feature.yaml
+[source,yaml]
+----
 apiVersion: management.cattle.io/v3
 kind: Feature
 metadata:
   name: embedded-cluster-api
 spec:
   value: true
-`
+----
++
 . Use `kubectl` to apply the `feature.yaml` file to the cluster:
 +
 [source,bash]

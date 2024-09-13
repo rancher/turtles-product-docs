@@ -92,37 +92,37 @@ There is a limit on the https://kubernetes.io/docs/concepts/configuration/config
 For example, you have two files: `components.yaml` and `metadata.yaml`. To create a working config map you need:
 
 . Archive components.yaml using `gzip` cli tool
-
++
 [source,sh]
 ----
 gzip -c components.yaml > components.gz
 ----
-
++
 . Create a ConfigMap manifest from the archived data
-
++
 [source,sh]
 ----
 kubectl create configmap v1.8.5 --namespace=capv-system --from-file=components=components.gz --from-file=metadata=metadata.yaml --dry-run=client -o yaml > configmap.yaml
 ----
-
++
 . Edit the file by adding "provider.cluster.x-k8s.io/compressed: true" annotation
-
++
 [source,sh]
 ----
 yq eval -i '.metadata.annotations += {"provider.cluster.x-k8s.io/compressed": "true"}' configmap.yaml
 ----
-
++
 NOTE: without this annotation operator won't be able to determine if the data is compressed or not.
 
 . Add labels that will be used to match the ConfigMap in `fetchConfig` section of the provider
-
++
 [source,sh]
 ----
 yq eval -i '.metadata.labels += {"my-label": "label-value"}' configmap.yaml
 ----
-
++
 . Create a ConfigMap in your kubernetes cluster using kubectl
-
++
 [source,sh]
 ----
 kubectl create -f configmap.yaml

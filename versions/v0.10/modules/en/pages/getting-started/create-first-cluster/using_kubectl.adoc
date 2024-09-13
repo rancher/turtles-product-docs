@@ -14,26 +14,26 @@ This section will guide you through creating your first cluster and importing it
 To generate the YAML for the cluster, do the following (assuming the Docker infrastructure provider is being used):
 
 . Open a terminal and run the following:
-
++
 [source,bash]
 ----
 export CONTROL_PLANE_MACHINE_COUNT=1
 export WORKER_MACHINE_COUNT=1
-export KUBERNETES_VERSION=v1.30.0
+export KUBERNETES_VERSION=v1.26.4
 
 clusterctl generate cluster cluster1 \
 --from https://raw.githubusercontent.com/rancher-sandbox/rancher-turtles-fleet-example/templates/docker-rke2.yaml \
 > cluster1.yaml
 ----
-
++
 . View *cluster1.yaml* to ensure there are no tokens. You can make any changes you want as well.
-
++
 ____
 The Cluster API quickstart guide contains more detail. Read the steps related to this section https://cluster-api.sigs.k8s.io/user/quick-start.html#required-configuration-for-common-providers[here].
 ____
-
++
 . Create the cluster using kubectl
-
++
 [source,bash]
 ----
 kubectl create -f cluster1.yaml

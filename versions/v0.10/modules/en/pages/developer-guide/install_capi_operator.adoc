@@ -44,10 +44,10 @@ helm install cert-manager jetstack/cert-manager --namespace cert-manager --creat
 [source,bash]
 ----
 helm install capi-operator capi-operator/cluster-api-operator
- --create-namespace -n capi-operator-system
- --set infrastructure=docker:v1.7.3
- --set core=cluster-api:v1.7.3
- --timeout 90s --wait # Core Cluster API with kubeadm bootstrap and control plane providers will also be installed
+	--create-namespace -n capi-operator-system
+	--set infrastructure=docker:v1.4.6
+	--set core=cluster-api:v1.4.6
+	--timeout 90s --wait # Core Cluster API with kubeadm bootstrap and control plane providers will also be installed
 ----
 
 [NOTE]
@@ -62,8 +62,8 @@ To provide additional environment variables, enable feature gates, or supply clo
 ----
 helm install capi-operator capi-operator/cluster-api-operator
 	--create-namespace -n capi-operator-system
-	--set infrastructure=docker:v1.7.3
-	--set core=cluster-api:v1.7.3
+	--set infrastructure=docker:v1.4.6
+	--set core=cluster-api:v1.4.6
 	--timeout 90s
 	--secret-name <secret_name>
 	--wait
@@ -120,7 +120,7 @@ and then it can be installed into the `rancher-turtles-system` namespace with:
 
 [source,bash]
 ----
-helm install rancher-turtles turtles/rancher-turtles --version v0.11.0
+helm install rancher-turtles turtles/rancher-turtles --version v0.10.0
     -n rancher-turtles-system
     --set cluster-api-operator.enabled=false
     --set cluster-api-operator.cluster-api.enabled=false

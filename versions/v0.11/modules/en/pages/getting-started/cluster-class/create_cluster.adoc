@@ -25,6 +25,7 @@ There are 2 options to provide the configuration. The first is using the Rancher
 
 === Import ClusterClass Definitions
 
+[discrete]
 ==== Using the Rancher Manager UI
 
 . Go to Rancher Manager
@@ -48,7 +49,7 @@ There are 2 options to provide the configuration. The first is using the Rancher
 . Get the *HTTPS* clone URL from your git repo
 . Create a new file called *repo.yaml*
 . Add the following contents to the new file:
-
++
 [source,yaml]
 ----
 apiVersion: fleet.cattle.io/v1alpha1
@@ -63,14 +64,14 @@ spec:
     - /classes
   targets: []
 ----
-
++
 . Apply the file to the Rancher Manager cluster using *kubectl*:
-
++
 [source,bash]
 ----
 kubectl apply -f repo.yaml
 ----
-
++
 . Go to Rancher Manager
 . Select *Continuos Delivery* from the side bar
 . Select *fleet-local* as the namespace from the top right
@@ -84,6 +85,7 @@ kubectl apply -f repo.yaml
 
 Now the classes have been imported its possible to use them with cluster definitions.
 
+[discrete]
 ==== Using the Rancher Manager UI
 
 . Go to Rancher Manager
@@ -109,7 +111,7 @@ Now the classes have been imported its possible to use them with cluster definit
 . Get the *HTTPS* clone URL from your git repo
 . Create a new file called *repo.yaml*
 . Add the following contents to the new file:
-
++
 [source,yaml]
 ----
 apiVersion: fleet.cattle.io/v1alpha1
@@ -124,14 +126,14 @@ spec:
     - /clusters
   targets: []
 ----
-
++
 . Apply the file to the Rancher Manager cluster using *kubectl*:
-
++
 [source,bash]
 ----
 kubectl apply -f repo.yaml
 ----
-
++
 . Go to Rancher Manager
 . Select *Continuos Delivery* from the side bar
 . Select *fleet-local* as the namespace from the top right

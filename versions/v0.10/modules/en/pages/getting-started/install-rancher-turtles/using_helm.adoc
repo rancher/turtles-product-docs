@@ -31,8 +31,7 @@ If uninstalling, you can refer to xref:../getting-started/uninstall_turtles.adoc
 ====
 
 
-[discrete]
-=== Install Rancher Turtles with `Cluster API Operator` as a Helm dependency
+== Install Rancher Turtles with `Cluster API Operator` as a Helm dependency
 
 The `rancher-turtles` chart is available in https://rancher.github.io/turtles and this Helm repository must be added before proceeding with the installation:
 
@@ -46,7 +45,7 @@ As mentioned before, installing Rancher Turtles requires the https://github.com/
 
 [source,bash]
 ----
-helm install rancher-turtles turtles/rancher-turtles --version v0.11.0 \
+helm install rancher-turtles turtles/rancher-turtles --version v0.10.0 \
     -n rancher-turtles-system \
     --dependency-update \
     --create-namespace --wait \
@@ -78,7 +77,9 @@ helm install ...
 
 The following is an example of a user-managed secret `cluster-api-operator.cluster-api.configSecret.name=variables` with `CLUSTER_TOPOLOGY`, `EXP_CLUSTER_RESOURCE_SET` and `EXP_MACHINE_POOL` feature flags set and an extra custom variable:
 
-`yaml title="secret.yaml"
+.secret.yaml
+[source, yaml]
+----
 apiVersion: v1
 kind: Secret
 metadata:
@@ -90,7 +91,7 @@ stringData:
   EXP_CLUSTER_RESOURCE_SET: "true"
   EXP_MACHINE_POOL: "true"
   CUSTOM_ENV_VAR: "false"
-`
+----
 
 [IMPORTANT]
 ====
