@@ -1,5 +1,4 @@
 = Create & import your first cluster using Fleet
-:sidebar_position: 3
 
 This section will guide you through creating your first cluster and importing it into Rancher Manager using a GitOps workflow with Fleet.
 
@@ -30,7 +29,7 @@ This guide does not use ClusterClass. Templates that use ClusterClass will requi
 To generate the YAML for the cluster do the following (assuming the Docker infrastructure provider is being used):
 
 . Open a terminal and run the following:
-
++
 [source,bash]
 ----
 export CONTROL_PLANE_MACHINE_COUNT=1
@@ -41,7 +40,7 @@ clusterctl generate cluster cluster1 \
 --from https://raw.githubusercontent.com/rancher-sandbox/rancher-turtles-fleet-example/templates/docker-rke2.yaml \
 > cluster1.yaml
 ----
-
++
 . View *cluster1.yaml* to ensure there are no tokens. You can make any changes you want as well.
 
 [TIP]
@@ -56,12 +55,12 @@ The Cluster API quickstart guide contains more detail. Read the steps related to
 . Create a new folder called *clusters*
 . Move the *cluster1.yaml* file you generated in the last section to the *clusters* folder.
 . Create a file called *fleet.yaml* in the root and add the following contents
-
++
 [source,yaml]
 ----
 namespace: default
 ----
-
++
 . Commit the changes
 
 [NOTE]
@@ -85,7 +84,7 @@ This walkthrough will use the first option of importing all clusters in a namesp
 
 . Open a terminal
 . Label the default namespace in your Rancher Manager cluster:
-
++
 [source,bash]
 ----
 kubectl label namespace default cluster-api.cattle.io/rancher-auto-import=true
@@ -123,7 +122,7 @@ image:gh_clone.png[git clone url]
 . Get the *HTTPS* clone URL from your git repo
 . Create a new file called *repo.yaml*
 . Add the following contents to the new file:
-
++
 [source,yaml]
 ----
 apiVersion: fleet.cattle.io/v1alpha1
@@ -136,14 +135,14 @@ spec:
   repo: <https://github.com/rancher-sandbox/rancher-turtles-fleet-example.git>
   targets: []
 ----
-
++
 . Apply the file to the Rancher Manager cluster using *kubectl*:
-
++
 [source,bash]
 ----
 kubectl apply -f repo.yaml
 ----
-
++
 . Go to Rancher Manager
 . Select *Continuos Delivery* from the side bar
 . Select *fleet-local* as the namespace from the top right
