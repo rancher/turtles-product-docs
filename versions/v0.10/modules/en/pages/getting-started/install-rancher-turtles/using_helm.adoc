@@ -45,7 +45,7 @@ As mentioned before, installing Rancher Turtles requires the https://github.com/
 
 [source,bash]
 ----
-helm install rancher-turtles turtles/rancher-turtles --version v0.11.0 \
+helm install rancher-turtles turtles/rancher-turtles --version v0.10.0 \
     -n rancher-turtles-system \
     --dependency-update \
     --create-namespace --wait \
