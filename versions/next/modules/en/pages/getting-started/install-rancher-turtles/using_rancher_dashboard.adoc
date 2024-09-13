@@ -1,5 +1,5 @@
 = Via Rancher Dashboard
-:sidebar_position: 4
+
 
 This is the recommended option for installing Rancher Turtles.
 
@@ -30,8 +30,7 @@ If uninstalling, you can refer to xref:../getting-started/uninstall_turtles.adoc
 ====
 
 
-[discrete]
-=== Installation
+== Installation
 
 * From your browser, access Rancher Manager and explore the *local* cluster.
 * Using the left navigation panel, go to `Apps` \-> `Repositories`.
