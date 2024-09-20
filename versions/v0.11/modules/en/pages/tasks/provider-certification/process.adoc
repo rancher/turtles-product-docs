@@ -1,7 +1,7 @@
 = Provider Certification Guide
 :sidebar_position: 1
 
-The process of certification is based on verifying Rancher Turtles integration with CAPI providers. To simplify this task, we prepared a generic test that validates the provisioning and importing of a downstream CAPI cluster.
+The process of certification is based on verifying {product_name} integration with CAPI providers. To simplify this task, we prepared a generic test that validates the provisioning and importing of a downstream CAPI cluster.
 
 [TIP]
 ====
@@ -32,6 +32,6 @@ Next, we recommend you read the xref:../../reference-guides/test-suite/usage.ado
 
 == Request for certification
 
-Integrating with Turtles' test suite and running checks on your provider of interest is enough to validate that it is compatible with Rancher Turtles. As it is not feasible for us to continuously test every CAPI provider, this certification workflow will allow you as a user to verify the expected functionality. However, as we are not actively testing newer iterations of the provider (with newer versions of Turtles), the support and guarantee for the given provider is limited, and you will be responsible for validating future releases.
+Integrating with Turtles' test suite and running checks on your provider of interest is enough to validate that it is compatible with {product_name}. As it is not feasible for us to continuously test every CAPI provider, this certification workflow will allow you as a user to verify the expected functionality. However, as we are not actively testing newer iterations of the provider (with newer versions of Turtles), the support and guarantee for the given provider is limited, and you will be responsible for validating future releases.
 
 If, after successfully running checks on your provider, you would like to request it be added to the table of xref:../../reference-guides/providers/certified.adoc[Certified Providers], hence being added to the project's periodic E2E suite, you can request so via GitHub issue, using the https://github.com/rancher/turtles/issues/new/choose[Request for Certification template]. The proposal will be studied by the community and we will decide on the feasibility of adding the provider to the certification matrix.

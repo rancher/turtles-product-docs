@@ -3,7 +3,7 @@
 
 == Installing Rancher
 
-_If you're already running Rancher, you can skip this section and jump to xref:./install-rancher-turtles/using_rancher_dashboard.adoc[Install Rancher Turtles]._
+_If you're already running Rancher, you can skip this section and jump to xref:./install-rancher-turtles/using_rancher_dashboard.adoc[Install {product_name}]._
 
 Helm is the recommended way to install `Rancher` in an existing or new Kubernetes cluster.
 
@@ -25,6 +25,6 @@ helm install rancher rancher-stable/rancher
     --wait
 ----
 
-Replace `<rancher-hostname>` with the actual hostname of your `Rancher` server and use the `--version` option to specify the version of `Rancher` you want to install. In this case, use the xref:../index.adoc#_prerequisites[recommended] `Rancher` version for `Rancher Turtles`.
+Replace `<rancher-hostname>` with the actual hostname of your `Rancher` server and use the `--version` option to specify the version of `Rancher` you want to install. In this case, use the xref:../index.adoc#_prerequisites[recommended] `Rancher` version for `{product_name}`.
 
-You are now ready to install and use Rancher Turtles! 🎉
+You are now ready to install and use {product_name}! 🎉

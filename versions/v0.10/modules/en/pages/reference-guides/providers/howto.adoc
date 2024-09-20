@@ -12,7 +12,7 @@ Keep in mind that most Cluster API Providers are upstream projects maintained by
 ======
 AWS RKE2::
 +
-* Rancher Manager cluster with Rancher Turtles installed 
+* Rancher Manager cluster with {product_name} installed 
 * Cluster API Providers: you can find a guide on how to install a provider using the `CAPIProvider` resource xref:../tasks/capi-operator/basic_cluster_api_provider_installation.adoc[here]
 ** https://github.com/kubernetes-sigs/cluster-api-provider-aws/[Infrastructure provider for AWS] 
 ** https://github.com/rancher/cluster-api-provider-rke2[Bootstrap/Control Plane provider for RKE2] 
@@ -20,7 +20,7 @@ AWS RKE2::
 
 AWS Kubeadm::
 +
-* Rancher Manager cluster with Rancher Turtles installed 
+* Rancher Manager cluster with {product_name} installed 
 * Cluster API Providers: you can find a guide on how to install a provider using the `CAPIProvider` resource xref:../tasks/capi-operator/basic_cluster_api_provider_installation.adoc[here]
 ** https://github.com/kubernetes-sigs/cluster-api-provider-aws/[Infrastructure provider for AWS] 
 ** https://github.com/kubernetes-sigs/cluster-api[Bootstrap/Control Plane provider for Kubeadm] 
@@ -28,7 +28,7 @@ AWS Kubeadm::
 
 Docker Kubeadm::
 +
-* Rancher Manager cluster with Rancher Turtles installed 
+* Rancher Manager cluster with {product_name} installed 
 * Cluster API Providers: you can find a guide on how to install a provider using the `CAPIProvider` resource xref:../tasks/capi-operator/basic_cluster_api_provider_installation.adoc[here]
 ** https://github.com/kubernetes-sigs/cluster-api[Infrastructure provider for Docker] 
 ** https://github.com/kubernetes-sigs/cluster-api[Bootstrap/Control Plane provider for Kubeadm] 

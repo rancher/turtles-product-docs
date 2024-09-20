@@ -1,6 +1,6 @@
 = Upgrade Instructions for Early Adopters
 
-If you were part of the early adopter programme and using Rancher Turtles v0.5.x or older, then you need to follow these instructions to use the GA version.
+If you were part of the early adopter programme and using {product_name} v0.5.x or older, then you need to follow these instructions to use the GA version.
 
 [NOTE]
 ====
@@ -10,10 +10,10 @@ The early adopter programme was for non-production use. If you were using Turtle
 
 == Overview
 
-To upgrade to the GA version of Rancher Turtles, you will need to do the following:
+To upgrade to the GA version of {product_name}, you will need to do the following:
 
 . Delete any CAPI child cluster definitions
-. Helm uninstall Rancher Turtles
+. Helm uninstall {product_name}
 . Clean-up orphaned resources
 . Install the GA version
 
@@ -68,7 +68,7 @@ If you are not going to continue using the extension then do the next step, inst
 
 [NOTE]
 ====
-This step is only required if you are not going to use the Rancher Turtles extension any further.
+This step is only required if you are not going to use the {product_name} extension any further.
 ====
 
 

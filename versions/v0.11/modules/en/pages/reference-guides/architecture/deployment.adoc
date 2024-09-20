@@ -3,8 +3,8 @@
 
 [NOTE]
 ====
-Currently Rancher Turtles only supports having Rancher Manager and
-Rancher Turtles running in the same cluster. A topology with a separate Rancher
+Currently {product_name} only supports having Rancher Manager and
+{product_name} running in the same cluster. A topology with a separate Rancher
 Manager cluster and one/multiple CAPI management cluster/s will be supported in
 future releases.
 ====
@@ -12,7 +12,7 @@ future releases.
 
 == Rancher Manager & CAPI Management Combined
 
-In this topology, both Rancher Manager and Rancher Turtles are deployed to the
+In this topology, both Rancher Manager and {product_name} are deployed to the
 same Kubernetes cluster, and it acts as a centralized management cluster.
 
 image::in_cluster_topology.png[Rancher Manager & CAPI Management Combined]

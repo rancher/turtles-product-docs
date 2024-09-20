@@ -1,20 +1,20 @@
-= Uninstall Rancher Turtles
+= Uninstall {product_name}
 :sidebar_position: 5
 
-This gives an overview of Rancher Turtles uninstallation process.
+This gives an overview of {product_name} uninstallation process.
 
 [CAUTION]
 ====
-When installing Rancher Turtles in your Rancher environment, by default, Rancher Turtles enables the Cluster API Operator cleanup. This includes cleaning up Cluster API Operator specific webhooks and deployments that otherwise cause issues with Rancher provisioning.
+When installing {product_name} in your Rancher environment, by default, {product_name} enables the Cluster API Operator cleanup. This includes cleaning up Cluster API Operator specific webhooks and deployments that otherwise cause issues with Rancher provisioning.
 
-To simplify uninstalling Rancher Turtles (via Rancher Manager or helm command), the official Rancher Turtles Helm chart includes a `post-delete` hook that applies these changes, making it transparent to the end user:
+To simplify uninstalling {product_name} (via Rancher Manager or helm command), the official {product_name} Helm chart includes a `post-delete` hook that applies these changes, making it transparent to the end user:
 
 * Delete the `mutating-webhook-configuration` and `validating-webhook-configuration` webhooks that are no longer needed.
 * Delete the CAPI `deployments` that are no longer needed.
 ====
 
 
-To uninstall the Rancher Turtles Extension use the following helm command:
+To uninstall the {product_name} Extension use the following helm command:
 
 [source,bash]
 ----

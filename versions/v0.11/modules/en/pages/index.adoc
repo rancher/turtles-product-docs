@@ -9,14 +9,14 @@ Starting with Turtles `v0.9.0`, the process used for importing CAPI clusters int
 ====
 
 
-Rancher Turtles is a Kubernetes Operator that provides integration between Rancher Manager and Cluster API (CAPI) with the aim of bringing full CAPI support to Rancher. With Rancher Turtles, you can:
+{product_name} is a Kubernetes Operator that provides integration between Rancher Manager and Cluster API (CAPI) with the aim of bringing full CAPI support to Rancher. With {product_name}, you can:
 
 * Automatically import CAPI clusters into Rancher, by installing the Rancher Cluster Agent in CAPI provisioned clusters.
 * Configure the CAPI Operator.
 
 == Demo
 
-This demo shows how to use the Rancher UI to install Rancher Turtles, create/import a CAPI cluster, and install monitoring on the cluster:
+This demo shows how to use the Rancher UI to install {product_name}, create/import a CAPI cluster, and install monitoring on the cluster:
 
 +++<iframe width="560" height="315" src="https://www.youtube.com/embed/lGsr7KfBjgU?si=ORkzuAJjcdXUXMxh" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="">++++++</iframe>+++
 
@@ -49,7 +49,7 @@ This demo shows how to use the Rancher UI to install Rancher Turtles, create/imp
 | `v1.7.3`
 |
 
-| Rancher Turtles
+| {product_name}
 | `>v0.11.0`
 | Using xref:./getting-started/install-rancher-turtles/using_rancher_dashboard.adoc[Rancher UI] (recommended) or xref:./getting-started/install-rancher-turtles/using_helm.adoc[Helm install] (for advanced use cases)
 |===
@@ -57,14 +57,14 @@ This demo shows how to use the Rancher UI to install Rancher Turtles, create/imp
 == Reference Guides
 
 This section focuses on implementation details including
-xref:./reference-guides/architecture/intro.adoc[architecture], how Rancher Turtles integrates with Rancher, and xref:./reference-guides/rancher-turtles-chart/values.adoc[Helm Chart configuration values].
+xref:./reference-guides/architecture/intro.adoc[architecture], how {product_name} integrates with Rancher, and xref:./reference-guides/rancher-turtles-chart/values.adoc[Helm Chart configuration values].
 
 == Tasks
 
-In this section we cover additional xref:./tasks/intro.adoc[operational tasks] including basic `CAPIProvider` xref:./tasks/capi-operator/basic_cluster_api_provider_installation.adoc[installation], an xref:./tasks/capi-operator/add_infrastructure_provider.adoc[example] AWS infrastructure provider install using `CAPIProvider`, and xref:./tasks/maintenance/early_adopter_upgrade.adoc[upgrade instructions] for early adopters of Rancher Turtles.
+In this section we cover additional xref:./tasks/intro.adoc[operational tasks] including basic `CAPIProvider` xref:./tasks/capi-operator/basic_cluster_api_provider_installation.adoc[installation], an xref:./tasks/capi-operator/add_infrastructure_provider.adoc[example] AWS infrastructure provider install using `CAPIProvider`, and xref:./tasks/maintenance/early_adopter_upgrade.adoc[upgrade instructions] for early adopters of {product_name}.
 
 == Security
 
-Rancher Turtles meets https://slsa.dev/spec/v1.0/levels#build-l3[SLSA Level 3] requirements as an appropriate hardened build platform, with consistent build processes, and provenance distribution. This section contains more information on security-related topics:
+{product_name} meets https://slsa.dev/spec/v1.0/levels#build-l3[SLSA Level 3] requirements as an appropriate hardened build platform, with consistent build processes, and provenance distribution. This section contains more information on security-related topics:
 
 * xref:./security/slsa.adoc[SLSA]
