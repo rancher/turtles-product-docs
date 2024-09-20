@@ -3,7 +3,7 @@
 
 Below is a visual representation of the architecture components of Rancher
 Turtles. This diagram illustrates the key elements and their relationships
-within the Rancher Turtles system. Understanding these components is essential
+within the {product_name} system. Understanding these components is essential
 for gaining insights into how Rancher leverages Cluster API (CAPI) for cluster
 management.
 
@@ -20,7 +20,7 @@ The agent is deployed within child clusters, enabling Rancher to import and
 establish a connection with these clusters. This connection allows Rancher to
 manage the child clusters effectively from within its platform.
 
-== Rancher Turtles - Rancher CAPI Extension
+== {product_name} - Rancher CAPI Extension
 
 It provides integration between CAPI and Rancher while currently supporting the
 following functionalities:

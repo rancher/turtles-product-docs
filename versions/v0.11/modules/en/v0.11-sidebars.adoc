@@ -1,7 +1,7 @@
 * Getting Started
 ** xref:index.adoc[Introduction]
 ** xref:getting-started/rancher.adoc[Rancher Setup]
-** Install Rancher Turtles
+** Install {product_name}
 *** xref:getting-started/install-rancher-turtles/using_rancher_dashboard.adoc[Via Rancher Dashboard]
 *** xref:getting-started/install-rancher-turtles/using_helm.adoc[Via Helm Install]
 ** Your first cluster
@@ -12,7 +12,7 @@
 *** xref:getting-started/cluster-class/intro.adoc[Introduction]
 *** xref:getting-started/cluster-class/create_cluster.adoc[Create a cluster using Fleet]
 ** xref:getting-started/air-gapped-environment.adoc[Air-gapped environment]
-** xref:getting-started/uninstall_turtles.adoc[Uninstall Rancher Turtles]
+** xref:getting-started/uninstall_turtles.adoc[Uninstall {product_name}]
 * Reference Guides
 ** Architecture
 *** xref:reference-guides/architecture/intro.adoc[Introduction]

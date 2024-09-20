@@ -3,7 +3,7 @@
 
 [CAUTION]
 ====
-Installing Cluster API Operator by following this page (without it being a Helm dependency to Rancher Turtles) is not a recommended installation method and intended only for local development purposes.
+Installing Cluster API Operator by following this page (without it being a Helm dependency to {product_name}) is not a recommended installation method and intended only for local development purposes.
 ====
 
 
@@ -11,7 +11,7 @@ This section describes how to install `Cluster API Operator` in the Kubernetes c
 
 == Installing Cluster API (CAPI) and providers
 
-`CAPI` and desired `CAPI` providers could be installed using the helm-based installation for https://github.com/kubernetes-sigs/cluster-api-operator[`Cluster API Operator`] or as a helm dependency for the `Rancher Turtles`.
+`CAPI` and desired `CAPI` providers could be installed using the helm-based installation for https://github.com/kubernetes-sigs/cluster-api-operator[`Cluster API Operator`] or as a helm dependency for the `{product_name}`.
 
 === Install manually with Helm (alternative)
 
@@ -93,14 +93,14 @@ helm install ... --set infrastructure="docker:v1.7.3;aws:v2.6.1"
 
 The `infrastructure` flag is set to `docker:v1.7.3;aws:v2.6.1`, representing the desired provider names. This means that the `Cluster API Operator` will install and manage multiple providers, `Docker` and `AWS`, with versions `v1.7.3` and `v2.6.1` respectively.
 
-The cluster is now ready to install Rancher Turtles. The default behavior when installing the chart is to install Cluster API Operator as a Helm dependency. Since we decided to install it manually before installing Rancher Turtles, the feature `cluster-api-operator.enabled` must be explicitly disabled as otherwise it would conflict with the existing installation. You can refer to xref:../developer-guide/install_capi_operator.adoc#install-rancher-turtles-without-cluster-api-operator-as-a-helm-dependency[Install Rancher Turtles without Cluster API Operator] to see next steps.
+The cluster is now ready to install {product_name}. The default behavior when installing the chart is to install Cluster API Operator as a Helm dependency. Since we decided to install it manually before installing {product_name}, the feature `cluster-api-operator.enabled` must be explicitly disabled as otherwise it would conflict with the existing installation. You can refer to xref:../developer-guide/install_capi_operator.adoc#install-rancher-turtles-without-cluster-api-operator-as-a-helm-dependency[Install {product_name} without Cluster API Operator] to see next steps.
 
 [TIP]
 ====
 For more fine-grained control of the providers and other components installed with CAPI, see the xref:../tasks/capi-operator/add_infrastructure_provider.adoc[Add the infrastructure provider] section.
 ====
 
-=== Install Rancher Turtles without `Cluster API Operator` as a Helm dependency
+=== Install {product_name} without `Cluster API Operator` as a Helm dependency
 
 [NOTE]
 ====

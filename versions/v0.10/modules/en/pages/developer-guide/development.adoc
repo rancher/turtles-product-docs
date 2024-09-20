@@ -9,7 +9,7 @@
 
 == Create a local development environment
 
-. Clone the https://github.com/rancher/turtles[Rancher Turtles] repository locally
+. Clone the https://github.com/rancher/turtles[{product_name}] repository locally
 . Create *tilt-settings.yaml*:
 +
 [source,yaml]
@@ -26,7 +26,7 @@
 }
 ----
 +
-. Open a terminal in the root of the Rancher Turtles repository
+. Open a terminal in the root of the {product_name} repository
 . Run the following:
 +
 [source,bash]
