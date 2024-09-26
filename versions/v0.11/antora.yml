@@ -1,5 +1,5 @@
-name: turtles-documentation
-title: Turtles
+name: cluster-api
+title: Cluster API
 version: v0.11
 display_version: '0.11'
 start_page: en:index.adoc
