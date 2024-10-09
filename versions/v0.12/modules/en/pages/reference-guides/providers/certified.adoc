@@ -18,12 +18,12 @@ This is a list of the officially certified CAPI Providers by Turtles. These prov
 | *RKE2*
 | CAPRKE2
 | Bootstrap/Control Plane
-| https://github.com/rancher/cluster-api-provider-rke2
+| https://rancher.github.io/cluster-api-provider-rke2
 
 | *Kubeadm*
 | Kubeadm
 | Bootstrap/Control Plane
-| https://github.com/kubernetes-sigs/cluster-api
+| https://cluster-api.sigs.k8s.io/tasks/bootstrap/kubeadm-bootstrap
 
 | *AWS*
 | CAPA
@@ -40,7 +40,7 @@ This is a list of the officially certified CAPI Providers by Turtles. These prov
 | Infrastructure
 | https://github.com/kubernetes-sigs/cluster-api-provider-vsphere
 
-| *Azure* (Only AKS clusters)
+| *Azure* (Only AKS managed clusters)
 | CAPZ
 | Infrastructure
 | https://capz.sigs.k8s.io/
