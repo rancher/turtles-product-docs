@@ -42,7 +42,7 @@ This demo shows how to use the Rancher UI to install {product_name}, create/impo
 | Using https://cert-manager.io/docs/installation/helm/#installing-with-helm[helm] based installation or via https://cert-manager.io/docs/installation/#default-static-install[kubectl apply].
 
 | Cluster API Operator
-| `>=v0.12.0`
+| `>=v0.13.0`
 | Using xref:./getting-started/install-rancher-turtles/using_rancher_dashboard.adoc[Rancher UI] (recommended) or https://github.com/kubernetes-sigs/cluster-api-operator/blob/main/docs/README.md#method-2-use-helm-charts[Helm install] (for development use cases)
 
 | Cluster API
@@ -50,7 +50,7 @@ This demo shows how to use the Rancher UI to install {product_name}, create/impo
 |
 
 | {product_name}
-| `>v0.11.0`
+| `>v0.12.0`
 | Using xref:./getting-started/install-rancher-turtles/using_rancher_dashboard.adoc[Rancher UI] (recommended) or xref:./getting-started/install-rancher-turtles/using_helm.adoc[Helm install] (for advanced use cases)
 |===
 
