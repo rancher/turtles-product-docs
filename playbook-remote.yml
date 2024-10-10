@@ -1,13 +1,13 @@
 site:
   title: Cluster-API
   url: /
-  start_page: v0.11@cluster-api:en:index.adoc
+  start_page: v0.12@cluster-api:en:index.adoc
 
 content:
   sources:
     - url: https://github.com/rancher/turtles-product-docs.git
       branches: [main]
-      start_paths: [versions/v0.11, versions/v0.10]
+      start_paths: [versions/v0.12, versions/v0.11]
 
 
 ui: 
