@@ -259,10 +259,6 @@ A component deployed by Rancher in each Kubernetes cluster it manages. Its prima
 
 The Rancher Manager (or Rancher Server) is where the Rancher UI and API are hosted, and it communicates with managed clusters through components like the <<_rancher_cluster_agent,Rancher Cluster Agent>>. It allows users to manage their Kubernetes clusters, applications, and Rancher-specific resources such as Catalogs, Users, Global Roles, and more.
 
-=== {product_name}
-
-A <<_kubernetes_operator,Kubernetes operator>> that provides integration between Rancher Manager and Cluster API (CAPI) with the aim of bringing full CAPI support to Rancher.
-
 === RKE2
 
 Rancher's next-generation, fully conformant Kubernetes distribution that focuses on security and compliance within the U.S. Federal Government sector. See https://docs.rke2.io/[documentation] for more details.
@@ -290,6 +286,10 @@ is running as a static pod.
 
 The infrastructure that backs a <<_machine,Machine Resource>>, typically either a cloud instance, virtual machine, or physical host.
 
+=== {product_name}
+
+A <<_kubernetes_operator,Kubernetes operator>> that provides integration between Rancher Manager and Cluster API (CAPI) with the aim of bringing full CAPI support to Rancher.
+
 == T
 
 === Topology
@@ -301,7 +301,7 @@ See <<_clusterclass,ClusterClass>>
 
 === Turtles
 
-Refers to <<_rancher_turtles,{product_name}>>
+Refers to <<_suse_rancher_prime_cluster_api,{product_name}>>
 
 == W
 
