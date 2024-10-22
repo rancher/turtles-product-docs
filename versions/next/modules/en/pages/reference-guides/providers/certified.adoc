@@ -60,3 +60,36 @@ This is a list of providers that are in an advanced state of development and wil
 |===
 | Platform | Code Name | Provider Type | Docs
 |===
+
+== ClusterClass Support for Certified Providers
+
+The following is a support matrix for each certified provider and their support of the cluster topology feature:
+
+[tabs]
+======
+CAPZ::
++
+- **Full support** of `ClusterClass`: both managed (AKS) and unmanaged (virtual machines) clusters can be provisioned via topology.
+
+CAPA::
++
+- **Supports** `ClusterClass` when provisioning unmanaged (EC2-based) clusters.
+- **Does not support** `ClusterClass` when provisioning managed (EKS) clusters: this is a work-in-progress.
+
+CAPRKE2::
++
+- **Full support** of `ClusterClass`.
+
+CABPK::
++
+- **Full support** of `ClusterClass`.
+
+CAPV::
++
+- **Full support** of `ClusterClass`.
+
+CAPD::
++
+- **Full support** of `ClusterClass`.
+
+======
