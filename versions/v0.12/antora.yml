@@ -7,4 +7,4 @@ asciidoc:
   attributes:
     product_name: SUSE® Rancher Prime Cluster API
 nav:
-  - modules/en/v0.12-sidebars.adoc
+  - modules/en/nav.adoc
