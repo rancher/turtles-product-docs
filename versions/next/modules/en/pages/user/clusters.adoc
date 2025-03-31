@@ -1,6 +1,6 @@
 :doctype: book
 
-= Create & Import a Cluster Using CAPI Providers
+= Create & import a cluster using CAPI providers
 
 This guide goes over the process of creating and importing CAPI clusters with a selection of the officially certified providers.
 
@@ -76,44 +76,6 @@ metadata:
 spec:
   name: kubeadm
   type: controlPlane
-----
-
-Azure AKS::
-+
-* Rancher Manager cluster with {product_name} installed
-* Cluster API Providers: you can find a guide on how to install a provider using the `CAPIProvider` resource xref:../operator/capiprovider.adoc[here]
-** https://github.com/kubernetes-sigs/cluster-api-provider-aws/[Infrastructure provider for Azure], this is an example of Azure provider installation,
-follow the provider documentation if some options need to be customized:
-+
-[source,bash]
-----
-export AZURE_CLIENT_SECRET="xxx"
-----
-+
-[source,yaml]
-----
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: capz-system
----
-apiVersion: turtles-capi.cattle.io/v1alpha1
-kind: CAPIProvider
-metadata:
-  name: azure
-  namespace: capz-system
-spec:
-  type: infrastructure
----
-apiVersion: v1
-stringData:
-  clientSecret: "${AZURE_CLIENT_SECRET}"
-kind: Secret
-metadata:
-  name: cluster-identity-secret
-  namespace: default
-type: Opaque
 ----
 
 GCP GKE::
@@ -284,6 +246,11 @@ spec:
 ======
 
 == Create Your Cluster Definition
+:kubernetes-version: v1.31.4
+:cluster-name: cluster1
+:namespace: capi-clusters
+:worker-machine-count: 1
+:control-plane-machine-count: 1 
 
 [tabs]
 ======
@@ -299,23 +266,23 @@ To generate the YAML for the cluster, do the following:
 +
 . Open a terminal and run the following: 
 +
-[source,bash]
+[source,bash,subs=attributes+]
 ----
-export CLUSTER_NAME=cluster1
-export NAMESPACE=capi-clusters
-export CONTROL_PLANE_MACHINE_COUNT=1
-export WORKER_MACHINE_COUNT=1
-export RKE2_VERSION=v1.30.3+rke2r1 
+export CLUSTER_NAME={cluster-name}
+export NAMESPACE={namespace}
+export CONTROL_PLANE_MACHINE_COUNT={control-plane-machine-count}
+export WORKER_MACHINE_COUNT={worker-machine-count}
+export RKE2_VERSION={kubernetes-version}+rke2r1
 export AWS_NODE_MACHINE_TYPE=t3a.large 
 export AWS_CONTROL_PLANE_MACHINE_TYPE=t3a.large 
 export AWS_SSH_KEY_NAME="aws-ssh-key" 
 export AWS_REGION="aws-region" 
 export AWS_AMI_ID="ami-id" 
 
-curl -s https://raw.githubusercontent.com/rancher/cluster-api-provider-rke2/refs/heads/main/examples/aws/cluster-template.yaml | envsubst > cluster1.yaml
+curl -s https://raw.githubusercontent.com/rancher/cluster-api-provider-rke2/refs/heads/main/examples/templates/aws/cluster-template.yaml | envsubst > cluster1.yaml
 ----
 +
-. View **cluster1.yaml** and examine the resulting yaml file. You can make any changes you want as well.
+. View **cluster1.yaml** and examine the resulting YAML file. You can make any changes you want as well.
 +
 > The Cluster API quickstart guide contains more detail. Read the steps related to this section https://cluster-api.sigs.k8s.io/user/quick-start.html#required-configuration-for-common-providers[here].
 
@@ -323,7 +290,8 @@ curl -s https://raw.githubusercontent.com/rancher/cluster-api-provider-rke2/refs
 +
 [source,bash]
 ----
-bash kubectl create -f cluster1.yaml
+kubectl create namespace ${NAMESPACE}
+kubectl create -f cluster1.yaml
 ----
 
 AWS EC2 Kubeadm::
@@ -332,17 +300,17 @@ To generate the YAML for the cluster, do the following:
 +
 . Open a terminal and run the following:
 +
-[source,bash]
+[source,bash,subs=attributes+]
 ----
-export CLUSTER_NAME=cluster1
-export NAMESPACE=capi-clusters
+export CLUSTER_NAME={cluster-name}
+export NAMESPACE={namespace}
 export AWS_CONTROL_PLANE_MACHINE_TYPE=t3.large
 export AWS_NODE_MACHINE_TYPE=t3.large
 export AWS_SSH_KEY_NAME="aws-ssh-key" 
 export AWS_REGION="aws-region"
-export KUBERNETES_VERSION=v1.29.9
-export CONTROL_PLANE_MACHINE_COUNT=1
-export WORKER_MACHINE_COUNT=1
+export KUBERNETES_VERSION={kubernetes-version}
+export CONTROL_PLANE_MACHINE_COUNT={control-plane-machine-count}
+export WORKER_MACHINE_COUNT={worker-machine-count}
 
 curl -s https://raw.githubusercontent.com/kubernetes-sigs/cluster-api-provider-aws/refs/heads/main/templates/cluster-template.yaml | envsubst > cluster1.yaml
 ----
@@ -355,7 +323,8 @@ curl -s https://raw.githubusercontent.com/kubernetes-sigs/cluster-api-provider-a
 +
 [source,bash]
 ----
- kubectl create -f cluster1.yaml
+kubectl create namespace ${NAMESPACE}
+kubectl create -f cluster1.yaml
 ----
 +
 . Deploy CNI
@@ -368,16 +337,18 @@ To generate the YAML for the cluster, do the following:
 +
 . Open a terminal and run the following:
 +
-[source,bash]
+[source,bash,subs=attributes+]
 ----
-export CLUSTER_NAME=cluster1
-export NAMESPACE=capi-clusters
-export CONTROL_PLANE_MACHINE_COUNT=1
-export WORKER_MACHINE_COUNT=1
-export RKE2_VERSION=v1.30.2+rke2r1
-export KUBERNETES_VERSION=v1.30.4 # needed for the CAPI Docker provider to use proper image
+export CLUSTER_NAME={cluster-name}
+export NAMESPACE={namespace}
+export CONTROL_PLANE_MACHINE_COUNT={control-plane-machine-count}
+export WORKER_MACHINE_COUNT={worker-machine-count}
+export RKE2_VERSION={kubernetes-version}+rke2r1
+export RKE2_CNI=calico
+export KUBERNETES_VERSION={kubernetes-version} # needed for the CAPI Docker provider to use proper image
 
-curl -s https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/test/e2e/data/cluster-templates/docker-rke2.yaml | envsubst > cluster1.yaml
+curl -s https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/test/e2e/data/cluster-templates/docker-rke2.yaml -o docker-rke2.yaml
+envsubst '${NAMESPACE} ${CLUSTER_NAME} ${WORKER_MACHINE_COUNT} ${RKE2_VERSION} ${RKE2_CNI} ${CONTROL_PLANE_MACHINE_COUNT} ${KUBERNETES_VERSION}' < template-docker-rke2.yaml > cluster1.yaml
 ----
 +
 . View **cluster1.yaml** to ensure there are no tokens. You can make any changes you want as well.
@@ -388,6 +359,7 @@ curl -s https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/test/e
 +
 [source,bash]
 ----
+kubectl create namespace ${NAMESPACE}
 kubectl create -f cluster1.yaml 
 ----
 
@@ -397,13 +369,13 @@ To generate the YAML for the cluster, do the following:
 +
 . Open a terminal and run the following:
 +
-[source,bash]
+[source,bash,subs=attributes+]
 ----
-export CLUSTER_NAME=cluster1
-export NAMESPACE=capi-clusters
-export CONTROL_PLANE_MACHINE_COUNT=1
-export WORKER_MACHINE_COUNT=1
-export KUBERNETES_VERSION=v1.30.4
+export CLUSTER_NAME={cluster-name}
+export NAMESPACE={namespace}
+export CONTROL_PLANE_MACHINE_COUNT={control-plane-machine-count}
+export WORKER_MACHINE_COUNT={worker-machine-count}
+export KUBERNETES_VERSION={kubernetes-version}
 
 curl -s https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/test/e2e/data/cluster-templates/docker-kubeadm.yaml | envsubst > cluster1.yaml
 ----
@@ -416,6 +388,7 @@ curl -s https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/test/e
 +
 [source,bash]
 ----
+kubectl create namespace ${NAMESPACE}
 kubectl create -f cluster1.yaml 
 ----
 +
@@ -429,12 +402,12 @@ Before creating a vSphere+RKE2 workload cluster, it is required to have a VM tem
 +
 To generate the YAML for the cluster, do the following:
 +
-[source,bash]
+[source,bash,subs=attributes+]
 ----
-export CLUSTER_NAME=cluster1
-export NAMESPACE=capi-clusters
-export CONTROL_PLANE_MACHINE_COUNT=1
-export WORKER_MACHINE_COUNT=1
+export CLUSTER_NAME={cluster-name}
+export NAMESPACE={namespace}
+export CONTROL_PLANE_MACHINE_COUNT={control-plane-machine-count}
+export WORKER_MACHINE_COUNT={worker-machine-count}
 export VSPHERE_USERNAME: "<username>"
 export VSPHERE_PASSWORD: "<password>"
 export VSPHERE_SERVER: "10.0.0.1"
@@ -448,8 +421,8 @@ export CONTROL_PLANE_ENDPOINT_IP: "192.168.9.230"
 export VSPHERE_TLS_THUMBPRINT: "..."
 export EXP_CLUSTER_RESOURCE_SET: "true"
 export VSPHERE_SSH_AUTHORIZED_KEY: "ssh-rsa AAAAB3N..."
-export CPI_IMAGE_K8S_VERSION: "v1.30.0"
-export KUBERNETES_VERSION=v1.30.0
+export CPI_IMAGE_K8S_VERSION: "v1.31.0"
+export KUBERNETES_VERSION={kubernetes-version}
 ----
 +
 . Open a terminal and run the following:
@@ -467,6 +440,7 @@ curl -s https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/test/e
 +
 [source,bash]
 ----
+kubectl create namespace ${NAMESPACE}
 kubectl apply -f cluster1.yaml
 ----
 
@@ -478,12 +452,12 @@ A list of published machine images (OVAs) is available https://github.com/kubern
 +
 To generate the YAML for the cluster, do the following:
 +
-[source,bash]
+[source,bash,subs=attributes+]
 ----
-export CLUSTER_NAME=cluster1
-export NAMESPACE=capi-clusters
-export CONTROL_PLANE_MACHINE_COUNT=1
-export WORKER_MACHINE_COUNT=1
+export CLUSTER_NAME={cluster-name}
+export NAMESPACE={namespace}
+export CONTROL_PLANE_MACHINE_COUNT={control-plane-machine-count}
+export WORKER_MACHINE_COUNT={worker-machine-count}
 export VSPHERE_USERNAME: "<username>"
 export VSPHERE_PASSWORD: "<password>"
 export VSPHERE_SERVER: "10.0.0.1"
@@ -497,8 +471,8 @@ export CONTROL_PLANE_ENDPOINT_IP: "192.168.9.230"
 export VSPHERE_TLS_THUMBPRINT: "..."
 export EXP_CLUSTER_RESOURCE_SET: "true"
 export VSPHERE_SSH_AUTHORIZED_KEY: "ssh-rsa AAAAB3N..."
-export CPI_IMAGE_K8S_VERSION: "v1.30.0"
-export KUBERNETES_VERSION=v1.30.0
+export CPI_IMAGE_K8S_VERSION: "v1.31.0"
+export KUBERNETES_VERSION={kubernetes-version}
 ----
 +
 . Open a terminal and run the following:
@@ -516,41 +490,7 @@ curl -s https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/test/e
 +
 [source,bash]
 ----
-kubectl apply -f cluster1.yaml
-----
-
-Azure AKS::
-+
-To generate the YAML for the cluster, do the following:
-+
-[source,bash]
-----
-export CLUSTERCLASS_NAME=clusterclass1
-export CLUSTER_NAME=cluster1
-export NAMESPACE=capi-clusters
-export CONTROL_PLANE_MACHINE_COUNT=1
-export WORKER_MACHINE_COUNT=1
-export KUBERNETES_VERSION=v1.30.4
-export AZURE_SUBSCRIPTION_ID="xxx"
-export AZURE_CLIENT_ID="xxx"
-export AZURE_TENANT_ID="xxx"
-----
-+
-. Open a terminal and run the following:
-+
-[source,bash]
-----
-curl -s https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/test/e2e/data/cluster-templates/azure-aks-topology.yaml | envsubst > cluster1.yaml
-----
-+
-. View **cluster1.yaml** and examine the resulting YAML file. You can make any changes you want as well.
-+
-> The Cluster API quickstart guide contains more detail. Read the steps related to this section https://cluster-api.sigs.k8s.io/user/quick-start.html#required-configuration-for-common-providers[here].
-+
-. Create the cluster using kubectl
-+
-[source,bash]
-----
+kubectl create namespace ${NAMESPACE}
 kubectl apply -f cluster1.yaml
 ----
 
@@ -558,12 +498,12 @@ AWS EKS::
 +
 To generate the YAML for the cluster, do the following:
 +
-[source,bash]
+[source,bash,subs=attributes+]
 ----
-export CLUSTER_NAME=cluster1
-export NAMESPACE=capi-clusters
-export WORKER_MACHINE_COUNT=1
-export KUBERNETES_VERSION=v1.30.4
+export CLUSTER_NAME={cluster-name}
+export NAMESPACE={namespace}
+export WORKER_MACHINE_COUNT={worker-machine-count}
+export KUBERNETES_VERSION={kubernetes-version}
 ----
 +
 . Open a terminal and run the following:
@@ -581,6 +521,7 @@ curl -s https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/test/e
 +
 [source,bash]
 ----
+kubectl create namespace ${NAMESPACE}
 kubectl apply -f cluster1.yaml
 ----
 
@@ -590,12 +531,12 @@ To generate the YAML for the cluster, do the following:
 +
 [source,bash]
 ----
-export CLUSTER_NAME=cluster1
-export NAMESPACE=capi-clusters
+export CLUSTER_NAME={cluster-name}
+export NAMESPACE={namespace}
 export GCP_PROJECT=cluster-api-gcp-project
 export GCP_REGION=us-east4
 export GCP_NETWORK_NAME=default
-export WORKER_MACHINE_COUNT=1
+export WORKER_MACHINE_COUNT={worker-machine-count}
 ----
 +
 . Open a terminal and run the following:
@@ -613,6 +554,7 @@ curl -s https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/test/e
 +
 [source,bash]
 ----
+kubectl create namespace ${NAMESPACE}
 kubectl apply -f cluster1.yaml
 ----
 
