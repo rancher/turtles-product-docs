@@ -134,7 +134,7 @@ Installing Turtles prior to installing the CAPI UI extension is recommended.
 
 image::install-capi-ui-extension.gif[install-capi-ui-extension]
 
-== Install {product_name} using cli (development/experimental)
+== Install {product_name} using a CLI (development/experimental)
 
 For users who prefer a streamlined command-line installation process, Rancher Manager with Rancher Turtles can be installed using the https://github.com/rancher/turtles/blob/main/scripts/turtles-quickstart.sh[`turtles-quickstart.sh`] script.
 
@@ -143,27 +143,27 @@ This installation method provides a fast way to get Rancher Manager and Turtles 
 *Using the quickstart script*
 
 . Ensure you have installed on your system https://kubernetes.io/docs/tasks/tools/[`kubectl`], https://kind.sigs.k8s.io/docs/user/quick-start/#installation[`kind`], https://helm.sh/docs/intro/install/[`helm`] and running https://docs.docker.com/engine/install/[`docker`] daemon.
-+
+
 . Download the script from Rancher Turtles github repository:
 +
 [source,bash]
 ----
 curl -fsSL https://raw.githubusercontent.com/rancher/turtles/main/scripts/turtles-quickstart.sh -o turtles-quickstart.sh
 ----
-+
+
 . Run https://github.com/rancher/turtles/blob/main/scripts/turtles-quickstart.sh[`turtles-quickstart.sh`] script:
 +
 [source,bash]
 ----
 bash ./turtles-quickstart.sh
 ----
-+
+
 . Wait until the script completes - this may take a few minutes while all components are installed
 
-The script will:
+The script:
 
-* Verify that your cluster meets the prerequisites
-* Add the Rancher and Turtles Helm repository
-* Install Rancher Turtles with default configuration
-* Display status information when complete
-* Create new example downstream cluster using *CAPI Docker Provider*
+* Verifies that your cluster meets the prerequisites.
+* Adds the Rancher and Turtles Helm repositories.
+* Installs Rancher Turtles with default configuration.
+* Displays status information when complete.
+* Creates a new example downstream cluster using the *CAPI Docker Provider*.

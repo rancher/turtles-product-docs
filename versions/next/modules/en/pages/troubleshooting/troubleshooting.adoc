@@ -12,15 +12,15 @@ Understanding the intricacies of both Rancher Turtles and CAPI is crucial for ef
 
 To effectively troubleshoot Rancher Turtles and CAPI clusters, you need:
 
-* Access to a terminal with kubectl configured to access Rancher management cluster
-* Krew plugin manager for kubectl installed
-* Helm CLI tool installed
+* Access to a terminal with kubectl configured to access the Rancher management cluster.
+* The Krew plugin manager for kubectl installed.
+* The Helm CLI tool installed.
 
-You can install Krew by following the instructions at https://krew.sigs.k8s.io/docs/user-guide/setup/install/[Krew installation guide].
+You can install Krew by following the instructions in the https://krew.sigs.k8s.io/docs/user-guide/setup/install/[Krew installation guide].
 
 == How to check the logs
 
-You can view the following pods and check their logs in namespaces:
+You can view the following pods and check their logs in the following namespaces:
 
 
 |===
@@ -64,9 +64,9 @@ You can view the following pods and check their logs in namespaces:
 |===
 
 '*' - depending on the infrastructure provider in use
-'$' - depending on controlplane/bootstrap provider in use, e.g. kubeadm or rke2
+'$' - depending on control plane/bootstrap provider in use, e.g. kubeadm or rke2
 
-One way to monitor logs from Cluster API controll plane pods by usuing `kubectl logs` with label selector.
+One way to monitor logs from the Cluster API control plane pods is by usuing `kubectl logs` with the label selector.
 
 [source,bash]
 ----
@@ -78,7 +78,7 @@ kubectl logs -l control-plane=controller-manager -n rke2-control-plane-system -f
 
 [CAUTION]
 ====
-Using kubectl krew to install the stern plugin involves third-party software which may pose security risks in production environments. While it's a useful tool for log viewing, it should primarily be used in development or testing environments. Always review third-party plugins before installing them in sensitive or production clusters.
+Using `kubectl krew` to install the stern plugin involves third-party software which may pose security risks in production environments. While it's a useful tool for log viewing, it should primarily be used in development or testing environments. Always review third-party plugins before installing them in sensitive or production clusters.
 ====
 
 The best method to monitor logs from different pods is by using the following method.
@@ -106,16 +106,16 @@ kubectl stern -A -l control-plane=controller-manager
 
 *List Rancher and Cluster API resources*
 
-Often users are asking how to deal with long list of different CRDs created by CAPI and Rancher, here is some idea how you can deal with it.
+Users are often asking how they can deal with long lists of different CRDs created by CAPI and Rancher, here are some ideas on how you can deal with it.
 
-. List all CAPI and Rancher related credentials
+. List all CAPI and Rancher related credentials.
 +
 [source,bash]
 ----
 kubectl api-resources | grep 'cattle.io\|cluster.x-k8s.io'
 ----
 +
-. About the resource, you can get a full explanation of what it is doing or what the configuration options are
+. Learn about the resource. You can get a full explanation of what it is doing or what the configuration options are.
 +
 [source,bash]
 ----
@@ -123,7 +123,7 @@ kubectl api-resources | grep clusterclass
 kubectl explain clusterclass.cluster.x-k8s.io
 ----
 +
-. Then you get a description about each field and configuration section 
+. Then you get a description about each field and configuration section.
 +
 [source,bash]
 ----
@@ -134,9 +134,9 @@ kubectl explain clusterclasses.spec.controlPlane.machineInfrastructure
 
 *List existing Rancher and Cluster API objects resources*
 
-The most common mistake is to use the `default` namespace in Kubernetes for your work. This will make your configuration really messy and difficult to manage and troubleshoot. It is highly recommended to use separate namespaces for deploying and creating CAPI downstream clusters and avoid using kubernetes system namespaces, such as `default` and `kube-*`.
+The most common mistake is to use the `default` namespace in Kubernetes for your work. This makes your configuration really messy and difficult to manage and troubleshoot. We highly recommend using separate namespaces for deploying and creating CAPI downstream clusters and avoid using Kubernetes system namespaces, such as `default` and `kube-*`.
 
-When applying templates with `kubectl`, always specify `-n <NAMESPACE>` to provision resources in a known locaction. You can switch between namespaces in *KUBECONFIG* with command:
+When applying templates with `kubectl`, always specify `-n <NAMESPACE>` to provision resources in a known location. You can switch between namespaces in *KUBECONFIG* with this command:
 
 [source,bash]
 ----
@@ -148,7 +148,7 @@ With separate namespaces, you can easily manage resources by following this meth
 
 [CAUTION]
 ====
-Using kubectl krew to install the lineage plugin involves third-party software which may pose security risks in production environments. While it's a useful tool for log viewing, it should primarily be used in development or testing environments. Always review third-party plugins before installing them in sensitive or production clusters.
+Using `kubectl krew` to install the lineage plugin involves third-party software which may pose security risks in production environments. While it's a useful tool for log viewing, it should primarily be used in development or testing environments. Always review third-party plugins before installing them in sensitive or production clusters.
 ====
 
 . Install `get-all` and `lineage` plugins using `krew` for `kubectl`
@@ -159,7 +159,7 @@ kubectl krew install lineage
 kubectl krew install get-all
 ----
 +
-. Then list all existing resources in for example `capi-clusters` namespace where your downstream cluster configuration was deployed.
+. Then list all existing resources in the namespace, for example `capi-clusters`, where your downstream cluster configuration is deployed.
 +
 [source,bash]
 ----
@@ -194,7 +194,7 @@ azuremanagedmachinepooltemplate.infrastructure.cluster.x-k8s.io/cluster1-pool0  
 azuremanagedmachinepooltemplate.infrastructure.cluster.x-k8s.io/cluster1-pool1           capi-clusters  33s  
 ----
 +
-. Then you can check what the relation is between all object resources
+. Then you can check the relationship between all object resources.
 +
 [source,bash]
 ----
@@ -207,9 +207,9 @@ image::lineage-cluster-output.png[Output]
 
 == How to enable debug mode for Rancher Turtles and CAPI operators
 
-The helm chart exposes values for increasing the log level via the usual `values.yaml` configuration parameters:
+The Helm chart exposes values for increasing the log level via the usual `values.yaml` configuration parameters:
 
-* Cluster API Operator - log level for CAPI operator can also be increased using helm chart, if installed with Rancher Turtles chart use:
+The Cluster API Operator - log level for the CAPI operator can also be increased using the Helm chart, if installed with the Rancher Turtles chart use the command:
 
 [source,bash]
 ----
@@ -229,7 +229,7 @@ helm upgrade rancher-turtles turtles/rancher-turtles \
 ----
 
 
-* Cluster API Providers - edit CAPIProvider resources for providers where increasing log level is needed. Change to desidered level:
+If the log level is needed to be increased then the Cluster API Providers - edit CAPIProvider resource can be changed to your desired level as seen below:
 
 [source,bash]
 ----
@@ -239,9 +239,9 @@ CAPIProvider.Spec.Manager.Verbosity=5
 
 == How to collect infortmation from Rancher Turtles and CAPI
 
-https://github.com/crust-gather/crust-gather[crust-gather] is a project created by Cluster API developers specifically designed for gathering logs and resource states from CAPI environments. It's a safe and official tool that can be used in any type of environment (development, testing, or production) to collect comprehensive diagnostic information for troubleshooting.
+https://github.com/crust-gather/crust-gather[crust-gather] is a project created by Cluster API developers specifically designed for gathering logs and resource states from CAPI environments. It's a safe and official tool that can be used in any type of environment (production, testing, or development) to collect comprehensive diagnostic information for troubleshooting.
 
-You can install it via following instructions:
+You can install it via the following instructions:
 
 [source,bash]
 ----
@@ -250,7 +250,7 @@ kubectl krew install crust-gather
 kubectl crust-gather --help
 ----
 
-Alternatively, it can be installed standalone via *install.sh* script:
+Alternatively, it can be installed standalone via the *install.sh* script:
 
 [source,bash]
 ----
@@ -259,9 +259,60 @@ curl -sSfL https://github.com/crust-gather/crust-gather/raw/main/install.sh | sh
 crust-gather --help
 ----
 
-You can specify a list of filters to collect data. By default it takes a full cluster snapshot. Data is stored in crust-gather dir by default.
-Crust gather accepts a pre-defined filter configs for Rancher or child cluster. Kubeconfig should point to the correct cluster.
-Usage with https://gist.github.com/Danil-Grigorev/0a1e629090772330bf817176ed99f324[config] file:
+You can specify a list of filters to collect data. By default it takes a full cluster snapshot. Data is stored in the crust-gather directory by default.
+Crust-gather accepts a pre-defined filter configuration for Rancher or the child cluster. See below for example configurations.
+
+Example YAML filter configuration for `child-crust-gather.yaml` file:
+
+[source,yaml]
+----
+filters:
+  - include_kind:
+    - Node
+    - Namespace
+    - CustomResourceDefinition
+  - include_group:
+    - management.cattle.io/.*
+    - provisioning.cattle.io/.*
+  - include_namespace:
+    - cattle.*
+    - fleet.*
+    - kube-system
+settings:
+  insecure_skip_tls_verify: true
+  secrets_file: secrets.txt
+----
+
+Example YAML filter configuration for `rancher-crust-gather.yaml` file:
+
+[source,yaml]
+----
+filters:
+  - include_group:
+    - .*cluster.x-k8s.io/.*
+    - turtles-capi.cattle.io/.*
+  - include_kind:
+    - CustomResourceDefinition
+    - Node
+    - Namespace
+  - include_group:
+    - management.cattle.io/.*
+    - provisioning.cattle.io/.*
+  - include_namespace:
+    - rancher-turtles-system
+    - capi-.*
+    - cattle.*
+    - fleet.*
+    - c-.*
+    - rke2.*
+    - cert-manager
+    - kube-system
+settings:
+  insecure_skip_tls_verify: true
+  secrets_file: secrets.txt
+----
+
+Ensure the kubeconfig points to the correct cluster and then run the below command:
 
 [source,bash]
 ----
@@ -293,9 +344,9 @@ kubectl crust-gather collect --exclude-kind Secret
 
 == How to clean up Rancher Turtles and CAPI resources
 
-Sometimes cleanup of your infrastructure might fail and it might lead to pending resources. In this situation, we have to remove resources manually.
+Sometimes cleanup of your infrastructure might fail and it might lead to pending resources. In this situation, you have to remove resources manually.
 
-Keep in mind, that removal of finalizers manually **will** require to perform manual cleanup of provisioned resources by the infrastructure provider.
+Keep in mind that removing finalizers manually **requires**  manually cleaning provisioned resources by the infrastructure provider.
 
 [source,bash]
 ----
@@ -324,14 +375,14 @@ kubectl delete -n capi-clusters cluster.cluster.x-k8s.io cluster1
 ====
 Replace `capi-clusters` with the namespace where your clusters are deployed and `cluster1` with your cluster name. Wait for each cluster to be fully deleted before proceeding to the next step.
 ====
-+
+
 . Uninstall the Rancher Turtles Helm chart:
 +
 [source,bash]
 ----
 helm uninstall -n rancher-turtles-system rancher-turtles
 ----
-+
+
 . Remove any webhook configurations that might have been created by CAPI providers:
 +
 [source,bash]
@@ -349,7 +400,7 @@ kubectl delete validatingwebhookconfigurations.admissionregistration.k8s.io rke2
 kubectl get mutatingwebhookconfigurations
 kubectl delete mutatingwebhookconfigurations [webhook-name]
 ----
-+
+
 . Clean up any leftover namespaces and resources. The following namespaces may remain after uninstallation:
    * rancher-turtles-system
    * rke2-bootstrap-system
@@ -370,7 +421,7 @@ done
 # Then delete the namespaces
 kubectl delete namespace rancher-turtles-system rke2-bootstrap-system rke2-control-plane-system capi-system capz-system capi-clusters
 ----
-+
+
 . Finally, remove the CRDs related to Cluster API and Rancher Turtles:
 +
 [source,bash]
