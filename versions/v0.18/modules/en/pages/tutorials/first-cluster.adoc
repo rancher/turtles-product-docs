@@ -13,7 +13,7 @@ This section will guide you through creating your first cluster and importing it
 ======
 GitOps using Fleet::
 +
-====
+--
 *Configure your Fleet repository*
 
 To simplify the process of cluster provisioning, we will be using a series of pre-configured examples that you can find in the repository https://github.com/rancher-sandbox/rancher-turtles-fleet-example.
@@ -48,11 +48,11 @@ image:gh_clone.png[git clone url]
 . Watch the resources become ready
 . Select *Cluster Management* from the menu
 . Check your cluster has been imported
-====
+--
 
 Manually using kubectl::
 +
-====
+--
 *Create your cluster definition*
 
 To generate the YAML for the cluster, do the following:
@@ -69,9 +69,9 @@ export NAMESPACE=capi-clusters
 
 curl -s https://raw.githubusercontent.com/rancher-sandbox/rancher-turtles-fleet-example/templates/docker-rke2.yaml | envsubst > cluster1.yaml
 ----
-+
+
 . View *cluster1.yaml* to ensure there are no tokens. You can make any changes you want as well.
-+
+
 . Create the cluster using kubectl
 +
 [source,bash]
@@ -82,8 +82,7 @@ kubectl apply -f cluster1.yaml
 . Watch the resources become ready
 . Select *Cluster Management* from the menu
 . Check your cluster has been imported
-====
-
+--
 ======
 
 == Mark Namespace for auto-import

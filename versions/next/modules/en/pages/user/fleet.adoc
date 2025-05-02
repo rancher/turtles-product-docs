@@ -27,7 +27,8 @@ There are 2 options to provide the configuration. The first is using the Rancher
 [tabs]
 ======
 Using the Rancher Manager UI::
-
++
+--
 . Go to Rancher Manager.
 . Select *Continuous Delivery* from the menu.
 . Select *fleet-local* as the namespace from the top right.
@@ -43,9 +44,11 @@ Using the Rancher Manager UI::
 . Click *Create*.
 . Click on the *clusters* name.
 . Watch the resources become ready.
+--
 
 Manually using kubectl::
-
++
+--
 . Get the *HTTPS* clone URL from your git repo.
 . Create a new file called *repo.yaml*.
 . Add the following contents to the new file:
@@ -64,14 +67,14 @@ spec:
     - /classes
   targets: []
 ----
-+
+
 . Apply the file to the Rancher Manager cluster using *kubectl*:
 +
 [source,bash]
 ----
 kubectl apply -f repo.yaml
 ----
-+
+
 . Go to Rancher Manager.
 . Select *Continuous Delivery* from the side bar.
 . Select *fleet-local* as the namespace from the top right.
@@ -80,6 +83,7 @@ kubectl apply -f repo.yaml
 . Watch the resources become ready.
 . Select *Cluster Management* from the menu.
 . Check that your cluster has been imported.
+--
 ======
 
 === Import Cluster Definitions
@@ -89,7 +93,8 @@ Now that the classes have been imported, it's possible to use them with cluster 
 [tabs]
 ======
 Using the Rancher Manager UI::
-
++
+--
 . Go to Rancher Manager.
 . Select *Continuous Delivery* from the menu.
 . Select *fleet-local* as the namespace from the top right.
@@ -107,9 +112,11 @@ Using the Rancher Manager UI::
 . Watch the resources become ready.
 . Select *Cluster Management* from the menu.
 . Check that your cluster has been imported.
+--
 
 Manually using kubectl::
-
++
+--
 . Get the *HTTPS* clone URL from your git repo.
 . Create a new file called *repo.yaml*.
 . Add the following contents to the new file:
@@ -128,14 +135,14 @@ spec:
     - /clusters
   targets: []
 ----
-+
+
 . Apply the file to the Rancher Manager cluster using *kubectl*:
 +
 [source,bash]
 ----
 kubectl apply -f repo.yaml
 ----
-+
+
 . Go to Rancher Manager.
 . Select *Continuous Delivery* from the side bar.
 . Select *fleet-local* as the namespace from the top right.
@@ -144,4 +151,5 @@ kubectl apply -f repo.yaml
 . Watch the resources become ready.
 . Select *Cluster Management* from the menu.
 . Check that your cluster has been imported.
+--
 ======
