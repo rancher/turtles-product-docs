@@ -15,11 +15,11 @@ Azure::
 --
 To prepare the management Cluster, we are going to install the https://capz.sigs.k8s.io/[Cluster API Provider Azure], and create a https://capz.sigs.k8s.io/topics/identities#service-principal[ServicePrincipal] identity to provision a new Cluster on Azure.
 
-Before we start, a ServicePrincipal needs to be created, with at least Contributor access to an Azure subscription. +
+Before we start, a ServicePrincipal needs to be created, with at least Contributor access to an Azure subscription.
 Refer to the https://capz.sigs.k8s.io/getting-started#setting-up-your-azure-environment[CAPZ documentation] for more details.
 
 * Provider installation
-
++
 [source,yaml]
 ----
 apiVersion: v1
@@ -38,9 +38,9 @@ spec:
 ----
 
 * Identity setup
-
++
 A Secret containing the ADD Service Principal password need to be created first.  
-
++
 [source,bash]
 ----
 # Settings needed for AzureClusterIdentity used by the AzureCluster
@@ -52,13 +52,13 @@ export AZURE_CLIENT_SECRET="<Password>"
 # This secret will be referenced by the AzureClusterIdentity used by the AzureCluster
 kubectl create secret generic "${AZURE_CLUSTER_IDENTITY_SECRET_NAME}" --from-literal=clientSecret="${AZURE_CLIENT_SECRET}" --namespace "${AZURE_CLUSTER_IDENTITY_SECRET_NAMESPACE}"
 ----
-
++
 The AzureClusterIdentity can now be created to use the Service Principal identity.
 Note that the AzureClusterIdentity is a namespaced resource and it needs to be created in the same namespace as the Cluster. +
 For more information on best practices when using Azure identities, please refer to the official https://capz.sigs.k8s.io/topics/identities-use-cases[documentation].
-
++
 Note that some variables are left to the user to substitute.
-
++
 [source,yaml]
 ----
 apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
@@ -84,7 +84,7 @@ AWS::
 To prepare the management Cluster, we are going to install the https://cluster-api-aws.sigs.k8s.io/[Cluster API Provider AWS], and create a secret with the required credentials to provision a new Cluster on AWS.
 
 * Credentials setup
-
++
 [source,yaml]
 ----
 apiVersion: v1
@@ -101,12 +101,12 @@ type: Opaque
 stringData:
   AWS_B64ENCODED_CREDENTIALS: xxx
 ----
-
++
 The content of the string, `AWS_B64ENCODED_CREDENTIALS`, is a base64-encoded string containing the AWS credentials. You will need to use an AWS IAM user with administrative permissions so you can create the cloud resources to host the cluster.
 We recommend you use `clusterawsadm` to encode credentials to use with Cluster API Provider AWS. You can refer to the https://cluster-api-aws.sigs.k8s.io/clusterawsadm/clusterawsadm_bootstrap_credentials.html?highlight=bootstrap%20credentials#clusterawsadm-bootstrap-credentials[CAPA book] for more information.
-
++
 These are the variables you will need to export to authenticate with AWS and use `clusterawsadm` to generate the encoded string, which are linked to your IAM user:
-
++
 [source,bash]
 ----
 AWS_REGION
@@ -115,7 +115,7 @@ AWS_SECRET_ACCESS_KEY
 ----
 
 * Provider installation
-
++
 [source,yaml]
 ----
 ---
@@ -135,7 +135,7 @@ Docker::
 To prepare the management Cluster, we are going to install the Docker Cluster API Provider.
 
 * Infrastructure Docker provider installation
-
++
 [source,yaml]
 ----
 apiVersion: v1
@@ -153,7 +153,7 @@ spec:
 ----
 
 * https://github.com/rancher/cluster-api-provider-rke2[Bootstrap/Control Plane provider for RKE2](installed by default) or https://github.com/kubernetes-sigs/cluster-api[Bootstrap/Control Plane provider for Kubeadm], example of Kubeadm installation:
-
++
 [source,yaml]
 ----
 apiVersion: v1
@@ -202,7 +202,7 @@ Azure RKE2::
 +
 --
 * An Azure ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
-
++
 [source,bash]
 ----
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/examples/clusterclasses/azure/clusterclass-rke2-example.yaml
@@ -210,11 +210,11 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/ma
 
 * Additionally, the https://capz.sigs.k8s.io/self-managed/cloud-provider-config[Azure Cloud Provider] will need to be installed on each downstream Cluster, for the nodes to be initialized correctly.
 For this example we are also going to install https://docs.tigera.io/calico/latest/about/[Calico] as the default CNI.
-
++
 We can do this automatically at Cluster creation using the https://rancher-sandbox.github.io/cluster-api-addon-provider-fleet/[Cluster API Add-on Provider Fleet].
 This Add-on provider is installed by default with {product_name}.
 Two `HelmApps` need to be created first, to be applied on the new Cluster via label selectors.
-
++
 [source,bash]
 ----
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/examples/applications/ccm/azure/helm-chart.yaml
@@ -222,12 +222,12 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/ma
 ----
 
 * Create the Azure Cluster from the example ClusterClass
-
++
 Note that some variables are left to the user to substitute.
 Also beware that the `internal-first` `registrationMethod` variable is used as a workaround for correct provisioning.
 This immutable variable however will lead to issues when scaling or rolling out control plane nodes.
 A https://github.com/kubernetes-sigs/cluster-api-provider-azure/pull/5525[patch] will support this case in a future release of CAPZ, but the Cluster will need to be reprovisioned to change the `registrationMethod`.
-
++
 [source,yaml]
 ----
 apiVersion: cluster.x-k8s.io/v1beta1
@@ -271,16 +271,16 @@ Azure AKS::
 +
 --
 * An Azure AKS ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
-
++
 [source,bash]
 ----
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/examples/clusterclasses/azure/clusterclass-aks-example.yaml
 ----
 
 * Create the Azure AKS Cluster from the example ClusterClass.
-
++
 Note that some variables are left to the user to substitute.
-
++
 [source,yaml]
 ----
 apiVersion: cluster.x-k8s.io/v1beta1
@@ -321,7 +321,7 @@ AWS Kubeadm::
 +
 --
 * An AWS ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
-
++
 [source,bash]
 ----
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/examples/clusterclasses/aws/clusterclass-kubeadm-example.yaml
@@ -330,28 +330,28 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/ma
 * For this example we are also going to install https://docs.tigera.io/calico/latest/about/[Calico] as the default CNI.
 * The https://github.com/kubernetes/cloud-provider-aws[Cloud Controller Manager AWS] will need to be installed on each downstream Cluster for the nodes to be functional.
 * Additionally, we will also enable https://github.com/kubernetes-sigs/aws-ebs-csi-driver[AWS EBS CSI Driver].
-
++
 We can do this automatically at Cluster creation using the https://rancher-sandbox.github.io/cluster-api-addon-provider-fleet/[Cluster API Add-on Provider Fleet].
 This Add-on provider is installed by default with {product_name}.
 Two `HelmApps` need to be created first, to be applied on the new Cluster via label selectors. This will take care of deploying Calico and the EBS CSI Driver in the workload cluster.
-
++
 [source,bash]
 ----
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/examples/applications/csi/aws/helm-chart.yaml
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/examples/applications/cni/aws/calico/helm-chart.yaml
 ----
-
++
 We will need to create a Fleet Bundle to deploy the AWS Cloud Controller Manager as the upstream Helm chart has limitations that retrict us from applying the desired configuration via CAPI Add-on Provider Fleet. We expect this to be a temporary solution until the official chart is capable of supporting our requirements.
-
++
 [source,bash]
 ----
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/examples/applications/ccm/aws/fleet-bundle.yaml
 ----
 
 * Create the AWS Cluster from the example ClusterClass.
-
++
 Note that some variables are left to the user to substitute.
-
++
 [source,yaml]
 ----
 apiVersion: cluster.x-k8s.io/v1beta1
@@ -394,27 +394,27 @@ Docker Kubeadm::
 +
 --
 * A Docker Kubeadm ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
-
++
 [source,bash]
 ----
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/examples/clusterclasses/docker/clusterclass-docker-kubeadm.yaml
 ----
 
 * For this example we are also going to install Calico as the default CNI.
-
++
 We can do this automatically at Cluster creation using the https://rancher-sandbox.github.io/cluster-api-addon-provider-fleet/[Cluster API Add-on Provider Fleet].
 This Add-on provider is installed by default with {product_name}.
 Two `HelmApps` need to be created first, to be applied on the new Cluster via label selectors.
-
++
 [source,bash]
 ----
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/examples/applications/cni/calico/helm-chart.yaml
 ----
 
 * Create the Docker Kubeadm Cluster from the example ClusterClass.
-
++
 Note that some variables are left to the user to substitute.
-
++
 [source,yaml]
 ----
 apiVersion: cluster.x-k8s.io/v1beta1
@@ -449,25 +449,25 @@ Docker RKE2::
 +
 --
 * A Docker RKE2 ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
-
++
 [source,bash]
 ----
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/examples/clusterclasses/docker/clusterclass-docker-rke2.yaml
 ----
 
 * For this example we are also going to install Calico as the default CNI.
-
++
 We can do this automatically at Cluster creation using the https://rancher-sandbox.github.io/cluster-api-addon-provider-fleet/[Cluster API Add-on Provider Fleet].
 This Add-on provider is installed by default with {product_name}.
 Two `HelmApps` need to be created first, to be applied on the new Cluster via label selectors.
-
++
 [source,bash]
 ----
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/examples/applications/cni/calico/helm-chart.yaml
 ----
 
 * Create the LoadBalancer ConfigMap for Docker RKEv2 Cluster.
-
++
 [source,yaml]
 ----
 apiVersion: v1
@@ -531,7 +531,7 @@ data:
 ----
 
 * Create the Docker Kubeadm Cluster from the example ClusterClass.
-
++
 [source,yaml]
 ----
 apiVersion: cluster.x-k8s.io/v1beta1
