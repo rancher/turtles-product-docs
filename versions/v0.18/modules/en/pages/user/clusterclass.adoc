@@ -88,7 +88,7 @@ Azure RKE2::
 +
 --
 * An Azure ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
-
++
 [source,bash]
 ----
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/examples/clusterclasses/azure/clusterclass-rke2-example.yaml
@@ -96,11 +96,11 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/ma
 
 * Additionally, the https://capz.sigs.k8s.io/self-managed/cloud-provider-config[Azure Cloud Provider] will need to be installed on each downstream Cluster, for the nodes to be initialized correctly.
 For this example we are also going to install https://docs.tigera.io/calico/latest/about/[Calico] as the default CNI.
-
++
 We can do this automatically at Cluster creation using the https://rancher-sandbox.github.io/cluster-api-addon-provider-fleet/[Cluster API Add-on Provider Fleet].
 This Add-on provider is installed by default with {product_name}.
 Two `HelmApps` need to be created first, to be applied on the new Cluster via label selectors.
-
++
 [source,bash]
 ----
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/examples/applications/ccm/azure/helm-chart.yaml
@@ -108,12 +108,12 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/ma
 ----
 
 * Create the Azure Cluster from the example ClusterClass.
-
++
 Note that some variables are left to the user to substitute.
 Also beware that the `internal-first` `registrationMethod` variable is used as a workaround for correct provisioning.
 This immutable variable however will lead to issues when scaling or rolling out control plane nodes.
 A https://github.com/kubernetes-sigs/cluster-api-provider-azure/pull/5525[patch] will support this case in a future release of CAPZ, but the Cluster will need to be reprovisioned to change the `registrationMethod`.
-
++
 [source,yaml]
 ----
 apiVersion: cluster.x-k8s.io/v1beta1
@@ -157,16 +157,16 @@ Azure AKS::
 +
 --
 * An Azure AKS ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
-
++
 [source,bash]
 ----
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/examples/clusterclasses/azure/clusterclass-aks-example.yaml
 ----
 
 * Create the Azure AKS Cluster from the example ClusterClass.
-
++
 Note that some variables are left to the user to substitute.
-
++
 [source,yaml]
 ----
 apiVersion: cluster.x-k8s.io/v1beta1
