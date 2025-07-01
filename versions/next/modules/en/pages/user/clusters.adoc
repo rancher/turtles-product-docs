@@ -260,7 +260,7 @@ export KUBERNETES_VERSION={kubernetes-version}
 +
 [source,bash]
 ----
-curl -s https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/test/e2e/data/cluster-templates/vsphere-rke2.yaml | envsubst > cluster1.yaml
+curl -s https://raw.githubusercontent.com/rancher/turtles/refs/tags/v0.21.0/test/e2e/data/cluster-templates/vsphere-rke2.yaml | envsubst > cluster1.yaml
 ----
 
 . View **cluster1.yaml** and examine the resulting YAML file. You can make any changes you want as well.
@@ -312,7 +312,7 @@ export KUBERNETES_VERSION={kubernetes-version}
 +
 [source,bash]
 ----
-curl -s https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/test/e2e/data/cluster-templates/vsphere-kubeadm.yaml | envsubst > cluster1.yaml
+curl -s https://raw.githubusercontent.com/rancher/turtles/refs/tags/v0.21.0/test/e2e/data/cluster-templates/vsphere-kubeadm.yaml | envsubst > cluster1.yaml
 ----
 
 . View **cluster1.yaml** and examine the resulting YAML file. You can make any changes you want as well.
@@ -345,7 +345,7 @@ export KUBERNETES_VERSION={kubernetes-version}
 +
 [source,bash]
 ----
-curl -s https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/test/e2e/data/cluster-templates/aws-eks-mmp.yaml | envsubst > cluster1.yaml
+curl -s https://raw.githubusercontent.com/rancher/turtles/refs/tags/v0.21.0/test/e2e/data/cluster-templates/aws-eks-mmp.yaml | envsubst > cluster1.yaml
 ----
 
 . View **cluster1.yaml** and examine the resulting YAML file. You can make any changes you want as well.
@@ -380,7 +380,7 @@ export WORKER_MACHINE_COUNT={worker-machine-count}
 +
 [source,bash]
 ----
-curl -s https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/test/e2e/data/cluster-templates/gcp-gke.yaml | envsubst > cluster1.yaml
+curl -s https://raw.githubusercontent.com/rancher/turtles/refs/tags/v0.21.0/test/e2e/data/cluster-templates/gcp-gke.yaml | envsubst > cluster1.yaml
 ----
 
 . View **cluster1.yaml** and examine the resulting YAML file. You can make any changes you want as well.
