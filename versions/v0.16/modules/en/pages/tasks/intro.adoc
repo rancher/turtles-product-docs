@@ -1,6 +1,0 @@
-= Introduction
-:revdate: 2025-02-10
-:page-revdate: {revdate}
-:sidebar_position: 1
-
-In this section we cover additional operation tasks.
