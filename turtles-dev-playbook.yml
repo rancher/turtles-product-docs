@@ -6,7 +6,7 @@ site:
 content:
   sources:
     - url: ./
-      start_paths: [docs/next]
+      start_paths: [community-docs/next]
 
 # Description: SUSE UI bundle
 ui:
