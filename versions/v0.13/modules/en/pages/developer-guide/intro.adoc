@@ -1,6 +1,0 @@
-= Introduction
-:revdate: 2024-10-29
-:page-revdate: {revdate}
-:sidebar_position: 0
-
-Everything you need to know about developing {product_name}.
