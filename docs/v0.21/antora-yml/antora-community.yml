@@ -2,7 +2,7 @@ name: turtles
 title: Rancher Turtles
 version: v0.21
 display_version: 'v0.21'
-start_page: en:index.adoc
+start_page: en:community-index.adoc
 asciidoc:
   attributes:
     product_name: Rancher Turtles
