@@ -2,7 +2,7 @@ name: cluster-api
 title: Cluster API
 version: v0.21
 display_version: '0.21'
-start_page: en:index.adoc
+start_page: en:product-index.adoc
 asciidoc:
   attributes:
     product_name: SUSE® Rancher Prime Cluster API
