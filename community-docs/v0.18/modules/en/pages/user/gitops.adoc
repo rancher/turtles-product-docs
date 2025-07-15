@@ -1,6 +1,6 @@
 = GitOps Best Practices for Turtles and CAPI
 
-This section provides best practices for implementing GitOps with Turtles and Cluster API (CAPI), focusing on using https://fleet.rancher.io/[Fleet] in combination with *Cluster API Addon Provider Fleet*(`CAAPF`) for automated agent provisioning and integration into the `CAPI` ecosystem.
+This section provides best practices for implementing GitOps with Turtles and Cluster API (CAPI), focusing on using https://fleet.rancher.io/[Fleet] in combination with the *Cluster API Addon Provider Fleet*(`CAAPF`) for automating agent provisioning and integration into the `CAPI` ecosystem.
 
 These tips are transferable and can be applied even when using a different GitOps solution.
 
@@ -12,8 +12,8 @@ These tips are transferable and can be applied even when using a different GitOp
   Store application manifests in `applications/`, ensuring they are independent of `Clusters` and `ClusterClasses`. This enables selective or grouped provisioning based on user demand or matching selectors, preventing interference with cluster infrastructure. Please be aware that Helm chart dependencies need to be https://fleet.rancher.io/gitrepo-content#fleetyaml[refreshed] prior to addon provisioning.
 - **Utilize Nested GitRepo Resources:**
   Leverage https://fleet.rancher.io/gitrepo-content#nested-gitrepo-crs[nested] `GitRepo` resources in Fleet to structure repository content efficiently. This approach allows for modular provisioning, combining `ClusterClass` definitions, required addons/applications, and cluster configurations while maintaining separation of concerns.
-- **Use GitOps Integration Tools When Available**
-  When configuring a GitOps setup, take into consideration available tooling and features it provides. An example of this is https://rancher.github.io/cluster-api-addon-provider-fleet/00_intro.html[`CAAPF`], which automates Fleet GitOps installation on `CAPI` clusters and provides convenient automation.
+- **Use GitOps Integration Tools When Available:**
+  When configuring a GitOps setup, take into consideration available tooling and features it provides. An example of this is https://rancher.github.io/cluster-api-addon-provider-fleet/00_intro.html[`CAAPF`], which automates the Fleet GitOps installation on `CAPI` clusters and provides convenient automation.
 - **Apply Kustomize Overlays for Environment-Specific Customization:**
   Use `overlays/` to store Kustomize overlays for different environments. This ensures that configuration changes, such as scaling adjustments, networking modifications, or component upgrades, can be applied dynamically without altering base manifests.
 - **Utilize Compare Patches:**
@@ -60,25 +60,27 @@ repo-root/
 
 where the core provider contains:
 
-```yaml
+[source,yaml]
+----
 apiVersion: turtles-capi.cattle.io/v1alpha1
 kind: CAPIProvider
 metadata:
   name: cluster-api
 spec:
   type: core
-```
+----
 
 == Templates Configuration
 
 Specify `dependsOn` in `fleet.yaml` for specific `CAPIProvider` bundles or external `GitRepo` components. This ensures templates roll out in the correct order and prevents issues where component controllers are missing or not ready to accept `ClusterClass` definitions.
 
-```yaml
+[source,yaml]
+----
 namespace: capa-clusters
 dependsOn:
   - name: core      # Ensure core bundle is installed first
   - name: infra-aws # Wait for AWS provider installation
-```
+----
 
 == Clusters Configuration
 
@@ -86,7 +88,8 @@ Use labels to dynamically match clusters with required addons, allowing deployme
 
 Example label usage:
 
-```yaml
+[source,yaml]
+----
 apiVersion: cluster.x-k8s.io/v1beta1
 kind: Cluster
 metadata:
@@ -95,7 +98,7 @@ metadata:
     cni: calico
     ccm: aws
     env: dev
-```
+----
 
 [WARNING]
 ====
@@ -110,7 +113,8 @@ Cluster addons should define precise selection rules to match against appropriat
 
 The example below showcases a cluster that requires the installation of the `Calico` CNI and the `AWS` Cloud Controller Manager (CCM):
 
-```yaml
+[source,yaml]
+----
 apiVersion: cluster.x-k8s.io/v1beta1
 kind: Cluster
 metadata:
@@ -118,13 +122,14 @@ metadata:
   labels:
     cni: calico
     ccm: aws
-```
+----
 
 This setup requires two `GitRepo` resources, each responsible for provisioning addons based on specific labels - one for `cni: calico` and another for `ccm: aws`.
 
 Here is an example of a `GitRepo` resource for deploying the `Calico` CNI:
 
-```yaml
+[source,yaml]
+----
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
 metadata:
@@ -139,7 +144,7 @@ spec:
       matchLabels:
         cni: calico
         env: dev
-```
+----
 
 This ensures that the `Calico` CNI is deployed only on clusters labeled with `cni: calico` and `env: dev`, allowing for selective environment provisioning.
 
@@ -155,9 +160,10 @@ repo-root/
 │   │   │   ├── fleet.yaml # Fleet configuration for the Calico setup
 ----
 
-The `fleet.yaml` file defines templating rules and `comparePatches` to ensure a smooth rollout, independent of cluster configuration. To learn more about `CAAPF` templating, which is leveraged here, refer to the official https://rancher.github.io/cluster-api-addon-provider-fleet/04_reference/02_templating-strategy.html[documentation]
+The `fleet.yaml` file defines templating rules and `comparePatches` to ensure a smooth rollout, independent of cluster configuration. To learn more about `CAAPF` templating, which is leveraged here, refer to the official https://rancher.github.io/cluster-api-addon-provider-fleet/04_reference/02_templating-strategy.html[documentation].
 
-```yaml
+[source,yaml]
+----
 helm:
   releaseName: projectcalico
   repo: https://docs.tigera.io/calico/charts
@@ -185,4 +191,4 @@ diff:
     name: default
     operations:
     - {"op":"remove", "path":"/spec/kubernetesProvider"}
-```
+----

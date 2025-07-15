@@ -20,37 +20,37 @@ This is a list of the officially certified CAPI Providers by Turtles. These prov
 | *RKE2*
 | CAPRKE2
 | Bootstrap/Control Plane
-| https://rancher.github.io/cluster-api-provider-rke2[CAPRKE2 book]
+| https://rancher.github.io/cluster-api-provider-rke2
 
 | *Kubeadm*
 | Kubeadm
 | Bootstrap/Control Plane
-| https://cluster-api.sigs.k8s.io/tasks/bootstrap/kubeadm-bootstrap[CABPK docs]
+| https://cluster-api.sigs.k8s.io/tasks/bootstrap/kubeadm-bootstrap
 
 | *AWS*
 | CAPA
 | Infrastructure
-| https://cluster-api-aws.sigs.k8s.io[CAPA book]
+| https://cluster-api-aws.sigs.k8s.io
 
 | *Docker**
 | CAPD
 | Infrastructure
-| https://cluster-api.sigs.k8s.io[CAPI book]
+| https://cluster-api.sigs.k8s.io
 
 | *vSphere*
 | CAPV
 | Infrastructure
-| https://github.com/kubernetes-sigs/cluster-api-provider-vsphere/blob/main/docs/getting_started.md[CAPV docs]
+| https://github.com/kubernetes-sigs/cluster-api-provider-vsphere
 
 | *Azure* (Only AKS managed clusters)
 | CAPZ
 | Infrastructure
-| https://capz.sigs.k8s.io/[CAPZ book]
+| https://capz.sigs.k8s.io/
 
 | *GCP* (Only GKE managed clusters)
 | CAPG
 | Infrastructure
-| https://cluster-api-gcp.sigs.k8s.io/[CAPG book]
+| https://cluster-api-gcp.sigs.k8s.io/
 
 | *Addon Provider Fleet*
 | CAAPF
@@ -76,32 +76,38 @@ The following is a support matrix for each certified provider and their support 
 ======
 CAPZ::
 +
+--
 - **Full support** of `ClusterClass`: both managed (AKS) and unmanaged (virtual machines) clusters can be provisioned via topology.
+--
 
 CAPA::
 +
+--
 - **Supports** `ClusterClass` when provisioning unmanaged (EC2-based) clusters.
 - **Does not support** `ClusterClass` when provisioning managed (EKS) clusters: this is a work-in-progress.
-
-CAPG::
-+
-- **Supports** `ClusterClass` when provisioning unmanaged (virtual machines) clusters.
-- **Does not support** `ClusterClass` when provisioning managed (GKE) clusters: this is a work-in-progress.
+--
 
 CAPRKE2::
 +
+--
 - **Full support** of `ClusterClass`.
+--
 
 CABPK::
 +
+--
 - **Full support** of `ClusterClass`.
+--
 
 CAPV::
 +
+--
 - **Full support** of `ClusterClass`.
+--
 
 CAPD::
 +
+--
 - **Full support** of `ClusterClass`.
-
+--
 ======
