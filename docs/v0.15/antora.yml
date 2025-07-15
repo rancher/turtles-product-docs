@@ -1,10 +1,1 @@
-name: turtles
-title: Rancher Turtles
-version: v0.15
-display_version: 'v0.15'
-start_page: en:index.adoc
-asciidoc:
-  attributes:
-    product_name: Rancher Turtles
-nav:
-  - modules/en/nav.adoc
+antora-yml/antora-product.yml
