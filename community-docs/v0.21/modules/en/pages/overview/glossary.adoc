@@ -1,5 +1,4 @@
 = Glossary
-:sidebar_position: 2
 
 == Table of Contents
 
@@ -301,7 +300,7 @@ See <<_clusterclass,ClusterClass>>
 
 === Turtles
 
-Refers to <<_rancher_turtles,{product_name}>>
+Refers to <<_suse_rancher_prime_cluster_api,{product_name}>>
 
 == W
 

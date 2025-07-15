@@ -12,7 +12,6 @@ __ (github-actions[bot]) released this 2025-05-29 09:13:48 +0000 UTC - v0.20.0__
 ---
 
 ++++
-
 <p>Rancher Turtles is an extension to Rancher that brings full Cluster API integration to Rancher.</p>
 <p>This release of Rancher Turtles focuses of fixing bugs and improving stability of the extension.</p>
 <h2>What's Changed</h2>
@@ -53,7 +52,6 @@ __ (github-actions[bot]) released this 2025-05-29 09:13:48 +0000 UTC - v0.20.0__
 <li>Bump CAAPF to v0.10.0 by <a class="user-mention notranslate" data-hovercard-type="user" data-hovercard-url="/users/furkatgofurov7/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="https://github.com/furkatgofurov7">@furkatgofurov7</a> in <a class="issue-link js-issue-link" data-error-text="Failed to load title" data-id="3094381495" data-permission-text="Title is private" data-url="https://github.com/rancher/turtles/issues/1398" data-hovercard-type="pull_request" data-hovercard-url="/rancher/turtles/pull/1398/hovercard" href="https://github.com/rancher/turtles/pull/1398">#1398</a></li>
 </ul>
 <p><strong>Full Changelog</strong>: <a class="commit-link" href="https://github.com/rancher/turtles/compare/v0.19.0...v0.20.0"><tt>v0.19.0...v0.20.0</tt></a></p>
-
 ++++
 
 ---
@@ -74,4 +72,3 @@ __ (github-actions[bot]) released this 2025-05-29 09:13:48 +0000 UTC - v0.20.0__
 ---
 
 __Information retrieved from link:https://github.com/rancher/turtles/releases/tag/v0.20.0[here]__
-

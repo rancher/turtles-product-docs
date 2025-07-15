@@ -1,4 +1,3 @@
 = Introduction
-:sidebar_position: 0
 
 In this section, we will explore references in {product_name}.

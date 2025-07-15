@@ -6,13 +6,13 @@
 
 == Delete the imported cluster from Rancher
 
-1. From your browser, access Rancher Manager -> Cluster Management.
-2. Locate the cluster to be deleted, click the three-dot menu (⋮) next to it, and select Delete.
-3. Once the imported cluster is marked for deletion:
+. From your browser, access Rancher Manager -> Cluster Management.
+. Locate the cluster to be deleted, click the three-dot menu (⋮) next to it, and select Delete.
+. Once the imported cluster is marked for deletion:
     * Turtles controller will annotate the CAPI cluster with `imported: true`.
     * This annotation prevents the cluster from being re-imported automatically by Rancher.
     * Verify the annotation using the following command:
-+
+
 [source,bash]
 ----
 kubectl -n capi-clusters get clusters.cluster.x-k8s.io cluster1 -o json | jq .metadata.annotations

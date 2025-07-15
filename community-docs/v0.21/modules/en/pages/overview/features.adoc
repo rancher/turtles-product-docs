@@ -1,5 +1,4 @@
 = Features
-:sidebar_position: 0
 
 This section describes features and feature stages in {product_name}.
 
@@ -44,7 +43,6 @@ This feature gate is used to instruct Turtles on whether it should follow Ranche
 
 === Cluster Class Operations
 This feature gate is used to enable operations against CAPI clusters that use the ClusterClass feature. As CAPI clusters evolve, there is often a need to transition them from one ClusterClass to another, an operation known as rebasing. Turtles includes experimental support for rebasing which can be tested by enabling this feature gate.  Note that this feature is currently in alpha stage with no long-term support.
-
 
 == Feature Stages
 

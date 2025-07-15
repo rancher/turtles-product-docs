@@ -20,7 +20,7 @@ Starting with Turtles `v0.9.0`, the process used for importing CAPI clusters int
 
 This demo shows how to use the Rancher UI to install {product_name}, create/import a CAPI cluster, and install monitoring on the cluster:
 
-video::lGsr7KfBjgU[youtube,width=560,height=315]
++++<iframe width="560" height="315" src="https://www.youtube.com/embed/lGsr7KfBjgU?si=ORkzuAJjcdXUXMxh" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="">++++++</iframe>+++
 
 == Prerequisites
 

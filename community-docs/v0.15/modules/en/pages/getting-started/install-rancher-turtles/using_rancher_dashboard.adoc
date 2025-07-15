@@ -11,15 +11,16 @@ In case you need to review the list of prerequisites (including `cert-manager`),
 ====
 
 
-[CAUTION]
+[IMPORTANT]
 ====
-Rancher's `embedded-cluster-api` functionality will be disabled when installing {product_name}. This includes also cleaning up Rancher-specific webhooks that otherwise would conflict with CAPI ones.
+Before xref:./using_helm.adoc#_install_suse_rancher_prime_cluster_api_with_cluster_api_operator_as_a_helm_dependency[installing {product_name}] in your Rancher environment, Rancher's `embedded-cluster-api` functionality must be disabled. This includes also cleaning up Rancher-specific webhooks that otherwise would conflict with CAPI ones.
 
-The recommended way to disable this feature and the Rancher-specific webhooks, is to use the official {product_name} Helm chart, that includes a `pre-install` hook to apply the following changes:  
+To simplify setting up Rancher for installing {product_name}, the official {product_name} Helm chart includes a `pre-install` hook that applies these changes, making it transparent to the end user:
 
 * Disable the `embedded-cluster-api` feature in Rancher.
 * Delete the `mutating-webhook-configuration` and `validating-webhook-configuration` webhooks that are no longer needed.
 ====
+
 
 If you would like to understand how {product_name} works and what the architecture looks like, you can refer to the xref:../../reference-guides/architecture/intro.adoc[Architecture] section.
 
@@ -31,17 +32,17 @@ If uninstalling, you can refer to xref:../getting-started/uninstall_turtles.adoc
 
 == Installation
 
-* From your browser, access Rancher Manager and explore the *local* cluster.
-* Using the left navigation panel, go to `Apps` \-> `Repositories`.
-* Click `Create` to add a new repository.
-* Enter the following:
- ** *Name*: `turtles`.
- ** *Index URL*: https://rancher.github.io/turtles.
-* Wait for the `turtles` repository to have a status of `Active`.
-* Go to `Apps` \-> `Charts`.
-* Filter for `turtles`.
-* Click `Rancher Turtles - the Cluster API Extension`
-* Click `Install` \-> `Next` \-> `Install`.
+. From your browser, access Rancher Manager and explore the *local. cluster.
+. Using the left navigation panel, go to `Apps` \-> `Repositories`.
+. Click `Create` to add a new repository.
+. Enter the following:
+ .. *Name*: `turtles`.
+ .. *Index URL*: https://rancher.github.io/turtles.
+. Wait for the `turtles` repository to have a status of `Active`.
+. Go to `Apps` \-> `Charts`.
+. Filter for `turtles`.
+. Click `Rancher Turtles - the Cluster API Extension`
+. Click `Install` \-> `Next` \-> `Install`.
 
 [CAUTION]
 ====

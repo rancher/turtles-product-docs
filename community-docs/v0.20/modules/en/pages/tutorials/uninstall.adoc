@@ -1,5 +1,4 @@
 = Uninstall {product_name}
-:sidebar_position: 5
 
 To uninstall {product_name} use the following Helm command:
 

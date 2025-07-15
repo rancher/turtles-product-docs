@@ -1,6 +1,4 @@
 = Overview
-:page_project_origin: /intro.md
-:page_project_slug: /
 
 == What is Rancher Turtles?
 

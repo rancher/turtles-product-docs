@@ -13,7 +13,7 @@ This section will guide you through creating your first cluster and importing it
 ======
 GitOps using Fleet::
 +
-====
+--
 *Configure your Fleet repository*
 
 To simplify the process of cluster provisioning, we will be using a series of pre-configured examples that you can find in the repository https://github.com/rancher-sandbox/rancher-turtles-fleet-example.
@@ -22,7 +22,7 @@ By inspecting the contents of this repository, you will find:
 . A *clusters* folder, which is where the manifests are stored.
 . *cluster1.yaml* is the CAPI workload cluster definition.
 . *fleet.yaml* is used to specify the configuration options for Fleet. In this case it's declaring that the cluster definition should be added to the `capi-clusters` namespace.
-
++
 [NOTE]
 If you prefer, you can create your own Fleet repository using the same base structure.
 
@@ -48,11 +48,11 @@ image:gh_clone.png[git clone url]
 . Watch the resources become ready
 . Select *Cluster Management* from the menu
 . Check your cluster has been imported
-====
+--
 
 Manually using kubectl::
 +
-====
+--
 *Create your cluster definition*
 
 To generate the YAML for the cluster, do the following:
@@ -71,9 +71,9 @@ export NAMESPACE=capi-clusters
 # environment variables we exported above
 curl -s https://raw.githubusercontent.com/rancher-sandbox/rancher-turtles-fleet-example/templates/docker-rke2.yaml | envsubst '$CLUSTER_NAME,$CONTROL_PLANE_MACHINE_COUNT,$WORKER_MACHINE_COUNT,$KUBERNETES_VERSION,$NAMESPACE' > cluster1.yaml
 ----
-+
+
 . View *cluster1.yaml* to ensure there are no tokens. You can make any changes you want as well.
-+
+
 . Create the cluster using kubectl
 +
 [source,bash]
@@ -84,8 +84,7 @@ kubectl apply -f cluster1.yaml
 . Watch the resources become ready
 . Select *Cluster Management* from the menu
 . Check your cluster has been imported
-====
-
+--
 ======
 
 == Mark Namespace for auto-import
@@ -114,8 +113,7 @@ A namespace (or cluster) can be marked for auto-import at any time: before or af
 
 [CAUTION]
 ====
-Marking a cluster for auto-import triggers automatic registration by the Turtles controller, manual execution of
-registration commands is not required.
+Marking a cluster for auto-import triggers automatic registration by the Turtles controller, manual execution of registration commands is not required.
 ====
 
 [CAUTION]

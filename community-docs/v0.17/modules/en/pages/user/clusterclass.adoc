@@ -38,9 +38,8 @@ There are 2 options to provide the configuration. The first is using the Rancher
 
 === Import ClusterClass Definitions
 
-[tabs]
-======
-Using the Rancher Manager UI::
+[discrete]
+==== Using the Rancher Manager UI
 
 . Go to Rancher Manager
 . Select *Continuos Delivery* from the menu:
@@ -58,7 +57,7 @@ Using the Rancher Manager UI::
 . Click on the *clusters* name
 . Watch the resources become ready
 
-Manually using kubectl::
+=== Using kubectl
 
 . Get the *HTTPS* clone URL from your git repo
 . Create a new file called *repo.yaml*
@@ -94,15 +93,13 @@ kubectl apply -f repo.yaml
 . Watch the resources become ready
 . Select *Cluster Management* from the menu
 . Check your cluster has been imported
-======
 
 === Import Cluster Definitions
 
 Now the classes have been imported its possible to use them with cluster definitions.
 
-[tabs]
-======
-Using the Rancher Manager UI::
+[discrete]
+==== Using the Rancher Manager UI
 
 . Go to Rancher Manager
 . Select *Continuos Delivery* from the menu:
@@ -122,7 +119,7 @@ Using the Rancher Manager UI::
 . Select *Cluster Management* from the menu
 . Check your cluster has been imported
 
-Manually using kubectl::
+=== Using kubectl
 
 . Get the *HTTPS* clone URL from your git repo
 . Create a new file called *repo.yaml*
@@ -158,4 +155,3 @@ kubectl apply -f repo.yaml
 . Watch the resources become ready
 . Select *Cluster Management* from the menu
 . Check your cluster has been imported
-======
