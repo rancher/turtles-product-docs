@@ -1,13 +1,17 @@
-* xref:index.adoc[Overview]
-* Tutorials
-** xref:tutorials/quickstart.adoc[Quick Start]
-** xref:tutorials/first-cluster.adoc[Your First Cluster]
-** xref:tutorials/uninstall.adoc[Uninstall]
-* Overview
+ifeval::["{build-type}" == "product"]
+* xref:product-index.adoc[Overview]
+endif::[]
+ifeval::["{build-type}" == "community"]
+* xref:community-index.adoc[Overview]
+endif::[]
 ** xref:overview/architecture.adoc[Architecture]
 ** xref:overview/glossary.adoc[Glossary]
 ** xref:overview/features.adoc[Features]
 ** xref:overview/certified.adoc[Certified Providers]
+* Tutorials
+** xref:tutorials/quickstart.adoc[Quick Start]
+** xref:tutorials/first-cluster.adoc[Your First Cluster]
+** xref:tutorials/uninstall.adoc[Uninstall]
 * Reference
 ** xref:reference/capiprovider.adoc[CAPIProvider]
 ** xref:reference/clusterctlconfig.adoc[ClusterctlConfig]
