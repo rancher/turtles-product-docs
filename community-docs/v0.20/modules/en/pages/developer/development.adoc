@@ -1,5 +1,4 @@
 = Development setup
-:sidebar_position: 3
 
 == Prerequisites:
 

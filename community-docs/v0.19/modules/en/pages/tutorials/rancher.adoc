@@ -1,5 +1,4 @@
 = Rancher Setup
-:sidebar_position: 2
 
 == Installing Rancher
 
