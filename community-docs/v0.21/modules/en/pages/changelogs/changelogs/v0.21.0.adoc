@@ -12,8 +12,6 @@ __ (github-actions[bot]) released this 2025-06-30 13:10:47 +0000 UTC - v0.21.0__
 ---
 
 ++++
-
-
 <p>Rancher Turtles is an extension to Rancher that brings full Cluster API integration to Rancher.</p>
 <p>This release of Rancher Turtles focuses of fixing bugs and improving stability of the extension:</p>
 <ul>
@@ -22,7 +20,7 @@ __ (github-actions[bot]) released this 2025-06-30 13:10:47 +0000 UTC - v0.21.0__
 <li>Ability to run examples CLI with <code>go run</code> from tag</li>
 <li>Ships:
 <ul>
-<li>Cluster API Provider Add-on Provider Fleet v0.10.1</li>
+<li>Cluster API Provider Add-on Provider Fleet v0.11.0</li>
 <li>Cluster API Provider RKE2 v0.17.1</li>
 </ul>
 </li>
@@ -72,7 +70,6 @@ __ (github-actions[bot]) released this 2025-06-30 13:10:47 +0000 UTC - v0.21.0__
 <li><a class="user-mention notranslate" data-hovercard-type="user" data-hovercard-url="/users/thehejik/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="https://github.com/thehejik">@thehejik</a> made their first contribution in <a class="issue-link js-issue-link" data-error-text="Failed to load title" data-id="3097705823" data-permission-text="Title is private" data-url="https://github.com/rancher/turtles/issues/1406" data-hovercard-type="pull_request" data-hovercard-url="/rancher/turtles/pull/1406/hovercard" href="https://github.com/rancher/turtles/pull/1406">#1406</a></li>
 </ul>
 <p><strong>Full Changelog</strong>: <a class="commit-link" href="https://github.com/rancher/turtles/compare/v0.20.0...v0.21.0"><tt>v0.20.0...v0.21.0</tt></a></p>
-
 ++++
 
 ---
@@ -93,4 +90,3 @@ __ (github-actions[bot]) released this 2025-06-30 13:10:47 +0000 UTC - v0.21.0__
 ---
 
 __Information retrieved from link:https://github.com/rancher/turtles/releases/tag/v0.21.0[here]__
-

@@ -5,7 +5,7 @@ This section will guide you through creating your first cluster and importing it
 == Prerequisites
 
 * Rancher Manager cluster with {product_name} installed
-* Cluster API providers installed for your scenario - we'll be using the https://github.com/kubernetes-sigs/cluster-api/tree/main/test/infrastructure/docker[Docker infrastructure] and https://github.com/rancher/cluster-api-provider-rke2[RKE2 bootstrap/control plane] providers in these instructions - see xref:../operator/capiprovider.adoc[Initialization for common providers using Turtles' `CAPIProvider`]
+* Cluster API providers installed for your scenario - we'll be using the https://github.com/kubernetes-sigs/cluster-api/tree/main/test/infrastructure/docker[Docker infrastructure] and https://github.com/rancher-sandbox/cluster-api-provider-rke2[RKE2 bootstrap/control plane] providers in these instructions - see xref:../operator/capiprovider.adoc[Initialization for common providers using Turtles' `CAPIProvider`]
 
 == Provision a CAPI Workload Cluster
 
@@ -13,7 +13,7 @@ This section will guide you through creating your first cluster and importing it
 ======
 GitOps using Fleet::
 +
-====
+--
 *Configure your Fleet repository*
 
 To simplify the process of cluster provisioning, we will be using a series of pre-configured examples that you can find in the repository https://github.com/rancher-sandbox/rancher-turtles-fleet-example.
@@ -22,7 +22,7 @@ By inspecting the contents of this repository, you will find:
 . A *clusters* folder, which is where the manifests are stored.
 . *cluster1.yaml* is the CAPI workload cluster definition.
 . *fleet.yaml* is used to specify the configuration options for Fleet. In this case it's declaring that the cluster definition should be added to the `default` namespace.
-
++
 [NOTE]
 If you prefer, you can create your own Fleet repository using the same base structure.
 
@@ -48,11 +48,11 @@ image:gh_clone.png[git clone url]
 . Watch the resources become ready
 . Select *Cluster Management* from the menu
 . Check your cluster has been imported
-====
+--
 
 Manually using kubectl::
 +
-====
+--
 *Create your cluster definition*
 
 To generate the YAML for the cluster, do the following:
@@ -68,9 +68,9 @@ export KUBERNETES_VERSION=v1.30.0
 
 curl -s https://raw.githubusercontent.com/rancher-sandbox/rancher-turtles-fleet-example/templates/docker-rke2.yaml | envsubst > cluster1.yaml
 ----
-+
+
 . View *cluster1.yaml* to ensure there are no tokens. You can make any changes you want as well.
-+
+
 . Create the cluster using kubectl
 +
 [source,bash]
@@ -80,8 +80,7 @@ kubectl create -f cluster1.yaml
 . Watch the resources become ready
 . Select *Cluster Management* from the menu
 . Check your cluster has been imported
-====
-
+--
 ======
 
 == Mark Namespace for auto-import
@@ -104,11 +103,5 @@ kubectl label namespace capi-clusters cluster-api.cattle.io/rancher-auto-import=
 ----
 
 [NOTE]
-====
 A namespace (or cluster) can be marked for auto-import at any time: before or after the cluster has been created.
-====
 
-[CAUTION]
-====
-To prevent a cluster from getting stuck in deletion when Fleet is removed, keep auto-import enabled in the UI or avoid manually removing labels in the cluster's namespace, as Turtles will no longer handle the 'import' functionality from that point onward.
-====
