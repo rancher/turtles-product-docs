@@ -43,10 +43,18 @@ If you're a new to the project and want to help, but don't know where to start, 
 Beyond fixing bugs and submitting new features, there are other things you can submit
  which, while less flashy, will be deeply appreciated by all who interact with the codebase:
 
+ifeval::["{build-type}" == "product"]
  ** Extending test coverage!
  ** Refactoring!
- ** Reviewing and updating https://rancher.github.io/turtles-docs/[documentation]!
+ ** Reviewing and updating https://documentation.suse.com/cloudnative/cluster-api/v0.21/en/index.html[documentation]!
  ** Adding a new UI functionality!
+endif::[]
+ifeval::["{build-type}" == "community"]
+ ** Extending test coverage!
+ ** Refactoring!
+ ** Reviewing and updating https://turtles.docs.rancher.com/turtles/stable/en/index.html[documentation]!
+ ** Adding a new UI functionality!
+endif::[]
 
 +
 (See also <<_choosing_something_to_work_on,Choosing something to work on>> below.)
@@ -62,7 +70,7 @@ We have 2 forms of issues: bug reports and feature requests. If you are not sure
   If you are seeking to take on a bigger challenge or a more experienced contributor, check out https://github.com/rancher/turtles/issues?q=is%3Aopen+is%3Aissue+label%3Akind%2Ffeature[`feature requests`].
 * extension UI? Take a look at https://github.com/rancher/capi-ui-extension[`open`] or
   https://github.com/rancher/capi-ui-extension/labels/help-wanted[`help wanted` issues].
-* maybe, user-docs? Then, jump straight into https://github.com/rancher/turtles-docs/issues[`open` issues] in the docs repository.
+* maybe, user-docs? Then, jump straight into https://github.com/rancher/turtles-product-docs/issues[`open` issues] in the docs repository.
 
 == Opening Issues
 
