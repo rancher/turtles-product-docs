@@ -1,6 +1,6 @@
 = Release Notes
 
-* xref:changelogs/changelogs/v0.21.0.adoc[v0.22.0 (latest)]
+* xref:changelogs/changelogs/v0.22.0.adoc[v0.22.0 (latest)]
 
 * xref:changelogs/changelogs/v0.21.0.adoc[v0.21.0]
 
