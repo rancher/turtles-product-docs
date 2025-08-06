@@ -1,4 +1,6 @@
 = SLSA
+:revdate: 2024-10-29
+:page-revdate: {revdate}
 :sidebar_position: 1
 
 == Overview

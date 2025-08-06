@@ -1,4 +1,6 @@
 = Via Rancher Dashboard
+:revdate: 2024-11-05
+:page-revdate: {revdate}
 
 
 This is the recommended option for installing {product_name}.

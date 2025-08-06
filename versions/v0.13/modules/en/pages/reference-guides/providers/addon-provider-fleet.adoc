@@ -1,4 +1,6 @@
 = Cluster API Addon Provider Fleet
+:revdate: 2024-10-29
+:page-revdate: {revdate}
 
 == Overview
 

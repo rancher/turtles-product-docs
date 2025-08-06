@@ -1,4 +1,6 @@
 = Uninstall {product_name}
+:revdate: 2025-04-04
+:page-revdate: {revdate}
 
 To uninstall {product_name} use the following Helm command:
 

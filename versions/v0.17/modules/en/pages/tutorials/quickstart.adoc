@@ -1,4 +1,6 @@
 = Install
+:revdate: 2025-02-27
+:page-revdate: {revdate}
 
 {product_name} is a Rancher extension which means that you must have Rancher installed before you can get started with {product_name}.
 

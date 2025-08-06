@@ -1,4 +1,6 @@
 = Release Notes
+:revdate: 2025-05-07
+:page-revdate: {revdate}
 
 
 * xref:changelogs/changelogs/v0.16.0.adoc[v0.16.0 (latest)]

@@ -1,4 +1,6 @@
 = Create & Import Your First Cluster Using kubectl
+:revdate: 2024-10-09
+:page-revdate: {revdate}
 :sidebar_position: 3
 
 This section will guide you through creating your first cluster and importing it into Rancher Manager using kubectl.

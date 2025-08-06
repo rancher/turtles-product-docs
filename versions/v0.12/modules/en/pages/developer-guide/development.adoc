@@ -1,4 +1,6 @@
 = Development setup
+:revdate: 2024-10-09
+:page-revdate: {revdate}
 :sidebar_position: 3
 
 == Prerequisites:

@@ -1,6 +1,8 @@
 :doctype: book
 
 = Create & Import a Cluster Using CAPI Providers
+:revdate: 2025-05-05
+:page-revdate: {revdate}
 
 This guide goes over the process of creating and importing CAPI clusters with a selection of the officially certified providers.
 

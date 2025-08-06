@@ -1,4 +1,6 @@
 = Deployment Scenarios
+:revdate: 2024-12-23
+:page-revdate: {revdate}
 :sidebar_position: 0
 
 [NOTE]

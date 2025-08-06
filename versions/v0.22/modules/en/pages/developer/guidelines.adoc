@@ -1,4 +1,6 @@
 = Guidelines
+:revdate: 2025-08-01
+:page-revdate: {revdate}
 
 // START doctoc generated TOC please keep comment here to allow auto update
 

@@ -1,4 +1,6 @@
 = GitOps Best Practices for Turtles and CAPI
+:revdate: 2025-07-01
+:page-revdate: {revdate}
 
 This section provides best practices for implementing GitOps with Turtles and Cluster API (CAPI), focusing on using https://fleet.rancher.io/[Fleet] in combination with the *Cluster API Addon Provider Fleet*(`CAAPF`) for automating agent provisioning and integration into the `CAPI` ecosystem.
 

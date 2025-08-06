@@ -1,4 +1,6 @@
 = Test suite guide
+:revdate: 2024-10-09
+:page-revdate: {revdate}
 
 The main reference for reusing the test suite is https://github.com/rancher-sandbox/turtles-integration-suite-example[this repository], which contains an example on how to integrate a given CAPI provider with {product_name} and applies a series of checks based on a GitOps workflow.
 

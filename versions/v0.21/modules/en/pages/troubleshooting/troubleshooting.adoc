@@ -1,6 +1,8 @@
 :doctype: book
 
 = Rancher Turtles Troubleshooting
+:revdate: 2025-07-01
+:page-revdate: {revdate}
 
 This guide provides troubleshooting steps for Rancher Turtles and Cluster API (CAPI) clusters. It covers common issues and their resolutions to help you maintain a stable and functional environment.
 
