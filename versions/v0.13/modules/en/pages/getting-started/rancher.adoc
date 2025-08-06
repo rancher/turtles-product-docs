@@ -1,4 +1,6 @@
 = Rancher Setup
+:revdate: 2024-10-29
+:page-revdate: {revdate}
 :sidebar_position: 2
 
 == Installing Rancher

@@ -1,4 +1,6 @@
 = Introduction
+:revdate: 2024-10-09
+:page-revdate: {revdate}
 
 [WARNING]
 ====

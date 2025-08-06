@@ -1,4 +1,6 @@
 = Components
+:revdate: 2024-10-09
+:page-revdate: {revdate}
 :sidebar_position: 0
 
 Below is a visual representation of the architecture components of Rancher

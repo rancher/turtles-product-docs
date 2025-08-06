@@ -1,4 +1,6 @@
 = Glossary
+:revdate: 2024-10-10
+:page-revdate: {revdate}
 :sidebar_position: 2
 
 == Table of Contents

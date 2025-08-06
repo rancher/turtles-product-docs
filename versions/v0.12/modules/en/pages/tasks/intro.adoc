@@ -1,4 +1,6 @@
 = Introduction
+:revdate: 2024-10-09
+:page-revdate: {revdate}
 :sidebar_position: 1
 
 In this section we cover additional operation tasks.

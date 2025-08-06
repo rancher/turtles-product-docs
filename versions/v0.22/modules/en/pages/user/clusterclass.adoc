@@ -1,4 +1,6 @@
 = ClusterClass
+:revdate: 2025-08-01
+:page-revdate: {revdate}
 
 In this section we cover using https://cluster-api.sigs.k8s.io/tasks/experimental-features/cluster-class/[ClusterClass] with the {product_name}.
 

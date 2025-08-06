@@ -1,4 +1,6 @@
 == "v0.4.0"
+:revdate: 2025-05-30
+:page-revdate: {revdate}
 === "2024-01-09 11:39:06 +0000 UTC"
 
 // Disclaimer: this file is generated, do not edit it manually.

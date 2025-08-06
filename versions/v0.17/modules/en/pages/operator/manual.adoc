@@ -1,4 +1,6 @@
 = Manual Installation
+:revdate: 2025-02-27
+:page-revdate: {revdate}
 
 This page describes how to install {product_name} manually, using the Helm CLI.
 

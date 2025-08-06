@@ -1,4 +1,6 @@
 = Introduction
+:revdate: 2024-12-23
+:page-revdate: {revdate}
 :page_project_origin: /getting-started/intro.md
 :page_project_slug: /
 

@@ -1,4 +1,6 @@
 = Create a cluster using Fleet
+:revdate: 2025-05-30
+:page-revdate: {revdate}
 
 This section will guide you through creating a cluster that utilizes ClusterClass using a GitOps workflow with Fleet.
 
