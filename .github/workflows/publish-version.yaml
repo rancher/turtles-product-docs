@@ -28,30 +28,30 @@ jobs:
       - name: Update example versions in documentation
         run: |
           go run tools/setexampleversion/main.go -version=v${{ env.TRIMMED_TAG }} \
-            docs/next/modules/en/pages/user/clusterclass.adoc \
-            docs/next/modules/en/pages/operator/certificationsuite.adoc \
-            docs/next/modules/en/pages/operator/manual.adoc \
-            docs/next/modules/en/pages/tutorials/quickstart.adoc \
-            docs/next/modules/en/pages/user/clusters.adoc
+            versions/next/modules/en/pages/user/clusterclass.adoc \
+            versions/next/modules/en/pages/operator/certificationsuite.adoc \
+            versions/next/modules/en/pages/operator/manual.adoc \
+            versions/next/modules/en/pages/tutorials/quickstart.adoc \
+            versions/next/modules/en/pages/user/clusters.adoc
       - name: Copy docs directory
         run: |
-          mkdir -p docs/${TAG}
-          cp -r docs/next/* docs/${TAG}
+          mkdir -p versions/${TAG}
+          cp -r versions/next/* versions/${TAG}
       - name: Update site.start_page with new tag
         run: |
-          sed -i "s|start_page:.*|start_page: ${TAG}@turtles:en:index.adoc|" turtles-gh-pages-playbook.yml
+          sed -i "s|start_page:.*|start_page: ${TAG}@turtles:en:index.adoc|" turtles-local-community-playbook.yml
       - name: Prepend new tag to start_paths
         run: |
-          sed -i "s|start_paths: \[|start_paths: [docs/${TAG}, |" turtles-gh-pages-playbook.yml
+          sed -i "s|start_paths: \[|start_paths: [versions/${TAG}, |" turtles-local-community-playbook.yml
       - name: Change version in antora.yml
         run: |
-          sed -i "s/^version: .*/version: $TAG/" docs/${TAG}/antora.yml
+          sed -i "s/^version: .*/version: $TAG/" versions/${TAG}/antora.yml
       - name: Remove prerelease tag in antora.yml
         run: |
-          sed -i '/prerelease/d' docs/$TAG/antora.yml
+          sed -i '/prerelease/d' versions/$TAG/antora.yml
       - name: Change display_version in antora.yml
         run: |
-          sed -i "s/^display_version: .*/display_version: '$TAG'/"  docs/${TAG}/antora.yml
+          sed -i "s/^display_version: .*/display_version: '$TAG'/"  versions/${TAG}/antora.yml
       - name: Commit changes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
