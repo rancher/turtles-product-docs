@@ -1,6 +1,8 @@
 :doctype: book
 
 = Rancher Turtles Troubleshooting
+:revdate: 2025-12-17
+:page-revdate: {revdate}
 
 This guide provides troubleshooting steps for Rancher Turtles and Cluster API (CAPI) clusters. It covers common issues and their resolutions to help you maintain a stable and functional environment.
 
@@ -24,21 +26,17 @@ You can view the following pods and check their logs in the following namespaces
 
 
 |===
-| Namespace | Pod | Description
+| Namespace | Deployment | Description
 
-| rancher-turtles-system
-| rancher-turtles-cluster-api-operator
-| Manages the installation and lifecycle of Cluster API providers in the management cluster
-
-| rancher-turtles-system
+| cattle-turtles-system
 | rancher-turtles-controller-manager
 | Handles Rancher integration and manages the custom resources for Turtles
 
-| rancher-turtles-system
+| fleet-addon-system
 | caapf-controller-manager
 | Controls the Cluster API Provider Framework for custom infrastructure providers
 
-| capi-system
+| cattle-capi-system
 | capi-controller-manager
 | Core Cluster API controller that reconciles main cluster resources
 
@@ -70,8 +68,8 @@ One way to monitor logs from the Cluster API control plane pods is by usuing `ku
 
 [source,bash]
 ----
-kubectl logs -l control-plane=controller-manager -n rancher-turtles-system -f
-kubectl logs -l control-plane=controller-manager -n capi-system -f
+kubectl logs -l control-plane=controller-manager -n cattle-turtles-system -f
+kubectl logs -l control-plane=controller-manager -n cattle-capi-system -f
 kubectl logs -l control-plane=controller-manager -n rke2-bootstrap-system -f
 kubectl logs -l control-plane=controller-manager -n rke2-control-plane-system -f
 ----
@@ -92,7 +90,7 @@ Then you can tail logs from all pods in real time.
 
 [source,bash]
 ----
-kubectl stern . -n rancher-turtles-system -n rke2-bootstrap-system -n rke2-control-plane-system -n capi-system
+kubectl stern . -n cattle-turtles-system -n rke2-bootstrap-system -n rke2-control-plane-system -n cattle-capi-system
 ----
 
 or
@@ -205,32 +203,20 @@ Output:
 +
 image::lineage-cluster-output.png[Output]
 
-== How to enable debug mode for Rancher Turtles and CAPI operators
+== How to enable debug mode for {product_name} and CAPI providers
 
-The Helm chart exposes values for increasing the log level via the usual `values.yaml` configuration parameters:
-
-The Cluster API Operator - log level for the CAPI operator can also be increased using the Helm chart, if installed with the Rancher Turtles chart use the command:
-
+* {product_name} - To enable debug mode for {product_name}, you need to patch `cattle-system/rancher-config` configmap as follows:
++
 [source,bash]
 ----
-        --set cluster-api-operator.logLevel=5
-        --set rancherTurtles.managerArguments[0]="-v=5"
+kubectl patch configmap -n cattle-system rancher-config --type merge --patch '{"data":{"rancher-turtles": "managerArguments:\n  - --v=5\n"}}'
 ----
+(5 is equivalent to DEBUG)
++
+This results in the Turtles pod being restarted, in order to use the new configuration.
 
-For example:
-
-[source,bash]
-----
-helm upgrade rancher-turtles turtles/rancher-turtles \
-            -n rancher-turtles-system \
-            --reuse-values \
-            --set "rancherTurtles.managerArguments={--insecure-skip-verify,-v=5}" \
-            --set cluster-api-operator.logLevel=5
-----
-
-
-If the log level is needed to be increased then the Cluster API Providers - edit CAPIProvider resource can be changed to your desired level as seen below:
-
+* Cluster API Providers - Edit the CAPIProvider resources for providers where increasing the log level is needed. Change to your desidered level:
++
 [source,bash]
 ----
 CAPIProvider.Spec.Manager.Verbosity=5
@@ -299,7 +285,7 @@ filters:
     - management.cattle.io/.*
     - provisioning.cattle.io/.*
   - include_namespace:
-    - rancher-turtles-system
+    - cattle-turtles-system
     - capi-.*
     - cattle.*
     - fleet.*
@@ -323,7 +309,7 @@ Usage via regular flags:
 
 [source,bash]
 ----
-kubectl crust-gather collect --include-namespace rancher-turtles-system --include-namespace capi-* --include-namespace cattle* --include-namespace c-* --include-namespace=<any-capi-cluster-namespace> --kubeconfig=<KUBECONFIG>
+kubectl crust-gather collect --include-namespace cattle-turtles-system --include-namespace capi-* --include-namespace cattle* --include-namespace c-* --include-namespace=<any-capi-cluster-namespace> --kubeconfig=<KUBECONFIG>
 ----
 
 You can specify a file with secrets or environment variables with secrets strings to exclude. 
@@ -380,7 +366,7 @@ Replace `capi-clusters` with the namespace where your clusters are deployed and 
 +
 [source,bash]
 ----
-helm uninstall -n rancher-turtles-system rancher-turtles
+helm uninstall -n cattle-turtles-system rancher-turtles
 ----
 
 . Remove any webhook configurations that might have been created by CAPI providers:
@@ -402,7 +388,7 @@ kubectl delete mutatingwebhookconfigurations [webhook-name]
 ----
 
 . Clean up any leftover namespaces and resources. The following namespaces may remain after uninstallation:
-   * rancher-turtles-system
+   * cattle-turtles-system
    * rke2-bootstrap-system
    * rke2-control-plane-system
    * capi-system
@@ -414,12 +400,12 @@ To remove these namespaces:
 [source,bash]
 ----
 # First remove any finalizers that might be blocking deletion
-for NS in rancher-turtles-system rke2-bootstrap-system rke2-control-plane-system capi-system capz-system capi-clusters; do
+for NS in cattle-turtles-system rke2-bootstrap-system rke2-control-plane-system capi-system capz-system capi-clusters; do
   kubectl get namespace $NS -o json | jq '.spec.finalizers = []' | kubectl replace --raw "/api/v1/namespaces/$NS/finalize" -f -
 done
 
 # Then delete the namespaces
-kubectl delete namespace rancher-turtles-system rke2-bootstrap-system rke2-control-plane-system capi-system capz-system capi-clusters
+kubectl delete namespace cattle-turtles-system rke2-bootstrap-system rke2-control-plane-system capi-system capz-system capi-clusters
 ----
 
 . Finally, remove the CRDs related to Cluster API and Rancher Turtles:

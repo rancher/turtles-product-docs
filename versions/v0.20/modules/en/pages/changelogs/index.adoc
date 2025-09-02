@@ -1,8 +1,13 @@
 = Release Notes
+<<<<<<< HEAD
 :revdate: 2025-11-20
 :page-revdate: {revdate}
 
 * xref:changelogs/changelogs/v0.20.0.adoc[v0.20.0]
+=======
+
+* xref:changelogs/changelogs/v0.20.0.adoc[v0.20.0 ]
+>>>>>>> f203b29 (Updating to have versions folder hold all page content so as to not break the articles listing page and publishing workflow.)
 
 * xref:changelogs/changelogs/v0.19.0.adoc[v0.19.0]
 

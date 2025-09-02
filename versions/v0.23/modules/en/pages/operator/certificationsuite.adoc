@@ -1,9 +1,6 @@
 = Provider Test Suite
-<<<<<<< HEAD:versions/v0.25/modules/en/pages/operator/certificationsuite.adoc
 :revdate: 2025-09-16
 :page-revdate: {revdate}
-=======
->>>>>>> f203b29 (Updating to have versions folder hold all page content so as to not break the articles listing page and publishing workflow.):versions/next/modules/en/pages/operator/certificationsuite.adoc
 
 This section contains information on how you can leverage the existing E2E suite to integrate any CAPI providers with Turtles and verify that the provisioning and importing of clusters works as expected. The validation performs the following actions:
 
@@ -82,11 +79,7 @@ variables:
   SKIP_RESOURCE_CLEANUP: "false"
   ARTIFACTS_FOLDER: "_artifacts"
   MANAGEMENT_CLUSTER_ENVIRONMENT: "kind" # supported options are eks, isolated-kind, kind
-<<<<<<< HEAD:versions/v0.25/modules/en/pages/operator/certificationsuite.adoc
   RANCHER_VERSION: "{rancher_version}"
-=======
-  RANCHER_VERSION: "v2.11.0"
->>>>>>> f203b29 (Updating to have versions folder hold all page content so as to not break the articles listing page and publishing workflow.):versions/next/modules/en/pages/operator/certificationsuite.adoc
   KUBERNETES_VERSION: "{kubernetes-version}"
   KUBERNETES_MANAGEMENT_VERSION: "{kubernetes-version}"
   KUBERNETES_MANAGEMENT_AWS_REGION: "eu-west-2"
@@ -94,11 +87,7 @@ variables:
   TURTLES_PATH: "turtles/rancher-turtles"
   TURTLES_REPO_NAME: "turtles"
   TURTLES_URL: https://rancher.github.io/turtles
-<<<<<<< HEAD:versions/v0.25/modules/en/pages/operator/certificationsuite.adoc
   TURTLES_VERSION: "{turtles_version}"
-=======
-  TURTLES_VERSION: "v0.21.0"
->>>>>>> f203b29 (Updating to have versions folder hold all page content so as to not break the articles listing page and publishing workflow.):versions/next/modules/en/pages/operator/certificationsuite.adoc
   RANCHER_HOSTNAME: "localhost"
   RANCHER_FEATURES: ""
   RANCHER_PATH: "rancher-latest/rancher"
