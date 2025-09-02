@@ -1,4 +1,6 @@
 = ClusterctlConfig
+:revdate: 2025-06-30
+:page-revdate: {revdate}
 
 The `ClusterctlConfig` resource allows managing overrides for clusterctl (CAPI Operator) configurations in a declarative way. It is used to configure clusterctl providers and their urls, as well as version restrictions.
 
