@@ -1,18 +1,16 @@
 * xref:index.adoc[Overview]
-* Tutorials
-** xref:tutorials/quickstart.adoc[Quick Start]
-** xref:tutorials/first-cluster.adoc[Your First Cluster]
-** xref:tutorials/uninstall.adoc[Uninstall]
-* Overview
 ** xref:overview/architecture.adoc[Architecture]
 ** xref:overview/glossary.adoc[Glossary]
 ** xref:overview/features.adoc[Features]
 ** xref:overview/certified.adoc[Certified Providers]
+* Tutorials
+** xref:tutorials/quickstart.adoc[Quick Start]
+** xref:tutorials/first-cluster.adoc[Your First Cluster]
+** xref:tutorials/uninstall.adoc[Uninstall]
 * Reference
 ** xref:reference/capiprovider.adoc[CAPIProvider]
 ** xref:reference/clusterctlconfig.adoc[ClusterctlConfig]
 * User Guide
-** xref:user/clusters.adoc[Provision a CAPI cluster]
 ** xref:user/clusterclass.adoc[Provision a CAPI cluster with ClusterClass]
 ** xref:user/fleet.adoc[Create a cluster using Fleet]
 ** xref:user/delete-cluster.adoc[Delete an imported cluster]
