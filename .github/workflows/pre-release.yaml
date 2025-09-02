@@ -151,8 +151,8 @@ jobs:
         run: |
           if [[ -s dynamic-config.json ]] && [[ $(jq '.rules | length' dynamic-config.json) -gt 0 ]]; then
             go run tools/setexampleversion/main.go -config=dynamic-config.json \
-              docs/next/modules/en/pages/operator/certificationsuite.adoc \
-              docs/next/modules/en/pages/tutorials/quickstart.adoc
+              versions/next/modules/en/pages/operator/certificationsuite.adoc \
+              versions/next/modules/en/pages/tutorials/quickstart.adoc
           else
             echo "No rules to apply - skipping updates"
           fi
@@ -160,7 +160,7 @@ jobs:
       - name: Check for changes
         id: changes
         run: |
-          if git diff --quiet docs/next/; then
+          if git diff --quiet versions/next/; then
             echo "has_changes=false" >> $GITHUB_OUTPUT
           else
             echo "has_changes=true" >> $GITHUB_OUTPUT
@@ -175,7 +175,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           
           # Create a descriptive commit message
-          commit_msg="Update component versions in docs/next"
+          commit_msg="Update component versions in versions/next"
           if [[ -n "${{ inputs.rancher_version }}" ]]; then commit_msg+="\n- Rancher: ${{ inputs.rancher_version }}"; fi
           if [[ -n "${{ inputs.cluster_api_operator_version }}" ]]; then commit_msg+="\n- Cluster API Operator: ${{ inputs.cluster_api_operator_version }}"; fi
           if [[ -n "${{ inputs.cluster_api_version }}" ]]; then commit_msg+="\n- Cluster API: ${{ inputs.cluster_api_version }}"; fi
@@ -186,7 +186,7 @@ jobs:
           
           branch_name="update-component-versions-$(date +%Y%m%d-%H%M%S)"
           git checkout -b $branch_name
-          git add docs/next/
+          git add versions/next/
           git commit -m "$commit_msg"
           git push origin $branch_name
           
