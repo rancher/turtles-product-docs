@@ -1,6 +1,5 @@
 tmp/
 node_modules/
-build/site
-build/site-product
+build/
 .vscode/
 .DS_Store
