@@ -48,7 +48,7 @@ Beyond fixing bugs and submitting new features, there are other things you can s
 ifeval::["{build-type}" == "product"]
  ** Extending test coverage!
  ** Refactoring!
- ** Reviewing and updating https://documentation.suse.com/cloudnative/cluster-api/v0.21/en/index.html[documentation]!
+ ** Reviewing and updating https://documentation.suse.com/cloudnative/cluster-api/latest/en/index.html[documentation]!
  ** Adding a new UI functionality!
 endif::[]
 ifeval::["{build-type}" == "community"]
