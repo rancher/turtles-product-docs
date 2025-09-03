@@ -53,16 +53,14 @@ https://github.com/metal3-io/cluster-api-provider-metal3/releases/v1.7.1/infrast
 
 == Override a Certified Provider version
 
-{product_name} embeds a validated configuration where all certified provider versions are pinned.  +
-Typically versions are updated with any relese of {product_name}.  
+{product_name} embeds a validated configuration where all certified provider versions are pinned. Typically versions are updated with any relese of {product_name}.  
 
 [WARNING]
 ====
 - {product_name} only validates the embedded configuration for certified providers. Any customization to the embedded configuration can eventually lead to incompatibilities and unsupported scenarios. 
 ====
 
-In order to override a provider version, or to use a different registry to pull images, a `ClusterctlConfig` can be defined.  +
-For more information on image override, please refer to the upstream link:https://cluster-api.sigs.k8s.io/clusterctl/configuration#image-overrides[documentation].  
+In order to override a provider version, or to use a different registry to pull images, a `ClusterctlConfig` can be defined. For more information on image override, please refer to the upstream https://cluster-api.sigs.k8s.io/clusterctl/configuration#image-overrides[documentation].  
 
 [source,yaml]
 ----
