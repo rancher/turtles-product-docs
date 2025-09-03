@@ -13,10 +13,18 @@ To install Cluster API providers in an air-gapped environment the following will
 . Configure Cluster API providers for an air-gapped environment:
  ** Provide fetch configuration for each provider from an accessible location (e.g., an internal github/gitlab server) or from pre-created ConfigMaps within the cluster.
  ** Provide image overrides for each provider to pull images from an accessible image repository.
+ifeval::["{build-type}" == "product"]
+. Configure {product_name} for an air-gapped environment:
+ ** Collect and publish {product_name} images and publish to the private registry. https://documentation.suse.com/cloudnative/rancher-manager/latest/en/installation-and-upgrade/other-installation-methods/air-gapped/publish-images.html#_2_collect_the_cert_manager_image[Example of cert-manager installation for the reference].
+ ** Provide fetch configuration and image values for `core` and `caprke2` providers in xref:../operator/chart.adoc#_cluster_api_operator_values[values.yaml].
+ ** Provider image value for the Cluster API Operator Helm chart dependency in https://github.com/kubernetes-sigs/cluster-api-operator/blob/main/hack/charts/cluster-api-operator/values.yaml#L26[values.yaml]. Image values specified with the cluster-api-operator key will be passed along to the Cluster API Operator.
+endif::[]
+ifeval::["{build-type}" == "community"]
 . Configure {product_name} for an air-gapped environment:
  ** Collect and publish {product_name} images and publish to the private registry. https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/other-installation-methods/air-gapped-helm-cli-install/publish-images#2-collect-the-cert-manager-image[Example of cert-manager installation for the reference].
  ** Provide fetch configuration and image values for `core` and `caprke2` providers in xref:../operator/chart.adoc#_cluster_api_operator_values[values.yaml].
  ** Provider image value for the Cluster API Operator Helm chart dependency in https://github.com/kubernetes-sigs/cluster-api-operator/blob/main/hack/charts/cluster-api-operator/values.yaml#L26[values.yaml]. Image values specified with the cluster-api-operator key will be passed along to the Cluster API Operator.
+endif::[]
 
 == Example Usage
 
