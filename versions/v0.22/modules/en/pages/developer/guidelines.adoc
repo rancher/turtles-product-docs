@@ -48,7 +48,7 @@ Beyond fixing bugs and submitting new features, there are other things you can s
  ** Extending test coverage!
  ** Refactoring!
 ifeval::["{build-type}" == "product"]
- ** Reviewing and updating https://documentation.suse.com/cloudnative/cluster-api/v0.21/en/index.html[documentation]!
+ ** Reviewing and updating https://documentation.suse.com/cloudnative/cluster-api/latest/en/index.html[documentation]!
 endif::[]
 ifeval::["{build-type}" == "community"]
  ** Reviewing and updating https://turtles.docs.rancher.com/turtles/stable/en/index.html[documentation]!
