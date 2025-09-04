@@ -4,18 +4,16 @@
 
 {product_name} is a Rancher extension which means that you must have Rancher installed before you can get started with {product_name}.
 
-ifeval::["{build-type}" == "product"]
 [TIP]
 ====
-If you don't have Rancher installed yet, make sure to follow one of the official https://documentation.suse.com/cloudnative/rancher-manager/latest/en/installation-and-upgrade/installation-and-upgrade.html[installation guides]. We recommend you take a look at the xref:./quickstart.adoc#_prerequisites[Prerequisites] table to determine the appropriate version to install.
-====
+ifeval::["{build-type}" == "product"]
+If you don't have Rancher installed yet, make sure to follow one of the official https://documentation.suse.com/cloudnative/rancher-manager/latest/en/installation-and-upgrade/installation-and-upgrade.html[installation guides].
 endif::[]
 ifeval::["{build-type}" == "community"]
-[TIP]
-====
-If you don't have Rancher installed yet, make sure to follow one of the official https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade[installation guides]. We recommend you take a look at the xref:./quickstart.adoc#_prerequisites[Prerequisites] table to determine the appropriate version to install.
-====
+If you don't have Rancher installed yet, make sure to follow one of the official https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade[installation guides].
 endif::[]
+We recommend you take a look at the xref:./quickstart.adoc#_prerequisites[Prerequisites] table to determine the appropriate version to install.
+====
 
 == Prerequisites
 
