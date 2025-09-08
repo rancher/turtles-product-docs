@@ -35,7 +35,7 @@ Before you can install {product_name}, you need to have the following components
 
 == Components Versions
 
-This table lists the version of the components installed with the latest version `v0.22.0` of {product_name}:
+This table lists the version of the components installed with the latest version `v0.23.0` of {product_name}:
 
 [TIP]
 ====
