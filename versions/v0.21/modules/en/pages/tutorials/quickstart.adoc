@@ -25,7 +25,7 @@ Before you can install {product_name}, you need to have the following components
 | Follow the official https://helm.sh/docs/intro/install[installation docs]
 
 | Rancher
-| `v2.10.2`
+| `v2.11.0`
 | Install using https://documentation.suse.com/cloudnative/rancher-manager/latest/en/installation-and-upgrade/install-rancher.html#_install_the_rancher_helm_chart[Helm] on any Kubernetes cluster, whether self-hosted or on a managed service from https://documentation.suse.com/cloudnative/rancher-manager/latest/en/installation-and-upgrade/hosted-kubernetes/rancher-on-amazon-eks.html[Amazon], https://documentation.suse.com/cloudnative/rancher-manager/latest/en/installation-and-upgrade/hosted-kubernetes/rancher-on-aks.html[Azure], or https://documentation.suse.com/cloudnative/rancher-manager/latest/en/installation-and-upgrade/hosted-kubernetes/rancher-on-gke.html[Google].
 
 | Cert-manager
@@ -46,10 +46,10 @@ If you're customizing the installation parameters, please make sure that you are
 | Name | Version 
 
 | Cluster API Operator
-| `v0.17.1`
+| `v0.18.1`
 
 | Cluster API
-| `v1.9.6`
+| `v1.9.5`
 
 | Cluster API Provider RKE2
 | `v0.17.1`
