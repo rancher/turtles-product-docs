@@ -29,8 +29,13 @@ Before you can install {product_name}, you need to have the following components
 | Follow the official https://helm.sh/docs/intro/install[installation docs]
 
 | Rancher
-| `v2.10.2`
+| `v2.11.0`
+ifeval::["{build-type}" == "product"]
 | Install using https://documentation.suse.com/cloudnative/rancher-manager/latest/en/installation-and-upgrade/install-rancher.html#_install_the_rancher_helm_chart[Helm] on any Kubernetes cluster, whether self-hosted or on a managed service from https://documentation.suse.com/cloudnative/rancher-manager/latest/en/installation-and-upgrade/hosted-kubernetes/rancher-on-amazon-eks.html[Amazon], https://documentation.suse.com/cloudnative/rancher-manager/latest/en/installation-and-upgrade/hosted-kubernetes/rancher-on-aks.html[Azure], or https://documentation.suse.com/cloudnative/rancher-manager/latest/en/installation-and-upgrade/hosted-kubernetes/rancher-on-gke.html[Google].
+endif::[]
+ifeval::["{build-type}" == "community"]
+| Install using https://ranchermanager.docs.rancher.com/pages-for-subheaders/install-upgrade-on-a-kubernetes-cluster#install-the-rancher-helm-chart[Helm] on any Kubernetes cluster, whether self-hosted or on a managed service from https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/install-upgrade-on-a-kubernetes-cluster/rancher-on-amazon-eks[Amazon], https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/install-upgrade-on-a-kubernetes-cluster/rancher-on-aks[Azure], or https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/install-upgrade-on-a-kubernetes-cluster/rancher-on-gke[Google].
+endif::[]
 
 | Cert-manager
 | `v1.16.3`
@@ -39,7 +44,7 @@ Before you can install {product_name}, you need to have the following components
 
 == Components Versions
 
-This table lists the version of the components installed with the latest version `v0.21.0` of {product_name}:
+This table lists the version of the components installed with the latest version `v0.23.0` of {product_name}:
 
 [TIP]
 ====
@@ -49,8 +54,11 @@ If you're customizing the installation parameters, please make sure that you are
 |===
 | Name | Version 
 
+| Cluster API Operator
+| `v0.22.0`
+
 | Cluster API
-| `v1.9.6`
+| `v1.9.5`
 
 | Cluster API Provider RKE2
 | `v0.17.1`
