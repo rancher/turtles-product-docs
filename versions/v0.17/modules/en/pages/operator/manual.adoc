@@ -1,5 +1,5 @@
 = Manual Installation
-:revdate: 2025-02-27
+:revdate: 2025-09-15
 :page-revdate: {revdate}
 
 This page describes how to install {product_name} manually, using the Helm CLI.
@@ -45,7 +45,7 @@ Once the Helm repository has been added and updated locally, you can proceed to 
 
 [source,bash]
 ----
-helm install rancher-turtles turtles/rancher-turtles --version v0.17.0 \
+helm install rancher-turtles turtles/rancher-turtles --version {turtles_version} \
     -n rancher-turtles-system \
     --dependency-update \
     --create-namespace --wait \

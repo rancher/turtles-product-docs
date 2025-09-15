@@ -1,5 +1,5 @@
 = Provider Test Suite
-:revdate: 2025-08-01
+:revdate: 2025-09-15
 :page-revdate: {revdate}
 
 This section contains information on how you can leverage the existing E2E suite to integrate any CAPI providers with Turtles and verify that the provisioning and importing of clusters works as expected. The validation performs the following actions:
@@ -87,7 +87,7 @@ variables:
   TURTLES_PATH: "turtles/rancher-turtles"
   TURTLES_REPO_NAME: "turtles"
   TURTLES_URL: https://rancher.github.io/turtles
-  TURTLES_VERSION: "v0.23.0"
+  TURTLES_VERSION: "{turtles_version}"
   RANCHER_HOSTNAME: "localhost"
   RANCHER_FEATURES: ""
   RANCHER_PATH: "rancher-latest/rancher"
