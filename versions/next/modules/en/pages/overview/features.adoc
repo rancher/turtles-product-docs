@@ -1,5 +1,5 @@
 = Features
-:revdate: 2025-08-01
+:revdate: 2025-09-16
 :page-revdate: {revdate}
 
 This section describes features and feature stages in {product_name}.
