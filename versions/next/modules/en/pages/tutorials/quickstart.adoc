@@ -17,7 +17,7 @@ Before you can install {product_name}, you need to have the following components
 | Name | Version | Details
 
 | Kubernetes cluster
-| `{k8s-cluster-version}`
+| `{k8s_cluster_version}`
 |
 
 | Helm
