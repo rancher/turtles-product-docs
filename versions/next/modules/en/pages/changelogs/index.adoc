@@ -2,7 +2,9 @@
 :revdate: 2025-08-25
 :page-revdate: {revdate}
 
-* xref:changelogs/changelogs/v0.23.0.adoc[v0.23.0 (latest)]
+* xref:changelogs/changelogs/v0.24.0.adoc[v0.24.0 (latest)]
+
+* xref:changelogs/changelogs/v0.23.0.adoc[v0.23.0]
 
 * xref:changelogs/changelogs/v0.22.0.adoc[v0.22.0]
 
