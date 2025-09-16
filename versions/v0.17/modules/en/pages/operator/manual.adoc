@@ -43,7 +43,7 @@ helm repo update
 
 Once the Helm repository has been added and updated locally, you can proceed to install {product_name}. The Helm chart will handle installation of any dependencies automatically:
 
-[source,bash]
+[source,bash, subs="attributes"]
 ----
 helm install rancher-turtles turtles/rancher-turtles --version {turtles_version} \
     -n rancher-turtles-system \
