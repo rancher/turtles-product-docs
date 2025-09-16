@@ -79,7 +79,7 @@ variables:
   SKIP_RESOURCE_CLEANUP: "false"
   ARTIFACTS_FOLDER: "_artifacts"
   MANAGEMENT_CLUSTER_ENVIRONMENT: "kind" # supported options are eks, isolated-kind, kind
-  RANCHER_VERSION: "v2.10.2"
+  RANCHER_VERSION: "{rancher_version}"
   KUBERNETES_VERSION: "{kubernetes-version}"
   KUBERNETES_MANAGEMENT_VERSION: "{kubernetes-version}"
   KUBERNETES_MANAGEMENT_AWS_REGION: "eu-west-2"
