@@ -134,7 +134,7 @@ image::install-capi-ui-extension.gif[install-capi-ui-extension]
 
 == Install {product_name} using a CLI (development/experimental)
 
-For users who prefer a streamlined command-line installation process, Rancher Manager with Rancher Turtles can be installed using the https://github.com/rancher/turtles/blob/main/scripts/turtles-quickstart.sh[`turtles-quickstart.sh`] script.
+For users who prefer a streamlined command-line installation process, Rancher Manager with {product_name} can be installed using the https://github.com/rancher/turtles/blob/main/scripts/turtles-quickstart.sh[`turtles-quickstart.sh`] script.
 
 This installation method provides a fast way to get Rancher Manager and Turtles without doing too many manual steps.
 
@@ -142,7 +142,7 @@ This installation method provides a fast way to get Rancher Manager and Turtles 
 
 . Ensure you have installed on your system https://kubernetes.io/docs/tasks/tools/[`kubectl`], https://kind.sigs.k8s.io/docs/user/quick-start/#installation[`kind`], https://helm.sh/docs/intro/install/[`helm`] and running https://docs.docker.com/engine/install/[`docker`] daemon.
 
-. Download the script from Rancher Turtles github repository:
+. Download the script from {product_name} github repository:
 +
 [source,bash]
 ----
@@ -162,6 +162,6 @@ The script:
 
 * Verifies that your cluster meets the prerequisites.
 * Adds the Rancher and Turtles Helm repositories.
-* Installs Rancher Turtles with default configuration.
+* Installs {product_name} with default configuration.
 * Displays status information when complete.
 * Creates a new example downstream cluster using the *CAPI Docker Provider*.
