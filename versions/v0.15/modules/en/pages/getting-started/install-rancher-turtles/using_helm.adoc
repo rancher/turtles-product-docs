@@ -45,7 +45,7 @@ helm repo update
 
 As mentioned before, installing {product_name} requires the https://github.com/kubernetes-sigs/cluster-api-operator[Cluster API Operator] and the Helm chart can handle its installation automatically with a minimum set of flags:
 
-[source,bash, subs="attributes"]
+[source,bash,subs="attributes+"]
 ----
 helm install rancher-turtles turtles/rancher-turtles --version {turtles_version} \
     -n rancher-turtles-system \

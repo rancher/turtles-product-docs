@@ -120,7 +120,7 @@ helm repo update
 
 and then it can be installed into the `rancher-turtles-system` namespace with:
 
-[source,bash, subs="attributes"]
+[source,bash,subs="attributes+"]
 ----
 helm install rancher-turtles turtles/rancher-turtles --version {turtles_version}
     -n rancher-turtles-system
