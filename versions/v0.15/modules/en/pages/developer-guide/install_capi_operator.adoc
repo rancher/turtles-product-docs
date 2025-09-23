@@ -1,5 +1,5 @@
 = Installing Cluster API Operator
-:revdate: 2024-12-23
+:revdate: 2025-09-15
 :page-revdate: {revdate}
 :sidebar_position: 2
 
@@ -120,9 +120,9 @@ helm repo update
 
 and then it can be installed into the `rancher-turtles-system` namespace with:
 
-[source,bash]
+[source,bash,subs="attributes+"]
 ----
-helm install rancher-turtles turtles/rancher-turtles --version v0.13.0
+helm install rancher-turtles turtles/rancher-turtles --version {turtles_version}
     -n rancher-turtles-system
     --set cluster-api-operator.enabled=false
     --set cluster-api-operator.cluster-api.enabled=false
