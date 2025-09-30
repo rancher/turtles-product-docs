@@ -23,7 +23,7 @@ Before you can install {product_name}, you need to have the following components
 | Name | Version | Details
 
 | Kubernetes cluster
-| `k8s_cluster_version`
+| `{k8s_cluster_version}`
 |
 
 | Helm
@@ -55,9 +55,6 @@ If you're customizing the installation parameters, please make sure that you are
 
 |===
 | Name | Version 
-
-| Cluster API Operator
-| `{cluster_api_operator_version}`
 
 | Cluster API
 | `{cluster_api_version}`
