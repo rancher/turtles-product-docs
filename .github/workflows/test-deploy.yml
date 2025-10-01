@@ -21,14 +21,15 @@ jobs:
         run: make environment
       - name: Generate Site
         run: |
+          mkdir -p tmp
+          bin/switch-prod-comm product
           npx antora --stacktrace \
-            --log-file local-build.log \
             --log-format=pretty \
             --log-level=info \
             --log-failure-level=warn \
-            turtles-local-playbook.yml 2>&1 | tee local-build.log 2>&1
+            turtles-local-product-playbook.yml 2>&1 | tee tmp/local-product-build.log 2>&1
             BUILD_STATUS=${PIPESTATUS[0]}
-            if grep "INFO (asciidoctor)" local-build.log; then
+            if grep "INFO (asciidoctor)" tmp/local-product-build.log; then
               BUILD_STATUS=1
             fi
             echo "BUILD_STATUS=$BUILD_STATUS" >> $GITHUB_ENV
@@ -38,6 +39,6 @@ jobs:
           if [ ${{ env.BUILD_STATUS }} -eq "0" ]; then
             exit 0
           else
-            cat local-build.log
+            cat tmp/local-product-build.log
             exit 1
           fi

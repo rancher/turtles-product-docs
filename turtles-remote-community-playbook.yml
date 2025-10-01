@@ -1,0 +1,36 @@
+site:
+  title: Rancher Turtles
+  url: /
+  start_page: latest@turtles:en:index.adoc
+
+content:
+  sources:
+    - url: https://github.com/rancher/turtles-product-docs.git
+      branches: [main]
+      start_paths: [versions/latest, versions/v0.24, versions/v0.23, versions/v0.22, versions/v0.21, versions/v0.20, versions/v0.19, versions/v0.18, versions/v0.17, versions/v0.16, versions/v0.15, versions/v0.14, versions/v0.13, versions/v0.12, versions/v0.11]
+
+
+# Description: SUSE UI bundle
+ui:
+  bundle:
+    url: https://github.com/rancher/product-docs-ui/blob/main/build/ui-bundle.zip?raw=true
+    snapshot: true
+  supplemental_files: ./turtles-supplemental-files
+
+runtime:
+  fetch: true
+
+asciidoc:
+  attributes:
+    build-type: community
+    page-pagination: ''
+    tabs-sync-option: ''
+  extensions:
+  - '@asciidoctor/tabs'
+antora:
+  extensions:
+  - require: '@antora/lunr-extension'
+  - require: '@springio/antora-xref-extension'
+
+output:
+  dir: build/site-community-remote
