@@ -1,0 +1,37 @@
+site:
+  title: Cluster-API
+  url: /
+  start_page: latest@cluster-api:en:index.adoc
+
+content:
+  sources:
+    - url: https://github.com/rancher/turtles-product-docs.git
+      branches: [main]
+      start_paths: [versions/latest, versions/v0.24, versions/v0.23, versions/v0.22, versions/v0.21, versions/v0.20, versions/v0.19, versions/v0.18, versions/v0.17, versions/v0.16, versions/v0.15, versions/v0.14, versions/v0.13, versions/v0.12, versions/v0.11]
+
+
+# Description: SUSE UI bundle
+ui:
+  bundle:
+    url: https://github.com/SUSEdoc/dsc-style-bundle/blob/main/default-ui/ui-bundle.zip?raw=true
+    snapshot: true
+  supplemental_files: ./dsc-style-bundle/supplemental-files/rancher
+
+runtime:
+  fetch: true
+
+asciidoc:
+  attributes:
+    build-type: product
+    page-pagination: ''
+    tabs-sync-option: ''
+  extensions:
+  - '@asciidoctor/tabs'
+antora:
+  extensions:
+  - require: '@antora/lunr-extension'
+  - require: '@springio/antora-xref-extension'
+  - require: ./product-docs-common/extensions/dynamic-loading-attributes/load-global-site-attributes.js
+    attributefile: ./product-docs-common/global-attributes.yml
+    enabled: true
+    

@@ -1,7 +1,11 @@
 site:
-  title: Cluster-API
+  title: Rancher Turtles
   url: /
-  start_page: latest@cluster-api:en:index.adoc
+  start_page: latest@turtles:en:index.adoc
+
+urls:
+  latest_version_segment: stable
+  latest_prerelease_version_segment: next
 
 content:
   sources:
@@ -12,13 +16,14 @@ content:
 # Description: SUSE UI bundle
 ui:
   bundle:
-    url: https://github.com/SUSEdoc/dsc-style-bundle/blob/main/default-ui/ui-bundle.zip?raw=true
+    url: https://github.com/rancher/product-docs-ui/blob/main/build/ui-bundle.zip?raw=true
     snapshot: true
-  supplemental_files: ./dsc-style-bundle/supplemental-files/rancher
+  supplemental_files: ./turtles-supplemental-files
 
 asciidoc:
   attributes:
     page-draft-preview-only: 'true'
+    build-type: community
     page-pagination: ''
     page-toclevels: 4@
     tabs-sync-option: ''
@@ -27,10 +32,6 @@ asciidoc:
 antora:
   extensions:
   - require: '@antora/lunr-extension'
-  - require: '@springio/antora-xref-extension'
-  - require: ./product-docs-common/extensions/dynamic-loading-attributes/load-global-site-attributes.js
-    attributefile: ./product-docs-common/global-attributes.yml
-    enabled: true
 
 output:
-  dir: build/site
+  dir: build/site-community
