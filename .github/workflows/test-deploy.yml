@@ -20,7 +20,19 @@ jobs:
       - name: Install Antora and dependencies
         run: make environment
       - name: Generate Site
-        run: make local-product
+        run: |
+          mkdir -p tmp
+          bin/switch-prod-comm product
+          npx antora --stacktrace \
+            --log-format=pretty \
+            --log-level=info \
+            --log-failure-level=warn \
+            turtles-local-product-playbook.yml 2>&1 | tee tmp/local-product-build.log 2>&1
+            BUILD_STATUS=${PIPESTATUS[0]}
+            if grep "INFO (asciidoctor)" tmp/local-product-build.log; then
+              BUILD_STATUS=1
+            fi
+            echo "BUILD_STATUS=$BUILD_STATUS" >> $GITHUB_ENV
       - name: Check for build errors
         run: |
           echo ${{ env.BUILD_STATUS }}
