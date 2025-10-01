@@ -30,11 +30,11 @@ jobs:
       run: make environment
       # Generate site using 'make local' which uses turtles-local-playbook.yml with draft preview enabled
     - name: Generate Site
-      run: make local
+      run: make local-community
     - name: Upload Artifacts
       uses: actions/upload-pages-artifact@v4
       with:
-        path: build/site
+        path: build/site-community
   deploy:
     name: Deploy to GitHub Pages
     needs: build
