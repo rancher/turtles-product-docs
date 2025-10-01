@@ -32,6 +32,7 @@ asciidoc:
 antora:
   extensions:
   - require: '@antora/lunr-extension'
+  - require: '@springio/antora-xref-extension'
 
 output:
   dir: build/site-community
