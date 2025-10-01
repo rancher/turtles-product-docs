@@ -27,6 +27,6 @@ jobs:
           if [ ${{ env.BUILD_STATUS }} -eq "0" ]; then
             exit 0
           else
-            cat local-build.log
+            cat local-community-build.log
             exit 1
           fi
