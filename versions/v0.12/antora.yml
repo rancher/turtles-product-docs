@@ -1,18 +1,1 @@
-name: cluster-api
-title: Cluster API
-version: v0.12
-display_version: '0.12'
-start_page: en:index.adoc
-asciidoc:
-  attributes:
-    product_name: SUSE® Rancher Prime Cluster API
-    #Prerequisite and Component version attributes
-    cert_manager_version: v1.15.2
-    cluster_api_version: v1.7.3
-    cluster_api_operator_version: v0.13.0
-    helm_version: v3.12.0
-    k8s_cluster_version: v1.30.0
-    rancher_version: v2.9.0
-    turtles_version: v0.12.0
-nav:
-  - modules/en/nav.adoc
+antora-yml/antora-community.yml

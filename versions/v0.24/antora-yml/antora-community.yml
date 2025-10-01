@@ -1,0 +1,18 @@
+name: turtles
+title: Rancher Turtles
+version: v0.24
+display_version: 'v0.24'
+start_page: en:index.adoc
+asciidoc:
+  attributes:
+    product_name: Rancher Turtles
+    #Prerequisite and Component version attributes
+    cert_manager_version: v1.16.3
+    cluster_api_version: v1.10.5
+    cluster_api_provider_RKE2_version: v0.20.1
+    helm_version: v3.17.1
+    k8s_cluster_version: v1.31.4
+    rancher_version: v2.12.1
+    turtles_version: v0.24.0
+nav:
+  - modules/en/nav.adoc
