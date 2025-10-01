@@ -20,13 +20,13 @@ jobs:
       - name: Install Antora and dependencies
         run: make environment
       - name: Generate Site
-        run: make local-community
+        run: make local-product
       - name: Check for build errors
         run: |
           echo ${{ env.BUILD_STATUS }}
           if [ ${{ env.BUILD_STATUS }} -eq "0" ]; then
             exit 0
           else
-            cat tmp/local-community-build.log
+            cat tmp/local-product-build.log
             exit 1
           fi
