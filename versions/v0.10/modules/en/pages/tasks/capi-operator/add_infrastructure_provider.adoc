@@ -1,5 +1,5 @@
 = Installing AWS Infrastructure Provider using CAPIProvider resource
-:revdate: 2024-09-13	
+:revdate: 2024-09-13
 :page-revdate: {revdate}
 
 This section describes how to install the AWS `InfrastructureProvider` via `CAPIProvider`, which is responsible for managing Cluster API AWS CRDs and the Cluster API AWS controller.

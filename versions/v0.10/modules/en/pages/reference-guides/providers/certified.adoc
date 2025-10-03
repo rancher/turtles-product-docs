@@ -1,5 +1,5 @@
 = Certified CAPI Providers
-:revdate: 2024-09-12	
+:revdate: 2024-09-12
 :page-revdate: {revdate}
 :sidebar_position: 1
 

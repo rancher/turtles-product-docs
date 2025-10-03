@@ -1,5 +1,5 @@
 = Upgrade Instructions for Early Adopters
-:revdate: 2024-10-29	
+:revdate: 2024-10-29
 :page-revdate: {revdate}
 
 If you were part of the early adopter programme and using {product_name} v0.5.x or older, then you need to follow these instructions to use the GA version.
