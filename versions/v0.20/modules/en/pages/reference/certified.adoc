@@ -1,4 +1,6 @@
 = Certified CAPI Providers
+:revdate: 2025-05-30
+:page-revdate: {revdate}
 
 == What does Certified Providers mean?
 

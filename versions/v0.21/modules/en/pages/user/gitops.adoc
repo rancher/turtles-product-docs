@@ -1,4 +1,6 @@
 = GitOps Best Practices for Turtles and CAPI
+:revdate: 2025-07-01
+:page-revdate: {revdate}
 
 ifeval::["{build-type}" == "product"]
 This section provides best practices for implementing GitOps with Turtles and Cluster API (CAPI), focusing on using https://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/index.html[Continuous Delivery] in combination with the *Cluster API Addon Provider Fleet*(`CAAPF`) for automating agent provisioning and integration into the `CAPI` ecosystem.
