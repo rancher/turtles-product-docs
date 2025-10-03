@@ -1,5 +1,5 @@
 = Create a workload cluster
-:revdate: 2024-10-29	
+:revdate: 2024-10-29
 :page-revdate: {revdate}
 
 This section will guide you through creating a `ClusterClass` which you will then use to provision a workload `Cluster`. The Cluster API book includes a https://cluster-api.sigs.k8s.io/tasks/experimental-features/cluster-class/[ClusterClass section] with detailed information on what is supported and how you can use the powerful abstraction this feature provides, including operations such as https://cluster-api.sigs.k8s.io/tasks/experimental-features/cluster-class/write-clusterclass#clusterclass-with-patches[patching class values] and https://cluster-api.sigs.k8s.io/tasks/experimental-features/cluster-class/operate-cluster[operating a managed cluster]. We recommend you familiarize with the feature to get the most out of it.

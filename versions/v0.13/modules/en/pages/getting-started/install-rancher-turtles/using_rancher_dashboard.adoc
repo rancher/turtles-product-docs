@@ -1,5 +1,5 @@
 = Via Rancher Dashboard
-:revdate: 2024-11-05	
+:revdate: 2024-11-05
 :page-revdate: {revdate}
 
 

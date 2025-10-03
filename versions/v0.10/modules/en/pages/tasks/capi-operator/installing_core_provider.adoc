@@ -1,5 +1,5 @@
 = Installing the CoreProvider using CAPIProvider resource
-:revdate: 2024-09-13	
+:revdate: 2024-09-13
 :page-revdate: {revdate}
 :sidebar_position: 4
 

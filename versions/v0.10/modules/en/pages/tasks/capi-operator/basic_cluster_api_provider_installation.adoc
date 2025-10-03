@@ -1,5 +1,5 @@
 = Basic Cluster API Provider Installation
-:revdate: 2024-09-10	
+:revdate: 2024-09-10
 :page-revdate: {revdate}
 :sidebar_position: 1
 

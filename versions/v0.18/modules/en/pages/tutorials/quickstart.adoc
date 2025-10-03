@@ -46,7 +46,7 @@ endif::[]
 
 == Components Versions
 
-This table lists the version of the components installed with the latest version `v0.18.0` of {product_name}:
+This table lists the version of the components installed with the latest version `{turtles_version}` of {product_name}:
 
 [TIP]
 ====

@@ -1,5 +1,5 @@
 = Create a cluster using Fleet
-:revdate: 2024-09-20	
+:revdate: 2024-09-20
 :page-revdate: {revdate}
 :sidebar_position: 2
 

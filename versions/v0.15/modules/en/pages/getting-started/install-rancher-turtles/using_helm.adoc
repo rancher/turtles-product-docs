@@ -1,5 +1,5 @@
 = Via Helm install
-:revdate: 2025-09-15	
+:revdate: 2025-09-15
 :page-revdate: {revdate}
 
 [CAUTION]

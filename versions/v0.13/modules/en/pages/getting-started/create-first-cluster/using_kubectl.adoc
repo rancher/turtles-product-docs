@@ -1,5 +1,5 @@
 = Create & Import Your First Cluster Using kubectl
-:revdate: 2024-10-29	
+:revdate: 2024-10-29
 :page-revdate: {revdate}
 :sidebar_position: 3
 
