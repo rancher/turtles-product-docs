@@ -1,5 +1,5 @@
 = Certified CAPI Providers
-:revdate: 2024-10-09	
+:revdate: 2024-10-09
 :page-revdate: {revdate}
 
 Remember that most Cluster API Providers are upstream projects maintained by the Kubernetes open-source community.
