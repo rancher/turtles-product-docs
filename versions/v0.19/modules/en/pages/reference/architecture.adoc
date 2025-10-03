@@ -1,4 +1,6 @@
 = Architecture
+:revdate: 2025-05-06
+:page-revdate: {revdate}
 
 This guide offers a comprehensive overview of the core components and structure that power {product_name} and its integration within the Rancher ecosystem.
 

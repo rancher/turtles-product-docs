@@ -28,7 +28,7 @@ metadata:
 spec:
   providers:
   - name: metal3
-    url: https://github.com/metal3-io/cluster-api-provider-metal3/releases/v1.10.1/infrastructure-components.yaml
+    url: https://github.com/metal3-io/cluster-api-provider-metal3/releases/v1.7.1/infrastructure-components.yaml
     type: InfrastructureProvider
   images:
   - name: metal3
@@ -44,7 +44,7 @@ The key fields in the `ClusterctlConfig` spec are:
 
 * `providers[].name` - Name of the provider (e.g. metal3)
 * `providers[].url` - URL of the provider configuration (e.g.
-https://github.com/metal3-io/cluster-api-provider-metal3/releases/v1.10.1/infrastructure-components.yaml). This can use `latest` release, if supported, or pin the maximum version to `v1.10.1` for example.
+https://github.com/metal3-io/cluster-api-provider-metal3/releases/v1.7.1/infrastructure-components.yaml). This can use `latest` release, if supported, or pin the maximum version to `v1.7.1` for example.
 * `providers[].type` - Type of the provider (e.g. InfrastructureProvider)
 
 * `images[].name` - The image name to override (e.g. infrastructure-metal3, cluster-api, bootstrap-rke2, control-plane-rke2)
@@ -53,14 +53,16 @@ https://github.com/metal3-io/cluster-api-provider-metal3/releases/v1.10.1/infras
 
 == Override a Certified Provider version
 
-{product_name} embeds a validated configuration where all certified provider versions are pinned. Typically versions are updated with any relese of {product_name}.  
+{product_name} embeds a validated configuration where all certified provider versions are pinned.  +
+Typically versions are updated with any relese of {product_name}.  
 
 [WARNING]
 ====
 - {product_name} only validates the embedded configuration for certified providers. Any customization to the embedded configuration can eventually lead to incompatibilities and unsupported scenarios. 
 ====
 
-In order to override a provider version, or to use a different registry to pull images, a `ClusterctlConfig` can be defined. For more information on image override, please refer to the upstream https://cluster-api.sigs.k8s.io/clusterctl/configuration#image-overrides[documentation].  
+In order to override a provider version, or to use a different registry to pull images, a `ClusterctlConfig` can be defined.  +
+For more information on image override, please refer to the upstream link:https://cluster-api.sigs.k8s.io/clusterctl/configuration#image-overrides[documentation].  
 
 [source,yaml]
 ----
@@ -72,10 +74,10 @@ metadata:
 spec:
   providers:
   - name: rke2
-    url: "https://github.com/rancher/cluster-api-provider-rke2/releases/v0.20.1/control-plane-components.yaml"
+    url: "https://github.com/rancher/cluster-api-provider-rke2/releases/v0.16.0/control-plane-components.yaml"
     type: ControlPlaneProvider
   - name: rke2
-    url: "https://github.com/rancher/cluster-api-provider-rke2/releases/v0.20.1/bootstrap-components.yaml"
+    url: "https://github.com/rancher/cluster-api-provider-rke2/releases/v0.16.0/bootstrap-components.yaml"
     type: BootstrapProvider
   images:
   - name: control-plane-rke2

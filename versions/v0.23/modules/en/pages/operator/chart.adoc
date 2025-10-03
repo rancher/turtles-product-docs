@@ -1,4 +1,6 @@
 = Chart Configuration
+:revdate: 2025-08-01
+:page-revdate: {revdate}
 
 [TIP]
 ====
@@ -14,44 +16,24 @@ When installing {product_name} using the official Helm chart, it is possible to 
 ----
 rancherTurtles:
   features:
-    day2operations:
-      enabled: false # indicates whether day 2 operations functionality is enabled (default: false).
-      etcdBackupRestore:
-        enabled: false # indicates whether ETCD backup/restore experimental functionality is enabled (default: false).
     addon-provider-fleet:
       enabled: true # indicates whether the fleet addon provider is installed (default: true).
     agent-tls-mode:
-      enabled: false # use CA certs stored in Rancher when importing CAPI clusters.
-    clusterclass-operations: 
-      enabled: false # indicates whether ClusterClass operations functionality is enabled (default: false).
+      enabled: true # use CA certs stored in Rancher when importing CAPI clusters.
 ----
 
 The list has been truncated to show only the configurable feature flags. Other fields with the `rancherTurtles` key are automatically set when a chart is released. 
 
-[NOTE]
-====
-Nested feature flags take effect when their parent feature flag is enabled. For example, the `rancherTurtles.features.day2operations.etcdBackupRestore.enabled` flag takes effect only when the `rancherTurtles.features.day2operations.enabled` flag is set to true.
-====
-
 == Cluster API Operator values
 
-{product_name} uses the `Cluster API Operator` Helm chart to install this dependency, and any values passed to Helm with the `cluster-api-operator` key are passed along to the `Cluster API Operator` chart in order to customize its installation.
-
-[TIP]
-====
-A full set of available values for the `Cluster API Operator` can be found in the operator https://github.com/kubernetes-sigs/cluster-api-operator/blob/main/hack/charts/cluster-api-operator/values.yaml[values.yaml].
-====
-
+{product_name} uses the embedded `Cluster API Operator` controller, and any values passed to Helm with the `cluster-api-operator` key are used to configure the embedded `Cluster API Operator` installation and default providers.
 
 Currently the available set of values for the `cluster-api-operator` setup in the `rancher-turtles`:
 
 [source,yaml]
 ----
 cluster-api-operator:
-  enabled: true # indicates whether CAPI operator is installed (default: true).
   cleanup: true # indicates whether CAPI operator resources are cleaned up on uninstall (default: true).
-  cert-manager:
-    enabled: false # indicates whether cert-manager is installed (default: false).
   cluster-api:
     enabled: true # indicates whether core CAPI controllers are installed (default: true).
     configSecret:

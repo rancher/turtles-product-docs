@@ -1,4 +1,6 @@
 = Create & import your first cluster using Fleet
+:revdate: 2024-10-29	
+:page-revdate: {revdate}
 
 This section will guide you through creating your first cluster and importing it into Rancher Manager using a GitOps workflow with Fleet.
 

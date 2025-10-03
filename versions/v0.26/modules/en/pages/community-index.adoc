@@ -1,6 +1,8 @@
 = Overview
+:revdate: 2025-08-01
+:page-revdate: {revdate}
 
-== What is Rancher Turtles?
+== What is {product_name}?
 
 The Cluster API Extension for Rancher, also known as {product_name}, is a Kubernetes Operator that provides **integration between Rancher Manager and Cluster API (CAPI)** with the aim of bringing full CAPI support to Rancher.
 
@@ -39,7 +41,7 @@ Contains the reference documentation for all {product_name} custom resources.
 
 === User Guide
 
-Learn how to use {product_name} to xref:./user/clusters.adoc[manage your CAPI clusters with Rancher], and use more advanced features like xref:./user/clusterclass.adoc[`ClusterClass`].
+Learn how to use {product_name} to xref:./user/clusterclass.adoc[manage your CAPI clusters with Rancher, using ClusterClass].
 
 === Operator Guide
 
@@ -51,7 +53,7 @@ If you are interested in contributing to {product_name}, this section will guide
 
 === Troubleshooting
 
-This section covers basic xref:./troubleshooting/troubleshooting.adoc[troubleshooting approaches] for issues related to Rancher Turtles, Cluster API (CAPI), and CAPI providers.
+This section covers basic xref:./troubleshooting/troubleshooting.adoc[troubleshooting approaches] for issues related to {product_name} and Cluster API providers.
 
 === Security
 

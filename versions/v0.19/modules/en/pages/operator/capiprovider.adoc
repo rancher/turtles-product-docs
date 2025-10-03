@@ -1,4 +1,6 @@
 = Install CAPI Providers
+:revdate: 2025-05-06
+:page-revdate: {revdate}
 
 The `CAPIProvider` resource allows managing Cluster API Operator manifests in a declarative way. It is used to provision and configure Cluster API providers like AWS, vSphere etc.
 

@@ -1,4 +1,6 @@
 = Provider Certification Guide
+:revdate: 2024-12-23	
+:page-revdate: {revdate}
 :sidebar_position: 1
 
 The process of certification is based on verifying {product_name} integration with CAPI providers. To simplify this task, we prepared a generic test that validates the provisioning and importing of a downstream CAPI cluster.

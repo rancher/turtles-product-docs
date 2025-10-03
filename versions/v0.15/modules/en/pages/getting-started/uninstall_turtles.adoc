@@ -1,4 +1,6 @@
 = Uninstall {product_name}
+:revdate: 2024-12-23	
+:page-revdate: {revdate}
 :sidebar_position: 5
 
 This gives an overview of {product_name} uninstallation process.
