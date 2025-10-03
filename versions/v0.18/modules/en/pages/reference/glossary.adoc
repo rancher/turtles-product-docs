@@ -1,4 +1,6 @@
 = Glossary
+:revdate: 2025-04-04
+:page-revdate: {revdate}
 
 == Table of Contents
 

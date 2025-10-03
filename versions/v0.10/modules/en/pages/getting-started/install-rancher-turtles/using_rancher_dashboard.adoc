@@ -1,4 +1,6 @@
 = Via Rancher Dashboard
+:revdate: 2024-09-20	
+:page-revdate: {revdate}
 :sidebar_position: 4
 
 This is the recommended option for installing {product_name}.

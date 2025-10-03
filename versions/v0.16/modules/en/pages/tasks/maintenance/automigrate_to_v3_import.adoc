@@ -1,4 +1,6 @@
 = Auto-migration to v3 cluster import
+:revdate: 2025-02-10
+:page-revdate: {revdate}
 :sidebar_position: 3
 
 [CAUTION]

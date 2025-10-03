@@ -1,5 +1,5 @@
 = Provider Test Suite
-:revdate: 2025-09-15
+:revdate: 2025-09-16
 :page-revdate: {revdate}
 
 This section contains information on how you can leverage the existing E2E suite to integrate any CAPI providers with Turtles and verify that the provisioning and importing of clusters works as expected. The validation performs the following actions:
@@ -79,7 +79,7 @@ variables:
   SKIP_RESOURCE_CLEANUP: "false"
   ARTIFACTS_FOLDER: "_artifacts"
   MANAGEMENT_CLUSTER_ENVIRONMENT: "kind" # supported options are eks, isolated-kind, kind
-  RANCHER_VERSION: "v2.10.2"
+  RANCHER_VERSION: "{rancher_version}""
   KUBERNETES_VERSION: "{kubernetes-version}"
   KUBERNETES_MANAGEMENT_VERSION: "{kubernetes-version}"
   KUBERNETES_MANAGEMENT_AWS_REGION: "eu-west-2"

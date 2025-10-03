@@ -1,4 +1,6 @@
 = Development setup
+:revdate: 2025-07-01
+:page-revdate: {revdate}
 
 == Prerequisites:
 
