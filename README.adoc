@@ -1,0 +1,252 @@
+= Turtles Product Documentation
+
+== Build the Documentation site
+
+The repository uses [Antora Playbooks](https://docs.antora.org/antora/latest/) to locally or remotely build the AsciiDoc content into a static website.
+
+=== Prerequisites
+
+==== git
+
+You need git to get the source code of this repository. Run the command below to check whether git is installed on your machine.
+
+```console
+git --version
+```
+
+If you don't have git installed on your machine, download and install it for your operating system from the [git downloads](https://git-scm.com/downloads) page.
+
+==== Node.js
+
+Antora requires an active long term support (LTS) release of Node.js. Run the command below to check if you have Node.js installed, and which version. This command should return an [active Node.js LTS version number](https://nodejs.org/en/about/releases/)
+
+```console
+node -v
+```
+
+If you don't have Node.js installed on your machine, install it, preferably via [nvm](https://github.com/nvm-sh/nvm)
+
+=== Clone the Playbook repository
+
+Run the git command to clone this repository.
+
+```console
+git clone https://github.com/rancher/turtles-product-docs.git
+```
+
+This playbook repository uses a [git submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules) to get the custom Antora supplemental files that provide a custom GUI theme for the documentation website. Run the command below to get the submodule.
+
+```console
+git submodule update --init
+```
+
+=== Install node modules
+
+Open a terminal at the root of the git repository. Run the command below.
+
+```console
+npm install
+```
+
+=== Run Antora to build the static website
+
+As a local example, run the command below to build the site:
+
+```console
+npx antora --fetch turtles-local-playbook.yml
+```
+
+Navigate to the `./build/site` directory and open the index.html file in your browser to view and navigate the documentation site.
+
+Alternatively, run the below command first and then open `http://127.0.0.1:8080/` in your browser for a web server preview:
+
+```console
+make preview
+```
+
+=== Run Antora to build the static website using the local documentation content
+
+The command provided in the previous section fetches documentation content of the products from their respective remote GitHub repositories. If you want the playbook to use the documentation content from your local machine instead you can do so with `product-docs-playbook-local.yml`.
+
+Clone all the individual product documentation Github repositories one level above the current playbook repository.
+
+As an example, run the command below to use the local `turtles-local-playbook.yml` file.
+
+```console
+npx antora --fetch turtles-local-playbook.yml
+```
+
+=== Makefile
+
+The Makefile can also be used to set up your environment, build the local and remote static site, and clean your build output directory.
+
+== How to report issues related to the SUSE Rancher Product Documentation
+
+=== If you are a SUSE Rancher Customer
+
+It is recommended to report the issue via the [SUSE Customer Center](https://scc.suse.com/)
+
+=== If you are a SUSE Internal Employee
+
+It is recommended to file a Jira ticket. If you do not have access to Jira then you can file a GitHub ticket on the respective product documentation repository.
+
+[#build-the-static-website]
+=== Build the Static Website
+
+You can use the `make` command to build the documentation site locally or remotely. The Makefile defines various tasks for building the site using different playbooks.
+
+### Build the site locally using the GitHub Pages playbook:
+
+To build the site locally using the GitHub Pages playbook, run the following command:
+
+[,console]
+----
+make gh-pages
+----
+
+This will generate the static website using the `turtles-gh-pages-playbook.yml` playbook.
+
+### Build the site remotely:
+
+To build the site remotely using the remote playbook, run:
+
+[,console]
+----
+make remote
+----
+
+This will use the `playbook-remote.yml` to generate the site remotely.
+
+### Build the site using the development playbook:
+
+For development purposes, you can build the site using the development playbook by running:
+
+[,console]
+----
+make dev
+----
+
+This will use the `turtles-dev-playbook.yml` to generate the site with development settings.
+
+### Clean up the build:
+
+To remove the build and temporary directories, use the following command:
+
+[,console]
+----
+make clean
+----
+
+This will delete the `build` and `tmp` directories.
+
+### Preview the site locally:
+
+To preview the site locally, use the `preview` task:
+
+[,console]
+----
+make preview
+----
+
+This will serve the site locally, allowing you to view it in your browser.
+
+### Watch for changes and rebuild:
+
+To watch for changes in the content and rebuild the site automatically, use the `watch` task:
+
+[,console]
+----
+make watch
+----
+
+This will watch the content and documentation files for changes, rebuild the site, and preview it with hot reload.
+
+### Continuous Integration (CI):
+
+To run the build process for continuous integration, use the `ci` task:
+
+[,console]
+----
+make ci
+----
+
+This will run the build using the GitHub Pages playbook and the development playbook in sequence.
+
+[#turtles-version-updates-across-docs]
+== Turtles Version Updates Across Docs
+
+This section explains how Turtles documentation versions are managed and updated when new releases are published.
+
+[#automated-version-bumping]
+=== Automated Version Bumping
+
+The documentation repository automatically updates versions when a new Turtles release tag is pushed to the main repository. Here's how the process works:
+The version bump process is triggered automatically when:
+
+1. A new version tag (format: `v*`) is pushed to the rancher/turtles repository
+2. The GitHub workflow `.github/workflows/publish-version.yaml` detects the tag and starts the process
+
+[#what-gets-updated]
+==== What Gets Updated
+
+The automation updates several types of version references throughout the documentation:
+
+* **GitHub URLs**: Raw GitHub links are updated from `refs/heads/main` to `refs/tags/v{version}`
+* **Environment Variables**: `TURTLES_VERSION` values in code examples
+* **Helm Commands**: Version flags in `helm install` commands
+* **Component Tables**: Version references in component compatibility tables
+
+[#version-replacement-tool]
+==== Version Replacement Tool
+
+The repository includes a custom Go tool at `tools/setexampleversion/main.go` that handles version replacements:
+
+* **Configuration**: Uses `replace-rules.json` to define replacement patterns
+* **Flexible Rules**: Each rule specifies a regex pattern and replacement template
+
+Example usage:
+[,console]
+----
+go run tools/setexampleversion/main.go -version=v0.21.0 \
+  docs/v0.21/modules/en/pages/user/installation.adoc \
+  docs/v0.21/modules/en/pages/user/clusterclass.adoc
+----
+
+[#component-version-updates]
+==== Component Version Updates
+
+For updating component versions (Rancher, Cluster API, etc.) in the prerequisites tables, the repository includes a reusable workflow at `.github/workflows/pre-release.yaml`. This workflow can be called from other workflows to selectively update component versions in the `docs/next/` directory:
+
+* **Selective Updates**: Only updates versions for components that are specified as inputs
+* **Automatic PR Creation**: Creates a pull request with the version changes
+* **Flexible Configuration**: Each component version can be updated independently
+
+[#manual-version-updates]
+=== Manual Version Updates
+
+For manual version updates or testing:
+
+1. **Update the config**: Modify `replace-rules.json` if new replacement patterns are needed
+2. **Run the tool**: Execute the version replacement tool with the desired version
+3. **Review changes**: Check that all version references have been updated correctly
+4. **Test locally**: Build and preview the documentation to ensure everything works
+
+[#adding-new-version-patterns]
+=== Adding New Version Patterns
+
+When new version references are added to the documentation:
+
+1. **Identify the pattern**: Find the exact text pattern that needs version replacement
+2. **Add a rule**: Update `replace-rules.json` with a new replacement rule
+3. **Test the rule**: Run the tool to verify the pattern matches correctly
+4. **Document the change**: Update this README if the change affects the workflow
+
+Example rule structure:
+[,json]
+----
+{
+  "name": "Description of what this rule updates",
+  "pattern": "regex-pattern-to-match",
+  "replacement": "replacement-template-with-%s-placeholder"
+}
+----
