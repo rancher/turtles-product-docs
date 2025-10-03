@@ -1,4 +1,6 @@
 = What is a Certified Provider?
+:revdate: 2025-02-10
+:page-revdate: {revdate}
 :sidebar_position: 1
 
 As most CAPI providers are upstream projects maintained by the open community, there is no safe way to guarantee that any clusters provisioned with a given provider can be imported into Rancher via Turtles. However, we do implement a certification process for those providers that:

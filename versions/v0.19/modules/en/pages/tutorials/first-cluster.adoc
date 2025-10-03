@@ -1,4 +1,6 @@
 = Create & Import Your First Cluster
+:revdate: 2025-05-06
+:page-revdate: {revdate}
 
 This section will guide you through creating your first cluster and importing it into Rancher Manager. Two alternative methods for cluster provisioning are presented: **using a GitOps workflow with Fleet** and **manually applying the manifests via `kubectl`**.
 

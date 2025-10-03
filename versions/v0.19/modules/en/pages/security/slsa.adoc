@@ -1,4 +1,6 @@
 = SLSA
+:revdate: 2025-05-06
+:page-revdate: {revdate}
 
 == Overview
 
