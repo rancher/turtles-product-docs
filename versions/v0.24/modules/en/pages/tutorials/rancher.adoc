@@ -1,5 +1,5 @@
 = Rancher Setup
-:revdate: 2025-04-04
+:revdate: 2025-10-02
 :page-revdate: {revdate}
 
 == Installing Rancher
