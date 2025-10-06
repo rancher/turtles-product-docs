@@ -1,5 +1,5 @@
 = Installing Cluster API Operator
-:revdate: 2025-09-15
+:revdate: 2025-10-02
 :page-revdate: {revdate}
 :sidebar_position: 2
 
