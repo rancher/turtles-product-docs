@@ -1,5 +1,5 @@
 = GitOps Best Practices for Turtles and CAPI
-:revdate: 2025-07-01
+:revdate: 2025-10-02
 :page-revdate: {revdate}
 
 ifeval::["{build-type}" == "product"]

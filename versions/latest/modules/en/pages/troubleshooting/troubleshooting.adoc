@@ -64,7 +64,7 @@ You can view the following pods and check their logs in the following namespaces
 '*' - depending on the infrastructure provider in use
 '$' - depending on control plane/bootstrap provider in use, e.g. kubeadm or rke2
 
-One way to monitor logs from the Cluster API control plane pods is by usuing `kubectl logs` with the label selector.
+One way to monitor logs from the Cluster API control plane pods is by using `kubectl logs` with the label selector.
 
 [source,bash]
 ----
