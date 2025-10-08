@@ -2,7 +2,7 @@
 
 == Build the Documentation site
 
-The repository uses [Antora Playbooks](https://docs.antora.org/antora/latest/) to locally or remotely build the AsciiDoc content into a static website.
+The repository uses https://docs.antora.org/antora/latest/[Antora Playbooks] to locally or remotely build the AsciiDoc content into a static website.
 
 === Prerequisites
 
@@ -15,20 +15,20 @@ You need git to get the source code of this repository. Run the command below to
 git --version
 ----
 
-If you don't have git installed on your machine, download and install it for your operating system from the [git downloads](https://git-scm.com/downloads) page.
+If you don't have git installed on your machine, download and install it for your operating system from the https://git-scm.com/downloads[git downloads] page.
 
 ==== Node.js
 
-Antora requires an active long term support (LTS) release of Node.js. Run the command below to check if you have Node.js installed, and which version. This command should return an [active Node.js LTS version number](https://nodejs.org/en/about/releases/)
+Antora requires an active long term support (LTS) release of Node.js. Run the command below to check if you have Node.js installed, and which version. This command should return an https://nodejs.org/en/about/releases/[active Node.js LTS version number].
 
 [,console]
 ----
 node -v
 ----
 
-If you don't have Node.js installed on your machine, install it, preferably via [nvm](https://github.com/nvm-sh/nvm)
+If you don't have Node.js installed on your machine, install it, preferably via https://github.com/nvm-sh/nvm[nvm].
 
-=== Clone the Playbook repository
+=== Clone the repository
 
 Run the git command to clone this repository.
 
@@ -37,7 +37,7 @@ Run the git command to clone this repository.
 git clone https://github.com/rancher/turtles-product-docs.git
 ----
 
-This playbook repository uses a [git submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules) to get the custom Antora supplemental files that provide a custom GUI theme for the documentation website. Run the command below to get the submodule.
+This playbook repository uses a https://git-scm.com/book/en/v2/Git-Tools-Submodules[git submodule] to get the custom Antora supplemental files that provide a custom GUI theme for the documentation website. Run the command below to get the submodule.
 
 [,console]
 ----
@@ -116,7 +116,7 @@ This will delete the `build` directory.
 
 === If you are a SUSE Rancher Customer
 
-It is recommended to report the issue via the [SUSE Customer Center](https://scc.suse.com/)
+It is recommended to report the issue via the https://scc.suse.com/[SUSE Customer Center].
 
 === If you are a SUSE Internal Employee
 
