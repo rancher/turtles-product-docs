@@ -45,18 +45,15 @@ If you're a new to the project and want to help, but don't know where to start, 
 Beyond fixing bugs and submitting new features, there are other things you can submit
  which, while less flashy, will be deeply appreciated by all who interact with the codebase:
 
-ifeval::["{build-type}" == "product"]
  ** Extending test coverage!
  ** Refactoring!
- ** Reviewing and updating https://documentation.suse.com/cloudnative/cluster-api/latest/en/index.html[documentation]!
- ** Adding a new UI functionality!
+ifeval::["{build-type}" == "product"]
+ ** Reviewing and updating xref:index.adoc[documentation]!
 endif::[]
 ifeval::["{build-type}" == "community"]
- ** Extending test coverage!
- ** Refactoring!
- ** Reviewing and updating https://turtles.docs.rancher.com/turtles/stable/en/index.html[documentation]!
- ** Adding a new UI functionality!
+ ** Reviewing and updating xref:index.adoc[documentation]!
 endif::[]
+ ** Adding a new UI functionality!
 
 +
 (See also <<_choosing_something_to_work_on,Choosing something to work on>> below.)
