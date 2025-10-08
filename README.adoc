@@ -75,7 +75,6 @@ make preview-product-local
 
 The Makefile can be used to set up your environment, build the local and remote static sites, and clean your build output directory.
 
-[#build-the-static-website]
 === Build the Static Website
 
 You can use the `make` command to build the documentation site locally or remotely for either the Community or Product versions. The Makefile defines various tasks for building the site using different playbooks.
@@ -123,12 +122,10 @@ It is recommended to report the issue via the [SUSE Customer Center](https://scc
 
 It is recommended to file a Jira ticket. If you do not have access to Jira then you can file a GitHub ticket on the respective product documentation repository.
 
-[#turtles-version-updates-across-docs]
 == Turtles Version Updates Across Docs
 
 This section explains how Turtles documentation versions are managed and updated when new releases are published.
 
-[#automated-version-bumping]
 === Automated Version Bumping
 
 The documentation repository automatically updates versions when a new Turtles release tag is pushed to the main repository. Here's how the process works:
@@ -137,7 +134,6 @@ The version bump process is triggered automatically when:
 1. A new version tag (format: `v*`) is pushed to the rancher/turtles repository
 2. The GitHub workflow `.github/workflows/publish-version.yaml` detects the tag and starts the process
 
-[#what-gets-updated]
 ==== What Gets Updated
 
 The automation updates several types of version references throughout the documentation:
@@ -147,7 +143,6 @@ The automation updates several types of version references throughout the docume
 * **Helm Commands**: Version flags in `helm install` commands
 * **Component Tables**: Version references in component compatibility tables
 
-[#version-replacement-tool]
 ==== Version Replacement Tool
 
 The repository includes a custom Go tool at `tools/setexampleversion/main.go` that handles version replacements:
@@ -163,7 +158,6 @@ go run tools/setexampleversion/main.go -version=v0.21.0 \
   docs/v0.21/modules/en/pages/user/clusterclass.adoc
 ----
 
-[#component-version-updates]
 ==== Component Version Updates
 
 For updating component versions (Rancher, Cluster API, etc.) in the prerequisites tables, the repository includes a reusable workflow at `.github/workflows/pre-release.yaml`. This workflow can be called from other workflows to selectively update component versions in the `docs/next/` directory:
@@ -172,7 +166,6 @@ For updating component versions (Rancher, Cluster API, etc.) in the prerequisite
 * **Automatic PR Creation**: Creates a pull request with the version changes
 * **Flexible Configuration**: Each component version can be updated independently
 
-[#manual-version-updates]
 === Manual Version Updates
 
 For manual version updates or testing:
@@ -182,7 +175,6 @@ For manual version updates or testing:
 3. **Review changes**: Check that all version references have been updated correctly
 4. **Test locally**: Build and preview the documentation to ensure everything works
 
-[#adding-new-version-patterns]
 === Adding New Version Patterns
 
 When new version references are added to the documentation:
