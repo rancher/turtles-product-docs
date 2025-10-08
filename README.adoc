@@ -59,7 +59,7 @@ As a local example, run the command below to build the product version of the si
 
 [,console]
 ----
-npx antora --fetch turtles-local-product-playbook.yml
+npx antora turtles-local-product-playbook.yml
 ----
 
 Navigate to the `./build/site-product` directory and open the index.html file in your browser to view and navigate the documentation site.
