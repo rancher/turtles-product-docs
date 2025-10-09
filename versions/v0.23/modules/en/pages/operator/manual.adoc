@@ -93,4 +93,3 @@ stringData:
 ====
 For detailed information on the values supported by the chart and their usage, refer to xref:../operator/chart.adoc[Helm chart options]
 ====
-
