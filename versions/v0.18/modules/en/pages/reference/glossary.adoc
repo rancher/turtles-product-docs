@@ -1,5 +1,5 @@
 = Glossary
-:revdate: 2025-04-04
+:revdate: 2025-10-02
 :page-revdate: {revdate}
 
 == Table of Contents
@@ -300,9 +300,17 @@ Sometimes it is also referred as a managed topology.
 
 See <<_clusterclass,ClusterClass>>
 
+ifeval::["{build-type}" == "product"]
 === Turtles
 
 Refers to <<_suse_rancher_prime_cluster_api,{product_name}>>
+endif::[]
+
+ifeval::["{build-type}" == "community"]
+=== Turtles
+
+Refers to <<_rancher_turtles,{product_name}>>
+endif::[]
 
 == W
 
