@@ -1,7 +1,7 @@
-== "v0.12.0"
+= "v0.12.0"
 :revdate: 2025-05-30
 :page-revdate: {revdate}
-=== "2024-09-26 09:53:01 +0000 UTC"
+== "2024-09-26 09:53:01 +0000 UTC"
 
 // Disclaimer: this file is generated, do not edit it manually.
 
@@ -9,7 +9,7 @@
 __ (github-actions[bot]) released this 2024-09-26 09:53:01 +0000 UTC - v0.12.0__
 
 
-=== Description
+== Description
 
 ---
 
@@ -87,7 +87,7 @@ __ (github-actions[bot]) released this 2024-09-26 09:53:01 +0000 UTC - v0.12.0__
 
 
 
-=== Download
+== Download
 
 [cols="3,1,1" options="header" frame="all" grid="rows"]
 |===
