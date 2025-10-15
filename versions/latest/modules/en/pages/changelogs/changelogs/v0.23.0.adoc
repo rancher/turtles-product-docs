@@ -1,8 +1,8 @@
-== "v0.23.0"
+= "v0.23.0"
 :revdate: 2025-08-25
 :page-revdate: {revdate}
 
-=== "2025-08-25 12:13:30 +0000 UTC"
+== "2025-08-25 12:13:30 +0000 UTC"
 
 // Disclaimer: this file is generated, do not edit it manually.
 
@@ -10,7 +10,7 @@
 __ (github-actions[bot]) released this 2025-08-25 12:13:30 +0000 UTC - v0.23.0__
 
 
-=== Description
+== Description
 
 ---
 
@@ -58,7 +58,7 @@ The providers installed with the Turtles chart will continue to be automatically
 
 
 
-=== Download
+== Download
 
 [cols="3,1,1" options="header" frame="all" grid="rows"]
 |===
