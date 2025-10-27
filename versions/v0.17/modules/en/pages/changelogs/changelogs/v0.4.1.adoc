@@ -1,5 +1,5 @@
 = "v0.4.1"
-:revdate: 2025-02-27
+:revdate: 2025-10-27
 :page-revdate: {revdate}
 == "2024-01-17 17:18:48 +0000 UTC"
 
