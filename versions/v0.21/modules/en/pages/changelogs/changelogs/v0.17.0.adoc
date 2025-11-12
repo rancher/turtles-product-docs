@@ -21,7 +21,7 @@ __ (github-actions[bot]) released this 2025-02-27 10:39:19 +0000 UTC - v0.17.0__
 <li>Documentation improvements and restructuring:
 <ul>
 <li>Added examples for RKE2 based docker, vsphere, gcp, aws and azure clusters.</li>
-<li><a href="https://turtles.docs.rancher.com" rel="nofollow">https://turtles.docs.rancher.com</a> with support for automatic <code>stable</code> version display with redirect to latest documentation release.</li>
+<li><a href="https://documentation.suse.com/cloudnative/cluster-api/latest/en/index.html" rel="nofollow">https://documentation.suse.com/cloudnative/cluster-api/latest/en/index.html</a> with support for automatic <code>stable</code> version display with redirect to latest documentation release.</li>
 </ul>
 </li>
 <li>Updating Cluster API (CAPI) to <strong>v1.9.5</strong> with support for cross-namespaced <code>ClusterClasses</code>.</li>

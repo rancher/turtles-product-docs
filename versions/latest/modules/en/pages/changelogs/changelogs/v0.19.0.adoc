@@ -23,7 +23,7 @@ __ (github-actions[bot]) released this 2025-04-29 09:14:28 +0000 UTC - v0.19.0__
 <li>Ships Cluster API Provider RKE2 v0.14.0 with In-place propagation support for RKE2ControlPlane</li>
 <li>Ships Cluster API Provider Add-on Provider Fleet v0.8.1:
 <ul>
-<li>Sync CAAPF feature gates to <a href="https://fleet.rancher.io/ref-configuration#configure-fleet-install-options-in-rancher" rel="nofollow">rancher-config</a> ConfigMap instead of reinstalling the Fleet chart.</li>
+<li>Sync CAAPF feature gates to <a href="https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/reference/ref-configuration.html#configure-install-options-in-rancher" rel="nofollow">rancher-config</a> ConfigMap instead of reinstalling the Fleet chart.</li>
 </ul>
 </li>
 <li>Requires Rancher v2.11.0 by Rancher Turtles Helm chart</li>
