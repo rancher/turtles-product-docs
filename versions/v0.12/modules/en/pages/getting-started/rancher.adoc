@@ -11,7 +11,7 @@ Helm is the recommended way to install `Rancher` in an existing or new Kubernete
 
 [TIP]
 ====
-Make sure to follow one of the official https://ranchermanager.docs.rancher.com/pages-for-subheaders/installation-and-upgrade[installation guides] for Rancher.
+Make sure to follow one of the official https://documentation.suse.com/cloudnative/rancher-manager/latest/en/installation-and-upgrade/installation-and-upgrade.html[installation guides] for Rancher.
 ====
 
 
