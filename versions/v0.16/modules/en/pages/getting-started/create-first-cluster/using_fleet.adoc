@@ -68,7 +68,7 @@ namespace: default
 
 [NOTE]
 ====
-The *fleet.yaml* is used to specify configuration options for fleet (see https://fleet.rancher.io/ref-fleet-yaml[docs] for further details). In this instance its declaring that the cluster definitions should be added to the *default* namespace
+The *fleet.yaml* is used to specify configuration options for fleet (see https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/reference/ref-fleet-yaml.html[Fleet reference documentation] for further details). In this instance its declaring that the cluster definitions should be added to the *default* namespace
 ====
 
 

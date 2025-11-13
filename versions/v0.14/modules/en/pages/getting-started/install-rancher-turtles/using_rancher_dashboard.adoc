@@ -48,7 +48,7 @@ If uninstalling, you can refer to xref:../getting-started/uninstall_turtles.adoc
 
 [CAUTION]
 ====
-Rancher will select not to install Turtles into a https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/manage-clusters/projects-and-namespaces[Project] by default. Installing Turtles into a Project is not supported and the default configuration `None` should be used to avoid unexpected behavior during installation.
+Rancher will select not to install Turtles into a https://documentation.suse.com/cloudnative/rancher-manager/latest/en/cluster-admin/manage-clusters/projects-and-namespaces.html[Project] by default. Installing Turtles into a Project is not supported and the default configuration `None` should be used to avoid unexpected behavior during installation.
 ====
 
 
