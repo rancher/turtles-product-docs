@@ -1,5 +1,5 @@
 = "v0.11.0"
-:revdate: 2025-10-27
+:revdate: 2025-11-13
 :page-revdate: {revdate}
 == "2024-08-22 14:23:44 +0000 UTC"
 
@@ -15,7 +15,7 @@ __ (github-actions[bot]) released this 2024-08-22 14:23:44 +0000 UTC - v0.11.0__
 
 ++++
 
-<h3>🚀  This release brings two new providers to the list of certified providers: CAPV (vSphere) from experimental to GA and CAPZ (Azure). Moreover, our test suite is now available for prospective end-users to use and add their providers to the list of certified providers. For more information please read <a href="https://documentation.suse.com/cloudnative/cluster-api/v0.11/en/tasks/provider-certification/intro.html" rel="nofollow">here</a>.</h3>
+<h3>🚀  This release brings two new providers to the list of certified providers: CAPV (vSphere) from experimental to GA and CAPZ (Azure). Moreover, our test suite is now available for prospective end-users to use and add their providers to the list of certified providers. For more information please read <a href="https://documentation.suse.com/cloudnative/cluster-api/v0.16/en/tasks/provider-certification/intro.html" rel="nofollow">here</a>.</h3>
 <p>Rancher Turtles is an extension to Rancher that brings full Cluster API integration to Rancher.</p>
 
 <h2>What's Changed</h2>
