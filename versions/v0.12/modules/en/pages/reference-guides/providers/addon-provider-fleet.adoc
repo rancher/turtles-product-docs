@@ -4,14 +4,14 @@
 
 == Overview
 
-Cluster API Add-on Provider for `Fleet` (CAAPF) is a Cluster API (CAPI) provider that provides integration with https://fleet.rancher.io/[`Fleet`] to enable the easy deployment of applications to a CAPI provisioned cluster.
+Cluster API Add-on Provider for `Fleet` (CAAPF) is a Cluster API (CAPI) provider that provides integration with https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/index.html[`Fleet`] to enable the easy deployment of applications to a CAPI provisioned cluster.
 
 == Functionality
 
 * The provider will register a newly provisioned CAPI cluster with `Fleet` by creating a `Fleet` `Cluster` instance with the same `name` and `namespace`. Applications can be automatically deployed to the created cluster using `GitOps`.
 * The provider will automatically create a Fleet `ClusterGroup` for every CAPI `ClusterClass` in the `ClusterClass` namespace. This enables you to deploy the same applications to all clusters created from the same `ClusterClass`.
 
-This allows a user to specify either a https://fleet.rancher.io/ref-bundle[`Bundle`] resource with raw application workloads, or https://fleet.rancher.io/ref-gitrepo[`GitRepo`] to install applications from git. Each of the resources can provide https://fleet.rancher.io/gitrepo-targets#defining-targets[`targets`] with any combination of:
+This allows a user to specify either a https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/reference/ref-bundle.html[`Bundle`] resource with raw application workloads, or https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/reference/ref-gitrepo.html[`GitRepo`] to install applications from git. Each of the resources can provide https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/how-tos-for-users/gitrepo-targets.html#_defining_targets[`targets`] with any combination of:
 
 [source,yaml]
 ----
