@@ -6,7 +6,7 @@
 == Prerequisites:
 
 * https://kind.sigs.k8s.io/[kind]
-* https://helm.sh/[helm]
+* https://helm.sh/[Helm]
 * https://tilt.dev/[tilt]
 
 == Create a local development environment
