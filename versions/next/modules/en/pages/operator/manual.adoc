@@ -1,5 +1,5 @@
 = Manual Installation
-:revdate: 2025-09-16
+:revdate: 2025-11-14
 :page-revdate: {revdate}
 
 This page describes how to install {product_name} manually, using the Helm CLI.
@@ -46,7 +46,7 @@ Once the Helm repository has been added and updated locally, you can proceed to 
 [source,bash, subs="attributes"]
 ----
 helm install rancher-turtles turtles/rancher-turtles --version {turtles_version} \
-    -n rancher-turtles-system \
+    -n cattle-turtles-system \
     --dependency-update \
     --create-namespace --wait \
     --timeout 180s
@@ -80,7 +80,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: variables
-  namespace: rancher-turtles-system
+  namespace: cattle-turtles-system
 type: Opaque
 stringData:
   CLUSTER_TOPOLOGY: "true"
