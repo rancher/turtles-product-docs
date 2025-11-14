@@ -1,5 +1,5 @@
 = ClusterClass
-:revdate: 2025-09-16
+:revdate: 2025-11-14
 :page-revdate: {revdate}
 
 In this section we cover using https://cluster-api.sigs.k8s.io/tasks/experimental-features/cluster-class/[ClusterClass] with the {product_name}.
@@ -882,7 +882,12 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{tu
 * For this example we are also going to install https://docs.tigera.io/calico/latest/about/[Calico] as the default CNI.
 * The https://github.com/kubernetes/cloud-provider-gcp[GCP Cloud Controller Manager] will need to be installed on each downstream Cluster for the nodes to be functional.
 +
+ifeval::["{build-type}" == "product"]
+We can do this automatically at Cluster creation using a combination of https://rancher.github.io/cluster-api-addon-provider-fleet/[Cluster API Add-on Provider Fleet] and https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/how-tos-for-users/bundle-add.html[Fleet Bundle].
+endif::[]
+ifeval::["{build-type}" == "community"]
 We can do this automatically at Cluster creation using a combination of https://rancher.github.io/cluster-api-addon-provider-fleet/[Cluster API Add-on Provider Fleet] and https://fleet.rancher.io/bundle-add[Fleet Bundle].
+endif::[]
 The Add-on provider is installed by default with {product_name}.
 The `HelmOps` need to be created first, to be applied on the new Cluster via label selectors. This will take care of deploying Calico.
 +

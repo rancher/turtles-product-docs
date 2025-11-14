@@ -1,5 +1,5 @@
 = Glossary
-:revdate: 2025-10-02
+:revdate: 2025-11-14
 :page-revdate: {revdate}
 :sidebar_position: 2
 
@@ -142,7 +142,12 @@ See <<_cluster_api,CAPI>>.
 
 === Fleet
 
-A container management and deployment engine designed to offer users more control on the local cluster and constant monitoring through GitOps. Take a look at https://fleet.rancher.io/[fleet documentation] to know more about Fleet.
+ifeval::["{build-type}" == "product"]
+A container management and deployment engine designed to offer users more control on the local cluster and constant monitoring through GitOps. Take a look at https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/index.html/[Fleet documentation] to know more about Fleet.
+endif::[]
+ifeval::["{build-type}" == "community"]
+A container management and deployment engine designed to offer users more control on the local cluster and constant monitoring through GitOps. Take a look at https://fleet.rancher.io/[Fleet documentation] to know more about Fleet.
+endif::[]
 
 == I
 
@@ -263,7 +268,12 @@ The Rancher Manager (or Rancher Server) is where the Rancher UI and API are host
 
 === RKE2
 
+ifeval::["{build-type}" == "product"]
+Rancher's next-generation, fully conformant Kubernetes distribution that focuses on security and compliance within the U.S. Federal Government sector. See https://documentation.suse.com/cloudnative/rke2/latest/en/introduction.html[documentation] for more details.
+endif::[]
+ifeval::["{build-type}" == "community"]
 Rancher's next-generation, fully conformant Kubernetes distribution that focuses on security and compliance within the U.S. Federal Government sector. See https://docs.rke2.io/[documentation] for more details.
+endif::[]
 
 === Runtime Extension
 
