@@ -11,6 +11,7 @@
 ** Using ClusterClass
 *** xref:getting-started/cluster-class/intro.adoc[Introduction]
 *** xref:getting-started/cluster-class/create_cluster.adoc[Create a cluster using Fleet]
+*** xref:getting-started/cluster-class/provision.adoc[Create a workload cluster]
 ** xref:getting-started/air-gapped-environment.adoc[Air-gapped environment]
 ** xref:getting-started/uninstall_turtles.adoc[Uninstall {product_name}]
 * Reference Guides
