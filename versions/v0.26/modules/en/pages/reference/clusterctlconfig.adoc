@@ -1,5 +1,5 @@
 = ClusterctlConfig
-:revdate: 2025-09-16
+:revdate: 2025-11-14
 :page-revdate: {revdate}
 
 The `ClusterctlConfig` resource allows managing overrides for clusterctl (CAPI Operator) configurations in a declarative way. It is used to configure clusterctl providers and their urls, as well as version restrictions.
@@ -24,7 +24,7 @@ apiVersion: turtles-capi.cattle.io/v1alpha1
 kind: ClusterctlConfig
 metadata:
   name: clusterctl-config
-  namespace: rancher-turtles-system
+  namespace: cattle-turtles-system
 spec:
   providers:
   - name: metal3
@@ -70,7 +70,7 @@ apiVersion: turtles-capi.cattle.io/v1alpha1
 kind: ClusterctlConfig
 metadata:
   name: clusterctl-config
-  namespace: rancher-turtles-system
+  namespace: cattle-turtles-system
 spec:
   providers:
   - name: rke2
