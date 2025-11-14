@@ -1,5 +1,5 @@
 = Create & import your first cluster using Fleet
-:revdate: 2024-10-09
+:revdate: 2025-11-14
 :page-revdate: {revdate}
 
 This section will guide you through creating your first cluster and importing it into Rancher Manager using a GitOps workflow with Fleet.
@@ -67,7 +67,12 @@ namespace: default
 
 [NOTE]
 ====
-The *fleet.yaml* is used to specify configuration options for fleet (see https://fleet.rancher.io/ref-fleet-yaml[docs] for further details). In this instance its declaring that the cluster definitions should be added to the *default* namespace
+ifeval::["{build-type}" == "product"]
+The *fleet.yaml* is used to specify configuration options for fleet (see https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/reference/ref-fleet-yaml.html[Fleet reference documentation] for further details). In this instance its declaring that the cluster definitions should be added to the *default* namespace.
+endif::[]
+ifeval::["{build-type}" == "community"]
+The *fleet.yaml* is used to specify configuration options for fleet (see https://fleet.rancher.io/ref-fleet-yaml[Fleet reference documentation] for further details). In this instance its declaring that the cluster definitions should be added to the *default* namespace.
+endif::[]
 ====
 
 
