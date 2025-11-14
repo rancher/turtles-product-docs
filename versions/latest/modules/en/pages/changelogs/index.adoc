@@ -1,15 +1,13 @@
 = Release Notes
-<<<<<<< HEAD
 :revdate: 2025-11-20
 :page-revdate: {revdate}
 
-=======
-:revdate: 2025-09-16
-:page-revdate: {revdate}
+* xref:changelogs/changelogs/v0.24.2.adoc[v0.24.2]
 
-* xref:changelogs/changelogs/v0.24.0.adoc[v0.24.0 (latest)]
+* xref:changelogs/changelogs/v0.24.1.adoc[v0.24.1]
 
->>>>>>> 2669a83 (Resyncing revdates, changelogs, and syncing pages after rebase.)
+* xref:changelogs/changelogs/v0.24.0.adoc[v0.24.0]
+
 * xref:changelogs/changelogs/v0.23.0.adoc[v0.23.0]
 
 * xref:changelogs/changelogs/v0.22.0.adoc[v0.22.0]
