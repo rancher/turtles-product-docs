@@ -1,7 +1,7 @@
 site:
   title: Rancher Turtles
   url: /
-  start_page: latest@turtles:en:index.adoc
+  start_page: v0.25@turtles:en:index.adoc
 
 content:
   sources:
