@@ -1,10 +1,10 @@
 = Rancher Setup
-:revdate: 2025-04-04
+:revdate: 2025-11-20
 :page-revdate: {revdate}
 
 == Installing Rancher
 
-_If you're already running Rancher, you can skip this section and jump to xref:./quickstart.adoc[Install {product_name}]._
+_If you're already running Rancher, you can skip this section and jump to xref:first-cluster.adoc[Install {product_name}]._
 
 Helm is the recommended way to install `Rancher` in an existing or new Kubernetes cluster.
 
@@ -26,6 +26,6 @@ helm install rancher rancher-stable/rancher
     --wait
 ----
 
-Replace `<rancher-hostname>` with the actual hostname of your `Rancher` server and use the `--version` option to specify the version of `Rancher` you want to install. In this case, use the xref:../tutorials/quickstart.adoc#_prerequisites[recommended] `Rancher` version for `{product_name}`.
+Replace `<rancher-hostname>` with the actual hostname of your `Rancher` server and use the `--version` option to specify the version of `Rancher` you want to install.
 
 You are now ready to install and use {product_name}! 🎉
