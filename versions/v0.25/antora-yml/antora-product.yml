@@ -1,11 +1,11 @@
-name: turtles
-title: Rancher Turtles
-version: next
-display_version: 'Next'
+name: cluster-api
+title: Cluster API
+version: v0.25
+display_version: '0.25'
 start_page: en:index.adoc
 asciidoc:
   attributes:
-    product_name: Rancher Turtles
+    product_name: SUSE® Rancher Prime Cluster API
     #Prerequisite and Component version attributes
     cert_manager_version: v1.16.3
     cluster_api_version: v1.10.5

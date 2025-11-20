@@ -12,7 +12,7 @@ asciidoc:
     cluster_api_provider_RKE2_version: v0.20.1
     helm_version: v3.17.1
     k8s_cluster_version: v1.31.4
-    rancher_version: v2.12.1
-    turtles_version: v0.24.0
+    rancher_version: v2.13.0
+    turtles_version: v0.25.0
 nav:
   - modules/en/nav.adoc
