@@ -1,17 +1,27 @@
 = Cluster API Addon Provider Fleet
-:revdate: 2025-05-30
+:revdate: 2025-11-14
 :page-revdate: {revdate}
 
 == Overview
 
-Cluster API Add-on Provider for `Fleet` (CAAPF) is a Cluster API (CAPI) provider that provides integration with https://fleet.rancher.io/[`Fleet`] to enable the easy deployment of applications to a CAPI provisioned cluster.
+ifeval::["{build-type}" == "product"]
+Cluster API Add-on Provider for `Fleet` (CAAPF) is a Cluster API (CAPI) provider that provides integration with https://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/index.html[`Fleet`] to enable the easy deployment of applications to a CAPI-provisioned cluster.
+endif::[]
+ifeval::["{build-type}" == "community"]
+Cluster API Add-on Provider for `Fleet` (CAAPF) is a Cluster API (CAPI) provider that provides integration with https://fleet.rancher.io/[`Fleet`] to enable the easy deployment of applications to a CAPI-provisioned cluster.
+endif::[]
 
 == Functionality
 
 * The provider will register a newly provisioned CAPI cluster with `Fleet` by creating a `Fleet` `Cluster` instance with the same `name` and `namespace`. Applications can be automatically deployed to the created cluster using `GitOps`.
 * The provider will automatically create a Fleet `ClusterGroup` for every CAPI `ClusterClass` in the `ClusterClass` namespace. This enables you to deploy the same applications to all clusters created from the same `ClusterClass`.
 
-This allows a user to specify either a https://fleet.rancher.io/ref-bundle[`Bundle`] resource with raw application workloads, or https://fleet.rancher.io/ref-gitrepo[`GitRepo`] to install applications from git. Each of the resources can provide https://fleet.rancher.io/gitrepo-targets#defining-targets[`targets`] with any combination of:
+ifeval::["{build-type}" == "product"]
+This allows a user to specify either a https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/reference/ref-bundle.html[`Bundle`] resource with raw application workloads, or https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/reference/ref-gitrepo.html[`GitRepo`] to install applications from git. Each of the resources can provide https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/how-tos-for-users/gitrepo-targets.html#_defining_targets[`targets`] with any combination of:
+endif::[]
+ifeval::["{build-type}" == "community"]
+This allows a user to specify either a https://fleet.rancher.io/ref-bundle[`Bundle`] resource with raw application workloads or https://fleet.rancher.io/ref-gitrepo[`GitRepo`] to install applications from git. Each of the resources can provide https://fleet.rancher.io/gitrepo-targets#defining-targets[`targets`] with any combination of:
+endif::[]
 
 [source,yaml]
 ----

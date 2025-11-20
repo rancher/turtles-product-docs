@@ -1,13 +1,33 @@
 = GitOps Best Practices for Turtles and CAPI
-:revdate: 2025-08-01
+:revdate: 2025-10-02
 :page-revdate: {revdate}
 
+ifeval::["{build-type}" == "product"]
+This section provides best practices for implementing GitOps with Turtles and Cluster API (CAPI), focusing on using https://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/index.html[Continuous Delivery] in combination with the *Cluster API Addon Provider Fleet*(`CAAPF`) for automating agent provisioning and integration into the `CAPI` ecosystem.
+endif::[]
+ifeval::["{build-type}" == "community"]
 This section provides best practices for implementing GitOps with Turtles and Cluster API (CAPI), focusing on using https://fleet.rancher.io/[Fleet] in combination with the *Cluster API Addon Provider Fleet*(`CAAPF`) for automating agent provisioning and integration into the `CAPI` ecosystem.
+endif::[]
 
 These tips are transferable and can be applied even when using a different GitOps solution.
 
 == Common Tips
 
+ifeval::["{build-type}" == "product"]
+- **Separate CAPI Clusters and ClusterClass Configurations:**
+  Keep CAPI cluster configurations (`clusters/`) distinct from CAPI `ClusterClass` definitions (`templates/`). This separation allows multiple clusters to be provisioned from shared templates while reducing the risk of unintended infrastructure changes.
+- **Isolate Addon Configurations:**
+  Store application manifests in `applications/`, ensuring they are independent of `Clusters` and `ClusterClasses`. This enables selective or grouped provisioning based on user demand or matching selectors, preventing interference with cluster infrastructure. Please be aware that Helm chart dependencies need to be https://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/gitrepo-content.html#_fleet_yaml[refreshed] prior to addon provisioning.
+- **Utilize Nested GitRepo Resources:**
+  Leverage https://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/gitrepo-content.html#_nested_gitrepo_crs[nested] `GitRepo` resources in Fleet to structure repository content efficiently. This approach allows for modular provisioning, combining `ClusterClass` definitions, required addons/applications, and cluster configurations while maintaining separation of concerns.
+- **Use GitOps Integration Tools When Available:**
+  When configuring a GitOps setup, take into consideration available tooling and features it provides. An example of this is https://rancher.github.io/cluster-api-addon-provider-fleet/00_intro.html[`CAAPF`], which automates the Fleet GitOps installation on `CAPI` clusters and provides convenient automation.
+- **Apply Kustomize Overlays for Environment-Specific Customization:**
+  Use `overlays/` to store Kustomize overlays for different environments. This ensures that configuration changes, such as scaling adjustments, networking modifications, or component upgrades, can be applied dynamically without altering base manifests.
+- **Utilize Compare Patches:**
+  Fleet allows performing selective ignoring of resource differences if the bundle contains proper rules for https://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/troubleshooting.html#_suse_rancher_prime_continuous_delivery_deployment_stuck_in_modified_state[`diff` detection]. This would prevent bundles from being stuck in a modified state.
+endif::[]
+ifeval::["{build-type}" == "community"]
 - **Separate CAPI Clusters and ClusterClass Configurations:**
   Keep CAPI cluster configurations (`clusters/`) distinct from CAPI `ClusterClass` definitions (`templates/`). This separation allows multiple clusters to be provisioned from shared templates while reducing the risk of unintended infrastructure changes.
 - **Isolate Addon Configurations:**
@@ -20,6 +40,7 @@ These tips are transferable and can be applied even when using a different GitOp
   Use `overlays/` to store Kustomize overlays for different environments. This ensures that configuration changes, such as scaling adjustments, networking modifications, or component upgrades, can be applied dynamically without altering base manifests.
 - **Utilize Compare Patches:**
   Fleet allows performing selective ignoring of resource differences if the bundle contains proper rules for https://fleet.rancher.io/troubleshooting#fleet-deployment-stuck-in-modified-state[`diff` detection]. This would prevent bundles from being stuck in a modified state.
+endif::[]
 
 == Folder Separation Strategy
 

@@ -1,5 +1,5 @@
 = Via Rancher Dashboard
-:revdate: 2024-11-05
+:revdate: 2025-10-02
 :page-revdate: {revdate}
 
 
@@ -15,7 +15,12 @@ In case you need to review the list of prerequisites (including `cert-manager`),
 
 [IMPORTANT]
 ====
+ifeval::["{build-type}" == "product"]
 Before xref:./using_helm.adoc#_install_suse_rancher_prime_cluster_api_with_cluster_api_operator_as_a_helm_dependency[installing {product_name}] in your Rancher environment, Rancher's `embedded-cluster-api` functionality must be disabled. This includes also cleaning up Rancher-specific webhooks that otherwise would conflict with CAPI ones.
+endif::[]
+ifeval::["{build-type}" == "community"]
+Before xref:./using_helm.adoc#_install_rancher_turtles_with_cluster_api_operator_as_a_helm_dependency[installing {product_name}] in your Rancher environment, Rancher's `embedded-cluster-api` functionality must be disabled. This includes also cleaning up Rancher-specific webhooks that otherwise would conflict with CAPI ones.
+endif::[]
 
 To simplify setting up Rancher for installing {product_name}, the official {product_name} Helm chart includes a `pre-install` hook that applies these changes, making it transparent to the end user:
 
@@ -46,10 +51,18 @@ If uninstalling, you can refer to xref:../getting-started/uninstall_turtles.adoc
 . Click `Rancher Turtles - the Cluster API Extension`
 . Click `Install` \-> `Next` \-> `Install`.
 
+ifeval::["{build-type}" == "product"]
+[CAUTION]
+====
+Rancher will select not to install Turtles into a https://documentation.suse.com/cloudnative/rancher-manager/latest/en/cluster-admin/manage-clusters/projects-and-namespaces.html[Project] by default. Installing Turtles into a Project is not supported and the default configuration `None` should be used to avoid unexpected behavior during installation.
+====
+endif::[]
+ifeval::["{build-type}" == "community"]
 [CAUTION]
 ====
 Rancher will select not to install Turtles into a https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/manage-clusters/projects-and-namespaces[Project] by default. Installing Turtles into a Project is not supported and the default configuration `None` should be used to avoid unexpected behavior during installation.
 ====
+endif::[]
 
 
 image::install-turtles-from-ui.gif[install-turtles-from-ui]

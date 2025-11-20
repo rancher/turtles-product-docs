@@ -1,12 +1,18 @@
 = Install
-:revdate: 2025-09-15
+:revdate: 2025-10-02
 :page-revdate: {revdate}
 
 {product_name} is a Rancher extension which means that you must have Rancher installed before you can get started with {product_name}.
 
 [TIP]
 ====
-If you don't have Rancher installed yet, make sure to follow one of the official https://documentation.suse.com/cloudnative/rancher-manager/latest/en/installation-and-upgrade/installation-and-upgrade.html[installation guides]. We recommend you take a look at the xref:./quickstart.adoc#_prerequisites[Prerequisites] table to determine the appropriate version to install.
+ifeval::["{build-type}" == "product"]
+If you don't have Rancher installed yet, make sure to follow one of the official https://documentation.suse.com/cloudnative/rancher-manager/latest/en/installation-and-upgrade/installation-and-upgrade.html[installation guides].
+endif::[]
+ifeval::["{build-type}" == "community"]
+If you don't have Rancher installed yet, make sure to follow one of the official https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade[installation guides].
+endif::[]
+We recommend you take a look at the xref:./quickstart.adoc#_prerequisites[Prerequisites] table to determine the appropriate version to install.
 ====
 
 == Prerequisites
@@ -17,7 +23,7 @@ Before you can install {product_name}, you need to have the following components
 | Name | Version | Details
 
 | Kubernetes cluster
-| `k8s_cluster_version`
+| `{k8s_cluster_version}`
 |
 
 | Helm
@@ -26,7 +32,12 @@ Before you can install {product_name}, you need to have the following components
 
 | Rancher
 | `{rancher_version}`
+ifeval::["{build-type}" == "product"]
 | Install using https://documentation.suse.com/cloudnative/rancher-manager/latest/en/installation-and-upgrade/install-rancher.html#_install_the_rancher_helm_chart[Helm] on any Kubernetes cluster, whether self-hosted or on a managed service from https://documentation.suse.com/cloudnative/rancher-manager/latest/en/installation-and-upgrade/hosted-kubernetes/rancher-on-amazon-eks.html[Amazon], https://documentation.suse.com/cloudnative/rancher-manager/latest/en/installation-and-upgrade/hosted-kubernetes/rancher-on-aks.html[Azure], or https://documentation.suse.com/cloudnative/rancher-manager/latest/en/installation-and-upgrade/hosted-kubernetes/rancher-on-gke.html[Google].
+endif::[]
+ifeval::["{build-type}" == "community"]
+| Install using https://ranchermanager.docs.rancher.com/pages-for-subheaders/install-upgrade-on-a-kubernetes-cluster#install-the-rancher-helm-chart[Helm] on any Kubernetes cluster, whether self-hosted or on a managed service from https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/install-upgrade-on-a-kubernetes-cluster/rancher-on-amazon-eks[Amazon], https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/install-upgrade-on-a-kubernetes-cluster/rancher-on-aks[Azure], or https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/install-upgrade-on-a-kubernetes-cluster/rancher-on-gke[Google].
+endif::[]
 
 | Cert-manager
 | `{cert_manager_version}`
@@ -88,10 +99,18 @@ The recommended way to disable this feature and the Rancher-specific webhooks, i
 * Click `Rancher Turtles - the Cluster API Extension`
 * Click `Install` \-> `Next` \-> `Install`.
 
+ifeval::["{build-type}" == "product"]
 [CAUTION]
 ====
 Rancher will select not to install Turtles into a https://documentation.suse.com/cloudnative/rancher-manager/latest/en/cluster-admin/manage-clusters/projects-and-namespaces.html[Project] by default. Installing Turtles into a Project is not supported and the default configuration `None` should be used to avoid unexpected behavior during installation.
 ====
+endif::[]
+ifeval::["{build-type}" == "community"]
+[CAUTION]
+====
+Rancher will select not to install Turtles into a https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/manage-clusters/projects-and-namespaces[Project] by default. Installing Turtles into a Project is not supported and the default configuration `None` should be used to avoid unexpected behavior during installation.
+====
+endif::[]
 
 
 image::install-turtles-from-ui.gif[install-turtles-from-ui]
@@ -138,7 +157,7 @@ image::install-capi-ui-extension.gif[install-capi-ui-extension]
 
 == Install {product_name} using a CLI (development/experimental)
 
-For users who prefer a streamlined command-line installation process, Rancher Manager with Rancher Turtles can be installed using the https://github.com/rancher/turtles/blob/main/scripts/turtles-quickstart.sh[`turtles-quickstart.sh`] script.
+For users who prefer a streamlined command-line installation process, Rancher Manager with {product_name} can be installed using the https://github.com/rancher/turtles/blob/main/scripts/turtles-quickstart.sh[`turtles-quickstart.sh`] script.
 
 This installation method provides a fast way to get Rancher Manager and Turtles without doing too many manual steps.
 
@@ -146,7 +165,7 @@ This installation method provides a fast way to get Rancher Manager and Turtles 
 
 . Ensure you have installed on your system https://kubernetes.io/docs/tasks/tools/[`kubectl`], https://kind.sigs.k8s.io/docs/user/quick-start/#installation[`kind`], https://helm.sh/docs/intro/install/[`helm`] and running https://docs.docker.com/engine/install/[`docker`] daemon.
 
-. Download the script from Rancher Turtles github repository:
+. Download the script from {product_name} github repository:
 +
 [source,bash]
 ----
@@ -166,6 +185,6 @@ The script:
 
 * Verifies that your cluster meets the prerequisites.
 * Adds the Rancher and Turtles Helm repositories.
-* Installs Rancher Turtles with default configuration.
+* Installs {product_name} with default configuration.
 * Displays status information when complete.
 * Creates a new example downstream cluster using the *CAPI Docker Provider*.
