@@ -1,8 +1,8 @@
 = Release Notes
-:revdate: 2025-07-01
+:revdate: 2025-11-20
 :page-revdate: {revdate}
 
-* xref:changelogs/changelogs/v0.21.0.adoc[v0.21.0 (latest)]
+* xref:changelogs/changelogs/v0.21.0.adoc[v0.21.0]
 
 * xref:changelogs/changelogs/v0.20.0.adoc[v0.20.0]
 
