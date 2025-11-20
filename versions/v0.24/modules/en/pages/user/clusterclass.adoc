@@ -1,5 +1,5 @@
 = ClusterClass
-:revdate: 2025-09-16
+:revdate: 2025-11-20
 :page-revdate: {revdate}
 
 In this section we cover using https://cluster-api.sigs.k8s.io/tasks/experimental-features/cluster-class/[ClusterClass] with the {product_name}.
@@ -431,6 +431,11 @@ In order to migrate to Rancher `v2.12` and `HelmOps`, you need to take the follo
 . Deploy the converted `HelmOps` ensuring `HelmOp.spec.helm.takeOwnership: true`.
 
 Following these steps is necessary to guarantee the downstream Clusters will not be affected during the `HelmApp` conversion.  
+====
+
+[WARNING]
+====
+CAAPF depends on the `WatchList` Kubernetes feature gate. This feature needs to be explicitly enabled on Kubernetes `1.33` versions. See the https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/[Kubernetes upstream documentation] for further information.
 ====
 
 [tabs]
