@@ -1,13 +1,13 @@
 site:
   title: Cluster-API
   url: /
-  start_page: latest@cluster-api:en:index.adoc
+  start_page: v0.25@cluster-api:en:index.adoc
 
 content:
   sources:
     - url: https://github.com/rancher/turtles-product-docs.git
       branches: [main]
-      start_paths: [versions/latest, versions/v0.24, versions/v0.23, versions/v0.22, versions/v0.21, versions/v0.20, versions/v0.19, versions/v0.18, versions/v0.17, versions/v0.16, versions/v0.15, versions/v0.14, versions/v0.13, versions/v0.12, versions/v0.11]
+      start_paths: [versions/v0.25, versions/v0.24, versions/v0.23, versions/v0.22, versions/v0.21, versions/v0.20, versions/v0.19, versions/v0.18, versions/v0.17, versions/v0.16, versions/v0.15, versions/v0.14, versions/v0.13, versions/v0.12, versions/v0.11]
 
 
 # Description: SUSE UI bundle
@@ -33,6 +33,8 @@ antora:
   - require: '@springio/antora-xref-extension'
   - require: ./product-docs-common/extensions/dynamic-loading-attributes/load-global-site-attributes.js
     attributefile: ./product-docs-common/global-attributes.yml
+    enabled: true
+  - require: ./product-docs-common/extensions/versions-latest-prerelease/vlp.js
     enabled: true
 
 output:
