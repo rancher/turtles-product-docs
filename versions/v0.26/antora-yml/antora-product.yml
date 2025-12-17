@@ -13,6 +13,6 @@ asciidoc:
     helm_version: v3.17.1
     k8s_cluster_version: v1.31.4
     rancher_version: v2.13.0
-    turtles_version: v0.25.0
+    turtles_version: v0.25.1
 nav:
   - modules/en/nav.adoc
