@@ -1,5 +1,5 @@
 = Features
-:revdate: 2025-10-14
+:revdate: 2025-12-17
 :page-revdate: {revdate}
 
 This section describes features and feature stages in {product_name}.
@@ -24,8 +24,8 @@ This section describes features and feature stages in {product_name}.
 | *No Cert Manager*
 | `no-cert-manager`
 | _None_
-| disabled
-| alpha
+| enabled
+| beta
 
 |===
 
