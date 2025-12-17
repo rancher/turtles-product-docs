@@ -1,7 +1,7 @@
 :doctype: book
 
 = Rancher Turtles Troubleshooting
-:revdate: 2025-11-20
+:revdate: 2025-12-17
 :page-revdate: {revdate}
 
 This guide provides troubleshooting steps for Rancher Turtles and Cluster API (CAPI) clusters. It covers common issues and their resolutions to help you maintain a stable and functional environment.
@@ -203,10 +203,20 @@ Output:
 +
 image::lineage-cluster-output.png[Output]
 
-== How to enable debug mode
+== How to enable debug mode for {product_name} and CAPI providers
 
-You can edit CAPIProvider resources for providers where increasing the log level is needed. Change to your desidered level as seen in the example below:
+* {product_name} - To enable debug mode for {product_name}, you need to patch `cattle-system/rancher-config` configmap as follows:
++
+[source,bash]
+----
+kubectl patch configmap -n cattle-system rancher-config --type merge --patch '{"data":{"rancher-turtles": "managerArguments:\n  - --v=5\n"}}'
+----
+(5 is equivalent to DEBUG)
++
+This results in the Turtles pod being restarted, in order to use the new configuration.
 
+* Cluster API Providers - Edit the CAPIProvider resources for providers where increasing the log level is needed. Change to your desidered level:
++
 [source,bash]
 ----
 CAPIProvider.Spec.Manager.Verbosity=5
