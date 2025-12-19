@@ -1,12 +1,12 @@
 site:
   title: Rancher Turtles
   url: /
-  start_page: next@turtles:en:index.adoc
+  start_page: v0.26@turtles:en:index.adoc
 
 content:
   sources:
     - url: ./
-      start_paths: [versions/next]
+      start_paths: [versions/v0.26]
       branches: HEAD
       
 # Description: SUSE UI bundle

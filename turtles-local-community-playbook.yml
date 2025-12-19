@@ -5,7 +5,6 @@ site:
 
 urls:
   latest_version_segment: stable
-  latest_prerelease_version_segment: next
 
 content:
   sources:
