@@ -5,6 +5,7 @@
 ** xref:overview/certified.adoc[Certified Providers]
 * Tutorials
 ** xref:tutorials/first-cluster.adoc[Your First Cluster]
+** xref:tutorials/migration.adoc[Migration Guide]
 ** xref:tutorials/rancher.adoc[Rancher Setup]
 ** xref:tutorials/migration.adoc[Migration Guide]
 ** xref:tutorials/uninstall.adoc[Uninstall]

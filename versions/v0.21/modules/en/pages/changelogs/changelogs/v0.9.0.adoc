@@ -1,5 +1,5 @@
 = "v0.9.0"
-:revdate: 2025-10-27
+:revdate: 2025-11-14
 :page-revdate: {revdate}
 == "2024-06-28 10:54:06 +0000 UTC"
 
@@ -16,7 +16,12 @@ __ (github-actions[bot]) released this 2024-06-28 10:54:06 +0000 UTC - v0.9.0__
 ++++
 
 <h3><strong><g-emoji class="g-emoji" alias="warning">⚠️</g-emoji> Important:</strong></h3>
+ifeval::["{build-type}" == "product"]
+<h4>Starting with Turtles <code>v0.9.0</code>, the process used for importing CAPI clusters into Rancher has changed. We recommend you take a look at the changelog and the instructions provided in the <code>v0.9</code> version of the Turtles book: <a href="https://documentation.suse.com/cloudnative/cluster-api/latest/en/index.html/" rel="nofollow">https://documentation.suse.com/cloudnative/cluster-api/latest/en/index.html/</a></h4>
+endif::[]
+ifeval::["{build-type}" == "community"]
 <h4>Starting with Turtles <code>v0.9.0</code>, the process used for importing CAPI clusters into Rancher has changed. We recommend you take a look at the changelog and the instructions provided in the <code>v0.9</code> version of the Turtles book: <a href="https://turtles.docs.rancher.com/" rel="nofollow">https://turtles.docs.rancher.com/</a></h4>
+endif::[]
 <p>Rancher Turtles is an extension to Rancher that brings full Cluster API integration to Rancher.</p>
 <table>
 <thead>

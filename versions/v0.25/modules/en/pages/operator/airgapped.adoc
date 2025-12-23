@@ -4,7 +4,7 @@
 
 {product_name} provides support for an air-gapped environment out-of-the-box by leveraging features of the Cluster API Operator, the required dependency for installing {product_name}.
 
-To provision and configure Cluster API providers, Turtles uses the *CAPIProvider* resource to allow managing Cluster API Operator manifests in a declarative way. Every field provided by the upstream CAPI Operator resource for the desired `spec.type` is also available in the `spec` of the *CAPIProvider* resouce.
+To provision and configure Cluster API providers, Turtles uses the *CAPIProvider* resource to allow managing Cluster API Operator manifests in a declarative way. Every field provided by the upstream CAPI Operator resource for the desired `spec.type` is also available in the `spec` of the *CAPIProvider* resource.
 
 A new installation of {product_name} only includes the core CAPI provider and its CRDs. The default installation mechanism for this provider does not require fetching the manifest from a remote source, so it is fully functional in an air-gapped environment as it retrieves the YAML definition from a local `ConfigMap`, embedded in the application chart.
 

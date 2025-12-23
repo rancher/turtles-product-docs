@@ -1,7 +1,7 @@
 :doctype: book
 
 = Create & import a cluster using CAPI providers
-:revdate: 2025-05-05
+:revdate: 2025-10-02
 :page-revdate: {revdate}
 
 This guide goes over the process of creating and importing CAPI clusters with a selection of the officially certified providers.
@@ -411,7 +411,12 @@ kubectl create -f cluster1.yaml
 vSphere RKE2::
 +
 --
-Before creating a vSphere+RKE2 workload cluster, it is required to have a VM template with the necessary RKE2 binaries and dependencies. The template should already include RKE2 binaries if operating in an air-gapped environment, following the https://docs.rke2.io/install/airgap#tarball-method[tarball method]. You can find additional configuration details in the https://github.com/rancher/cluster-api-provider-rke2/tree/main/samples/vmware[CAPRKE2 repository].
+ifeval::["{build-type}" == "product"]
+Before creating a vSphere+RKE2 workload cluster, it is required to have a VM template with the necessary RKE2 binaries and dependencies. The template should already include RKE2 binaries if operating in an air-gapped environment, following the https://documentation.suse.com/cloudnative/rke2/latest/en/install/airgap.html#_tarball_method[tarball method]. You can find additional configuration details in the https://github.com/rancher/cluster-api-provider-rke2/tree/main/samples/vmware[CAPRKE2 repository].
+endif::[]
+ifeval::["{build-type}" == "community"]
+Before creating a vSphere+RKE2 workload cluster, it is required to have a VM template with the necessary RKE2 binaries and dependencies. The template should already include RKE2 binaries if operating in an air-gapped environment, following the https://docs.rke2.io/install/airgap?airgap-load-images=Manually+Deploy+Images#prepare-the-images-directory-and-airgap-image-tarball[tarball method]. You can find additional configuration details in the https://github.com/rancher/cluster-api-provider-rke2/tree/main/samples/vmware[CAPRKE2 repository].
+endif::[]
 
 To generate the YAML for the cluster, do the following:
 

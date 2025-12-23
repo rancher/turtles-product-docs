@@ -1,5 +1,5 @@
 site:
-  title: Rancher Turtles
+  title: Cluster-API
   url: /
   start_page: v0.26@cluster-api:en:index.adoc
 
