@@ -28,7 +28,7 @@ jobs:
         node-version: '18'
     - name: Install Dependencies
       run: make environment
-      # Generate site using 'make local' which uses turtles-local-playbook.yml with draft preview enabled
+      # Generate site using 'make local-community' which uses turtles-local-community-playbook.yml with draft preview enabled
     - name: Generate Site
       run: make local-community
     - name: Upload Artifacts

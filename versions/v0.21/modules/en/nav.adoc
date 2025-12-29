@@ -4,9 +4,8 @@
 ** xref:overview/features.adoc[Features]
 ** xref:overview/certified.adoc[Certified Providers]
 * Tutorials
+** xref:tutorials/quickstart.adoc[Quick Start]
 ** xref:tutorials/first-cluster.adoc[Your First Cluster]
-** xref:tutorials/rancher.adoc[Rancher Setup]
-** xref:tutorials/migration.adoc[Migration Guide]
 ** xref:tutorials/uninstall.adoc[Uninstall]
 * Reference
 ** xref:reference/capiprovider.adoc[CAPIProvider]
@@ -19,6 +18,8 @@
 ** xref:user/caapf.adoc[CAPI Addon Provider Fleet]
 ** xref:user/gitops.adoc[GitOps best practices for Turtles and CAPI]
 * Operator Guide
+** xref:operator/chart.adoc[Chart Configuration]
+** xref:operator/manual.adoc[Manual Installation]
 ** xref:operator/clusterclass.adoc[Enabling ClusterClass]
 ** xref:operator/certification.adoc[Provider Certification]
 ** xref:operator/certificationsuite.adoc[Provider Test Suite]
