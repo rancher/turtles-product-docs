@@ -1,43 +1,23 @@
 * xref:index.adoc[Overview]
-<<<<<<< HEAD:versions/v0.26/modules/en/nav.adoc
-=======
-* Tutorials
-** xref:tutorials/quickstart.adoc[Quick Start]
-** xref:tutorials/first-cluster.adoc[Your First Cluster]
-** xref:tutorials/uninstall.adoc[Uninstall]
-* Overview
->>>>>>> f203b29 (Updating to have versions folder hold all page content so as to not break the articles listing page and publishing workflow.):versions/next/modules/en/nav.adoc
 ** xref:overview/architecture.adoc[Architecture]
 ** xref:overview/glossary.adoc[Glossary]
 ** xref:overview/features.adoc[Features]
 ** xref:overview/certified.adoc[Certified Providers]
-<<<<<<< HEAD:versions/v0.26/modules/en/nav.adoc
 * Tutorials
 ** xref:tutorials/first-cluster.adoc[Your First Cluster]
 ** xref:tutorials/rancher.adoc[Rancher Setup]
 ** xref:tutorials/migration.adoc[Migration Guide]
 ** xref:tutorials/uninstall.adoc[Uninstall]
-=======
->>>>>>> f203b29 (Updating to have versions folder hold all page content so as to not break the articles listing page and publishing workflow.):versions/next/modules/en/nav.adoc
 * Reference
 ** xref:reference/capiprovider.adoc[CAPIProvider]
 ** xref:reference/clusterctlconfig.adoc[ClusterctlConfig]
 * User Guide
-<<<<<<< HEAD:versions/v0.26/modules/en/nav.adoc
-=======
-** xref:user/clusters.adoc[Provision a CAPI cluster]
->>>>>>> f203b29 (Updating to have versions folder hold all page content so as to not break the articles listing page and publishing workflow.):versions/next/modules/en/nav.adoc
 ** xref:user/clusterclass.adoc[Provision a CAPI cluster with ClusterClass]
 ** xref:user/fleet.adoc[Create a cluster using Fleet]
 ** xref:user/delete-cluster.adoc[Delete an imported cluster]
 ** xref:user/caapf.adoc[CAPI Addon Provider Fleet]
 ** xref:user/gitops.adoc[GitOps best practices for Turtles and CAPI]
 * Operator Guide
-<<<<<<< HEAD:versions/v0.26/modules/en/nav.adoc
-=======
-** xref:operator/chart.adoc[Chart Configuration]
-** xref:operator/manual.adoc[Manual Installation]
->>>>>>> f203b29 (Updating to have versions folder hold all page content so as to not break the articles listing page and publishing workflow.):versions/next/modules/en/nav.adoc
 ** xref:operator/clusterclass.adoc[Enabling ClusterClass]
 ** xref:operator/certification.adoc[Provider Certification]
 ** xref:operator/certificationsuite.adoc[Provider Test Suite]

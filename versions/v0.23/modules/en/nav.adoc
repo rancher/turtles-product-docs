@@ -6,7 +6,6 @@
 * Tutorials
 ** xref:tutorials/quickstart.adoc[Quick Start]
 ** xref:tutorials/first-cluster.adoc[Your First Cluster]
-** xref:tutorials/rancher.adoc[Rancher Setup]
 ** xref:tutorials/uninstall.adoc[Uninstall]
 * Reference
 ** xref:reference/capiprovider.adoc[CAPIProvider]

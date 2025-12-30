@@ -1,5 +1,5 @@
 = Development setup
-:revdate: 2025-10-02
+:revdate: 2025-07-01
 :page-revdate: {revdate}
 
 == Prerequisites:
@@ -60,4 +60,7 @@ ngrok http https://localhost:10000
  ** Docker Infrastructure Provider controller.
  ** CAPI Add-on Provider for Fleet controller.
  ** {product_name} controller.
+ ** {product_name} Cluster API Operator controller.
+ ** {product_name} ClusterClass controller.
+ ** {product_name} Day 2 operations controller.
 . The development environment will be started using `tilt up`.
