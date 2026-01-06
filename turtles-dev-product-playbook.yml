@@ -1,5 +1,5 @@
 site:
-  title: Rancher Turtles
+  title: Cluster-API
   url: /
   start_page: v0.26@cluster-api:en:index.adoc
 
@@ -18,7 +18,6 @@ ui:
 
 asciidoc:
   attributes:
-    build-type: product
     page-pagination: ''
     page-toclevels: 4@
     tabs-sync-option: ''

@@ -5,6 +5,7 @@ display_version: 'v0.24'
 start_page: en:index.adoc
 asciidoc:
   attributes:
+    build-type: community
     product_name: Rancher Turtles
     #Prerequisite and Component version attributes
     cert_manager_version: v1.16.3

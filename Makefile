@@ -57,16 +57,16 @@ clean:
 	rm -rf build
 
 # Preview Community and/or Product build output
-preview-product-local: ## Preview the site locally with http-server.
+preview-local-product: ## Preview the site locally with http-server.
 	npx http-server build/site-product -c-1 -p 8080
 
-preview-product-remote: ## Preview the site locally with http-server.
+preview-remote-product: ## Preview the site locally with http-server.
 	npx http-server build/site-product-remote -c-1 -p 8081
 
-preview-community-local: ## Preview the site locally with http-server.
+preview-local-community: ## Preview the site locally with http-server.
 	npx http-server build/site-community -c-1 -p 8082
 
-preview-community-remote: ## Preview the site locally with http-server.
+preview-remote-community: ## Preview the site locally with http-server.
 	npx http-server build/site-community-remote -c-1 -p 8083
 
 preview-dev-product: ## Preview the site locally with http-server.

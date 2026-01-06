@@ -118,4 +118,3 @@ variables:
 ====
 You can refer to https://github.com/rancher/turtles/tree/main/test/e2e#e2e-tests[Turtles repository] to see all the suites and parameters you can use to customize test execution. We recommend doing this only if you are familiar with the deployment/configuration of the test environment and have specific integration requirements.
 ====
-

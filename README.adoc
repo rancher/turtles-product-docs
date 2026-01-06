@@ -1,0 +1,123 @@
+= SUSE Rancher Prime Cluster API (Turtles): Product and Community Documentation
+
+== Build the Documentation site
+
+The repository uses https://docs.antora.org/antora/latest/[Antora Playbooks] to locally or remotely build the AsciiDoc content into a static website.
+
+=== Prerequisites
+
+==== git
+
+You need git to get the source code of this repository. Run the command below to check whether git is installed on your machine.
+
+[,console]
+----
+git --version
+----
+
+If you don't have git installed on your machine, download and install it for your operating system from the https://git-scm.com/downloads[git downloads] page.
+
+==== Node.js
+
+Antora requires an active long term support (LTS) release of Node.js. Run the command below to check if you have Node.js installed, and which version. This command should return an https://nodejs.org/en/about/releases/[active Node.js LTS version number].
+
+[,console]
+----
+node -v
+----
+
+If you don't have Node.js installed on your machine, install it, preferably via https://github.com/nvm-sh/nvm[nvm].
+
+=== Clone the repository
+
+Run the git command to clone this repository.
+
+[,console]
+----
+git clone https://github.com/rancher/turtles-product-docs.git
+----
+
+This playbook repository uses a https://git-scm.com/book/en/v2/Git-Tools-Submodules[git submodule] to get the custom Antora supplemental files that provide a custom GUI theme for the documentation website. Run the command below to get the submodule.
+
+[,console]
+----
+git submodule update --init
+----
+
+=== Install node modules
+
+Open a terminal at the root of the git repository. Run the command below.
+
+[,console]
+----
+npm install
+----
+
+=== Run Antora to build the static website - Product example
+
+As a local example, run the command below to build the product version of the site:
+
+[,console]
+----
+npx antora turtles-local-product-playbook.yml
+----
+
+Navigate to the `./build/site-product` directory and open the index.html file in your browser to view and navigate the documentation site.
+
+Alternatively, run the below command first and then open `http://127.0.0.1:8080/` in your browser for a web server preview:
+
+[,console]
+----
+make preview-product-local
+----
+
+== Makefile
+
+The Makefile can be used to set up your environment, build the local and remote static sites, and clean your build output directory.
+
+=== Build the Static Website
+
+You can use the `make` command to build the documentation site locally or remotely for either the Community or Product versions. The Makefile defines various tasks for building the site using different playbooks.
+
+=== Example: Build the site using the development playbook - Product
+
+For development purposes, you can build the product site using the development playbook by running:
+
+[,console]
+----
+make dev-product
+----
+
+This will use the `turtles-dev-product-playbook.yml` to generate the site with development settings.
+
+=== Preview the development build locally - Product
+
+To preview the above example development site locally, use the command below:
+
+[,console]
+----
+make preview-dev-product
+----
+
+and then open `http://127.0.0.1:8084/` in your browser for a web server preview.
+
+=== Clean up the build:
+
+To remove the build and temporary directories, use the following command:
+
+[,console]
+----
+make clean
+----
+
+This will delete the `build` directory.
+
+== How to report issues related to the SUSE Rancher Product Documentation
+
+=== If you are a SUSE Rancher Customer
+
+It is recommended to report the issue via the https://scc.suse.com/[SUSE Customer Center].
+
+=== If you are a SUSE Internal Employee
+
+It is recommended to file a Jira ticket. If you do not have access to Jira then you can file a GitHub ticket on the respective product documentation repository.

@@ -1,5 +1,5 @@
 = Rancher Setup
-:revdate: 2024-09-20
+:revdate: 2025-10-02
 :page-revdate: {revdate}
 :sidebar_position: 2
 
@@ -9,10 +9,18 @@ _If you're already running Rancher, you can skip this section and jump to xref:.
 
 Helm is the recommended way to install `Rancher` in an existing or new Kubernetes cluster.
 
+ifeval::["{build-type}" == "product"]
 [TIP]
 ====
-Make sure to follow one of the official https://ranchermanager.docs.rancher.com/pages-for-subheaders/installation-and-upgrade[installation guides] for Rancher.
+Make sure to follow one of the official https://documentation.suse.com/cloudnative/rancher-manager/latest/en/installation-and-upgrade/installation-and-upgrade.html[installation guides] for Rancher.
 ====
+endif::[]
+ifeval::["{build-type}" == "community"]
+[TIP]
+====
+Make sure to follow one of the official https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade[installation guides] for Rancher.
+====
+endif::[]
 
 
 Here's a minimal configuration example of a command to install `Rancher`:

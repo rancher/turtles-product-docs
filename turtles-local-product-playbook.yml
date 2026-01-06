@@ -18,8 +18,6 @@ ui:
 
 asciidoc:
   attributes:
-    page-draft-preview-only: 'true'
-    build-type: product
     page-pagination: ''
     page-toclevels: 4@
     tabs-sync-option: ''

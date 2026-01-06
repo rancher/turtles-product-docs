@@ -1,10 +1,15 @@
 = Cluster API Addon Provider Fleet
-:revdate: 2025-05-30
+:revdate: 2025-11-14
 :page-revdate: {revdate}
 
 == Overview
 
+ifeval::["{build-type}" == "product"]
+Cluster API Add-on Provider for `Fleet` (CAAPF) is a Cluster API (CAPI) provider that provides integration with https://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/index.html[`Fleet`] to enable the easy deployment of applications to a CAPI-provisioned cluster.
+endif::[]
+ifeval::["{build-type}" == "community"]
 Cluster API Add-on Provider for `Fleet` (CAAPF) is a Cluster API (CAPI) provider that provides integration with https://fleet.rancher.io/[`Fleet`] to enable the easy deployment of applications to a CAPI-provisioned cluster.
+endif::[]
 
 [TIP]
 ====
@@ -17,7 +22,12 @@ For more information about the provider, please refer to https://rancher.github.
 * The provider will automatically create a Fleet `ClusterGroup` for every CAPI `ClusterClass` in the `ClusterClass` namespace. This enables you to deploy the same applications to all clusters created from the same `ClusterClass`.
 * The provider will automatically create a Fleet `ClusterGroup` for every referenced CAPI `ClusterClass` by `Cluster` located in a different namespace from `ClusterClass`. This enables you to deploy the same applications to all clusters referencing the same `ClusterClass` in a particular namespace.
 
+ifeval::["{build-type}" == "product"]
+This allows a user to specify either a https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/reference/ref-bundle.html[`Bundle`] resource with raw application workloads, or https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/reference/ref-gitrepo.html[`GitRepo`] to install applications from git. Each of the resources can provide https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/how-tos-for-users/gitrepo-targets.html#_defining_targets[`targets`] with any combination of:
+endif::[]
+ifeval::["{build-type}" == "community"]
 This allows a user to specify either a https://fleet.rancher.io/ref-bundle[`Bundle`] resource with raw application workloads or https://fleet.rancher.io/ref-gitrepo[`GitRepo`] to install applications from git. Each of the resources can provide https://fleet.rancher.io/gitrepo-targets#defining-targets[`targets`] with any combination of:
+endif::[]
 
 [source,yaml]
 ----
@@ -37,7 +47,12 @@ Additionally, `CAAPF` automatically propagates `CAPI` cluster labels to the `Fle
 
 == Helm Chart templating based on CAPI `Cluster` and `ControlPlane`
 
+ifeval::["{build-type}" == "product"]
+The *Cluster API Addon Provider Fleet* automates application https://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/ref-fleet-yaml.html#_templating[templating] for imported CAPI clusters based on matching cluster state. This feature ensures that the state of a CAPI cluster and resources is always up-to-date in the `spec.templateValues.ClusterValues` field of the Fleet cluster resource. This allows users to:
+endif::[]
+ifeval::["{build-type}" == "community"]
 The *Cluster API Addon Provider Fleet* automates application https://fleet.rancher.io/ref-fleet-yaml#templating[templating] for imported CAPI clusters based on matching cluster state. This feature ensures that the state of a CAPI cluster and resources is always up-to-date in the `spec.templateValues.ClusterValues` field of the Fleet cluster resource. This allows users to:
+endif::[]
 
 - Reference specific parts of the CAPI cluster directly or via Helm substitution patterns referencing `.ClusterValues.Cluster` data.
 - Substitute based on the state of the control plane resource via the `.ClusterValues.ControlPlane` field.
