@@ -5,6 +5,7 @@ display_version: '0.14'
 start_page: en:index.adoc
 asciidoc:
   attributes:
+    build-type: product
     product_name: SUSE® Rancher Prime Cluster API
     #Prerequisite and Component version attributes
     cert_manager_version: v1.15.2

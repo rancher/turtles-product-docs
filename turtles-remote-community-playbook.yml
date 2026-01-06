@@ -22,7 +22,6 @@ runtime:
 
 asciidoc:
   attributes:
-    build-type: community
     page-pagination: ''
     tabs-sync-option: ''
   extensions:
