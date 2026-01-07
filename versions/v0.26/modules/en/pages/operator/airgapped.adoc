@@ -15,11 +15,12 @@ The version of core CAPI shipped with {product_name} is actively tested and vali
 
 == Community vs Prime Users
 
-{product_name} supports two types of air-gapped configurations depending on your deployment:
-
+ifeval::["{build-type}" == "product"]
 *Prime Users*: Rancher Prime users benefit from pre-mirrored CAPI provider OCI artifacts available in the Rancher Prime Registry (`registry.rancher.com`). These providers are automatically validated, tested, and maintained for your Turtles release. To see which providers and versions are available for your Turtles version, refer to the https://github.com/rancher/turtles/blob/main/internal/controllers/clusterctl/config-prime.yaml[config-prime.yaml] configuration file.
-
+endif::[]
+ifeval::["{build-type}" == "community"]
 *Community Users*: Community users have access to the core CAPI provider but do not have pre-mirrored provider OCI artifacts. They are free to manually mirror any CAPI provider or use fetched manifests according to their requirements. The https://github.com/rancher/turtles/blob/main/internal/controllers/clusterctl/config-community.yaml[config-community.yaml] configuration shows the minimal community setup without provider version pinning.
+endif::[]
 
 This section provides guidance on how to use `CAPIProvider` and the CAPI Operator functionality in different air-gapped scenarios.
 
@@ -27,11 +28,9 @@ This section provides guidance on how to use `CAPIProvider` and the CAPI Operato
 
 As an administrator working in an air-gapped environment, you need to fetch CAPI Provider components from within your cluster since external internet access is restricted. This section demonstrates how to deploy CAPI providers using OCI artifacts.
 
-[tabs]
-======
-Prime Users::
-+
---
+ifeval::["{build-type}" == "product"]
+=== Prime Users
+
 As a Rancher Prime user, you can directly mirror pre-validated provider OCI artifacts from the Rancher Prime Registry to your private registry.
 
 Set your private registry URL:
@@ -74,11 +73,11 @@ spec:
   fetchConfig:
     oci: ${REGISTRY}/cluster-api-azure-controller-components:${PROVIDER_VERSION}
 ----
---
+endif::[]
 
-Community Users::
-+
---
+ifeval::["{build-type}" == "community"]
+=== Community Users
+
 As a community user, you need to manually build and package provider OCI artifacts to your private registry. Community users do not have access to pre-mirrored artifacts from registry.rancher.com.
 
 Set your private registry URL and provider version:
@@ -108,18 +107,15 @@ spec:
   fetchConfig:
     oci: ${REGISTRY}:${RELEASE_TAG}
 ----
---
-======
+endif::[]
 
 == How to mirror CAPI Provider OCI artifact
 
 This section shows how to mirror CAPI Provider OCI artifacts to your private registry for use in an air-gapped environment.
 
-[tabs]
-======
-Prime Users::
-+
---
+ifeval::["{build-type}" == "product"]
+=== Prime Users
+
 As a Rancher Prime user, you can mirror pre-validated provider OCI artifacts from the Rancher Prime Registry. Check https://github.com/rancher/turtles/blob/main/internal/controllers/clusterctl/config-prime.yaml[config-prime.yaml] for available providers and their versions for your Turtles release.
 
 Install the ORAS (OCI Registry As Storage) CLI tool to manage OCI artifacts. Follow the installation instructions at: https://oras.land/docs/installation.
@@ -179,11 +175,11 @@ Use `kubectl` to create namespace and apply the configuration:
 kubectl create namespace capz-system
 kubectl apply -f capz-provider-oci.yaml
 ----
---
+endif::[]
 
-Community Users::
-+
---
+ifeval::["{build-type}" == "community"]
+=== Community Users
+
 As a community user, you need to build CAPI Provider OCI artifacts from source and must follow the upstream provider documentation to build release manifests.
 
 To build and package provider manifests:
@@ -232,8 +228,7 @@ Use `kubectl` to create namespace and apply the configuration:
 kubectl create namespace capz-system
 kubectl apply -f capz-provider-oci.yaml
 ----
---
-======
+endif::[]
 
 == CAPI Provider fetch and push OCI artifact
 
