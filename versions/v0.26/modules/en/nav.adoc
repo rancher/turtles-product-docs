@@ -18,7 +18,9 @@
 ** xref:user/caapf.adoc[CAPI Addon Provider Fleet]
 ** xref:user/gitops.adoc[GitOps best practices for Turtles and CAPI]
 ** xref:user/cluster-resource-mapping.adoc[Cluster Resource Relationships in {product_name}]
+ifeval::["{build-type}" == "product"]
 ** xref:user/providers.adoc[Install certified providers]
+endif::[]
 * Operator Guide
 ** xref:operator/clusterclass.adoc[Enabling ClusterClass]
 ** xref:operator/certification.adoc[Provider Certification]
