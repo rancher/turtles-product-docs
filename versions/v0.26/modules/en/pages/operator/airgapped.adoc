@@ -13,12 +13,13 @@ A new installation of {product_name} only includes the core CAPI provider and it
 The version of core CAPI shipped with {product_name} is actively tested and validated, and the chart is pre-configured to select this version by default using the CAPI Operator. However, if you have specific requirements about versioning or what repository to use, you can still customize the behavior of the CAPI Operator with your own https://github.com/rancher/turtles/blob/5b6b33d894edf265e5d2b09d2718538892e83cd0/charts/rancher-turtles/values.yaml#L80[fetchConfig].
 ====
 
-== Community vs Prime Users
-
 ifeval::["{build-type}" == "product"]
+== Prime Users
+
 *Prime Users*: Rancher Prime users benefit from pre-mirrored CAPI provider OCI artifacts available in the Rancher Prime Registry (`registry.rancher.com`). These providers are automatically validated, tested, and maintained for your Turtles release. To see which providers and versions are available for your Turtles version, refer to the https://github.com/rancher/turtles/blob/main/internal/controllers/clusterctl/config-prime.yaml[config-prime.yaml] configuration file.
 endif::[]
 ifeval::["{build-type}" == "community"]
+== Community Users
 *Community Users*: Community users have access to the core CAPI provider but do not have pre-mirrored provider OCI artifacts. They are free to manually mirror any CAPI provider or use fetched manifests according to their requirements. The https://github.com/rancher/turtles/blob/main/internal/controllers/clusterctl/config-community.yaml[config-community.yaml] configuration shows the minimal community setup without provider version pinning.
 endif::[]
 
