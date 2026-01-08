@@ -1,0 +1,22 @@
+changelogs:
+  - kind: github
+    dir: versions/{{ .turtles.next_version }}/modules/en/pages/changelogs/changelogs
+    formats:
+      - extension: asciidoc
+        frontmatters: |
+          == "{{ .Changelog.Name }}"
+          === "{{ .Changelog.PublishedAt }}"
+        indexfilename: index
+        indexfrontmatters: |
+          = Release Notes
+        indexfiletemplate: |
+          {{ .FrontMatters }}
+          {{ range $pos, $release := .Changelogs }}
+          * xref:changelogs/changelogs/{{ $release.Tag }}.adoc[{{ $release.Name }} {{ if (eq $pos 0) }}(latest){{ end}}]
+          {{ end }}
+    spec:
+      owner: rancher
+      repository: turtles
+      versionfilter:
+        kind: semver
+        pattern: ">=0.1.0"
