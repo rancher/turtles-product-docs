@@ -4,8 +4,8 @@ changelogs:
     formats:
       - extension: asciidoc
         frontmatters: |
-          == "{{ .Changelog.Name }}"
-          === "{{ .Changelog.PublishedAt }}"
+          = "{{ .Changelog.Name }}"
+          == "{{ .Changelog.PublishedAt }}"
         indexfilename: index
         indexfrontmatters: |
           = Release Notes
