@@ -1493,8 +1493,8 @@ metadata:
   name: docker-kubeadm-quickstart
   labels:
     cni: calico
-  annotation:
-    cluster-api.cattle.io/cluster-description: "This is a custom description of Rancher Cluster"
+  annotations:
+    cluster-api.cattle.io/cluster-description: "Modified cluster.mgmt.cattle.io object"
 ----
 
 image:imported-cluster-custom-description.png[Imported Rancher Cluster with custom description]
