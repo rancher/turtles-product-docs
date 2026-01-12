@@ -1480,10 +1480,10 @@ kubectl label namespace $NAMESPACE cluster-api.cattle.io/rancher-auto-import=tru
 
 == Add a custom description to Rancher Cluster
 
-The default description assigned to an imported Rancher is "CAPI cluster imported to Rancher".
+The default description assigned to an imported Rancher cluster is "CAPI cluster imported to Rancher".
 image:imported-cluster-default-description.png[Imported Rancher Cluster with default description]
 
-To add a custom description to the imported Rancher cluster, you may add `cluster-api.cattle.io/cluster-description` annotation to your CAPI cluster.
+To add a custom description to the imported Rancher cluster, you may add the `cluster-api.cattle.io/cluster-description` annotation to your CAPI cluster.
 
 [source,yaml]
 ----
