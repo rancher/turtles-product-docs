@@ -1,0 +1,4 @@
+# updatecli/values.yaml
+turtles:
+  # (release task) - this must be updated to latest_version + 1.
+  next_version: "v0.26"
