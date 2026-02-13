@@ -1,5 +1,5 @@
 = ClusterClass
-:revdate: 2025-11-20
+:revdate: 2026-02-10
 :page-revdate: {revdate}
 
 In this section we cover using https://cluster-api.sigs.k8s.io/tasks/experimental-features/cluster-class/[ClusterClass] with the {product_name}.
@@ -9,6 +9,14 @@ In this section we cover using https://cluster-api.sigs.k8s.io/tasks/experimenta
 * Rancher Manager cluster with {product_name} installed
 
 == Setup
+
+ifeval::["{build-type}" == "community"]
+[NOTE]
+.Version Pinning
+====
+The CAPIProvider `spec.version` can be set at any time to pin the provider to a specific version. To have immutability persist, you can also set `spec.enableAutomaticUpdate: false` to disable automatic version updates for your respective CAPIProvider.
+====
+endif::[]
 
 [tabs]
 ======
