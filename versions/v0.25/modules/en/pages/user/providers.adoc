@@ -1,5 +1,5 @@
 = Install certified providers
-:revdate: 2026-02-02
+:revdate: 2026-02-10
 :page-revdate: {revdate}
 
 This section describes how to install the {product_name} Providers chart, which installs the xref:overview/certified.adoc[certified providers].
@@ -25,10 +25,13 @@ helm install rancher-turtles-providers oci://<prime-registry-url>/rancher/charts
     --set providers.infrastructureGCP.enabled=true \
     --set providers.infrastructureGCP.variables.GCP_B64ENCODED_CREDENTIALS="" \
     --set providers.infrastructureVSphere.enabled=true \
+    --set providers.bootstrapRKE2.enabled=true \
+    --set providers.controlplaneRKE2.enabled=true \
+    --set providers.addonFleet.enabled=true \
     --wait
 ----
 
-The command above is used to install all certified providers. You may customize which providers are installed by setting the relevant flags to true. Note that the CAPRKE2 and Fleet Addon providers are enabled by default and will be installed unless explicitly disabled.
+The command above is used to install all certified providers. You may customize which providers are installed by setting the relevant flags to true.
 
 For example, to be able to provision RKE2 clusters on AWS you just need to install the AWS provider as following:
 
