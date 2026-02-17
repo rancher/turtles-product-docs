@@ -1,5 +1,5 @@
 = ClusterClass
-:revdate: 2026-02-10
+:revdate: 2026-02-17
 :page-revdate: {revdate}
 
 In this section we cover using https://cluster-api.sigs.k8s.io/tasks/experimental-features/cluster-class/[ClusterClass] with the {product_name}.
@@ -7,13 +7,38 @@ In this section we cover using https://cluster-api.sigs.k8s.io/tasks/experimenta
 == Prerequisites
 
 * Rancher Manager cluster with {product_name} installed
-* The CAPRKE2 and CAAPF providers must be installed as a prerequisite for using all ClusterClasses excluding Azure AKS.
-** CAPRKE2 (Bootstrap and Control Plane) provider installation:
+* The https://github.com/rancher/cluster-api-addon-provider-fleet[CAAPF] provider must be installed as a prerequisite for using all ClusterClasses.
+** CAAPF provider installation example:
 +
 .Click to Expand
 [%collapsible]
 ======
 [,yaml]
+----
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: fleet-addon
+  namespace: rancher-turtles-system
+spec:
+  name: fleet
+  type: addon
+----
+======
+* Depending on your engine, either the https://github.com/rancher/cluster-api-provider-rke2[CAPRKE2] or https://github.com/kubernetes-sigs/cluster-api[Kubeadm] Bootstrap/Control Plane installation is necessary before further CAPIProvider setup:
++
+[tabs]
+======
+CAPRKE2::
++
+--
+
+Bootstrap and Control Plane provider installation:
+
+.Click to Expand
+[%collapsible]
+=======
+[source,yaml]
 ----
 apiVersion: turtles-capi.cattle.io/v1alpha1
 kind: CAPIProvider
@@ -33,23 +58,53 @@ spec:
   name: rke2
   type: controlPlane
 ----
-======
-** CAAPF provider installation:
+=======
+
+--
+
+Kubeadm::
 +
+--
+
+Bootstrap and Control Plane provider installation:
+
 .Click to Expand
 [%collapsible]
-======
-[,yaml]
+=======
+[source,yaml]
 ----
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: capi-kubeadm-bootstrap-system
+---
 apiVersion: turtles-capi.cattle.io/v1alpha1
 kind: CAPIProvider
 metadata:
-  name: fleet-addon
-  namespace: rancher-turtles-system
+  name: kubeadm-bootstrap
+  namespace: capi-kubeadm-bootstrap-system
 spec:
-  name: fleet
-  type: addon
+  name: kubeadm
+  type: bootstrap
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: capi-kubeadm-control-plane-system
+---
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: kubeadm-control-plane
+  namespace: capi-kubeadm-control-plane-system
+spec:
+  name: kubeadm
+  type: controlPlane
 ----
+=======
+
+--
+
 ======
 
 == Setup
@@ -91,39 +146,6 @@ spec:
   name: azure
 ----
 
-* https://github.com/rancher/cluster-api-provider-rke2[Bootstrap/Control Plane provider for RKE2] or https://github.com/kubernetes-sigs/cluster-api[Bootstrap/Control Plane provider for Kubeadm], example of Kubeadm installation:
-+
-[source,yaml]
-----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: capi-kubeadm-bootstrap-system
----
-apiVersion: turtles-capi.cattle.io/v1alpha1
-kind: CAPIProvider
-metadata:
-  name: kubeadm-bootstrap
-  namespace: capi-kubeadm-bootstrap-system
-spec:
-  name: kubeadm
-  type: bootstrap
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: capi-kubeadm-control-plane-system
----
-apiVersion: turtles-capi.cattle.io/v1alpha1
-kind: CAPIProvider
-metadata:
-  name: kubeadm-control-plane
-  namespace: capi-kubeadm-control-plane-system
-spec:
-  name: kubeadm
-  type: controlPlane
-----
-+
 * Identity Setup
 +
 In this example we are going to use an `AzureClusterIdentity` to provision Azure Clusters.
@@ -182,39 +204,6 @@ spec:
     AWS_B64ENCODED_CREDENTIALS: ""
 ----
 
-* https://github.com/rancher/cluster-api-provider-rke2[Bootstrap/Control Plane provider for RKE2] or https://github.com/kubernetes-sigs/cluster-api[Bootstrap/Control Plane provider for Kubeadm], example of Kubeadm installation:
-+
-[source,yaml]
-----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: capi-kubeadm-bootstrap-system
----
-apiVersion: turtles-capi.cattle.io/v1alpha1
-kind: CAPIProvider
-metadata:
-  name: kubeadm-bootstrap
-  namespace: capi-kubeadm-bootstrap-system
-spec:
-  name: kubeadm
-  type: bootstrap
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: capi-kubeadm-control-plane-system
----
-apiVersion: turtles-capi.cattle.io/v1alpha1
-kind: CAPIProvider
-metadata:
-  name: kubeadm-control-plane
-  namespace: capi-kubeadm-control-plane-system
-spec:
-  name: kubeadm
-  type: controlPlane
-----
-
 * Identity Setup
 +
 In this example we are going to use a `AWSClusterStaticIdentity` to provision AWS Clusters. +
@@ -269,39 +258,6 @@ spec:
     GCP_B64ENCODED_CREDENTIALS: xxx
 ----
 
-* https://github.com/kubernetes-sigs/cluster-api[Bootstrap/Control Plane provider for Kubeadm], example of Kubeadm installation:
-+
-[source,yaml]
-----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: capi-kubeadm-bootstrap-system
----
-apiVersion: turtles-capi.cattle.io/v1alpha1
-kind: CAPIProvider
-metadata:
-  name: kubeadm-bootstrap
-  namespace: capi-kubeadm-bootstrap-system
-spec:
-  name: kubeadm
-  type: bootstrap
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: capi-kubeadm-control-plane-system
----
-apiVersion: turtles-capi.cattle.io/v1alpha1
-kind: CAPIProvider
-metadata:
-  name: kubeadm-control-plane
-  namespace: capi-kubeadm-control-plane-system
-spec:
-  name: kubeadm
-  type: controlPlane
-----
-
 * Network Setup
 +
 Provisioning a self-managed GCP cluster requires that a GCP network is configured to allow Kubernetes nodes to communicate with the control plane and pull images from the container registry for which machines need to have NAT access or a public IP.
@@ -340,38 +296,6 @@ spec:
   type: infrastructure
 ----
 
-* https://github.com/rancher/cluster-api-provider-rke2[Bootstrap/Control Plane provider for RKE2] or https://github.com/kubernetes-sigs/cluster-api[Bootstrap/Control Plane provider for Kubeadm], example of Kubeadm installation:
-+
-[source,yaml]
-----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: capi-kubeadm-bootstrap-system
----
-apiVersion: turtles-capi.cattle.io/v1alpha1
-kind: CAPIProvider
-metadata:
-  name: kubeadm-bootstrap
-  namespace: capi-kubeadm-bootstrap-system
-spec:
-  name: kubeadm
-  type: bootstrap
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: capi-kubeadm-control-plane-system
----
-apiVersion: turtles-capi.cattle.io/v1alpha1
-kind: CAPIProvider
-metadata:
-  name: kubeadm-control-plane
-  namespace: capi-kubeadm-control-plane-system
-spec:
-  name: kubeadm
-  type: controlPlane
-----
 --
 
 vSphere::
@@ -399,39 +323,6 @@ spec:
   variables:
     VSPHERE_USERNAME: "" 
     VSPHERE_PASSWORD: ""
-----
-
-* https://github.com/rancher/cluster-api-provider-rke2[Bootstrap/Control Plane provider for RKE2] or https://github.com/kubernetes-sigs/cluster-api[Bootstrap/Control Plane provider for Kubeadm], example of Kubeadm installation:
-+
-[source,yaml]
-----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: capi-kubeadm-bootstrap-system
----
-apiVersion: turtles-capi.cattle.io/v1alpha1
-kind: CAPIProvider
-metadata:
-  name: kubeadm-bootstrap
-  namespace: capi-kubeadm-bootstrap-system
-spec:
-  name: kubeadm
-  type: bootstrap
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: capi-kubeadm-control-plane-system
----
-apiVersion: turtles-capi.cattle.io/v1alpha1
-kind: CAPIProvider
-metadata:
-  name: kubeadm-control-plane
-  namespace: capi-kubeadm-control-plane-system
-spec:
-  name: kubeadm
-  type: controlPlane
 ----
 
 * Identity Setup
