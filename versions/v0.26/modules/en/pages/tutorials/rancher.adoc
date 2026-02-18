@@ -10,7 +10,6 @@ _If you're already running Rancher v2.13 or later, you can skip this section and
 ====
 Starting with Rancher v2.13, {product_name} is pre-installed as a Rancher system chart. There is no longer a need to install {product_name} separately. Simply installing Rancher v2.13 or later is all that is required to get started with Cluster API (CAPI).
 
-If you are upgrading from an earlier version of Rancher with {product_name} already installed, refer to the xref:tutorials/migration.adoc[Migration Guide] before upgrading.
 ====
 
 Helm is the recommended way to install Rancher in an existing or new Kubernetes cluster.
