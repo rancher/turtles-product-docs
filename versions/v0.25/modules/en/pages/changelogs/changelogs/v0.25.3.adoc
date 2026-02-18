@@ -1,0 +1,52 @@
+= v0.25.3
+:revdate: 2026-02-17
+:page-revdate: {revdate}
+
+== Release Date: 2026-02-16
+
+== Description
+
+[IMPORTANT]
+====
+This release fixes a critical issue with the {product_name} `no-cert-manager` feature which is enabled by default in Rancher v2.13.
+====
+
+This issue affects all users upgrading from {product_name} v0.24 + Rancher v2.12 to Rancher v2.13.
+
+In particular, the CAPIProviders have a chance at not being converted correctly to remove cert-manager dependencies and the `WranglerManagedCertificates` condition will not be set.
+
+When this is the case, conflicts with the Provider's CRDs may unexpectedly increase etcd size.
+
+For a workaround or more information, please see: https://github.com/rancher/turtles/issues/2109[#2109].
+
+=== What's Changed
+
+==== Bugs
+
+* [release/v0.25] Add images to values.yaml by @yiannistri in https://github.com/rancher/turtles/pull/2021[#2021].
+* [backport-release/v0.25] Make delete hooks do a full cleanup by @rancher-backport-assistant[bot] in https://github.com/rancher/turtles/pull/2032[#2032].
+* [backport-release/v0.25] fix: use systemDefaultRegistry for chart shell image by @rancher-backport-assistant[bot] in https://github.com/rancher/turtles/pull/2048[#2048].
+* [backport-release/v0.25] fix: Make turtles a Rancher managed chart (i.e. not user upgradeable) by @rancher-backport-assistant[bot] in https://github.com/rancher/turtles/pull/2111[#2111].
+* [backport-release/v0.25] fix: reconcile wrangler cleanup earlier by @rancher-backport-assistant[bot] in https://github.com/rancher/turtles/pull/2119[#2119].
+
+==== Other Changes
+
+* chore: Bump providers chart to 0.25.2 by @yiannistri in https://github.com/rancher/turtles/pull/2014[#2014].
+* [release/v0.25] chore: bump golang to 1.24.13 by @anmazzotti in https://github.com/rancher/turtles/pull/2075[#2075].
+* chore: bump providers release number by @anmazzotti in https://github.com/rancher/turtles/pull/2121[#2121].
+
+==== Full Changelog: 
+
+Review the full list of changes: https://github.com/rancher/turtles/compare/v0.25.2%E2%80%A6v0.25.3[v0.25.2...v0.25.3]
+
+== Download
+
+[cols="3,1,1" options="header" frame="all" grid="rows"]
+|===
+| Name | Created At | Updated At
+
+| link:https://github.com/rancher/turtles/releases/download/v0.25.3/rancher-turtles-0.25.3.tgz[rancher-turtles-0.25.3.tgz] | 2026-02-16 | 2026-02-16
+
+|===
+
+__Information retrieved from https://github.com/rancher/turtles/releases/tag/v0.25.3[v0.25.3 GitHub release].__
