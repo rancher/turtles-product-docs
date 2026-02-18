@@ -1,5 +1,5 @@
 = ClusterClass
-:revdate: 2026-02-17
+:revdate: 2026-02-18
 :page-revdate: {revdate}
 
 In this section we cover using https://cluster-api.sigs.k8s.io/tasks/experimental-features/cluster-class/[ClusterClass] with the {product_name}.
@@ -15,13 +15,18 @@ In this section we cover using https://cluster-api.sigs.k8s.io/tasks/experimenta
 ======
 [,yaml]
 ----
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fleet-addon-system
+---
 apiVersion: turtles-capi.cattle.io/v1alpha1
 kind: CAPIProvider
 metadata:
-  name: fleet-addon
-  namespace: rancher-turtles-system
-spec:
   name: fleet
+  namespace: fleet-addon-system
+spec:
+  name: rancher-fleet
   type: addon
 ----
 ======
@@ -40,20 +45,30 @@ Bootstrap and Control Plane provider installation:
 =======
 [source,yaml]
 ----
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: rke2-bootstrap-system
+---
 apiVersion: turtles-capi.cattle.io/v1alpha1
 kind: CAPIProvider
 metadata:
   name: rke2-bootstrap
-  namespace: rancher-turtles-system
+  namespace: rke2-bootstrap-system
 spec:
   name: rke2
   type: bootstrap
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: rke2-control-plane-system
 ---
 apiVersion: turtles-capi.cattle.io/v1alpha1
 kind: CAPIProvider
 metadata:
   name: rke2-control-plane
-  namespace: rancher-turtles-system
+  namespace: rke2-control-plane-system
 spec:
   name: rke2
   type: controlPlane
