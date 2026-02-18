@@ -7,7 +7,6 @@
 ** xref:tutorials/first-cluster.adoc[Your First Cluster]
 ** xref:tutorials/rancher.adoc[Rancher Setup]
 ** xref:tutorials/migration.adoc[Migration Guide]
-** xref:tutorials/uninstall.adoc[Uninstall]
 * Reference
 ** xref:reference/capiprovider.adoc[CAPIProvider]
 ** xref:reference/clusterctlconfig.adoc[ClusterctlConfig]
