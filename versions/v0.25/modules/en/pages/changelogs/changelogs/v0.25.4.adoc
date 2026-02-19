@@ -1,0 +1,33 @@
+= v0.25.4
+:revdate: 2026-02-18
+:page-revdate: {revdate}
+
+== Release Date: TBD
+
+== Description
+
+=== What's Changed
+
+==== Bugs
+
+* [backport-release/v0.25] fix: ignore cert-manager CRDs not found by @anmazzotti in https://github.com/rancher/turtles/pull/2131[#2131].
+
+==== Other Changes
+
+* [release/v0.25] bump providers version by @anmazzotti in https://github.com/rancher/turtles/pull/2135[#2135].
+
+==== Full Changelog: 
+
+Review the full list of changes: https://github.com/rancher/turtles/compare/v0.25.3%E2%80%A6v0.25.4[v0.25.3...v0.25.4]
+
+== Download
+
+[cols="3,1,1" options="header" frame="all" grid="rows"]
+|===
+| Name | Created At | Updated At
+
+| link:https://github.com/rancher/turtles/releases/download/v0.25.4/rancher-turtles-0.25.4.tgz[rancher-turtles-0.25.4.tgz] | TBD | TBD
+
+|===
+
+__Information retrieved from https://github.com/rancher/turtles/releases/tag/v0.25.4[v0.25.4 GitHub release].__
