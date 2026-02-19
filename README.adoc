@@ -68,7 +68,7 @@ Alternatively, run the below command first and then open `http://127.0.0.1:8080/
 
 [,console]
 ----
-make preview-product-local
+make preview-local-product
 ----
 
 == Makefile

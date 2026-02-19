@@ -1,12 +1,18 @@
 = Rancher Setup
-:revdate: 2025-11-20
+:revdate: 2026-02-18
 :page-revdate: {revdate}
 
 == Installing Rancher
 
-_If you're already running Rancher, you can skip this section and jump to xref:tutorials/first-cluster.adoc[Install {product_name}]._
+_If you're already running Rancher v2.13 or later, you can skip this section and jump to xref:tutorials/first-cluster.adoc[Your First Cluster]._
 
-Helm is the recommended way to install `Rancher` in an existing or new Kubernetes cluster.
+[NOTE]
+====
+Starting with Rancher v2.13, {product_name} is pre-installed as a Rancher system chart. There is no longer a need to install {product_name} separately. Simply installing Rancher v2.13 or later is all that is required to get started with Cluster API (CAPI).
+
+====
+
+Helm is the recommended way to install Rancher in an existing or new Kubernetes cluster.
 
 ifeval::["{build-type}" == "product"]
 [TIP]
@@ -21,19 +27,52 @@ Make sure to follow one of the official https://ranchermanager.docs.rancher.com/
 ====
 endif::[]
 
-
-Here's a minimal configuration example of a command to install `Rancher`:
+Here's a minimal example of installing Rancher with Helm:
 
 [source,bash]
 ----
-helm install rancher rancher-stable/rancher
-    --namespace cattle-system
-    --create-namespace
-    --set hostname=<rancher-hostname>
-    --version <rancher-version>
+helm install rancher rancher-stable/rancher \
+    --namespace cattle-system \
+    --create-namespace \
+    --set hostname=<rancher-hostname> \
+    --version <rancher-version> \
     --wait
 ----
 
-Replace `<rancher-hostname>` with the actual hostname of your `Rancher` server and use the `--version` option to specify the version of `Rancher` you want to install.
+Replace `<rancher-hostname>` with the actual hostname of your Rancher server and use `--version` to specify a Rancher version of `v2.13.0` or later.
 
-You are now ready to install and use {product_name}! 🎉
+== What Gets Installed
+
+When Rancher v2.13 or later is installed, {product_name} is automatically deployed as a system component in the `cattle-turtles-system` namespace. This includes:
+
+* The `rancher-turtles-controller-manager` pod, which handles all CAPI-related resources
+* Core CAPI CRDs and the core CAPI controller
+* The `CAPIProvider` custom resource, which allows declarative definition of CAPI providers
+
+[NOTE]
+====
+The core CAPI controller manifest is embedded in a ConfigMap, which simplifies operation in air-gapped environments.
+====
+
+== Installing CAPI Providers
+
+With {product_name} embedded in Rancher, CAPI providers are no longer bundled by default. Providers are managed declaratively using the `CAPIProvider` custom resource, and a separate
+providers chart is available for installing certified providers. For more information on the providers chart, refer to xref:user/providers.adoc[Install certified providers].
+
+For example, to define a provider:
+
+[source,yaml]
+----
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: aws
+  namespace: cattle-turtles-system
+spec:
+  type: infrastructure
+  name: aws
+----
+
+Refer to the xref:reference/capiprovider.adoc[CAPIProvider reference] for the full list of configuration options.
+
+You are now ready to use {product_name}! 🎉
