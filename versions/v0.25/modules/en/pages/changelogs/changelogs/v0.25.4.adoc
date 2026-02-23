@@ -26,7 +26,7 @@ Review the full list of changes: https://github.com/rancher/turtles/compare/v0.2
 |===
 | Name | Created At | Updated At
 
-| link:https://github.com/rancher/turtles/releases/download/v0.25.4/rancher-turtles-0.25.4.tgz[rancher-turtles-0.25.4.tgz] | TBD | TBD
+| link:https://github.com/rancher/turtles/releases/download/v0.25.4/rancher-turtles-0.25.4.tgz[rancher-turtles-0.25.4.tgz] | 2026-02-23 | 2026-02-23
 
 |===
 
