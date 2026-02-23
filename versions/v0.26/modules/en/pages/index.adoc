@@ -4,7 +4,7 @@
 
 [IMPORTANT]
 ====
-Starting with Rancher v2.13, {product_name} is installed by default as part of Rancher, and does not need to be installed manually. If you have been using earlier versions of {product_name}, make sure to follow the xref:tutorials/migration.adoc[migration guide] to facilitate a seamless upgrade process.
+Rancher v2.14 ships CAPI v1.12.2 and adopts the new `v1beta2` API contract. Refer to xref:tutorials/capi-v1beta2.adoc[Upgrading to CAPI v1beta2] for more details on the changes introduced in this new API version.
 ====
 
 == What is {product_name}?
