@@ -1,8 +1,8 @@
 = v0.25.4
-:revdate: 2026-02-18
+:revdate: 2026-02-24
 :page-revdate: {revdate}
 
-== Release Date: TBD
+== Release Date: 2026-02-23
 
 == Description
 
@@ -15,6 +15,7 @@
 ==== Other Changes
 
 * [release/v0.25] bump providers version by @anmazzotti in https://github.com/rancher/turtles/pull/2135[#2135].
+* Prepare v0.25.4 release by @anmazzotti in https://github.com/rancher/turtles/pull/2145[#2145].
 
 ==== Full Changelog: 
 
