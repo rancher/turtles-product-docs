@@ -6,7 +6,7 @@
 * Tutorials
 ** xref:tutorials/first-cluster.adoc[Your First Cluster]
 ** xref:tutorials/rancher.adoc[Rancher Setup]
-** xref:tutorials/migration.adoc[Migration Guide]
+** xref:tutorials/capi-v1beta2.adoc[Upgrading to CAPI v1beta2]
 * Reference
 ** xref:reference/capiprovider.adoc[CAPIProvider]
 ** xref:reference/clusterctlconfig.adoc[ClusterctlConfig]
