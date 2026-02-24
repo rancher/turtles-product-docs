@@ -1,5 +1,5 @@
 = ClusterClass
-:revdate: 2025-11-20
+:revdate: 2026-02-18
 :page-revdate: {revdate}
 
 In this section we cover using https://cluster-api.sigs.k8s.io/tasks/experimental-features/cluster-class/[ClusterClass] with the {product_name}.
@@ -7,40 +7,85 @@ In this section we cover using https://cluster-api.sigs.k8s.io/tasks/experimenta
 == Prerequisites
 
 * Rancher Manager cluster with {product_name} installed
-
-== Setup
-
+* The https://github.com/rancher/cluster-api-addon-provider-fleet[CAAPF] provider must be installed as a prerequisite for using all ClusterClasses.
+** CAAPF provider installation example:
++
+.Click to Expand
+[%collapsible]
+======
+[,yaml]
+----
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fleet-addon-system
+---
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: fleet
+  namespace: fleet-addon-system
+spec:
+  name: rancher-fleet
+  type: addon
+----
+======
+* Depending on your engine, either the https://github.com/rancher/cluster-api-provider-rke2[CAPRKE2] or https://github.com/kubernetes-sigs/cluster-api[Kubeadm] Bootstrap/Control Plane installation is necessary before further CAPIProvider setup:
++
 [tabs]
 ======
-Azure::
+CAPRKE2::
 +
 --
-To prepare the management Cluster, we are going to install the https://capz.sigs.k8s.io/[Cluster API Provider Azure], and create a https://capz.sigs.k8s.io/topics/identities#service-principal[ServicePrincipal] identity to provision a new Cluster on Azure.
 
-Before we start, a ServicePrincipal needs to be created, with at least Contributor access to an Azure subscription.
-Refer to the https://capz.sigs.k8s.io/topics/identities[CAPZ documentation] for more details.
+Bootstrap and Control Plane provider installation:
 
-* Provider installation
-+
+.Click to Expand
+[%collapsible]
+=======
 [source,yaml]
 ----
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: capz-system
+  name: rke2-bootstrap-system
 ---
 apiVersion: turtles-capi.cattle.io/v1alpha1
 kind: CAPIProvider
 metadata:
-  name: azure
-  namespace: capz-system
+  name: rke2-bootstrap
+  namespace: rke2-bootstrap-system
 spec:
-  type: infrastructure
-  name: azure
+  name: rke2
+  type: bootstrap
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: rke2-control-plane-system
+---
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: rke2-control-plane
+  namespace: rke2-control-plane-system
+spec:
+  name: rke2
+  type: controlPlane
 ----
+=======
 
-* https://github.com/rancher/cluster-api-provider-rke2[Bootstrap/Control Plane provider for RKE2](installed by default) or https://github.com/kubernetes-sigs/cluster-api[Bootstrap/Control Plane provider for Kubeadm], example of Kubeadm installation:
+--
+
+Kubeadm::
 +
+--
+
+Bootstrap and Control Plane provider installation:
+
+.Click to Expand
+[%collapsible]
+=======
 [source,yaml]
 ----
 apiVersion: v1
@@ -71,7 +116,51 @@ spec:
   name: kubeadm
   type: controlPlane
 ----
+=======
+
+--
+
+======
+
+== Setup
+
+ifeval::["{build-type}" == "community"]
+[NOTE]
+.Version Pinning
+====
+The CAPIProvider `spec.version` can be set at any time to pin the provider to a specific version. To have immutability persist, you can also set `spec.enableAutomaticUpdate: false` to disable automatic version updates for your respective CAPIProvider.
+====
+endif::[]
+
+[tabs]
+======
+Azure::
 +
+--
+To prepare the management Cluster, we are going to install the https://capz.sigs.k8s.io/[Cluster API Provider Azure], and create a https://capz.sigs.k8s.io/topics/identities#service-principal[ServicePrincipal] identity to provision a new Cluster on Azure.
+
+Before we start, a ServicePrincipal needs to be created, with at least Contributor access to an Azure subscription.
+Refer to the https://capz.sigs.k8s.io/topics/identities[CAPZ documentation] for more details.
+
+* Provider installation
++
+[source,yaml]
+----
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: capz-system
+---
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: azure
+  namespace: capz-system
+spec:
+  type: infrastructure
+  name: azure
+----
+
 * Identity Setup
 +
 In this example we are going to use an `AzureClusterIdentity` to provision Azure Clusters.
@@ -130,39 +219,6 @@ spec:
     AWS_B64ENCODED_CREDENTIALS: ""
 ----
 
-* https://github.com/rancher/cluster-api-provider-rke2[Bootstrap/Control Plane provider for RKE2](installed by default) or https://github.com/kubernetes-sigs/cluster-api[Bootstrap/Control Plane provider for Kubeadm], example of Kubeadm installation:
-+
-[source,yaml]
-----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: capi-kubeadm-bootstrap-system
----
-apiVersion: turtles-capi.cattle.io/v1alpha1
-kind: CAPIProvider
-metadata:
-  name: kubeadm-bootstrap
-  namespace: capi-kubeadm-bootstrap-system
-spec:
-  name: kubeadm
-  type: bootstrap
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: capi-kubeadm-control-plane-system
----
-apiVersion: turtles-capi.cattle.io/v1alpha1
-kind: CAPIProvider
-metadata:
-  name: kubeadm-control-plane
-  namespace: capi-kubeadm-control-plane-system
-spec:
-  name: kubeadm
-  type: controlPlane
-----
-
 * Identity Setup
 +
 In this example we are going to use a `AWSClusterStaticIdentity` to provision AWS Clusters. +
@@ -217,39 +273,6 @@ spec:
     GCP_B64ENCODED_CREDENTIALS: xxx
 ----
 
-* https://github.com/kubernetes-sigs/cluster-api[Bootstrap/Control Plane provider for Kubeadm], example of Kubeadm installation:
-+
-[source,yaml]
-----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: capi-kubeadm-bootstrap-system
----
-apiVersion: turtles-capi.cattle.io/v1alpha1
-kind: CAPIProvider
-metadata:
-  name: kubeadm-bootstrap
-  namespace: capi-kubeadm-bootstrap-system
-spec:
-  name: kubeadm
-  type: bootstrap
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: capi-kubeadm-control-plane-system
----
-apiVersion: turtles-capi.cattle.io/v1alpha1
-kind: CAPIProvider
-metadata:
-  name: kubeadm-control-plane
-  namespace: capi-kubeadm-control-plane-system
-spec:
-  name: kubeadm
-  type: controlPlane
-----
-
 * Network Setup
 +
 Provisioning a self-managed GCP cluster requires that a GCP network is configured to allow Kubernetes nodes to communicate with the control plane and pull images from the container registry for which machines need to have NAT access or a public IP.
@@ -288,38 +311,6 @@ spec:
   type: infrastructure
 ----
 
-* https://github.com/rancher/cluster-api-provider-rke2[Bootstrap/Control Plane provider for RKE2](installed by default) or https://github.com/kubernetes-sigs/cluster-api[Bootstrap/Control Plane provider for Kubeadm], example of Kubeadm installation:
-+
-[source,yaml]
-----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: capi-kubeadm-bootstrap-system
----
-apiVersion: turtles-capi.cattle.io/v1alpha1
-kind: CAPIProvider
-metadata:
-  name: kubeadm-bootstrap
-  namespace: capi-kubeadm-bootstrap-system
-spec:
-  name: kubeadm
-  type: bootstrap
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: capi-kubeadm-control-plane-system
----
-apiVersion: turtles-capi.cattle.io/v1alpha1
-kind: CAPIProvider
-metadata:
-  name: kubeadm-control-plane
-  namespace: capi-kubeadm-control-plane-system
-spec:
-  name: kubeadm
-  type: controlPlane
-----
 --
 
 vSphere::
@@ -347,39 +338,6 @@ spec:
   variables:
     VSPHERE_USERNAME: "" 
     VSPHERE_PASSWORD: ""
-----
-
-* https://github.com/rancher/cluster-api-provider-rke2[Bootstrap/Control Plane provider for RKE2](installed by default) or https://github.com/kubernetes-sigs/cluster-api[Bootstrap/Control Plane provider for Kubeadm], example of Kubeadm installation:
-+
-[source,yaml]
-----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: capi-kubeadm-bootstrap-system
----
-apiVersion: turtles-capi.cattle.io/v1alpha1
-kind: CAPIProvider
-metadata:
-  name: kubeadm-bootstrap
-  namespace: capi-kubeadm-bootstrap-system
-spec:
-  name: kubeadm
-  type: bootstrap
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: capi-kubeadm-control-plane-system
----
-apiVersion: turtles-capi.cattle.io/v1alpha1
-kind: CAPIProvider
-metadata:
-  name: kubeadm-control-plane
-  namespace: capi-kubeadm-control-plane-system
-spec:
-  name: kubeadm
-  type: controlPlane
 ----
 
 * Identity Setup
@@ -471,7 +429,6 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{tu
 For this example we are also going to install https://docs.tigera.io/calico/latest/about/[Calico] as the default CNI.
 +
 We can do this automatically at Cluster creation using the https://rancher.github.io/cluster-api-addon-provider-fleet/[Cluster API Add-on Provider Fleet].
-This Add-on provider is installed by default with {product_name}.
 Two `HelmOps` need to be created first, to be applied on the new Cluster via label selectors.
 +
 [source,bash, subs="attributes"]
@@ -616,7 +573,7 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{tu
 
 * Additionally, the https://capz.sigs.k8s.io/self-managed/cloud-provider-config[Azure Cloud Provider] will need to be installed on each downstream Cluster, for the nodes to be initialized correctly. For this example we are also going to install https://docs.tigera.io/calico/latest/about/[Calico] as the default CNI.
 +
-We can do this automatically at Cluster creation using the https://rancher.github.io/cluster-api-addon-provider-fleet/[Cluster API Add-on Provider Fleet]. This Add-on provider is installed by default with {product_name}. Two `HelmOps` need to be created first, to be applied on the new Cluster via label selectors.
+We can do this automatically at Cluster creation using the https://rancher.github.io/cluster-api-addon-provider-fleet/[Cluster API Add-on Provider Fleet]. Two `HelmOps` need to be created first, to be applied on the new Cluster via label selectors.
 +
 [source,bash, subs="attributes"]
 ----
@@ -699,7 +656,6 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{tu
 * Additionally, we will also enable https://github.com/kubernetes-sigs/aws-ebs-csi-driver[AWS EBS CSI Driver].
 +
 We can do this automatically at Cluster creation using the https://rancher.github.io/cluster-api-addon-provider-fleet/[Cluster API Add-on Provider Fleet].
-This Add-on provider is installed by default with {product_name}.
 The `HelmOps` need to be created first, to be applied on the new Cluster via label selectors. This will take care of deploying Calico, the EBS CSI Driver, and the AWS Cloud Controller Manager in the workload cluster.
 +
 [source,bash, subs="attributes"]
@@ -793,7 +749,6 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{tu
 * Additionally, we will also enable https://github.com/kubernetes-sigs/aws-ebs-csi-driver[AWS EBS CSI Driver].
 +
 We can do this automatically at Cluster creation using the https://rancher.github.io/cluster-api-addon-provider-fleet/[Cluster API Add-on Provider Fleet].
-This Add-on provider is installed by default with {product_name}.
 The `HelmOps` need to be created first, to be applied on the new Cluster via label selectors. This will take care of deploying Calico, the EBS CSI Driver, and the AWS Cloud Controller Manager in the workload cluster.
 +
 [source,bash, subs="attributes"]
@@ -893,7 +848,6 @@ endif::[]
 ifeval::["{build-type}" == "community"]
 We can do this automatically at Cluster creation using a combination of https://rancher.github.io/cluster-api-addon-provider-fleet/[Cluster API Add-on Provider Fleet] and https://fleet.rancher.io/bundle-add[Fleet Bundle].
 endif::[]
-The Add-on provider is installed by default with {product_name}.
 The `HelmOps` need to be created first, to be applied on the new Cluster via label selectors. This will take care of deploying Calico.
 +
 [source,bash, subs="attributes"]
@@ -986,7 +940,6 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{tu
 * For this example we are also going to install Calico as the default CNI.
 +
 We can do this automatically at Cluster creation using the https://rancher.github.io/cluster-api-addon-provider-fleet/[Cluster API Add-on Provider Fleet].
-This Add-on provider is installed by default with {product_name}.
 Two `HelmOps` need to be created first, to be applied on the new Cluster via label selectors.
 +
 [source,bash, subs="attributes"]
@@ -1059,7 +1012,6 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{tu
 * For this example we are also going to install Calico as the default CNI.
 +
 We can do this automatically at Cluster creation using the https://rancher.github.io/cluster-api-addon-provider-fleet/[Cluster API Add-on Provider Fleet].
-This Add-on provider is installed by default with {product_name}.
 Two `HelmOps` need to be created first, to be applied on the new Cluster via label selectors.
 +
 [source,bash, subs="attributes"]
@@ -1145,7 +1097,6 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{tu
 The https://github.com/kubernetes-sigs/vsphere-csi-driver[Container Storage Interface (CSI) driver for vSphere] will be used as storage solution.
 Finally, for this example we are going to install https://docs.tigera.io/calico/latest/about/[Calico] as the default CNI.
 We can install all applications automatically at Cluster creation using the https://rancher.github.io/cluster-api-addon-provider-fleet/[Cluster API Add-on Provider Fleet].
-This Add-on provider is installed by default with {product_name}.
 Two `HelmOps` need to be created first, to be applied on the new Cluster via label selectors.
 +
 [source,bash, subs="attributes"]
@@ -1321,7 +1272,6 @@ The https://github.com/kubernetes-sigs/vsphere-csi-driver[Container Storage Inte
 Finally, for this example we are going to install https://docs.tigera.io/calico/latest/about/[Calico] as the default CNI.
 +
 We can install all applications automatically at Cluster creation using the https://rancher.github.io/cluster-api-addon-provider-fleet/[Cluster API Add-on Provider Fleet].
-This Add-on provider is installed by default with {product_name}.
 Two `HelmOps` need to be created first, to be applied on the new Cluster via label selectors.
 +
 [source,bash, subs="attributes"]
