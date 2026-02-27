@@ -8,6 +8,34 @@ This section describes how to install the {product_name} Providers chart, which 
 
 * Ensure {product_name} has been installed.
 
+== Run the Providers migration script
+
+If you are using {product_name} with Rancher v2.12 or earlier and want to install the Providers chart in Rancher v2.13 or later, follow the steps in this section to ensure a smooth migration for any CAPI providers previously installed by default. For new installations, skip to the next section.
+
+Follow the xref:../tutorials/migration.adoc[migration guide] to update your cluster to Rancher v2.13. After the cluster has been upgraded, download and run the https://raw.githubusercontent.com/rancher/turtles/refs/heads/release/v0.25/scripts/migrate-providers-ownership.sh[Providers migration script] against your management cluster. By default, the script will update the namespaces and `CAPIProvider` resources for CAPRKE2 and CAAPF so that they are adopted by (or become part of) the new Providers Helm chart, when this is installed. The script will also delete the legacy CAAPF provider, if running on the `rancher-turtles-system` namespace.
+
+[source,bash]
+----
+./migrate-providers-ownership.sh
+Adopting existing turtles resources into Helm ownership
+Release: rancher-turtles-providers Namespace: cattle-turtles-system
+Found legacy Fleet CAPIProvider in rancher-turtles-system, deleting before providers install
+capiprovider.turtles-capi.cattle.io "fleet" deleted from rancher-turtles-system namespace
+configmap "fleet-addon-config" deleted from rancher-turtles-system namespace
+Adopting namespace rancher-turtles-system
+namespace/rancher-turtles-system patched
+CAPIProvider fleet in rancher-turtles-system not found, skipping
+Adopting namespace rke2-bootstrap-system
+namespace/rke2-bootstrap-system patched
+Adopting CAPIProvider rke2-bootstrap in rke2-bootstrap-system
+capiprovider.turtles-capi.cattle.io/rke2-bootstrap patched
+Adopting namespace rke2-control-plane-system
+namespace/rke2-control-plane-system patched
+Adopting CAPIProvider rke2-control-plane in rke2-control-plane-system
+capiprovider.turtles-capi.cattle.io/rke2-control-plane patched
+Migration completed
+----
+
 == Install the {product_name} Providers chart
 
 To install all certified providers, run the following command:
