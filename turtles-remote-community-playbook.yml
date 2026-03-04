@@ -5,8 +5,8 @@ site:
 
 content:
   sources:
-    - url: ./
-      branches: HEAD
+    - url: https://github.com/rancher/turtles-product-docs
+      branches: [main]
       start_paths: [versions/*]
 
 
