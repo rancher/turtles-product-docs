@@ -25,6 +25,46 @@ endif::[]
 
 This section provides guidance on how to use `CAPIProvider` and the CAPI Operator functionality in different air-gapped scenarios.
 
+== Automatic registry prefixing with Rancher Default Registry
+
+=== Prerequisites
+
+Ensure that the private registry configured in Rancher's `system-default-registry` setting contains mirror images for all CAPI providers you intend to use. The image paths within the mirror registry must preserve the original namespace and image name structure (e.g., `cluster-api/cluster-api-controller`).
+Refer to the embedded clusterctl configuration files (https://github.com/rancher/turtles/blob/main/internal/controllers/clusterctl/config-community.yaml[config-community.yaml] / https://github.com/rancher/turtles/blob/main/internal/controllers/clusterctl/config-prime.yaml[config-prime.yaml]) for the full list of provider images that need to be mirrored.
+
+{product_name} includes an alpha feature gate, `use-rancher-default-registry`, that simplifies image management in air-gapped environments. When enabled (the default), {product_name} reads Rancher's `system-default-registry` management setting and automatically prefixes all CAPI provider image repositories with the configured registry.
+
+Without this feature, provider images referencing external registries such as `registry.k8s.io` are not reachable in an air-gapped cluster. Rancher's image mirroring pipeline mirrors upstream images, but only the registry portion of an image reference is typically overridable - not the image name itself.
+This can lead to mismatches when mirrored images use a different naming convention (e.g., `rancher/mirrored-cluster-api-controller` instead of `cluster-api/cluster-api-controller`), or when certain images (e.g., `registry.k8s.io/kubernetes/kubectl`) are not mirrored at all.
+
+With `use-rancher-default-registry` enabled, {product_name} resolves this by reading the `system-default-registry` Rancher management setting and using its value to rewrite all provider image repositories. The embedded clusterctl-config `ConfigMap` serves as the source of truth for which providers and images are supported.
+If the setting is empty, {product_name} falls back to the default image references.
+
+=== How It Works
+
+. {product_name} reads the `system-default-registry` Rancher management setting.
+. If the setting contains a non-empty registry URL, {product_name} iterates through all provider images defined in the embedded clusterctl configuration.
+. For each image, the original registry prefix is stripped and replaced with the value from `system-default-registry`, preserving the namespace and image name.
++
+For example, `registry.k8s.io/cluster-api/cluster-api-controller` becomes `my-registry.example.com/cluster-api/cluster-api-controller`.
+. Any image overrides specified in the `ClusterctlConfig` resource are applied _after_ the registry prefix, allowing selective per-image overrides.
+
+[NOTE]
+====
+Image overrides defined in the `ClusterctlConfig` resource always take precedence. If a specific provider image is configured via `ClusterctlConfig`, it replaces the registry-prefixed value. This provides a mechanism to selectively override specific images while relying on the automatic registry prefix for everything else.
+====
+
+=== Enabling or Disabling
+
+This feature is enabled by default. To disable it and fall back to the original image references, set the following in your Helm values:
+
+[source,yaml]
+----
+features:
+  use-rancher-default-registry:
+    enabled: false
+----
+
 == CAPI Provider installation with OCI artifact
 
 As an administrator working in an air-gapped environment, you need to fetch CAPI Provider components from within your cluster since external internet access is restricted. This section demonstrates how to deploy CAPI providers using OCI artifacts.
