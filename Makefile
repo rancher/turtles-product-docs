@@ -35,23 +35,6 @@ remote-community: environment
 		turtles-remote-community-playbook.yml \
 		2>&1 | tee tmp/remote-community-build.log 2>&1
 
-#Dev builds using the 'next' folder
-dev-product: environment
-	mkdir -p tmp
-	bin/switch-prod-comm product
-	npx antora --version
-	npx antora --stacktrace --log-format=pretty --log-level=info \
-		turtles-dev-product-playbook.yml \
-		2>&1 | tee tmp/dev-product-build.log 2>&1
-
-dev-community: environment
-	mkdir -p tmp
-	bin/switch-prod-comm community
-	npx antora --version
-	npx antora --stacktrace --log-format=pretty --log-level=info \
-		turtles-dev-community-playbook.yml \
-		2>&1 | tee tmp/dev-community-build.log 2>&1
-
 # Clean build output
 clean:
 	rm -rf build
@@ -68,9 +51,3 @@ preview-local-community: ## Preview the site locally with http-server.
 
 preview-remote-community: ## Preview the site locally with http-server.
 	npx http-server build/site-community-remote -c-1 -p 8083
-
-preview-dev-product: ## Preview the site locally with http-server.
-	npx http-server build/site-dev-product -c-1 -p 8084
-
-preview-dev-community: ## Preview the site locally with http-server.
-	npx http-server build/site-dev-community -c-1 -p 8085
