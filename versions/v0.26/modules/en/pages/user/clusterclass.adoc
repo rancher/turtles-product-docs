@@ -677,7 +677,7 @@ Note that some variables are left to the user to substitute. +
 +
 [source,yaml]
 ----
-apiVersion: cluster.x-k8s.io/v1beta1
+apiVersion: cluster.x-k8s.io/v1beta2
 kind: Cluster
 metadata:
   labels:
