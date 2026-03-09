@@ -27,6 +27,12 @@ This section describes features and feature stages in {product_name}.
 | enabled
 | beta
 
+| *Use Rancher Default Registry*
+| `use-rancher-default-registry`
+| _None_
+| enabled
+| beta
+
 |===
 
 === Add-on Provider for Fleet
@@ -43,6 +49,11 @@ In particular, the validating and mutating admission webhooks will be updated to
 Beware that usage of the Rancher `CATTLE_SYNC_ONLY_CHANGED_OBJECTS` https://documentation.suse.com/cloudnative/rancher-manager/latest/en/installation-and-upgrade/best-practices/tuning-rancher-at-scale.html#_reducing_event_handler_executions[functionality] may prevent certificates from renewing after the default expiration time of one year.
 
 It is possible to disable this feature to restore all provider manifests to the original cert-manager usage.
+
+=== Use Rancher Default Registry
+
+This feature gate instructs {product_name} to leverage Rancher's `system-default-registry` management setting when constructing image references for CAPI provider components. When enabled, {product_name} reads this setting and, if a registry is configured, rewrites the repository for every provider image to use that registry.
+If the setting is empty, {product_name} falls back to the default image references. Image overrides defined in the `ClusterctlConfig` resource always take precedence. For detailed usage in air-gapped environments, see xref:operator/airgapped.adoc[Air-gapped Environment]. This feature is in alpha stage and enabled by default.
 
 == Feature Stages
 
