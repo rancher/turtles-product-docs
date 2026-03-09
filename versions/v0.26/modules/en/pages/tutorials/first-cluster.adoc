@@ -107,41 +107,8 @@ kubectl get clusters -w
 --
 ======
 
-== Mark Namespace for auto-import
+== Next Steps: Wait for the cluster to appear in the Rancher Dashboard
 
-To automatically import a CAPI cluster into Rancher Manager there are 2 options:
-
-. Label a namespace so all clusters contained in it are imported.
-. Label an individual cluster definition so that it's imported.
-
-In both cases the label is `cluster-api.cattle.io/rancher-auto-import`.
-
-[NOTE]
-====
-The example cluster we just created is already configured for auto-import, but this section shows you how to configure it manually for your own clusters.
-====
-
-This walkthrough will use the first option of importing all clusters in a namespace.
-
-. Open a terminal
-. Label the cluster's namespace in your Rancher Manager cluster:
-
-[source,bash]
-----
-kubectl label namespace capi-clusters cluster-api.cattle.io/rancher-auto-import=true
-----
-
-[NOTE]
-====
-A namespace (or cluster) can be marked for auto-import at any time: before or after the cluster has been created.
-====
-
-[CAUTION]
-====
-Marking a cluster for auto-import triggers automatic registration by the Turtles controller, manual execution of registration commands is not required.
-====
-
-[CAUTION]
-====
-To prevent a cluster from getting stuck in deletion when Fleet is removed, keep auto-import enabled in the UI or avoid manually removing labels in the cluster's namespace, as Turtles will no longer handle the 'import' functionality from that point onward.
-====
+The cluster provisioned in this tutorial contains the `cluster-api.cattle.io/rancher-auto-import` label.  
+This label will instruct Turtles to automatically import the cluster into Rancher.  
+For more information please refer to xref:user/rancher-cluster-registration.adoc[Rancher Cluster Registration].  
