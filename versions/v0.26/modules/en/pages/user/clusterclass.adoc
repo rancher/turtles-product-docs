@@ -30,6 +30,12 @@ spec:
   type: addon
 ----
 ======
+
+[WARNING]
+====
+CAAPF depends on the `WatchList` Kubernetes feature gate. This feature needs to be explicitly enabled on Kubernetes `1.33` versions. See the https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/[Kubernetes upstream documentation] for further information.
+====
+
 * Depending on your engine, either the https://github.com/rancher/cluster-api-provider-rke2[CAPRKE2] or https://github.com/kubernetes-sigs/cluster-api[Kubeadm] Bootstrap/Control Plane installation is necessary before further CAPIProvider setup:
 +
 [tabs]
@@ -382,27 +388,6 @@ spec:
 
 == Create a Cluster from a ClusterClass
 
-[IMPORTANT]
-====
-The experimental `HelmApp` CRD introduced in Rancher `v2.11` has been renamed to `HelmOp` in Rancher `v2.12`.
-
-Upgrading to Rancher `v2.12` or higher will lead to the removal of `HelmApps`, potentially breaking the provisioned Clusters.
-
-In order to migrate to Rancher `v2.12` and `HelmOps`, you need to take the following steps:
-
-. **Before** upgrading Rancher, update all the `HelmApps` with `HelmApp.spec.keepResources: true`. This will prevent the deployed Helm chart to be uninstalled downstream once the `HelmApp` resource is deleted.  
-. Upgrade Rancher to `v2.12` or higher. Wait until the `HelmApp` CRD has been removed, and the new `HelmOp` has been installed by the Fleet `v0.13` version update.  
-. Upgrade {product_name} to `v0.24` or higher.  
-. Deploy the converted `HelmOps` ensuring `HelmOp.spec.helm.takeOwnership: true`.
-
-Following these steps is necessary to guarantee the downstream Clusters will not be affected during the `HelmApp` conversion.  
-====
-
-[WARNING]
-====
-CAAPF depends on the `WatchList` Kubernetes feature gate. This feature needs to be explicitly enabled on Kubernetes `1.33` versions. See the https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/[Kubernetes upstream documentation] for further information.
-====
-
 [tabs]
 ======
 
@@ -451,7 +436,7 @@ Note that some variables are left to the user to substitute.
 +
 [source,yaml]
 ----
-apiVersion: cluster.x-k8s.io/v1beta1
+apiVersion: cluster.x-k8s.io/v1beta2
 kind: Cluster
 metadata:
   labels:
@@ -465,9 +450,10 @@ spec:
       cidrBlocks:
       - 192.168.0.0/16
   topology:
-    class: azure-rke2-example
+    classRef: 
+      name: azure-rke2-example
     controlPlane:
-      replicas: 3
+      replicas: 1
     variables:
     - name: subscriptionID
       value: <AZURE_SUBSCRIPTION_ID>
@@ -477,12 +463,12 @@ spec:
       value: <AZURE_RESOURCE_GROUP>
     - name: azureClusterIdentityName
       value: cluster-identity
-    version: v1.31.7+rke2r1
+    version: v1.34.3+rke2r1
     workers:
       machineDeployments:
       - class: rke2-default-worker
         name: md-0
-        replicas: 3
+        replicas: 1
 ----
 --
 
@@ -610,7 +596,7 @@ Note that some variables are left to the user to substitute.
 +
 [source,yaml]
 ----
-apiVersion: cluster.x-k8s.io/v1beta1
+apiVersion: cluster.x-k8s.io/v1beta2
 kind: Cluster
 metadata:
   labels:
@@ -624,7 +610,8 @@ spec:
       cidrBlocks:
       - 192.168.0.0/16
   topology:
-    class: azure-kubeadm-example
+    classRef: 
+      name: azure-kubeadm-example
     controlPlane:
       replicas: 1
     variables:
@@ -636,7 +623,7 @@ spec:
       value: <AZURE_RESOURCE_GROUP>
     - name: azureClusterIdentityName
       value: cluster-identity
-    version: v1.31.1
+    version: v1.34.3
     workers:
       machineDeployments:
       - class: kubeadm-default-worker
@@ -694,7 +681,7 @@ Note that some variables are left to the user to substitute.
 +
 [source,yaml]
 ----
-apiVersion: cluster.x-k8s.io/v1beta1
+apiVersion: cluster.x-k8s.io/v1beta2
 kind: Cluster
 metadata:
   labels:
@@ -709,9 +696,10 @@ spec:
       cidrBlocks:
       - 192.168.0.0/16
   topology:
-    class: aws-kubeadm-example
+    classRef: 
+      name: aws-kubeadm-example
     controlPlane:
-      replicas: 1
+      replicas: 3
     variables:
     - name: region
       value: eu-west-2
@@ -723,7 +711,7 @@ spec:
       value: <AWS_NODE_MACHINE_TYPE>
     - name: awsClusterIdentityName
       value: cluster-identity
-    version: v1.31.0
+    version: v1.32.0
     workers:
       machineDeployments:
       - class: default-worker
@@ -786,7 +774,7 @@ Note that some variables are left to the user to substitute.
 +
 [source,yaml]
 ----
-apiVersion: cluster.x-k8s.io/v1beta1
+apiVersion: cluster.x-k8s.io/v1beta2
 kind: Cluster
 metadata:
   labels:
@@ -801,9 +789,10 @@ spec:
       cidrBlocks:
       - 192.168.0.0/16
   topology:
-    class: aws-rke2-example
+    classRef: 
+      name: aws-rke2-example
     controlPlane:
-      replicas: 1
+      replicas: 3
     variables:
     - name: cni
       value: none
@@ -819,7 +808,7 @@ spec:
       value: <AWS_AMI_ID>
     - name: awsClusterIdentityName
       value: cluster-identity
-    version: v1.31.7+rke2r1
+    version: v1.35.0+rke2r1
     workers:
       machineDeployments:
       - class: default-worker
@@ -892,7 +881,7 @@ The default configuration of GCP Cloud Controller Manager is configured to use a
 +
 [source,yaml]
 ----
-apiVersion: cluster.x-k8s.io/v1beta1
+apiVersion: cluster.x-k8s.io/v1beta2
 kind: Cluster
 metadata:
   labels:
@@ -906,7 +895,8 @@ spec:
       cidrBlocks: 
       - 192.168.0.0/16
   topology:
-    class: gcp-kubeadm-example
+    classRef:
+      name: gcp-kubeadm-example
     controlPlane:
       replicas: 1
     workers:
@@ -928,7 +918,7 @@ spec:
         value: <GCP_IMAGE_ID>
       - name: machineType
         value: <GCP_MACHINE_TYPE>
-    version: v1.31.4
+    version: v1.34.1
 ----
 --
 
@@ -976,7 +966,7 @@ Note that some variables are left to the user to substitute.
 +
 [source,yaml]
 ----
-apiVersion: cluster.x-k8s.io/v1beta1
+apiVersion: cluster.x-k8s.io/v1beta2
 kind: Cluster
 metadata:
   name: docker-kubeadm-quickstart
@@ -992,15 +982,16 @@ spec:
       cidrBlocks:
         - 10.96.0.0/24
   topology:
-    class: docker-kubeadm-example
+    classRef: 
+      name: docker-kubeadm-example
     controlPlane:
-      replicas: 3
-    version: v1.31.4
+      replicas: 1
+    version: v1.35.0
     workers:
       machineDeployments:
         - class: default-worker
           name: md-0
-          replicas: 3
+          replicas: 1
 ----
 --
 
@@ -1053,7 +1044,7 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{tu
 +
 [source,yaml]
 ----
-apiVersion: cluster.x-k8s.io/v1beta1
+apiVersion: cluster.x-k8s.io/v1beta2
 kind: Cluster 
 metadata:
   name: docker-rke2-example
@@ -1071,20 +1062,21 @@ spec:
       - 10.96.0.0/24
     serviceDomain: cluster.local
   topology:
-    class: docker-rke2-example
+    classRef: 
+      name: docker-rke2-example
     controlPlane:
-      replicas: 3
+      replicas: 1
     variables:
     - name: rke2CNI
       value: none
     - name: dockerImage
-      value: kindest/node:v1.31.6
-    version: v1.31.7+rke2r1
+      value: kindest/node:v1.35.0
+    version: v1.35.0+rke2r1
     workers:
       machineDeployments:
       - class: default-worker
         name: md-0
-        replicas: 3
+        replicas: 1
 ----
 --
 
@@ -1207,7 +1199,7 @@ The `kube-vip` static manifest is embedded in the ClusterClass definition. For m
 +
 [source,yaml]
 ----
-apiVersion: cluster.x-k8s.io/v1beta1
+apiVersion: cluster.x-k8s.io/v1beta2
 kind: Cluster
 metadata:
   labels:
@@ -1222,10 +1214,11 @@ spec:
       cidrBlocks:
       - 192.168.0.0/16
   topology:
-    class: vsphere-kubeadm-example
-    version: v1.31.4
+    classRef: 
+      name: vsphere-kubeadm-example
+    version: v1.35.0
     controlPlane:
-      replicas: 1
+      replicas: 3
     workers:
       machineDeployments:
       - class: vsphere-kubeadm-example-worker
@@ -1383,7 +1376,7 @@ In case you are using a VM template based on SUSE Linux Micro, you may optionall
 +
 [source,yaml]
 ----
-apiVersion: cluster.x-k8s.io/v1beta1
+apiVersion: cluster.x-k8s.io/v1beta2
 kind: Cluster
 metadata:
   labels:
@@ -1398,10 +1391,11 @@ spec:
       cidrBlocks:
       - 192.168.0.0/16
   topology:
-    class: vsphere-rke2-example
-    version: v1.31.7+rke2r1
+    classRef: 
+      name: vsphere-rke2-example
+    version: v1.35.0+rke2r1
     controlPlane:
-      replicas: 1
+      replicas: 3
     workers:
       machineDeployments:
       - class: vsphere-rke2-example-worker
