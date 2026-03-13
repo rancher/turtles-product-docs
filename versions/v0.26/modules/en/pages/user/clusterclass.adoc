@@ -647,6 +647,7 @@ spec:
 
 AWS EKS::
 +
+--
 * An AWS EKS ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
 +
 [tabs]
@@ -892,6 +893,7 @@ spec:
 
 GCP GKE::
 +
+--
 * A GCP GKE ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
 +
 [tabs]
