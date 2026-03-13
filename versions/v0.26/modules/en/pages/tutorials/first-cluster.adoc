@@ -21,7 +21,6 @@ GitOps using Fleet::
 To simplify the process of cluster provisioning, we will be using a series of pre-configured examples that you can find in the repository https://github.com/rancher/turtles/tree/main/examples.
 By inspecting the contents of this repository, you will find:
 
-. An *applications* folder for additional apps that can be deployed using Fleet (CNI, CSI, CPI).
 . A *clusterclasses* folder with a bunch of ClusterClass examples.
 . A *clusters/docker/rke2* folder with an example of Docker cluster definition.
 +
@@ -50,7 +49,6 @@ image:paths.png[Fleet paths configuration]
 +
 ----
 examples/clusterclasses/docker/rke2
-examples/applications/cni/calico
 examples/applications/lb/docker
 examples/clusters/docker/rke2
 ----
@@ -81,13 +79,6 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/ma
 [source,bash]
 ----
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/examples/applications/lb/docker/configmap.yaml
-----
-
-. Apply the CNI (Calico) configuration:
-+
-[source,bash]
-----
-kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/examples/applications/cni/calico/helm-chart.yaml
 ----
 
 . Create the cluster:
