@@ -31,6 +31,11 @@ spec:
 ----
 ======
 
+[CAUTION]
+====
+In previous versions of {product_name}, CAAPF was installed by default. From Rancher 2.14.1 onwards, it is no longer part of {product_name} and if required it needs to be installed separately. The majority of the examples shown in this page are relying on CAAPF being installed and enabled. For more information on how to do this, see the xref:user/caapf.adoc[CAAPF] section.
+====
+
 [WARNING]
 ====
 CAAPF depends on the `WatchList` Kubernetes feature gate. This feature needs to be explicitly enabled on Kubernetes `1.33` versions. See the https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/[Kubernetes upstream documentation] for further information.
@@ -396,6 +401,8 @@ Azure RKE2::
 --
 * An Azure ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
 +
+This ClusterClass relies on the CAAPF provider being installed and enabled. For information on how to do this, see the xref:user/caapf.adoc[CAAPF] section.
++
 Applications like the Azure Cloud Provider and Calico CNI will be installed on downstream Clusters. This is done automatically at Cluster creation by targeted Clusters with specific labels, such as `cloud-provider: azure` and `cni: calico`.
 +
 [tabs]
@@ -557,6 +564,8 @@ Azure Kubeadm::
 --
 * An Azure ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
 +
+This ClusterClass relies on the CAAPF provider being installed and enabled. For information on how to do this, see the xref:user/caapf.adoc[CAAPF] section.
++
 Applications like the Azure Cloud Provider and Calico CNI will be installed on downstream Clusters. This is done automatically at Cluster creation by targeted Clusters with specific labels, such as `cloud-provider: azure` and `cni: calico`.
 +
 [tabs]
@@ -636,6 +645,8 @@ AWS Kubeadm::
 +
 --
 * An AWS Kubeadm ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
++
+This ClusterClass relies on the CAAPF provider being installed and enabled. For information on how to do this, see the xref:user/caapf.adoc[CAAPF] section.
 +
 Applications like https://docs.tigera.io/calico/latest/about/[Calico CNI], https://github.com/kubernetes/cloud-provider-aws[AWS Cloud Controller Manager], and the https://github.com/kubernetes-sigs/aws-ebs-csi-driver[AWS EBS CSI Driver] will be installed on downstream Clusters. This is done automatically at Cluster creation by targeted Clusters with specific labels, such as `cni: calico`, `cloud-provider: aws`, and `csi: aws-ebs-csi-driver`.
 +
@@ -730,6 +741,8 @@ You can follow the steps in the https://github.com/rancher/cluster-api-provider-
 ====
 
 * An AWS RKE2 ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
++
+This ClusterClass relies on the CAAPF provider being installed and enabled. For information on how to do this, see the xref:user/caapf.adoc[CAAPF] section.
 +
 Applications like https://docs.tigera.io/calico/latest/about/[Calico CNI], https://github.com/kubernetes/cloud-provider-aws[AWS Cloud Controller Manager], and the https://github.com/kubernetes-sigs/aws-ebs-csi-driver[AWS EBS CSI Driver] will be installed on downstream Clusters. This is done automatically at Cluster creation by targeted Clusters with specific labels, such as `cni: calico`, `cloud-provider: aws`, and `csi: aws-ebs-csi-driver`.
 +
@@ -827,6 +840,8 @@ You can follow the steps in the https://image-builder.sigs.k8s.io/capi/providers
 ====
 
 * A GCP Kubeadm ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
++
+This ClusterClass relies on the CAAPF provider being installed and enabled. For information on how to do this, see the xref:user/caapf.adoc[CAAPF] section.
 +
 Applications like https://docs.tigera.io/calico/latest/about/[Calico CNI] and https://github.com/kubernetes/cloud-provider-gcp[GCP Cloud Controller Manager] will be installed on downstream Clusters. This is done automatically at Cluster creation by targeted Clusters with specific labels, such as `cni: calico` and `cloud-provider: gcp`.
 +
@@ -927,6 +942,8 @@ Docker Kubeadm::
 --
 * A Docker Kubeadm ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
 +
+This ClusterClass relies on the CAAPF provider being installed and enabled. For information on how to do this, see the xref:user/caapf.adoc[CAAPF] section.
++
 Applications like https://docs.tigera.io/calico/latest/about/[Calico CNI] will be installed on downstream Clusters. This is done automatically at Cluster creation by targeted Clusters with specific labels, such as `cni: calico`.
 +
 [tabs]
@@ -1000,7 +1017,7 @@ Docker RKE2::
 --
 * A Docker RKE2 ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
 +
-Applications like https://docs.tigera.io/calico/latest/about/[Calico CNI] will be installed on downstream Clusters. This is done automatically at Cluster creation by targeted Clusters with specific labels, such as `cni: calico`.
+In this example, no CNI is being defined so RKE2 installs Canal by default. This ClusterClass does not rely on CAAPF being installed and enabled.
 +
 [tabs]
 =======
@@ -1020,16 +1037,6 @@ kubectl::
 [source,bash, subs="attributes"]
 ----
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/clusterclasses/docker/rke2/clusterclass-docker-rke2.yaml
-----
-
-* For this example we are also going to install Calico as the default CNI.
-+
-We can do this automatically at Cluster creation using the https://rancher.github.io/cluster-api-addon-provider-fleet/[Cluster API Add-on Provider Fleet].
-Two `HelmOps` need to be created first, to be applied on the new Cluster via label selectors.
-+
-[source,bash, subs="attributes"]
-----
-kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/cni/calico/helm-chart.yaml
 ----
 
 * Create the LoadBalancer ConfigMap for Docker RKEv2 Cluster.
@@ -1084,6 +1091,8 @@ vSphere Kubeadm::
 +
 --
 * A vSphere ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
++
+This ClusterClass relies on the CAAPF provider being installed and enabled. For information on how to do this, see the xref:user/caapf.adoc[CAAPF] section.
 +
 Applications like the vSphere Cloud Provider, vSphere CSI driver, and Calico CNI will be installed on downstream Clusters. This is done automatically at Cluster creation by targeted Clusters with specific labels, such as `cloud-provider: vsphere`, `csi: vsphere`, and `cni: calico`.
 +
@@ -1258,6 +1267,8 @@ vSphere RKE2::
 +
 --
 * A vSphere ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
++
+This ClusterClass relies on the CAAPF provider being installed and enabled. For information on how to do this, see the xref:user/caapf.adoc[CAAPF] section.
 +
 Applications like the vSphere Cloud Provider, vSphere CSI driver, and Calico CNI will be installed on downstream Clusters. This is done automatically at Cluster creation by targeted Clusters with specific labels, such as `cloud-provider: vsphere`, `csi: vsphere`, and `cni: calico`.
 +
