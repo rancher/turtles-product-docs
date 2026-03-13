@@ -91,8 +91,7 @@ CAPA::
 CAPG::
 +
 --
-- **Supports** `ClusterClass` when provisioning unmanaged (virtual machines) clusters.
-- **Does not support** `ClusterClass` when provisioning managed (GKE) clusters: this is a work-in-progress.
+- **Full support** of `ClusterClass`: both managed (GKE) and unmanaged (virtual machines) clusters can be provisioned via topology.
 --
 
 CAPRKE2::
