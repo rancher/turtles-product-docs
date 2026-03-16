@@ -669,7 +669,7 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/ma
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/examples/applications/lb/docker/configmap.yaml
 ----
 
-* Create the Docker Kubeadm Cluster from the example ClusterClass.
+* Create the Docker RKE2 Cluster from the example ClusterClass.
 +
 [source,yaml]
 ----
