@@ -35,6 +35,28 @@ ifeval::["{build-type}" == "product"]
 endif::[]
 ifeval::["{build-type}" == "community"]
 * Apply a xref:reference/capiprovider.adoc[`CAPIProvider`] manifest for CAAPF in your management cluster.
+** CAAPF provider installation example:
++
+.Click to Expand
+[%collapsible]
+======
+[,yaml]
+----
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fleet-addon-system
+---
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: fleet
+  namespace: fleet-addon-system
+spec:
+  name: rancher-fleet
+  type: addon
+----
+======
 endif::[]
 * Set `features.use-caapf.enabled: true` in the {product_name} chart values to enable the `use-caapf` alpha feature gate (disabled by default).  For instructions on how to set feature gates, refer to xref:overview/features.adoc#_how_to_set_feature_gates[this section].
 

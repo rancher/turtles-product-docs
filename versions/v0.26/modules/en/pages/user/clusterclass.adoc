@@ -6,30 +6,8 @@ In this section we cover using https://cluster-api.sigs.k8s.io/tasks/experimenta
 
 == Prerequisites
 
-* Rancher Manager cluster with {product_name} installed
-* The https://github.com/rancher/cluster-api-addon-provider-fleet[CAAPF] provider must be installed as a prerequisite for using all ClusterClasses.
-** CAAPF provider installation example:
-+
-.Click to Expand
-[%collapsible]
-======
-[,yaml]
-----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: fleet-addon-system
----
-apiVersion: turtles-capi.cattle.io/v1alpha1
-kind: CAPIProvider
-metadata:
-  name: fleet
-  namespace: fleet-addon-system
-spec:
-  name: rancher-fleet
-  type: addon
-----
-======
+* Rancher Manager cluster with {product_name} installed.
+* The https://github.com/rancher/cluster-api-addon-provider-fleet[CAAPF] provider, if required by the ClusterClass.
 
 [CAUTION]
 ====
