@@ -1,7 +1,7 @@
 site:
   title: Rancher Turtles
   url: https://turtles.docs.rancher.com
-  start_page: v0.25@turtles:en:index.adoc
+  start_page: v0.26@turtles:en:index.adoc
 
 urls:
   latest_version_segment: stable

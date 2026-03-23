@@ -1,0 +1,51 @@
+= v0.26.0
+:revdate: 2026-03-23
+:page-revdate: {revdate}
+
+== Release Date: 2026-03-19
+
+== Description
+
+[IMPORTANT]
+====
+Please read below information before updating.
+====
+
+This release is a major step for Turtles and CAPI in Rancher as it ships with https://github.com/kubernetes-sigs/cluster-api/releases/[CAPI v1.12] and adopts the new core CAPI contract v1beta2. The Rancher team has put together a simplified xref:tutorials/capi-v1beta2.adoc[migration guide] to make the transition as easy as possible.
+
+Additionally, you can refer to the https://cluster-api.sigs.k8s.io/developer/providers/migrations/v1.10-to-v1.11[official CAPI migration guide] to understand the full extent of the implications of moving to a CAPI version `>=v1.11`.
+
+**Before updating we recommend that you familiarize with the changes introduced by your provider/s of choice and, if needed, adapt your cluster templates accordingly.**
+
+=== Notable Changes
+
+* Add support for CAPI v1.12 by @salasberryfin in https://github.com/rancher/turtles/pull/2097[#2097] (also worth looking at bump CAPI to v1.11.5 by @salasberryfin in https://github.com/rancher/turtles/pull/2056[#2056])
+* Disable Rancher k8s version management for CAPI imported Clusters by @anmazzotti in https://github.com/rancher/turtles/pull/2011[#2011]
+* Bump go to 1.25.8 by @rancher-backport-assistant[bot] in https://github.com/rancher/turtles/pull/2198[#2198]
+
+==== Additions
+
+* Increase turtles pod memory limits by @rancher-backport-assistant[bot] in https://github.com/rancher/turtles/pull/2099[#2099]
+* Feat: Allow customizing the rancher cluster description by @valaparthvi in https://github.com/rancher/turtles/pull/1969[#1969]
+
+==== Bug Fixes
+
+* Make delete hooks do a full cleanup by @alexander-demicev in https://github.com/rancher/turtles/pull/2027[#2027]
+* Use systemDefaultRegistry for chart shell image by @anmazzotti in https://github.com/rancher/turtles/pull/2034[#2034]
+* Improve import controller deletion reconcile by @rancher-backport-assistant[bot] in https://github.com/rancher/turtles/pull/2073[#2073]
+
+==== Full Changelog: 
+
+Review the full list of changes: https://github.com/rancher/turtles/compare/v0.25.4%E2%80%A6v0.26.0[v0.25.4...v0.26.0]
+
+== Download
+
+[cols="3,1,1" options="header" frame="all" grid="rows"]
+|===
+| Name | Created At | Updated At
+
+| link:https://github.com/rancher/turtles/releases/download/v0.26.0/rancher-turtles-0.26.0.tgz[rancher-turtles-0.26.0.tgz] | 2026-03-19 | 2026-03-19
+
+|===
+
+__Information retrieved from https://github.com/rancher/turtles/releases/tag/v0.26.0[v0.26.0 GitHub release].__
