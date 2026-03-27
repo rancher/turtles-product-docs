@@ -1,0 +1,35 @@
+* xref:index.adoc[概述]
+** xref:overview/architecture.adoc[体系结构]
+** xref:overview/glossary.adoc[词汇表]
+** xref:overview/features.adoc[功能]
+** xref:overview/certified.adoc[认证提供者]
+* 教程
+** xref:tutorials/first-cluster.adoc[您的第一个集群]
+** xref:tutorials/rancher.adoc[Rancher 设置]
+** xref:tutorials/capi-v1beta2.adoc[升级到 CAPI v1beta2]
+* 参考手册
+** xref:reference/capiprovider.adoc[CAPIProvider]
+** xref:reference/clusterctlconfig.adoc[ClusterctlConfig]
+* 用户指南
+** xref:user/clusterclass.adoc[使用 ClusterClass 提供 CAPI 集群]
+** xref:user/fleet.adoc[使用 Fleet 创建集群]
+** xref:user/rancher-cluster-registration.adoc[Rancher 集群注册]
+** xref:user/caapf.adoc[CAPI 插件提供者 Fleet]
+** xref:user/gitops.adoc[GitOps 最佳实践适用于 Turtles 和 CAPI]
+** xref:user/cluster-resource-mapping.adoc[在 中的集群资源关系{product_name}]
+ifeval::["{build-type}" == "product"]
+** xref:user/providers.adoc[安装认证提供者]
+endif::[]
+* 运维人员指南
+** xref:operator/clusterclass.adoc[启用 ClusterClass]
+** xref:operator/certification.adoc[提供者认证]
+** xref:operator/certificationsuite.adoc[提供者测试套件]
+** xref:operator/airgapped.adoc[隔离的环境]
+* 开发人员指南
+** xref:developer/development.adoc[开发环境]
+** xref:developer/guidelines.adoc[开发指南]
+* 查错指南
+** xref:troubleshooting/troubleshooting.adoc[查错]
+* 安全性
+** xref:security/slsa.adoc[SLSA]
+* xref:changelogs/index.adoc[发行说明]

@@ -1,0 +1,25 @@
+= Migrationsleitfaden
+:revdate: 2025-11-14
+:page-revdate: {revdate}
+
+== Kontext
+
+Ab Rancher v2.13 wird {product_name} als Teil von Rancher installiert, wodurch die Notwendigkeit einer separaten Implementierung entfällt. Vor dem Upgrade auf Rancher v2.13 müssen die Benutzer diesen Leitfaden befolgen, um einen reibungslosen Upgrade-Prozess sicherzustellen.
+
+== Migration
+
+Befolgen Sie die folgenden Schritte der Reihe nach, _bevor_ Sie auf Rancher v2.13 upgraden:
+
+. Stellen Sie sicher, dass Sie {product_name} auf v0.24.3 upgraden. Dieser Schritt ist wichtig, da alle Patch-Versionen für v0.24 den Cluster auf das Upgrade auf Rancher v2.13 vorbereiten.
+. Deinstallieren Sie {product_name}. Dies ist notwendig, da {product_name} ab Rancher v2.13 kein optionales Addon mehr ist, sondern ein Bestandteil des Rancher-Systems. Daher installiert Rancher es in einem anderen Namespace als zuvor, und die zuvor installierte Version muss daher zuerst manuell deinstalliert werden. Die Deinstallation von v0.24.3 von {product_name} entfernt den Kernel-CAPI-Anbieter selbst, behält jedoch die Kernel-CAPI-CRDs. Während der Migration wird der Kernel-CAPI-Controller nicht im Verwaltungs-Cluster ausgeführt, aber alle Downstream-CAPI-Cluster sollten weiterhin wie gewohnt laufen und nicht betroffen sein.
+. Führen Sie die folgenden kubectl-Befehle aus:
++
+[source,bash]
+----
+kubectl patch crd capiproviders.turtles-capi.cattle.io --type=json -p='[{"op": "add", "path": "/metadata/annotations/meta.helm.sh~1release-namespace", "value": "cattle-turtles-system"}]'
+kubectl patch crd clusterctlconfigs.turtles-capi.cattle.io --type=json -p='[{"op": "add", "path": "/metadata/annotations/meta.helm.sh~1release-namespace", "value": "cattle-turtles-system"}]'
+----
+
+Diese Befehle werden die `capiprovider` und `clusterctlconfig` CRDs patchen, sodass sie von {product_name} übernommen werden, wenn sie als Teil von Rancher v2.13 installiert werden. 
+
+Bitte beachten Sie, dass die oben beschriebene Migration für Benutzer, die {product_name} Versionen &le; v0.24.3 verwenden, notwendig ist. Neue Benutzer, die Rancher v2.13 installieren, müssen keine Migration durchführen.

@@ -1,0 +1,35 @@
+* xref:index.adoc[概要]
+** xref:overview/architecture.adoc[アーキテクチャ]
+** xref:overview/glossary.adoc[用語集]
+** xref:overview/features.adoc[機能]
+** xref:overview/certified.adoc[認定プロバイダー]
+* チュートリアル
+** xref:tutorials/first-cluster.adoc[最初のクラスター]
+** xref:tutorials/rancher.adoc[Rancher のセットアップ]
+** xref:tutorials/capi-v1beta2.adoc[CAPI v1beta2へのアップグレード]
+* リファレンス
+** xref:reference/capiprovider.adoc[CAPIProvider]
+** xref:reference/clusterctlconfig.adoc[ClusterctlConfig]
+* ユーザーガイド
+** xref:user/clusterclass.adoc[ClusterClassを使用してCAPIクラスターをプロビジョニングする]
+** xref:user/fleet.adoc[Fleetを使用してクラスターを作成する]
+** xref:user/rancher-cluster-registration.adoc[Rancher クラスターの登録]
+** xref:user/caapf.adoc[CAPI Addon Provider Fleet]
+** xref:user/gitops.adoc[カメとCAPIのためのGitOpsのベストプラクティス]
+** xref:user/cluster-resource-mapping.adoc[におけるクラスターリソースの関係{product_name}]
+ifeval::["{build-type}" == "product"]
+** xref:user/providers.adoc[認定プロバイダーをインストールする]
+endif::[]
+* オペレーターガイド
+** xref:operator/clusterclass.adoc[ClusterClassを有効にする]
+** xref:operator/certification.adoc[プロバイダー認証]
+** xref:operator/certificationsuite.adoc[プロバイダーのテストスイート]
+** xref:operator/airgapped.adoc[エアギャップ(された)環境]
+* 開発者ガイド
+** xref:developer/development.adoc[開発環境]
+** xref:developer/guidelines.adoc[開発ガイドライン]
+* トラブルシューティングガイド
+** xref:troubleshooting/troubleshooting.adoc[トラブルシューティング]
+* セキュリティ
+** xref:security/slsa.adoc[SLSA]
+* xref:changelogs/index.adoc[リリースノート]

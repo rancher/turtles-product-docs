@@ -1,0 +1,77 @@
+= Rancherのセットアップ
+:revdate: 2026-02-18
+:page-revdate: {revdate}
+
+== Rancherのインストール
+
+_Rancher v2.13以降を既に実行している場合は、このセクションをスキップしてxref:tutorials/first-cluster.adoc[最初のクラスター]に進んでください。_
+
+[NOTE]
+====
+Rancher v2.13以降では、{product_name}がRancherシステムチャートとしてプリインストールされています。{product_name}を別途インストールする必要はなくなりました。Rancher v2.13以降をインストールするだけで、Cluster API (CAPI)を始めることができます。
+
+====
+
+Helmは、既存または新しいKubernetesクラスターにRancherをインストールするための推奨方法です。
+
+ifeval::["{build-type}" == "product"]
+[TIP]
+====
+Rancherの公式https://documentation.suse.com/cloudnative/rancher-manager/latest/en/installation-and-upgrade/installation-and-upgrade.html[インストールガイド]のいずれかに従ってください。
+====
+endif::[]
+ifeval::["{build-type}" == "community"]
+[TIP]
+====
+Rancherの公式https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade[インストールガイド]のいずれかに従ってください。
+====
+endif::[]
+
+Helmを使用してRancherをインストールするための最小限の例は次のとおりです：
+
+[source,bash]
+----
+helm install rancher rancher-stable/rancher \
+    --namespace cattle-system \
+    --create-namespace \
+    --set hostname=<rancher-hostname> \
+    --version <rancher-version> \
+    --wait
+----
+
+`<rancher-hostname>`をRancherサーバーの実際のホスト名に置き換え、`--version`を使用して`v2.13.0`以降のRancherバージョンを指定してください。
+
+== インストール内容
+
+Rancher v2.13以降がインストールされると、{product_name}が`cattle-turtles-system`ネームスペース内のシステムコンポーネントとして自動的にデプロイされます。これには以下のものが含まれます。
+
+* すべてのCAPI関連リソースを処理する`rancher-turtles-controller-manager`ポッド
+* コアCAPI CRDおよびコアCAPIコントローラー
+* CAPIプロバイダーの宣言的定義を可能にする`CAPIProvider`カスタムリソース
+
+[NOTE]
+====
+コアCAPIコントローラーのマニフェストはConfigMapに埋め込まれており、エアギャップ(された)環境での運用が簡素化されています。
+====
+
+== CAPIプロバイダーのインストール
+
+Rancherに{product_name}が埋め込まれているため、CAPIプロバイダーはデフォルトでバンドルされなくなりました。プロバイダーは`CAPIProvider`カスタムリソースを使用して宣言的に管理され、認定プロバイダーをインストールするための別のプロバイダーチャートが利用可能です。プロバイダーチャートに関する詳細は、xref:user/providers.adoc[認定プロバイダーをインストール]を参照してください。
+
+例えば、プロバイダーを定義するには:
+
+[source,yaml]
+----
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: aws
+  namespace: cattle-turtles-system
+spec:
+  type: infrastructure
+  name: aws
+----
+
+完全な設定オプションのリストについては、xref:reference/capiprovider.adoc[CAPIProviderのリファレンス]を参照してください。
+
+これで{product_name}を使用する準備が整いました！🎉

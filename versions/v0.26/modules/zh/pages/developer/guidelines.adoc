@@ -1,0 +1,228 @@
+= 准则
+:revdate: 2025-10-02
+:page-revdate: {revdate}
+
+// START doctoc generated TOC please keep comment here to allow auto update
+
+// DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE
+
+* <<_how_to_get_involved,如何参与？>>
+* <<_submitting_prs,提交 PR>>
+ ** <<_choosing_something_to_work_on,选择要处理的内容>>
+ ** <<_developing_rancher_turtles,开发 rancher-turtles>>
+ ** <<_asking_for_help,请求帮助>>
+ ** <<_pr_submission_guidelines,PR 提交指南>>
+  *** <<_commit_message_formatting,提交信息格式>>
+* <<_opening_issues,打开问题>>
+* <<_how_the_maintainers_process_contributions,维护者如何处理贡献>>
+ ** <<_prioritizing_issues,优先处理问题>>
+ ** <<_reviewing_prs,审查 PR>>
+* <<_adrs_architectural_decision_records,ADRs（架构决策记录）>>
+ ** <<_process,过程>>
+
+// END doctoc generated TOC please keep comment here to allow auto update
+
+感谢您花时间为 Rancher CAPI 扩展做出贡献 https://github.com/rancher?q=turtles&type=all&language=&sort=[项目]。
+
+对项目各个领域的改进；从代码到文档；从错误报告到功能设计和 UI 增强，均欢迎提出。
+本指南应涵盖与项目互动的所有方面，以及如何尽可能顺利地参与开发。
+
+阅读文档通常很乏味，因此我们将重要的贡献规则放在最上面：*始终保持友善！*
+
+期待在储存库中看到您的贡献！
+
+== 如何参与？
+
+我们非常乐意接受您在项目开发几乎所有领域的补丁！
+
+如果您是这个项目的新手，想要提供帮助，但不知道从哪里开始，这里有一个非详尽的帮助方式列表：
+
+. 提交一个<<_submitting_prs,拉取请求>>
++
+除了修复错误和提交新功能外，您还可以提交其他内容，虽然这些内容不那么抢眼，但会受到所有与储存库互动的人的深切感激：
+
+ ** 扩展测试覆盖率！
+ ** 重构！
+ifeval::["{build-type}" == "product"]
+ ** 审查和更新xref:index.adoc[文档]！
+endif::[]
+ifeval::["{build-type}" == "community"]
+ ** 审查和更新xref:index.adoc[文档]！
+endif::[]
+ ** 添加新的用户界面功能！
+
++
+（另见下面的<<_choosing_something_to_work_on,选择工作内容>>。）
+
+. 打开一个<<_opening_issues,问题>>
++
+我们有两种问题形式：错误报告和功能请求。如果您不确定所属类别，只需做出最佳猜测，并提供尽可能多的信息。
+
+. 有兴趣帮助改进：
+
+* Rancher CAPI 扩展后端？参与https://github.com/rancher/turtles/issues?q=is%3Aopen+is%3Aissue+label%3Akind%2Fbug+[`bugs`]或https://github.com/rancher/turtles/labels/help-wanted[`help wanted`问题]。
+  如果您想接受更大的挑战或成为更有经验的贡献者，请查看https://github.com/rancher/turtles/issues?q=is%3Aopen+is%3Aissue+label%3Akind%2Ffeature[`feature requests`]。
+* 扩展用户界面？查看https://github.com/rancher/capi-ui-extension[`open`]或https://github.com/rancher/capi-ui-extension/labels/help-wanted[`help wanted`问题]。
+* 也许，用户文档？然后，直接跳入文档储存库中的https://github.com/rancher/turtles-product-docs/issues[`open`问题]。
+
+== 打开问题
+
+这些指南旨在帮助您撰写问题，确保它们能够尽快得到处理。
+
+_请参见下面关于<<_prioritizing_issues,问题优先级>>的内容。_
+
+*一般规则*：
+
+. 在打开任何内容之前，请仔细查看现有问题。
+. 越多越好：提供尽可能多的信息。
+  高度详细的问题更有可能得到及时处理，因为它们更容易被优先安排和迅速调度工作。它们对社区也更具可访问性，这意味着您可能不必等待核心团队来处理。
+. 请不要创建一个问题，其描述仅是*just*——即一个指向另一个问题的链接、一个指向 Slack 对话的链接、对其中任一内容的引用，或其他同样模糊的内容。这提高了参与的门槛，使社区很难参与。花时间撰写适当的描述并总结关键点。
+. 注意格式。确保https://docs.github.com/en/free-pro-team@latest/github/writing-on-github/getting-started-with-writing-and-formatting-on-github[Markdown整洁]，使用https://docs.github.com/en/free-pro-team@latest/github/writing-on-github/creating-and-highlighting-code-blocks[代码块]等。
+  阅读越快，处理越快。
+. 保持文明。是的，当事情不工作时确实令人烦恼，但帮助一个不是...最糟糕的人要有趣得多。请记住，通过文本交流会加剧每个人的消极偏见，因此在不确定时可以加一些表情符号。
+
+== 提交PR
+
+=== 选择要处理的内容
+
+如果您是来寻求帮助或请求某些新功能的，这一部分适合您。我们为任何想要提升开源信誉的人策划了一系列问题。
+
+* 标记为 https://github.com/search?q=org%3Agithub%2Francher+repo%3Arancher%2Fturtles+repo%3Arancher%2Fcapi-ui-extension+repo%3Arancher%2Fturtles-docs+is%3Aopen+label%3A%22goodfirstissue%22+&type=issues&ref=advsearch[`good first issues`] 的问题，应对刚接触这些储存库的人以及整个开源社区的用户均可访问。
++
+这些问题应当设置非常低甚至不存在的进入门槛，并附有详细描述、易于理解的重现步骤（如适用）及充足的上下文，方便任何人上手。
+目标应该明确，可能附有建议的解决方案或一些伪代码。
+如果存在类似的工作，应该提供相应的链接。
++
+如果您遇到标记为 `good first issue` 的问题，并认为自己有兴趣认领但内容不够明确，请询问以获得更多信息！在撰写问题时，人们通常会假设_大量_知识是理所当然的。这是我们大家都可以提升的地方，因此不要犹豫，直接提出您完成优秀工作所需的支持。
++
+请参阅下面关于 <<_asking_for_help,请求帮助>> 的更多信息！
+
+* 标记为 https://github.com/search?q=org%3Agithub%2Francher+repo%3Arancher%2Fturtles+repo%3Arancher%2Fcapi-ui-extension+repo%3Arancher%2Fturtles-docs+is%3Aopen+label%3A%22help+wanted%22+&type=issues&ref=advsearch[`help wanted` issues] 的问题适用于对代码库较为熟悉的人，但仍应确保对新手足够友好。
+* 所有其他标记为 `kind/<x>` 或 `area/<x>` 的问题也欢迎认领，但可能需要提供较多的背景信息。
+
+=== 开发 rancher-turtles
+
+请查看专门针对开发入门的 xref:../developer/development.adoc[说明]。
+
+=== 请求帮助
+
+如果您在工作中的任何阶段需要帮助，请随时询问！
+
+* 要了解所选问题的更多细节，建议首先联系问题的创建者以获取更多信息。
+* 如果您在处理 PR 时遇到困难，或者对您的方法不太确定，您可以打开一个 https://github.blog/2019-02-14-introducing-draft-pull-requests/[草稿]（在标题前加上 `WIP:`）并解释您的想法。
+
+=== PR 提交指南
+
+. 分叉所需的储存库，开发并测试您的代码更改。
+. 将您的更改推送到您分叉的分支，并向原始储存库提交一个针对 `main` 分支的拉取请求。
+
+[source,bash]
+----
+git push <remote-name> <feature-name>
+----
+
+. 提交拉取请求。
+ .. 所有代码 PR 必须标记为以下之一
+  *** ⚠️ (`:warning:`，重大或破坏性更改)
+  *** ✨ (`:sparkles:`，功能添加)
+  *** 🐛 (`:bug:`，补丁和错误修复)
+  *** 📖 (`:book:`，文档或提案)
+  *** 🌱 (`:seedling:`，小改动或其他)
+
+如有可能，请合并您的提交，以确保历史记录整洁且具有描述性。
+
+如果您的 PR 仍在进行中，请打开一个 https://github.blog/2019-02-14-introducing-draft-pull-requests/[草稿 PR]，并在标题前加上 `WIP` 一词。当您的 PR 准备好进行审查时，您可以更改标题并移除草稿设置。
+
+我们建议您定期从原始储存库的 `main` 进行变基，以保持您的分支最新。
+
+一般来说，一旦维护者审查并批准 PR，我们将合并该 PR。
+微小的更改（例如，拼写更正）可能会被直接通过。
+对于重大更改，可能会有更多人参与，您可能会被要求重新提交 PR 或将更改分成多个 PR。
+
+==== 提交信息格式
+
+_有关如何撰写优秀提交信息的更多信息，以及您为什么应该这样做，请查看 https://chris.beams.io/posts/git-commit/[这篇优秀的博客文章]。_
+
+我们遵循一种粗略的提交信息约定，旨在回答三个问题：发生了什么变化，为什么要进行更改，以及您是如何进行更改的。
+
+主题行应包含 _什么_，提交的正文应描述 _为什么_ 和 _如何_。
+如果您在此过程中遇到任何奇怪的情况，这是一个很好的地方来记录您发现的内容以及您是如何解决的。
+
+格式可以更正式地描述如下：
+
+[source,text]
+----
+<short title for what changed>
+<BLANK LINE>
+<why this change was made and what changed>
+<BLANK LINE>
+<any interesting details>
+<footer>
+----
+
+第一行是主题，长度不应超过 70 个字符，第二行始终为空，其他行的最大长度应为 80 个字符。
+这使得在 GitHub 以及各种 git 工具上更易于阅读消息。
+
+有一个推荐使用的模板，位于 https://gist.github.com/yitsushi/656e68c7db141743e81b7dcd23362f1a[这里]。
+
+== 维护者如何处理贡献
+
+=== 优先处理问题
+
+核心团队定期处理收到的问题。在假期期间可能会有一些延迟。
+
+每个问题将被分配一个 `priority/<x>` 标签。优先级的级别为：
+
+* https://github.com/rancher/turtles/labels/priority%2Fcritical-urgent[`critical-urgent`]：这些是时间敏感的问题，应立即处理。
+如果标记为 `critical` 的问题没有被分配或正在积极处理，预计有人会立即放下手头的工作来处理它。
+这通常意味着核心团队，但社区成员如果先到达，欢迎认领任何优先级的问题。_然而，考虑到紧迫的时间框架，如果非核心贡献者请求被分配到 `critical` 问题，他们将与核心团队成员配对，以管理跟踪、沟通和修复的发布，并承担所有进展的责任。_
+* https://github.com/rancher/turtles/labels/priority%2Fimportant-soon[`important-soon`]：必须在有能力时尽快分配。
+理想情况下，应该在下一个发布之前交付某些内容。
+* https://github.com/rancher/turtles/labels/priority%2Fimportant-longterm[`important-longterm`]：从长远来看很重要，但目前可能没有人手，且可能需要多个版本才能完成。
+* https://github.com/rancher/turtles/labels/priority%2Fbacklog[`backlog`]：似乎普遍同意这将是有益的，但我们可能没有人可以在现在或不久的将来处理它。
+PR 仍然非常欢迎，尽管如果审阅者完全忙于更高优先级的问题，例如在发布前，可能需要一段时间才能进行审查。
+
+这些优先级类别的灵感来自 https://github.com/kubernetes/community/blob/master/contributors/guide/issue-triage.md[Kubernetes 贡献指南]。
+
+其他标签包括：
+
+* https://github.com/rancher/turtles/labels/adr-required[`adr-required`]：
+表示该问题或PR包含需要在<<_adrs_architectural_decision_records,ADR>> _之前_记录的决策，才能进行处理。
+* https://github.com/rancher/turtles/labels/needs-investigation[`needs-investigation`]： 目前的信息不足以进行正确分类，或理解和实施解决方案。这可能是因为问题提出者没有提供足够的相关信息，或者因为在开始工作之前需要进行更深入的研究。
+
+=== 审查PR
+
+核心团队的目标是尽快清理PR队列。社区成员也可以随时关注情况，并提供自己的想法和专业知识。
+
+高价值和/或高优先级的贡献将尽快处理，而低优先级或可有可无的事项可能需要更长时间才能获得批准。
+
+为了帮助促进更顺利和更快速的审查，请遵循<<_pr_submission_guidelines,上述>>指南。
+不符合标准的提交将被降低审查优先级。
+
+== ADR（架构决策记录）
+
+[NOTE]
+====
+请随意跳过<<_adrs_architectural_decision_records,此>>和<<_process,以下小节>>，因为它们仅与https://github.com/rancher/turtles[rancher-turtles]储存库相关。
+====
+
+
+对rancher-turtles的架构、设计、开发和行为产生影响的任何决策必须以https://engineering.atspotify.com/2020/04/14/when-should-i-write-an-architecture-decision-record/[ADR]的形式记录。
+
+模板可以在储存库的 https://github.com/rancher/turtles/blob/main/docs/adr/0000-template.md[`docs/adr/0000-template.md`] 中找到，同一目录中有许多已完成记录的示例。
+
+如果发现缺失，贡献者也欢迎补充ADR。
+
+=== 过程
+
+. 使用`ADR`类别开始新的https://github.com/rancher/turtles/discussions/new?category=adr[讨论]。
+. 选择一个适当的清晰简洁的标题（例如`ADR: Implement X in Go`）。
+. 提供要做出的决策的背景。描述各种选项（如果有多个），并解释优缺点。突出任何您希望审阅者关注的领域，或您特别希望获得意见的领域。
+. 在https://github.com/rancher/turtles/blob/main/CODEOWNERS[维护者]中标记为"决策者"，并邀请他们参与并对决策及其后果发表意见。
+. 一旦做出决定，打开一个 PR，向 https://github.com/rancher/turtles/blob/main/docs/adr[目录] 添加一个新的 ADR。
+  复制并完成 https://github.com/rancher/turtles/blob/main/docs/adr/0000-template.md[模板]；
+ ** 将文件编号增加一。
+ ** 将状态设置为 "已接受"。
+ ** 将决策者设置为批准讨论结果的人。
+ ** 总结讨论线程中的决定和后果。
+ ** 从 ADR 文档链接回讨论。

@@ -1,0 +1,38 @@
+= Architecture
+:revdate: 2025-06-30
+:page-revdate: {revdate}
+
+Ce guide offre un aperçu complet des composants du noyau et de la structure qui alimentent {product_name} et son intégration dans l'écosystème Rancher.
+
+*Un utilisateur de Rancher utilisera Rancher pour gérer des clusters. Rancher pourra utiliser l'API Cluster pour gérer le cycle de vie des clusters Kubernetes enfants.*
+
+image::in_cluster_topology.png[turtles-diagram,640,480]
+
+== Composants
+
+Ci-dessous se trouve une représentation visuelle des composants architecturaux de Rancher Turtles. Ce diagramme illustre les éléments clés et leurs relations au sein du système {product_name}. Comprendre ces composants est essentiel pour obtenir des informations sur la manière dont Rancher exploite l'API Cluster (CAPI) pour la gestion des clusters.
+
+image::30000ft_view.png[overview,640,480]
+
+=== Rancher Manager
+
+C'est le composant du noyau de Rancher et les utilisateurs peuvent tirer parti de la fonctionnalité Explorer existante dans le tableau de bord pour accéder aux détails de la charge de travail des clusters.
+
+=== Agent de cluster Rancher
+
+L'agent est déployé au sein des clusters enfants, permettant à Rancher d'importer et d'établir une connexion avec ces clusters. Cette connexion permet à Rancher de gérer efficacement les clusters enfants depuis sa plateforme.
+
+=== {product_name} - Extension CAPI de Rancher
+
+Elle fournit une intégration entre CAPI et Rancher tout en prenant actuellement en charge les fonctionnalités suivantes :
+
+* *Importation de clusters CAPI dans Rancher :* installation de l'agent de cluster Rancher dans les clusters provisionnés par CAPI.
+* *Configuration de l'Opérateur CAPI :* Support de configuration pour l'Opérateur CAPI.
+
+== Topologie de déploiement
+
+=== Gestionnaire Rancher et gestion CAPI combinés
+
+C'est la seule topologie actuellement prise en charge, où à la fois le Gestionnaire Rancher et {product_name} sont déployés sur le même cluster Kubernetes, et cela agit comme un cluster de gestion centralisé.
+
+Cette architecture offre un déploiement simplifié des composants et fournit une vue unique de tous les clusters. D'un autre côté, il est important de considérer que le nombre de clusters pouvant être gérés efficacement par l'API Cluster (CAPI) est limité par les ressources disponibles au sein du seul cluster de gestion.

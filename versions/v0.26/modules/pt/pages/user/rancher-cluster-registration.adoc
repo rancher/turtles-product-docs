@@ -1,0 +1,95 @@
+= Registro de cluster Rancher
+:revdate: 2026-03-06
+:page-revdate: {revdate}
+
+== Como registrar um cluster CAPI no Rancher utilizando a importação automática do Turtles
+
+O único fluxo de trabalho suportado para registrar clusters CAPI no Rancher usando Turtles é utilizando o rótulo `cluster-api.cattle.io/rancher-auto-import`:
+
+. Rotule um namespace para que todos os clusters contidos nele sejam importados.
++
+[source,bash]
+----
+kubectl label namespace capi-clusters cluster-api.cattle.io/rancher-auto-import=true
+----
+. Rotule uma definição de cluster individual para que ela seja importada.
++
+[source,bash]
+----
+kubectl label clusters.cluster.x-k8s.io cluster1 cluster-api.cattle.io/rancher-auto-import=true
+----
+
+Quando o rótulo de importação automática é usado, Turtles aguardará que o cluster CAPI tenha a condição `ControlPlaneAvailable` definida como `True`.
+Essa condição destaca que o cluster está totalmente inicializado e disponível para processar solicitações.
+Turtles então criará automaticamente o recurso `clusters.management.cattle.io` no cluster de gerenciamento, levando à instalação do `cattle-cluster-agent` no cluster CAPI downstream.
+Se a implantação do agente for bem-sucedida, o cluster importado deve aparecer no Painel do Rancher.
+
+[NOTE]
+====
+Um namespace (ou cluster) pode ser marcado para importação automática a qualquer momento: antes ou depois que o cluster foi criado.
+====
+
+[CAUTION]
+====
+Marcar um cluster para importação automática aciona o registro automático pelo controlador Turtles, a execução manual de comandos de registro não é suportada.
+====
+
+== Adicione uma descrição personalizada ao cluster Rancher
+
+image:imported-cluster-default-description.png[Cluster Rancher importado com descrição padrão]
+
+Para adicionar uma descrição personalizada ao cluster Rancher importado, você pode adicionar a anotação `cluster-api.cattle.io/cluster-description` ao seu cluster CAPI.
+
+[source,yaml]
+----
+apiVersion: cluster.x-k8s.io/v1beta1
+kind: Cluster
+metadata:
+  name: docker-kubeadm-quickstart
+  labels:
+    cni: calico
+  annotations:
+    cluster-api.cattle.io/cluster-description: "This is a custom description of Rancher Cluster"
+----
+
+image:imported-cluster-custom-description.png[Cluster Rancher importado com descrição personalizada]
+
+Se um cluster CAPI já foi importado, adicionar a anotação não fará nada. Você pode ter que excluir seu cluster Rancher importado e reimportá-lo.
+
+== Excluir o cluster Rancher importado
+
+Os rótulos `cluster-api.cattle.io/capi-cluster-owner` e `cluster-api.cattle.io/capi-cluster-owner-ns` podem ser usados para excluir o cluster Rancher:
+
+[source,bash]
+----
+kubectl delete clusters.management.cattle.io -l cluster-api.cattle.io/capi-cluster-owner=cluster1 -l cluster-api.cattle.io/capi-cluster-owner-ns=capi-clusters
+----
+
+Uma vez que o cluster importado esteja marcado para exclusão:
+
+. O controlador Turtles anotará o cluster CAPI com `imported: true`.
+. Essa anotação impede que o cluster seja reimportado automaticamente pelo Rancher.
+. Verifique a anotação usando o seguinte comando:
++
+[source,bash]
+----
+kubectl -n capi-clusters get clusters.cluster.x-k8s.io cluster1 -o json | jq .metadata.annotations
+{
+"imported": "true"
+...
+}
+----
+
+[NOTE]
+====
+Excluir o cluster Rancher remove apenas o recurso `clusters.management.cattle.io` e desabilita a importação automática para o cluster CAPI associado. O cluster CAPI subjacente permanece intacto.
+====
+
+== Reimportar cluster
+
+Se você precisar reimportar o mesmo cluster CAPI no Rancher, remova a anotação `imported: true` pelo comando abaixo:
+
+[source, bash]
+----
+kubectl -n capi-clusters patch clusters.cluster.x-k8s.io <cluster-name> --type='json' -p='[{"op": "remove", "path": "/metadata/annotations/imported"}]'
+----

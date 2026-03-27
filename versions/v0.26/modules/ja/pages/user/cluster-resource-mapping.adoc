@@ -1,0 +1,123 @@
+= におけるクラスタリソースの関係{product_name}
+:revdate: 2026-01-06
+:page-revdate: {revdate}
+
+== 概要
+
+Rancherは、それぞれ独自の`Cluster`カスタムリソースを定義するいくつかのコンポーネントを統合しています。{product_name}は、Cluster APIとFleetを使用してこの基盤の上に構築されており、これらの`Cluster`リソースがどのように相互作用し、ユーザーが何を編集すべきかについて混乱を招く可能性があります。
+
+この文書では、以下のクラスタリソースの目的、動作、および関係について説明します：
+
+* `clusters.cluster.x-k8s.io`（CAPIクラスタ）
+* `clusters.fleet.cattle.io`（Fleetクラスタ）
+* `clusters.provisioning.cattle.io`（プロビジョニングクラスタ）
+* `clusters.management.cattle.io`（管理クラスタ）
+
+== リソースの概要
+
+|===
+| APIグループ | クラスタリソース | Role
+
+| `cluster.x-k8s.io`
+| CAPIクラスタ
+| クラスタのライフサイクルとトポロジーを定義します。Turtlesにおける真実の源として機能します。
+
+| `fleet.cattle.io`
+| Fleet Cluster
+| Fleetを介したGitOpsバンドルのターゲティングとアプリケーションの同期に使用されます。
+
+| `provisioning.cattle.io`
+| プロビジョニングクラスタ
+| Rancherの以前の汎用クラスタ抽象化。インフラストラクチャに依存しない設定とプロバイダー固有の設定の両方をカプセル化し、クラスタ登録トークンとマニフェストを生成するために必要です。{product_name}では、このリソースはインポートされたCAPIクラスタをラップするために使用されてきましたが、段階的に廃止されています。
+
+| `management.cattle.io`
+| 管理クラスタ
+| Rancherの現在のクラスタ表現。`management.cattle.io/v3`クラスタは、現在Turtlesによって作成および管理されるデフォルトのリソースです。これは、CAPI管理クラスタと混同しないでください。「管理」とは、Rancherの`management.cattle.io` APIグループではなく、Cluster APIライフサイクル管理を指します。
+|===
+
+== 関係
+
+=== CAPIクラスタ → Fleetクラスタ
+
+Cluster API Add-on Provider for Fleet（CAAPF）が有効になると、CAPI `Cluster` から対応する Fleet `Cluster` へラベルとアノテーションが伝播されます。これにより、ラベルセレクターを介してGitOpsバンドルをターゲットにすることが可能になります。CAAPFは、CAPI `Cluster` が `ControlPlaneInitialized` 条件に達した後に、対応する Fleet `Cluster` リソースを作成します。
+
+=== CAPIクラスタ → プロビジョニングクラスタ（レガシー）
+
+CAPIクラスタをラップし、Rancher特有のフィールド（例：表示名、RKE設定）を公開するために `provisioning.cattle.io.Cluster` を作成することができます。しかし、ほとんどの {product_name} ワークフローでは段階的に廃止されており、ユーザーはこのリソースと対話する必要はありません。
+
+=== 管理クラスタ → プロビジョニングクラスタ
+
+レガシークラスタの場合、`provisioning.cattle.io/v1.Cluster` は `management.cattle.io/v3.Cluster` から生成されることがあります。このオブジェクトはRancherのUIとAPIによって使用され、ユーザーによる直接の変更は意図されていません。
+Turtlesを介してのみ管理される新しいクラスタは、自動的に `provisioning.cattle.io` クラスタを作成しません。
+
+== 伝播動作
+
+|===
+| From → To | 伝播 | 備考
+
+| CAPI → Fleet
+| はい
+| CAAPFによって伝播される
+
+| CAPI → プロビジョニング
+| いいえ
+| 自動的には作成されず、レガシークラスタのためにTurtlesを介してのみ生成されます。
+
+| CAPI → 管理
+| いいえ
+| レガシークラスタのためにプロビジョニングクラスタを介してのみ
+
+| プロビジョニング → Fleet
+| いいえ
+| サポートされていません。
+
+| Fleet → CAPI
+| いいえ
+| サポートされていません。
+
+| 管理 → プロビジョニング
+| 条件付き
+| レガシークラスタ専用; 新しいTurtles管理クラスタはプロビジョニングクラスタを生成しません
+|===
+
+== ユーザーが編集すべきことは何ですか？
+
+=== 推奨: `cluster.x-k8s.io.Cluster`
+
+CAPIクラスタは、{product_name}におけるクラスタ定義の権威あるリソースです。
+ラベルはCAPIクラスタオブジェクトに配置する必要があります。それらは自動的にFleetクラスタに伝播し、ラベルベースのバンドルセレクターが期待通りに機能するようになります。
+
+=== 条件付き: `provisioning.cattle.io.Cluster`
+
+Rancherネイティブのプロビジョニング機能を使用する場合にのみ必要です（例: `spec.rkeConfig`、UI駆動のフロー）。明示的に必要とされない限り、編集を避けてください。
+
+=== 回避: `fleet.cattle.io.Cluster`
+
+Fleetクラスタは自動的に管理されます。Fleet内部で作業している場合を除き、編集は推奨されません。
+
+=== 回避: `management.cattle.io.Cluster`
+
+これらのリソースは内部的であり、Rancherによって完全に管理されています。それらを変更しないでください。
+
+[NOTE]
+====
+* **CAPIクラスタ**は真実の源です。
+* **Fleetクラスタ**はCAPIクラスタからCAAPFを介して自動的に生成されます。
+* **プロビジョニング**と**管理クラスタ**は*Rancherプロビジョニングが関与しない限り*必要ありません。
+====
+
+[TIP]
+====
+CAPIクラスタのラベルを使用して、Fleetバンドルのデプロイを行います。CAAPFコントローラーは、これらのラベルがFleetクラスタオブジェクトに同期されることを保証します。
+====
+
+== 参考資料
+
+* https://github.com/rancher/cluster-api-addon-provider-fleet[Cluster API Add-on Provider for Fleet (CAAPF)]
+ifeval::["{build-type}" == "product"]
+* https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/index.html[Fleetのドキュメント]
+endif::[]
+ifeval::["{build-type}" == "community"]
+* https://fleet.rancher.io[Fleetのドキュメント]
+endif::[]
+* https://extensions.rancher.io/internal/code-base-works/cluster-management-resources#cluster-resources[Rancherクラスタの内部情報]

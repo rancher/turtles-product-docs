@@ -1,0 +1,57 @@
+= SLSA
+:revdate: 2025-04-04
+:page-revdate: {revdate}
+
+== Descripción general
+
+https://slsa.dev/spec/v1.0/about[SLSA] es un conjunto de directrices adoptables de forma incremental para la seguridad del sistema de suministro, establecidas por consenso de la industria. La especificación establecida por SLSA es útil tanto para los productores como para los consumidores de software: los productores pueden seguir las directrices de SLSA para hacer su sistema de suministro de software más seguro, y los consumidores pueden utilizar SLSA para tomar decisiones sobre si confiar en un paquete de software.
+
+{product_name} cumple con los requisitos de https://slsa.dev/spec/v1.0/levels[SLSA Nivel 3].
+
+|===
+| Requisito | Requerido en SLSA L3 | Cumplido por {product_name}
+
+| Elige una plataforma de construcción adecuada
+| Sí
+| Sí
+
+| Sigue un proceso de construcción consistente
+| Sí
+| Sí
+
+| Distribuye la procedencia
+| Sí
+| Sí
+|===
+
+== Plataforma de Construcción
+
+* El proyecto {product_name} utiliza Git para la gestión del código fuente.
+* Todos los mantenedores de {product_name} deben tener habilitada la autenticación de dos factores, para firmar y aprobar todas sus contribuciones.
+* El proyecto {product_name} utiliza GitHub Actions y GitHub Runners para construir todos sus artefactos de lanzamiento.
+* El proceso de construcción y lanzamiento se ejecuta en aislamiento en un entorno efímero proporcionado por los runners alojados en GitHub.
+
+== Proceso de Construcción
+
+* El proceso de construcción y lanzamiento está definido en código y se mantiene bajo control de versiones.
+* Los Workflows de GitHub utilizan GitHub Actions fijadas a ciertas versiones y se mantienen actualizadas utilizando GitHub Dependabot.
+* Todos los cambios en el proceso de construcción y lanzamiento se realizan a través de Pull Requests que deben ser aprobadas por al menos un mantenedor de {product_name}.
+* El proceso de lanzamiento solo puede ser iniciado por un mantenedor de {product_name} al empujar una etiqueta Git en el formato semver.
+
+== Procedencia
+
+* El proyecto {product_name} utiliza el proyecto oficial https://github.com/slsa-framework/slsa-github-generator[SLSA GitHub Generator] para la generación y distribución de la procedencia.
+* La procedencia de los artefactos de lanzamiento publicados en el Registro de Contenedores de GitHub y en el Registro de Rancher Prime se genera utilizando el flujo de trabajo generator_container_slsa3 de GitHub proporcionado por el proyecto https://github.com/slsa-framework/slsa-github-generator[SLSA GitHub Generator].
+* La procedencia identifica las imágenes de contenedor {product_name} utilizando su digest en formato SHA-256.
+* La procedencia está firmada por Sigstore Cosign utilizando la identidad OIDC de GitHub, y la clave pública para verificar la procedencia se almacena en el registro de transparencia público https://docs.sigstore.dev/logging/overview/[Rekor transparency log].
+* El proceso de lanzamiento y la generación de la procedencia se ejecutan de forma aislada en un entorno efímero proporcionado por los runners alojados en GitHub.
+* La procedencia de las imágenes de contenedor {product_name} se puede verificar utilizando la herramienta oficial https://github.com/slsa-framework/slsa-verifier[SLSA verifier tool].
+* Los flujos de trabajo de generación de procedencia se ejecutan en máquinas virtuales efímeras y aisladas, que son completamente gestionadas por GitHub.
+* Los secretos de firma de la procedencia son efímeros y se generan a través del procedimiento de firma https://github.com/sigstore/cosign/blob/main/KEYLESS.md[keyless] de Sigstore.
+* El https://github.com/slsa-framework/slsa-github-generator[SLSA GitHub Generator] se ejecuta en máquinas virtuales separadas del proceso de construcción y lanzamiento, de modo que los scripts de construcción {product_name} no tengan acceso a los secretos de firma.
+
+== Aislamiento
+
+* El proceso de lanzamiento y la generación de la procedencia se ejecutan de forma aislada en un entorno efímero proporcionado por los runners alojados en GitHub.
+* La generación de procedencia está desacoplada del proceso de construcción; el https://github.com/slsa-framework/slsa-github-generator[SLSA GitHub Generator] se ejecuta en máquinas virtuales separadas completamente gestionadas por GitHub.
+* El proceso de lanzamiento no puede acceder a la clave de firma de la procedencia porque el generador de procedencia se ejecuta en aislamiento en runners separados alojados en GitHub.

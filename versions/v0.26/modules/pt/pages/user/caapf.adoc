@@ -1,0 +1,78 @@
+= Fornecedor de Complemento da API de Cluster Fleet
+:revdate: 2025-11-20
+:page-revdate: {revdate}
+
+== Visão Geral
+
+ifeval::["{build-type}" == "product"]
+O Fornecedor de Complemento da API de Cluster para `Fleet` (CAAPF) é um fornecedor da API de Cluster (CAPI) que fornece integração com https://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/index.html[`Fleet`] para permitir a fácil implantação de aplicativos em um cluster provisionado pelo CAPI.
+endif::[]
+ifeval::["{build-type}" == "community"]
+O Fornecedor de Complemento da API de Cluster para `Fleet` (CAAPF) é um fornecedor da API de Cluster (CAPI) que fornece integração com https://fleet.rancher.io/[`Fleet`] para permitir a fácil implantação de aplicativos em um cluster provisionado pelo CAPI.
+endif::[]
+
+[TIP]
+====
+Para mais informações sobre o fornecedor, consulte https://rancher.github.io/cluster-api-addon-provider-fleet/[o livro CAAPF].
+====
+
+[WARNING]
+====
+O CAAPF depende da `WatchList` feature gate do Kubernetes. Esse recurso precisa ser explicitamente habilitado nas versões do Kubernetes `1.33`. Consulte a https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/[a documentação upstream do Kubernetes] para mais informações.
+====
+
+== Funcionalidade
+
+* O fornecedor registrará um cluster CAPI recém-provisionado com `Fleet` criando uma instância `Fleet` `Cluster` com o mesmo `name` e `namespace`. Os aplicativos podem ser implantados automaticamente no cluster criado usando `GitOps`.
+* O fornecedor criará automaticamente um Fleet `ClusterGroup` para cada CAPI `ClusterClass` no namespace `ClusterClass`. Isso permite que você implante os mesmos aplicativos em todos os clusters criados a partir do mesmo `ClusterClass`.
+* O fornecedor criará automaticamente um Fleet `ClusterGroup` para cada CAPI `ClusterClass` referenciado por `Cluster` localizado em um namespace diferente de `ClusterClass`. Isso permite que você implante os mesmos aplicativos em todos os clusters que referenciam o mesmo `ClusterClass` em um namespace específico.
+
+ifeval::["{build-type}" == "product"]
+Isso permite que um usuário especifique um recurso https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/reference/ref-bundle.html[`Bundle`] com cargas de trabalho de aplicativo brutas, ou https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/reference/ref-gitrepo.html[`GitRepo`] para instalar aplicativos a partir do git. Cada um dos recursos pode fornecer https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/how-tos-for-users/gitrepo-targets.html#_defining_targets[`targets`] com qualquer combinação de:
+endif::[]
+ifeval::["{build-type}" == "community"]
+Isso permite que um usuário especifique um recurso https://fleet.rancher.io/ref-bundle[`Bundle`] com cargas de trabalho de aplicativo brutas ou https://fleet.rancher.io/ref-gitrepo[`GitRepo`] para instalar aplicativos a partir do git. Cada um dos recursos pode fornecer https://fleet.rancher.io/gitrepo-targets#defining-targets[`targets`] com qualquer combinação de:
+endif::[]
+
+[source,yaml]
+----
+  targets:
+  - clusterGroup: <cluster-class-name> # If the cluster is created from cluster-class
+  - clusterName: <a specific CAPI cluster name>
+----
+
+Além disso, `CAAPF` propaga automaticamente os rótulos do cluster `CAPI` para o recurso de cluster `Fleet`, para que os usuários possam especificar um alvo que corresponda a um rótulo de cluster comum com:
+
+[source,yaml]
+----
+  targets:
+  - clusterSelector: <label selector for the cluster instances, inherited from CAPI clusters>
+  - clusterGroupSelector: <label selector for the cluster group instances, labels inherited from ClusterClass>
+----
+
+== Modelagem de Helm Chart baseada em CAPI `Cluster` e `ControlPlane`
+
+ifeval::["{build-type}" == "product"]
+O *Fornecedor de Complemento da API de Cluster Fleet* automatiza a https://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/ref-fleet-yaml.html#_templating[modelagem] de aplicativos para clusters CAPI importados com base no estado do cluster correspondente. Esse recurso garante que o estado de um cluster CAPI e os recursos estejam sempre atualizados no campo `spec.templateValues.ClusterValues` do recurso de cluster Fleet. Isso permite que os usuários:
+endif::[]
+ifeval::["{build-type}" == "community"]
+O *Fornecedor de Complemento da API de Cluster Fleet* automatiza a https://fleet.rancher.io/ref-fleet-yaml#templating[modelagem] de aplicativos para clusters CAPI importados com base no estado do cluster correspondente. Esse recurso garante que o estado de um cluster CAPI e os recursos estejam sempre atualizados no campo `spec.templateValues.ClusterValues` do recurso de cluster Fleet. Isso permite que os usuários:
+endif::[]
+
+- Referenciar partes específicas do cluster CAPI diretamente ou por meio de padrões de substituição do Helm que referenciam os dados de `.ClusterValues.Cluster`.
+- Substituir com base no estado do recurso do plano de controle através do campo `.ClusterValues.ControlPlane`.
+- Substituir com base no estado do recurso do cluster de infraestrutura através do campo `.ClusterValues.InfrastructureCluster`.
+- Manter um estado consistente dos aplicativos entre diferentes clusters.
+- Utilizar o mesmo modelo para múltiplos clusters correspondentes para simplificar a implantação e a gestão.
+
+Para mais informações sobre o recurso, consulte a https://rancher.github.io/cluster-api-addon-provider-fleet/04_reference/02_templating-strategy.html[documentação de modelagem] no livro.
+
+== Exemplo - implantando o CNI kindnet
+
+*Demonstração*: image:https://asciinema.org/a/seEFHKz5DVpUe5CQvWcddSJBp.svg[asciicast,link=https://asciinema.org/a/seEFHKz5DVpUe5CQvWcddSJBp]
+
+== Exemplo - implantando o CNI Calico usando GitRepo
+
+*Demonstração*: image:https://asciinema.org/a/706570.svg[asciicast,link=https://asciinema.org/a/706570]
+
+Para um tutorial e pré-requisitos, consulte a seção https://rancher.github.io/cluster-api-addon-provider-fleet/03_tutorials/04_installing_calico_via_gitrepo.html[tutorial do gitrepo] no livro.

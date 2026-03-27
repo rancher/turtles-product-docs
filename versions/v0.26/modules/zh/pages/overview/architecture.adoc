@@ -1,0 +1,38 @@
+= 体系结构
+:revdate: 2025-06-30
+:page-revdate: {revdate}
+
+本指南提供了关于支持{product_name}的内核组件和结构的全面概述，以及它在Rancher生态系统中的集成。
+
+*Rancher用户将使用Rancher来管理集群。Rancher将能够使用Cluster API来管理子Kubernetes集群的生命周期。*
+
+image::in_cluster_topology.png[turtles-diagram,640,480]
+
+== 组件
+
+以下是Rancher Turtles架构组件的可视化表示。该图示说明了{product_name}系统内关键元素及其关系。理解这些组件对于深入了解Rancher如何利用Cluster API (CAPI)进行集群管理至关重要。
+
+image::30000ft_view.png[概述,640,480]
+
+=== Rancher Manager
+
+这是Rancher的内核组件，用户可以利用仪表板中的现有Explorer功能来访问集群工作负载详细信息。
+
+=== Rancher集群代理
+
+代理部署在子集群内，使Rancher能够导入并与这些集群建立连接。此连接使Rancher能够有效地从其平台管理子集群。
+
+=== {product_name} - Rancher CAPI扩展
+
+它提供了CAPI与Rancher之间的集成，同时当前支持以下功能：
+
+* *将CAPI集群导入Rancher:* 在CAPI提供的集群中安装Rancher集群代理。
+* *CAPI操作器配置:*对CAPI操作器的配置支持。
+
+== 部署拓扑
+
+=== Rancher管理器与CAPI管理结合
+
+这是当前唯一支持的拓扑，其中Rancher管理器和{product_name}都部署在同一个Kubernetes集群中，并充当集中管理集群。
+
+该架构提供了组件的简化部署，并提供了所有集群的单一视图。另一方面，重要的是要考虑到，Cluster API（CAPI）能够有效管理的集群数量受到单个管理集群内可用资源的限制。

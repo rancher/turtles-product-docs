@@ -1,0 +1,82 @@
+= Recursos
+:revdate: 2026-03-05
+:page-revdate: {revdate}
+
+Esta seção descreve recursos e fases de recursos em {product_name}.
+
+== Lista de Recursos
+
+|===
+| Recurso | Nome do Recurso do Helm | Sub-Recurso | Default | Estágio 
+
+| *Fornecedor de Complemento para Fleet*
+| `addon-provider-fleet`
+| _Nenhuma_
+| habilitado
+| versÃ£o beta
+
+| *Modo TLS do Agente*
+| `agent-tls-mode`
+| _Nenhuma_
+| habilitado
+| versÃ£o beta
+
+| *Sem cert-manager*
+| `no-cert-manager`
+| _Nenhuma_
+| habilitado
+| versÃ£o beta
+
+| *Usar Registro Padrão do Rancher*
+| `use-rancher-default-registry`
+| _Nenhuma_
+| habilitado
+| versÃ£o beta
+
+|===
+
+=== Fornecedor de Complemento para Fleet
+Este recurso instala o Cluster API Add-on Provider for Fleet (CAAPF) para fornecer integração com https://github.com/rancher/fleet[Fleet] e permitir a fácil implantação de aplicativos em clusters provisionados pelo CAPI. O CAAPF instala automaticamente o Fleet no cluster de gerenciamento e registra clusters CAPI recém-provisionados com o Fleet, para que os aplicativos possam ser implantados nesses clusters via GitOps, `Bundle` ou `HelmOp` recursos. O CAAPF também inclui suporte para agrupar clusters CAPI que referenciam a mesma ClusterClass através do ClusterGroup do Fleet, simplificando essencialmente as implantações de aplicativos para grandes grupos de clusters. Este recurso está na fase GA e habilitado por padrão.
+
+=== Modo TLS do Agente
+Este recurso é usado para instruir os Turtles sobre se deve seguir a configuração `agent-tls-mode` do Rancher ao recuperar manifestos de registro de cluster para importar clusters. Quando habilitado, os Turtles verificarão o valor da configuração `agent-tls-mode` do Rancher para determinar se foi definido como `system-store` ou `strict`. Se definido como `system-store`, os Turtles confiarão em qualquer certificado gerado por uma Autoridade Certificadora pública contida no armazenamento de confiança do sistema operacional, incluindo aqueles assinados por autoridades como Let's Encrypt. Se definido como `strict`, os Turtles confiarão apenas em certificados gerados pela Autoridade Certificadora contida na configuração `cacerts` do Rancher. Quando esta configuração estiver desabilitada, os Turtles utilizarão o modo `system-store`. Este recurso está em fase beta e habilitado por padrão.
+
+=== Sem cert-manager
+Este recurso converte os manifests dos provedores CAPI para substituir o uso do cert-manager por https://github.com/rancher/wrangler/[wrangler].
+
+Em particular, os webhooks de validação e mutação de admissão serão atualizados para usar certificados gerados pelo wrangler, em vez do cert-manager, permitindo um ambiente sem cert-manager.
+
+Cuidado, o uso da `CATTLE_SYNC_ONLY_CHANGED_OBJECTS` https://documentation.suse.com/cloudnative/rancher-manager/latest/en/installation-and-upgrade/best-practices/tuning-rancher-at-scale.html#_reducing_event_handler_executions[funcionalidade] do Rancher pode impedir a renovação de certificados após o tempo de expiração padrão de um ano.
+
+É possível desabilitar este recurso para restaurar todos os manifests dos provedores ao uso original do cert-manager.
+
+=== Usar o Registro Padrão do Rancher
+
+Este recurso instrui {product_name} a aproveitar a configuração de gerenciamento `system-default-registry` do Rancher ao construir referências de imagem para os componentes do provedor CAPI. Quando habilitado, {product_name} lê esta configuração e, se um registro estiver configurado, reescreve o repositório para cada imagem do provedor para usar esse registro.
+Se a configuração estiver vazia, {product_name} volta às referências de imagem padrão. Substituições de imagem definidas no recurso `ClusterctlConfig` sempre têm precedência. Para uso detalhado em ambientes air-gapped, veja xref:operator/airgapped.adoc[Ambiente Air-gapped]. Este recurso está em fase alfa e habilitado por padrão.
+
+== Fases de Recursos
+
+{product_name} segue o processo de https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/#feature-stages[fases de recursos] do Kubernetes. Um recurso pode estar em uma das seguintes fases: Alfa, Beta ou Disponibilidade Geral (GA).
+
+=== Fase Alfa
+- Desabilitado por padrão.
+- Pode ter falhas, sem suporte a longo prazo.
+- A API pode mudar sem aviso prévio.
+- Recomendado apenas para clusters de teste de curta duração.
+
+=== Fase Beta
+- Sempre habilitado por padrão.
+- Bem testado e considerado seguro.
+- O suporte é estável, mas o esquema pode mudar em versões futuras.
+- Recomendado para usos não críticos para negócios devido a possíveis mudanças incompatíveis.
+
+[NOTE]
+====
+Por favor, forneça feedback sobre os recursos Alfa e Beta!
+====
+
+=== Fase de Disponibilidade Geral (GA)
+- Sempre habilitado, não pode ser desativado.
+- Nenhum recurso de controle necessário.
+- Estável, com suporte a longo prazo em versões futuras.

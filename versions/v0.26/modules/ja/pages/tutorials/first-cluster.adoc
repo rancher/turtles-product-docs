@@ -1,0 +1,114 @@
+= 最初のクラスターを作成およびインポート
+:revdate: 2025-11-20
+:page-revdate: {revdate}
+
+このセクションでは、最初のクラスターを作成し、それをRancher Managerにインポートする方法を案内します。クラスターのプロビジョニングには、次の2つの方法があります：**Fleetを使用したGitOpsワークフロー**と**`kubectl`を使ってマニフェストを手動で適用する**。
+
+== 前提条件
+
+* Rancher Managerクラスター
+* シナリオにインストールされたCluster APIプロバイダー - この手順では、https://github.com/kubernetes-sigs/cluster-api/tree/main/test/infrastructure/docker[Dockerインフラストラクチャ]とhttps://github.com/rancher/cluster-api-provider-rke2[RKE2起動/コントロールプレーン]プロバイダーを使用します - xref:../reference/capiprovider.adoc[Turtlesの`CAPIProvider`を使った一般的なプロバイダーの初期化を参照してください。]
+
+== CAPIワークロードクラスターをプロビジョニングする
+
+[tabs]
+======
+Fleetを使用したGitOps::
++
+--
+*Fleetリポジトリを設定する*
+
+クラスターのプロビジョニングプロセスを簡素化するために、リポジトリhttps://github.com/rancher/turtles/tree/main/examples.にある一連の事前設定された例を使用します。
+このリポジトリの内容を確認することで、次のことがわかります：
+
+. Fleetを使用してデプロイできる追加アプリ用の*applications*フォルダーがあります。
+. ClusterClassの例が多数含まれている*clusterclasses*フォルダー。
+. Dockerクラスター定義の例が含まれている*clusters/docker/rke2*フォルダー。
++
+[NOTE]
+お好みで、同じ基本構造を使用して独自のFleetリポジトリを作成することもできます。
+
+*Rancher UIを使用してFleetリポジトリを追加する*
+
+現在、クラスター定義はgitリポジトリにコミットされているため、クラスターをプロビジョニングするために使用できます。これを行うには、*Continuous Delivery*機能を使用して、Rancher Managerクラスター（Cluster API管理クラスターとしても機能しています）にインポートする必要があります。
+
+. Rancher Managerに移動する
+. メニューから*Continuous Delivery*を選択します：
+image:sidebar.png[サイドバー]
+. 右上から*fleet-local*をネームスペースとして選択します
+image:ns.png[ネームスペース]
+. サイドバーから *Git Repos* を選択します
+. *Add Repository* をクリックします
+. 名前として *clusters* を入力します
+. Git リポジトリから *HTTPS* クローン URL を取得します
+image:gh_clone.png[git clone url]
+. URL を *Repository URL* フィールドに追加します
+. ブランチ名を *main* に変更します
+. デプロイするディレクトリを指定するために、以下のパスを追加します。
++
+image:paths.png[Fleet パス設定]
++
+----
+examples/clusterclasses/docker/rke2
+examples/applications/cni/calico
+examples/applications/lb/docker
+examples/clusters/docker/rke2
+----
+. *次へ* をクリックします
+. *作成* をクリックします
+. *clusters* の名前をクリックします
+. リソースが準備完了になるのを確認します
+. メニューから *Cluster Management* を選択します
+. クラスターがインポートされたことを確認します
+--
+
+手動で kubectl を使用します::
++
+--
+*クラスターリソースを適用します*
+
+kubectl を使用してクラスターを作成するには、以下のコマンドを実行します。
+
+. ターミナルを開き、ClusterClass と関連するテンプレートを適用します。
++
+[source,bash]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/examples/clusterclasses/docker/rke2/clusterclass-docker-rke2.yaml
+----
+
+. ロードバランサーの設定を適用します。
++
+[source,bash]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/examples/applications/lb/docker/configmap.yaml
+----
+
+. CNI (Calico) の設定を適用します。
++
+[source,bash]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/examples/applications/cni/calico/helm-chart.yaml
+----
+
+. クラスターを作成します。
++
+[source,bash]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/examples/clusters/docker/rke2/cluster.yaml
+----
+. リソースが準備完了になるのを確認します。
++
+[source,bash]
+----
+kubectl get clusters -w
+----
+. メニューから *Cluster Management* を選択します
+. クラスターがインポートされたことを確認します
+--
+======
+
+== 次のステップ:Rancher ダッシュボードにクラスターが表示されるのを待ちます
+
+このチュートリアルでプロビジョニングされたクラスターには `cluster-api.cattle.io/rancher-auto-import` ラベルが含まれています。
+このラベルは、Turtles にクラスターを自動的に Rancher にインポートするよう指示します。
+詳細については、xref:user/rancher-cluster-registration.adoc[Rancher クラスター登録] を参照してください。

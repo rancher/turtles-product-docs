@@ -1,0 +1,82 @@
+= 機能
+:revdate: 2026-03-05
+:page-revdate: {revdate}
+
+このセクションでは、{product_name}の機能と機能の段階について説明します。
+
+== 機能の一覧
+
+|===
+| 機能 | Helm機能名 | サブ機能 | デフォルト | ステージ 
+
+| *Add-on Provider for Fleet*
+| `addon-provider-fleet`
+| _なし_
+| 対応
+| ベータ
+
+| *エージェントTLSモード*
+| `agent-tls-mode`
+| _なし_
+| 対応
+| ベータ
+
+| *証明書マネージャーなし*
+| `no-cert-manager`
+| _なし_
+| 対応
+| ベータ
+
+| *Rancherのデフォルトレジストリを使用*
+| `use-rancher-default-registry`
+| _なし_
+| 対応
+| ベータ
+
+|===
+
+=== Add-on Provider for Fleet
+この機能は、Cluster API Add-on Provider for Fleet（CAAPF）をインストールし、https://github.com/rancher/fleet[Fleet]との統合を提供し、CAPIによってプロビジョニングされたクラスターへのアプリケーションの簡単なデプロイを可能にします。CAAPFは、管理クラスターにFleetを自動的にインストールし、新しくプロビジョニングされたCAPIクラスターをFleetに登録するため、アプリケーションをGitOps、`Bundle`または`HelmOp`リソースを介してこれらのクラスターにデプロイできます。CAAPFは、FleetのClusterGroupを通じて同じClusterClassを参照するCAPIクラスターをグループ化するサポートも含まれており、大規模なクラスターグループへのアプリケーションデプロイを簡素化します。この機能は一般提供（GA）段階にあり、デフォルトで有効になっています。
+
+=== エージェントTLSモード
+この機能ゲートは、クラスターをインポートするためのクラスター登録マニフェストを取得する際に、TurtlesにRancherの`agent-tls-mode`設定に従うべきかどうかを指示するために使用されます。有効にすると、TurtlesはRancherの`agent-tls-mode`設定の値を調べ、`system-store`または`strict`に設定されているかどうかを判断します。`system-store`に設定されている場合、Turtlesはオペレーティングシステムの信頼ストアに含まれる公開証明書機関によって生成された任意の証明書を信頼し、Let's Encryptなどの機関によって署名された証明書も含まれます。`strict`に設定されている場合、TurtlesはRancherの`cacerts`設定に含まれる証明書機関によって生成された証明書のみを信頼します。この設定が無効にされている場合、Turtlesは`system-store`モードで動作します。この機能はベータ段階にあり、デフォルトで有効になっています。
+
+=== 証明書マネージャーはありません。
+この機能ゲートは、CAPIプロバイダーのマニフェストを変換し、cert-managerの使用をhttps://github.com/rancher/wrangler/[wrangler]に置き換えます。
+
+特に、検証および変更の入場ウェブホックは、cert-managerの代わりにwranglerによって生成された証明書を使用するように更新され、cert-managerなしの環境を可能にします。
+
+Rancherの`CATTLE_SYNC_ONLY_CHANGED_OBJECTS` https://documentation.suse.com/cloudnative/rancher-manager/latest/en/installation-and-upgrade/best-practices/tuning-rancher-at-scale.html#_reducing_event_handler_executions[機能]の使用は、デフォルトの有効期限である1年後に証明書の更新を妨げる可能性があることに注意してください。
+
+この機能を無効にすることで、すべてのプロバイダーマニフェストを元のcert-managerの使用に戻すことが可能です。
+
+=== Rancherのデフォルトレジストリを使用する
+
+この機能ゲートは、CAPIプロバイダーコンポーネントのイメージ参照を構築する際に、Rancherの`system-default-registry`管理設定を活用するように{product_name}に指示します。有効にすると、{product_name}はこの設定を読み取り、レジストリが構成されている場合、すべてのプロバイダーイメージのリポジトリをそのレジストリを使用するように書き換えます。
+設定が空の場合、{product_name}はデフォルトのイメージ参照に戻ります。`ClusterctlConfig`リソースで定義されたイメージのオーバーライドは常に優先されます。エアギャップ(された)環境での詳細な使用については、xref:operator/airgapped.adoc[エアギャップ(された)環境]を参照してください。この機能はアルファ段階にあり、デフォルトで有効になっています。
+
+== 機能の段階
+
+{product_name}はKubernetesのhttps://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/#feature-stages[機能段階]プロセスに従います。機能は次のいずれかの段階にあります：アルファ、ベータ、または一般提供（GA）。
+
+=== アルファ段階
+- デフォルトでは無効になっています。
+- バグがある可能性があり、長期サポートはありません。
+- APIは予告なく変更される場合があります。
+- 短期間のテストクラスターにのみ推奨されます。
+
+=== ベータ段階
+- 常にデフォルトで有効になっています。
+- 十分にテストされており、安全と見なされています。
+- サポートは安定していますが、スキーマは将来のリリースで変更される可能性があります。
+- 互換性のない変更の可能性があるため、ビジネスクリティカルでない用途に推奨されます。
+
+[NOTE]
+====
+アルファおよびベータ機能についてフィードバックを提供してください！
+====
+
+=== 一般提供（GA）段階
+- 常に有効で、無効にすることはできません。
+- 機能ゲートは必要ありません。
+- 安定しており、将来のリリースで長期サポートがあります。

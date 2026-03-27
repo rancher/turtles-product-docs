@@ -1,0 +1,73 @@
+= CAPI 提供程序
+:revdate: 2025-08-25
+:page-revdate: {revdate}
+
+`CAPIProvider` 资源允许以声明式方式管理集群 API 操作员清单。它用于部署和配置 CAPI 提供程序，如 AWS、vSphere 等。
+
+`CAPIProvider` 遵循 GitOps 模型 - 规格字段是声明式用户输入。控制器仅更新状态。
+
+上游 CAPI 操作员 `CAPIProviderSpec` 资源提供的每个字段在 `CAPIProvider` 资源的规格中也可用。请随时参考上游配置 link:https://cluster-api-operator.sigs.k8s.io/03_topics/02_configuration/05_provider-spec-configuration[指南] 以获取高级场景。
+
+所有 xref:../overview/certified.adoc[certified] CAPI 提供程序均使用嵌入式配置进行配置。为了覆盖它，需要创建一个自定义 xref:./clusterctlconfig.adoc#_override_a_certified_provider_version[ClusterctlConfig]。
+
+== 用法
+
+要使用 `CAPIProvider` 资源：
+
+. 创建一个具有所需提供程序名称、类型、凭据、配置和功能的 `CAPIProvider` 资源。
+. `CAPIProvider` 控制器将根据 `CAPIProvider` 规格生成所需的集群 API 操作员清单模板。
+. `CAPIProvider` 资源上的状态字段将反映生成的清单的状态。
+. 以声明式方式管理 `CAPIProvider` 对象，以对生成的提供程序清单应用更改。
+
+这是一个示例 `CAPIProvider` 清单：
+
+[source,yaml]
+----
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: aws-infra
+  namespace: capi-providers
+spec:
+  name: aws
+  type: infrastructure
+  enableAutomaticUpdate: true
+  credentials:
+    rancherCloudCredential: aws-creds # Rancher credentials secret for AWS
+  configSecret:
+    name: aws-config
+  features:
+    clusterResourceSet: true
+----
+
+这将生成一个 AWS 基础设施提供程序，并提供 Rancher 凭据密钥和自定义启用功能的映射。
+
+`CAPIProvider` 控制器将拥有所有生成的提供程序资源，允许通过删除 `CAPIProvider` 对象进行垃圾回收。
+
+== 明细单
+
+`CAPIProvider` 规格中的关键字段是：
+
+* `name` - 提供程序的名称（aws、vsphere 等）。如果未指定，则从 `metadata.name` 继承。
+* `type` - 提供程序资源的类型（可以设置为 `core`、`controlPlane`、`bootstrap`、`infrastructure`、`addon`、`ipam` 或 `runtimeextension`）。
+* `credentials` - 提供程序规范的源凭证。
+* `configSecret` - 提供程序配置密钥的名称，变量和同步凭证将存储在此处。默认情况下，如果未指定，将继承 `CAPIProvider` 资源的名称。
+* `features` - 启用的提供程序功能。
+* `variables` - 变量是要添加到 `configSecret` 内容中的环境变量映射。
+* `version` - 版本指示提供程序的版本。
+* `enableAutomaticUpdate` - 允许提供程序自动更新。仅在安装了 Turtles 图表的提供程序上默认启用。
+* `fetchConfig` - FetchConfig 决定操作员将如何获取提供程序的组件和元数据。
+** `oci` - OCI 用于从 OCI 工件中获取提供程序的组件和元数据。您必须设置 `providerSpec.Version` 字段，以便操作员从 GitHub 中选择所需版本的发布。如果 providerSpec.Version 缺失，将使用 clusterctl 默认的最新提供程序版本。
+** `selector` - 用于从存储在集群中的 ConfigMaps 中获取提供程序组件和元数据的选择器。每个 ConfigMap 预计仅包含特定版本的组件和元数据。
+** `url` - 用于从远程 Github 储存库获取提供程序组件和元数据的 URL。
+
+== 版本固定和自动更新
+
+`CAPIProvider` `version` 可以随时设置，以将提供程序固定到特定版本。此外，可以切换 `automaticUpdates` 以允许自动更新到最新可用版本。最新可用版本由嵌入的 clusterctl 配置确定，适用于 xref:../overview/certified.adoc[certified] 提供程序；对于自定义提供程序，可以通过 xref:../reference/clusterctlconfig.adoc[ClusterctlConfig] 覆盖或配置。
+
+== 删除
+
+当一个 `CAPIProvider` 资源被删除时，Kubernetes 垃圾回收将清理它所拥有的所有生成的提供程序资源。包括以下内容：
+
+* 集群 API 操作员资源实例
+* 由 `configSecret` 引用的密钥

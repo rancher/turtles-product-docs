@@ -1,0 +1,57 @@
+= SLSA
+:revdate: 2025-04-04
+:page-revdate: {revdate}
+
+== Visão Geral
+
+https://slsa.dev/spec/v1.0/about[SLSA] é um conjunto de diretrizes adotáveis de forma incremental para segurança da cadeia de suprimento, estabelecido por consenso da indústria. A especificação definida pelo SLSA é útil tanto para produtores quanto para consumidores de software: os produtores podem seguir as diretrizes do SLSA para tornar sua cadeia de suprimento de software mais segura, e os consumidores podem usar o SLSA para tomar decisões sobre confiar em um pacote de software.
+
+{product_name} atende aos requisitos de https://slsa.dev/spec/v1.0/levels[Nível 3 do SLSA].
+
+|===
+| Requisito | Requerido no SLSA L3 | Atendido por {product_name}
+
+| Escolha uma plataforma de build apropriada
+| Sim
+| Sim
+
+| Siga um processo de build consistente
+| Sim
+| Sim
+
+| Distribua a proveniência
+| Sim
+| Sim
+|===
+
+== Plataforma de Build
+
+* O projeto {product_name} usa Git para gerenciamento de código-fonte.
+* Todos os mantenedores do {product_name} são obrigados a ter a autenticação de dois fatores habilitada, para assinar e aprovar todas as suas contribuições.
+* O projeto {product_name} usa GitHub Actions e GitHub Runners para construir todos os seus artefatos de lançamento.
+* O processo de build e lançamento ocorre em isolamento em um ambiente efêmero fornecido por runners hospedados no GitHub.
+
+== Processo de Build
+
+* O processo de build e lançamento é definido em código e é mantido sob controle de versão.
+* Os workflows do GitHub utilizam o GitHub Actions fixado em certas versões e são mantidos atualizados usando o GitHub Dependabot.
+* Todas as mudanças no processo de build e lançamento são feitas via Pull Requests que devem ser aprovadas por pelo menos um mantenedor do {product_name}.
+* O processo de lançamento só pode ser iniciado por um mantenedor do {product_name} ao enviar uma tag Git no formato semver.
+
+== Proveniência
+
+* O projeto {product_name} utiliza o projeto oficial https://github.com/slsa-framework/slsa-github-generator[SLSA GitHub Generator] para geração e distribuição de proveniência.
+* A proveniência dos artefatos de lançamento publicados no GitHub Container Registry e no Rancher Prime Registry é gerada usando o Workflow generator_container_slsa3 do GitHub fornecido pelo projeto https://github.com/slsa-framework/slsa-github-generator[SLSA GitHub Generator].
+* A proveniência identifica as imagens de contêiner {product_name} usando seu digest no formato SHA-256.
+* A proveniência é assinada pelo Sigstore Cosign usando a identidade OIDC do GitHub, e a chave pública para verificar a proveniência é armazenada no log de transparência público https://docs.sigstore.dev/logging/overview/[Rekor transparency log].
+* O processo de lançamento e a geração de proveniência são executados em isolamento em um ambiente efêmero fornecido pelos runners hospedados no GitHub.
+* A proveniência das imagens de contêiner {product_name} pode ser verificada usando a ferramenta oficial https://github.com/slsa-framework/slsa-verifier[SLSA verifier tool].
+* Os workflows de geração de proveniência são executados em máquinas virtuais efêmeras e isoladas, que são totalmente gerenciadas pelo GitHub.
+* Os segredos de assinatura da proveniência são efêmeros e são gerados através do procedimento de assinatura https://github.com/sigstore/cosign/blob/main/KEYLESS.md[keyless] do Sigstore.
+* O https://github.com/slsa-framework/slsa-github-generator[SLSA GitHub Generator] é executado em máquinas virtuais separadas do processo de build e lançamento, para que os scripts de build {product_name} não tenham acesso aos segredos de assinatura.
+
+== Isolamento
+
+* O processo de lançamento e a geração de proveniência são executados em isolamento em um ambiente efêmero fornecido pelos runners hospedados no GitHub.
+* A geração de proveniência é desacoplada do processo de build; o https://github.com/slsa-framework/slsa-github-generator[SLSA GitHub Generator] é executado em máquinas virtuais separadas totalmente gerenciadas pelo GitHub.
+* O processo de lançamento não pode acessar a chave de assinatura da proveniência porque o gerador de proveniência é executado em isolamento em runners separados hospedados no GitHub.

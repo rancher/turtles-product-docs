@@ -1,0 +1,329 @@
+= 用語集
+:revdate: 2025-11-14
+:page-revdate: {revdate}
+
+== 目次
+
+[cols=14*]
+|===
+| xref:./glossary.adoc#_a[A]
+| xref:./glossary.adoc#_b[B]
+| xref:./glossary.adoc#_c[C]
+| xref:./glossary.adoc#_f[F]
+| xref:./glossary.adoc#_i[I]
+| xref:./glossary.adoc#_k[K]
+| xref:./glossary.adoc#_m[M]
+| xref:./glossary.adoc#_n[N]
+| xref:./glossary.adoc#_o[O]
+| xref:./glossary.adoc#_p[P]
+| xref:./glossary.adoc#_r[R]
+| xref:./glossary.adoc#_s[S]
+| xref:./glossary.adoc#_t[「T」]
+| xref:./glossary.adoc#_w[W]
+|===
+
+== A
+
+=== アドオン
+
+Kubernetes準拠のクラスターをデプロイするために必要な基本コンポーネントを超えたサービスで、2つのタイプに分類されます：
+
+* *コアアドオン*：Kubernetes準拠のクラスターを展開するために必要なアドオン：DNS、kube-proxy、CNI。
+* *追加アドオン*：Kubernetes準拠のクラスターには必要ないアドオン（例：metrics/Heapster、Dashboard）。
+
+=== エアギャップ(された)環境
+
+インターネットへの直接アクセスなしでKubernetesクラスターを設定および実行します。
+
+== B
+
+=== ブートストラップ
+
+サーバーをKubernetesノードに変換するプロセス。これは、マシンを支えるサーバーを作成する際に提供するデータを組み立てることや、そのサーバー上で実行されるソフトウェアのランタイム設定を含む場合があります。
+
+=== ブートストラップクラスター
+
+ターゲット管理クラスターをプロビジョニングするために使用される一時的なクラスター。
+
+=== ブートストラッププロバイダー
+
+<<_provider,プロバイダー>>を指し、<<_bootstrap,ブートストラップ>>プロセスのソリューションを実装します。
+
+== C
+
+=== CAPI
+
+コアクラスターAPI
+
+=== CAPA
+
+クラスターAPIプロバイダーAWS
+
+=== CAPD
+
+Cluster APIプロバイダー Docker
+
+=== CAPG
+
+Cluster API Google Cloudプロバイダー
+
+=== CAPIO
+
+Cluster APIオペレーター
+
+=== CAPRKE2
+
+Cluster APIプロバイダー RKE2。CAPRKE2の詳細情報については、ドキュメントをhttps://caprke2.docs.rancher.com[こちら]でご確認ください。
+
+=== CAPV
+
+Cluster APIプロバイダ vSphere
+
+=== CAPZ
+
+Cluster APIプロバイダ Azure
+
+=== CAPIプロバイダー
+
+<<_cluster_api_operator,CAPIオペレーター>>および<<_cluster_api,Cluster API>>リソースのプロビジョニングと操作を容易にする公開APIです。
+
+=== 子クラスタ
+
+<<_workload_cluster,ワークロードクラスタ>>と同義で一般的に使用される用語です。
+
+=== クラスタ
+
+完全なKubernetesデプロイメントです。管理クラスタとワークロードクラスタを参照してください。
+
+=== ClusterClass
+
+1つ以上のクラスターを継続的に調整するために使用されるトポロジー（コントロールプレーンとワーカー）を定義するテンプレートのコレクションです。
+xref:../user/clusterclass.adoc[ClusterClass]を参照してください。
+
+=== Cluster API
+
+または*Cluster APIプロジェクト*
+
+Cluster APIはSIG-cluster-lifecycleのサブプロジェクトです。これは、ソフトウェアコンポーネント、API、およびそれらを生成するコミュニティを指すためにも使用されます。
+
+<<_core_provider,コアプロバイダー>>を参照してください。
+
+=== Cluster APIオペレーター
+
+または*Cluster API Operatorプロジェクト*。
+
+Cluster API Operatorは、SIG-cluster-lifecycleのサブプロジェクトです。これは、宣言的アプローチを使用して、管理クラスター内でCluster APIプロバイダのライフサイクルを処理するためにクラスター管理者を支援するように設計されています。
+
+=== Cluster APIプロバイダRKE2
+
+<<_caprke2,Cluster APIプロバイダRKE2>>は、KubernetesコントロールプレーンノードをプロビジョニングするためのCluster APIコントロールプレーンプロバイダと、<<_rke2,RKE2>>がKubernetesディストリビューションとして使用されるマシンでKubernetesを起動するためのCluster API起動プロバイダの2つのプロバイダタイプの組み合わせです。
+
+=== コントロールプレーン
+
+クラスターの基盤を形成するKubernetesサービスのセット。https://kubernetes.io/docs/concepts/#_kubernetes-control-planeも参照してください。2つのバリアントがあります：
+
+* *自己プロビジョニング*：単一のCluster APIデプロイメントによって完全に管理されるポッドまたはマシンで構成されるKubernetesコントロールプレーン。
+* *外部*または*管理*：Cluster API以外のシステム（例：GKE、AKS、EKS、IKS）によって提供および管理されるコントロールプレーン。
+
+=== コントロールプレーンプロバイダー
+
+Kubernetesの<<_control_plane,コントロールプレーン>>の管理ソリューションを実装する<<_provider,プロバイダ>>を指します。
+
+<<_caprke2,CAPRRKE2>>、<<_kcp,KCP>>を参照してください。
+
+=== コアプロバイダ
+
+Cluster APIコアコントローラを実装する<<_provider,プロバイダー>>を指します。管理クラスターにデプロイする必要がある最初のプロジェクトはCluster API自体であると考えると、Cluster APIプロジェクトがコアプロバイダーとも呼ばれる理由は明らかです。
+
+<<_cluster_api,CAPI>>を参照してください。
+
+== F
+
+=== Fleet
+
+ifeval::["{build-type}" == "product"]
+ユーザーにローカルクラスタの管理と、GitOpsを通じた継続的な監視を提供するために設計されたコンテナ管理およびデプロイメントエンジン。Fleetについて詳しく知るには、https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/index.html/[Fleetのドキュメント]をご覧ください。
+endif::[]
+ifeval::["{build-type}" == "community"]
+ユーザーにローカルクラスタの管理と、GitOpsを通じた継続的な監視を提供するために設計されたコンテナ管理およびデプロイメントエンジン。Fleetについて詳しく知るには、https://fleet.rancher.io/[Fleetのドキュメント]をご覧ください。
+endif::[]
+
+== I
+
+=== インフラストラクチャプロバイダー
+
+クラスターまたはマシン（例：VM、ネットワーキングなど）に必要なインフラストラクチャ/計算リソースのプロビジョニングを実装する<<_provider,プロバイダ>>を指します。
+クラウドインフラストラクチャプロバイダにはAWS、Azure、Googleが含まれ、VMware、MAAS、またはmetal3.ioはベアメタルプロバイダとして定義できます。
+
+=== IPAMプロバイダー
+
+クラスターAPIがIPAMソリューションと相互作用できるようにする<<_provider,プロバイダ>>を指します。
+IPAMプロバイダのクラスターAPIとの相互作用は、`IPAddressClaim`および`IPAddress`のAPIタイプに基づいています。
+
+== K
+
+=== Kubernetes-conformant
+
+または*Kubernetes準拠*
+
+Kubernetesの適合性テストに合格したクラスター。
+
+=== Kubernetesオペレーター
+
+Kubernetesオペレーターは、Kubernetesアプリケーションをパッケージ化、デプロイ、および管理する方法です。詳細についてはhttps://kubernetes.io/docs/concepts/extend-kubernetes/operator/もご覧ください。
+
+=== k/k
+
+https://github.com/kubernetes/kubernetes[メインKubernetes Gitリポジトリ]またはメインKubernetesプロジェクトを指します。
+
+=== KCP
+
+Kubeadmコントロールプレーンプロバイダ
+
+== M
+
+=== マシン
+
+または*マシンリソース*
+
+Kubernetesノードをホストするインフラストラクチャコンポーネントを表すKubernetesのカスタムリソース。
+
+=== クラスタの管理
+
+クラスタに対して作成、スケール、アップグレード、または削除操作を実行します。
+
+=== マネージドKubernetes
+
+マネージドKubernetesは、通常APIとして提供される、クラウドプロバイダーにネイティブに存在するKubernetesクラスタのプロビジョニングとメンテナンスの抽象化を指します。例えば、https://aws.amazon.com/eks/[EKS]、https://www.oracle.com/cloud/cloud-native/container-engine-kubernetes/[OKE]、https://azure.microsoft.com/en-us/products/kubernetes-service[AKS]、https://cloud.google.com/kubernetes-engine[GKE]、https://www.ibm.com/cloud/kubernetes-service[IBM Cloud Kubernetes Service]、https://www.digitalocean.com/products/kubernetes[DOKS]など、Kubernetesクラウドネイティブエコシステム全体にわたって多くのものがあります。
+
+=== マネージドトポロジ
+
+<<_topology,トポロジ>>を参照してください。
+
+=== 管理クラスタ
+
+1つ以上のインフラストラクチャプロバイダーが実行され、リソース（例：マシン）が保存されるクラスタです。通常、複数のワークロードクラスタをプロビジョニングする際に言及されます。
+
+== N
+
+=== ノードプール
+
+ノードプールは、すべて同じ構成を持つクラスタ内のノードのグループです。
+
+== O
+
+=== オペレーティングシステム
+
+または*OS*
+
+特定のディストリビューションとは対照的に、LinuxやWindowsなどのカーネルとシステムレベルのユーザースペースインターフェースの一般的に理解される組み合わせです。
+
+== P
+
+=== ピボット
+
+ピボットは、プロバイダーコンポーネントと宣言されたクラスタAPIリソースをソース管理クラスタからターゲット管理クラスタに移動するプロセスです。
+
+ピボットプロセスは、管理クラスタを削除するためにも使用され、管理クラスタのアップグレード中にも使用される可能性があります。
+
+=== プロバイダ
+
+または*Cluster APIプロバイダー*
+
+この用語は元々<<_infrastructure_provider,インフラストラクチャプロバイダー>>の略語として使用されていましたが、現在はデプロイ可能で、Cluster API管理クラスタに機能を提供する任意のプロジェクトを指すために使用されています。
+
+<<_bootstrap_provider,ブートストラッププロバイダー>>、<<_control_plane_provider,コントロールプレーンプロバイダー>>、<<_core_provider,コアプロバイダー>>、<<_infrastructure_provider,インフラストラクチャプロバイダー>>、<<_ipam_provider,IPAMプロバイダー>>、<<_runtime_extension_provider,ランタイム拡張プロバイダー>>を参照してください。
+
+=== プロバイダーコンポーネント
+
+リリースプロセスの一部として公開されたYAMLアーティファクトを指します。<<_provider,プロバイダー>>に通常含まれるのは、カスタムリソース定義（CRD）、コントローラーマネージャーを実行するためのデプロイメント、RBACなどです。
+
+場合によっては、管理クラスターにデプロイされた上記コンポーネントのインスタンスを指すために同じ表現が使用されます。
+
+<<_provider_repository,プロバイダーリポジトリ>>を参照してください。
+
+=== プロバイダーリポジトリ
+
+<<_provider_components,プロバイダーコンポーネント>>のYAMLがホストされている場所を指します。通常、プロバイダーリポジトリは、各リリースごとに異なるバージョンのプロバイダーコンポーネントをホストします。
+
+== R
+
+=== Rancher
+
+Kubernetesクラスターのデプロイと管理を簡素化するために設計されたオープンソースのhttps://www.rancher.com/[プラットフォーム]です。
+
+=== Rancher Cluster Agent
+
+Rancherが管理する各Kubernetesクラスターにデプロイされるコンポーネントです。その主な役割は、RancherサーバーとKubernetesクラスター間の安全な通信チャネルを確立し、Rancherがクラスターを管理し、相互作用できるようにすることです。
+
+=== Rancher Manager
+
+Rancher Manager（またはRancher Server）は、Rancher UIとAPIがホストされている場所であり、<<_rancher_cluster_agent,Rancher Cluster Agent>>のようなコンポーネントを通じて管理クラスターと通信します。ユーザーがKubernetesクラスター、アプリケーション、およびカタログ、ユーザー、グローバルロールなどのRancher特有のリソースを管理できるようにします。
+
+=== RKE2
+
+ifeval::["{build-type}" == "product"]
+米国におけるセキュリティとコンプライアンスに焦点を当てた、Rancherの次世代の完全準拠Kubernetesディストリビューションです。の紹介。詳細についてはhttps://documentation.suse.com/cloudnative/rke2/latest/en/introduction.html[ドキュメント]を参照してください。
+endif::[]
+ifeval::["{build-type}" == "community"]
+米国におけるセキュリティとコンプライアンスに焦点を当てた、Rancherの次世代の完全準拠Kubernetesディストリビューションです。の紹介。詳細についてはhttps://docs.rke2.io/[ドキュメント]を参照してください。
+endif::[]
+
+=== ランタイム拡張機能
+
+特定のランタイムフックのリクエストを処理できるCluster APIの上に構築されたシステムの一部である外部コンポーネントです。
+
+=== ランタイム拡張機能プロバイダー
+
+1つ以上の<<_runtime_extension,ランタイム拡張機能>>を実装する<<_provider,プロバイダー>>を指します。
+
+== S
+
+=== スケーリング
+
+特に指定がない限り、これは水平スケーリングを指します。
+
+=== スタックされたコントロールプレーン
+
+etcdがKubernetes APIサーバーと同居しているコントロールプレーンノードで、静的ポッドとして実行されています。
+
+=== サーバ
+
+<<_machine,マシンリソース>>を支えるインフラストラクチャで、通常はクラウドインスタンス、仮想マシン、または物理ホストのいずれかです。
+
+=== {product_name}
+
+Rancher ManagerとCluster API (CAPI)の統合を提供し、RancherにCAPIのフルサポートをもたらすことを目的とした<<_kubernetes_operator,Kubernetesオペレーター>>です。
+
+== 「T」
+
+=== トポロジ
+
+Clusterオブジェクトの仕様におけるフィールドで、Clusterのコントロールプレーンとワーカーマシンの形状を単一の制御ポイントから定義および管理することを可能にします。Clusterのトポロジーは<<_clusterclass,ClusterClass>>に基づいています。
+時には管理されたトポロジーとも呼ばれます。
+
+<<_clusterclass,ClusterClass>>を参照してください。
+
+ifeval::["{build-type}" == "product"]
+=== カメ
+
+<<_suse_rancher_prime_cluster_api,{product_name}>>を指します。
+endif::[]
+
+ifeval::["{build-type}" == "community"]
+=== カメ
+
+<<_rancher_turtles,{product_name}>>を指します。
+endif::[]
+
+== W
+
+=== ワークロードクラスター
+
+ClusterAPIコントローラーによって作成されたクラスターで、_ブートストラップクラスターではない_ものであり、CAPIツールではなくエンドユーザーによって使用されることを意図しています。
+
+=== ワーカークラス
+
+クラスター内のワーカーノードのセットを定義するテンプレートのコレクションです。ClusterClassはゼロ個以上のWorkerClass定義を含みます。
+
+<<_clusterclass,ClusterClass>>を参照してください。

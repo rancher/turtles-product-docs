@@ -1,0 +1,35 @@
+* xref:index.adoc[Visão Geral]
+** xref:overview/architecture.adoc[Arquitetura]
+** xref:overview/glossary.adoc[Glossário]
+** xref:overview/features.adoc[Recursos]
+** xref:overview/certified.adoc[Provedores Certificados]
+* Tutoriais
+** xref:tutorials/first-cluster.adoc[Seu Primeiro Cluster]
+** xref:tutorials/rancher.adoc[Configuração do Rancher]
+** xref:tutorials/capi-v1beta2.adoc[Atualizando para CAPI v1beta2]
+* Referência
+** xref:reference/capiprovider.adoc[CAPIProvider]
+** xref:reference/clusterctlconfig.adoc[ClusterctlConfig]
+* Guia do usuário
+** xref:user/clusterclass.adoc[Provisionar um cluster CAPI com ClusterClass]
+** xref:user/fleet.adoc[Criar um cluster usando Fleet]
+** xref:user/rancher-cluster-registration.adoc[Registro de Cluster do Rancher]
+** xref:user/caapf.adoc[Provedor de Addon CAPI Fleet]
+** xref:user/gitops.adoc[Melhores práticas de GitOps para Turtles e CAPI]
+** xref:user/cluster-resource-mapping.adoc[Relações de Recursos do Cluster em {product_name}]
+ifeval::["{build-type}" == "product"]
+** xref:user/providers.adoc[Instalar provedores certificados]
+endif::[]
+* Guia do Operador
+** xref:operator/clusterclass.adoc[Habilitando ClusterClass]
+** xref:operator/certification.adoc[Certificação de Provedor]
+** xref:operator/certificationsuite.adoc[Conjunto de Testes de Provedor]
+** xref:operator/airgapped.adoc[Ambiente Air-Gapped]
+* Guia do Desenvolvedor
+** xref:developer/development.adoc[Ambiente de Desenvolvimento]
+** xref:developer/guidelines.adoc[Diretriz de Desenvolvimento]
+* Guia de Solução de Problemas
+** xref:troubleshooting/troubleshooting.adoc[Solução de problemas]
+* Segurança
+** xref:security/slsa.adoc[SLSA]
+* xref:changelogs/index.adoc[Notas de versão]
