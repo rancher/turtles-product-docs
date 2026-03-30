@@ -16,10 +16,51 @@ endif::[]
 For more information about the provider, please refer to https://rancher.github.io/cluster-api-addon-provider-fleet/[CAAPF book].
 ====
 
+[CAUTION]
+====
+In previous versions of {product_name}, CAAPF was installed by default. From Rancher 2.14.1 onwards, it is no longer part of {product_name} and if required it needs to be installed separately. See the <<_prerequisites,Prerequisites section>> below for information on how to enable it.
+====
+
 [WARNING]
 ====
 CAAPF depends on the `WatchList` Kubernetes feature gate. This feature needs to be explicitly enabled on Kubernetes `1.33` versions. See the https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/[Kubernetes upstream documentation] for further information.
 ====
+
+== Prerequisites
+
+Starting with Rancher 2.14.1, CAAPF needs to be installed and enabled manually, if required. To enable CAAPF, two configuration changes are required:
+
+ifeval::["{build-type}" == "product"]
+* Set `providers.addonFleet.enabled: true` in the {product_name} Providers chart values to deploy the CAAPF provider.
+endif::[]
+ifeval::["{build-type}" == "community"]
+* Apply a xref:reference/capiprovider.adoc[`CAPIProvider`] manifest for CAAPF in your management cluster.
+** CAAPF provider installation example:
++
+.Click to Expand
+[%collapsible]
+======
+[,yaml]
+----
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fleet-addon-system
+---
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: fleet
+  namespace: fleet-addon-system
+spec:
+  name: rancher-fleet
+  type: addon
+----
+======
+endif::[]
+* Set `features.use-caapf.enabled: true` in the {product_name} chart values to enable the `use-caapf` alpha feature gate (disabled by default).  For instructions on how to set feature gates, refer to xref:overview/features.adoc#_how_to_set_feature_gates[this section].
+
+Once both are in place, Turtles will automatically add the `provisioning.cattle.io/externally-managed` annotation to imported Rancher clusters, delegating Fleet agent installation on CAPI workload clusters to CAAPF rather than Rancher managing it directly.
 
 == Functionality
 
