@@ -1,0 +1,77 @@
+= Configuración de Rancher
+:revdate: 18-02-2026
+:page-revdate: {revdate}
+
+== Instalando Rancher
+
+_Si ya estás ejecutando Rancher v2.13 o posterior, puedes saltarte esta sección y pasar a xref:tutorials/first-cluster.adoc[Tu Primer Clúster]._
+
+[NOTE]
+====
+A partir de Rancher v2.13, {product_name} está preinstalado como un gráfico del sistema de Rancher. Ya no es necesario instalar {product_name} por separado. Simplemente instalar Rancher v2.13 o posterior es todo lo que se requiere para comenzar con Cluster API (CAPI).
+
+====
+
+Helm es la forma recomendada de instalar Rancher en un clúster de Kubernetes existente o nuevo.
+
+ifeval::["{build-type}" == "product"]
+[TIP]
+====
+Asegúrate de seguir una de las https://documentation.suse.com/cloudnative/rancher-manager/latest/en/installation-and-upgrade/installation-and-upgrade.html[guías de instalación] oficiales para Rancher.
+====
+endif::[]
+ifeval::["{build-type}" == "community"]
+[TIP]
+====
+Asegúrate de seguir una de las https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade[guías de instalación] oficiales para Rancher.
+====
+endif::[]
+
+Aquí tienes un ejemplo mínimo de instalación de Rancher con Helm:
+
+[source,bash]
+----
+helm install rancher rancher-stable/rancher \
+    --namespace cattle-system \
+    --create-namespace \
+    --set hostname=<rancher-hostname> \
+    --version <rancher-version> \
+    --wait
+----
+
+Reemplaza `<rancher-hostname>` con el nombre de host real de tu servidor Rancher y usa `--version` para especificar una versión de Rancher de `v2.13.0` o posterior.
+
+== Qué se instala
+
+Cuando se instala Rancher v2.13 o posterior, {product_name} se despliega automáticamente como un componente del sistema en el espacio de nombres `cattle-turtles-system`. Aquí se incluyen:
+
+* El pod `rancher-turtles-controller-manager`, que maneja todos los recursos relacionados con CAPI
+* CRDs de CAPI kernel y el controlador kernel de CAPI
+* El recurso personalizado `CAPIProvider`, que permite la definición declarativa de proveedores de CAPI
+
+[NOTE]
+====
+El manifiesto del kernel de CAPI está incrustado en un ConfigMap, lo que simplifica la operación en entornos aislados.
+====
+
+== Instalando Proveedores de CAPI
+
+Con {product_name} incrustado en Rancher, los proveedores de CAPI ya no se agrupan por defecto. Los proveedores se gestionan de forma declarativa utilizando el recurso personalizado `CAPIProvider`, y hay un gráfico de proveedores separado disponible para instalar proveedores certificados. Para más información sobre el gráfico de proveedores, consulta xref:user/providers.adoc[Instalar proveedores certificados].
+
+Por ejemplo, para definir un proveedor:
+
+[source,yaml]
+----
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: aws
+  namespace: cattle-turtles-system
+spec:
+  type: infrastructure
+  name: aws
+----
+
+Consulta la xref:reference/capiprovider.adoc[referencia de CAPIProvider] para la lista completa de opciones de configuración.
+
+¡Ahora estás listo para usar {product_name}! 🎉

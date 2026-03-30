@@ -1,0 +1,90 @@
+= Anbieterzertifizierung 
+:revdate: 2025-06-30
+:page-revdate: {revdate}
+
+== Was ist ein zertifizierter Anbieter?
+
+Da die meisten CAPI-Anbieter Upstream-Projekte sind, die von der offenen Gemeinschaft gepflegt werden, gibt es keinen sicheren Weg, zu garantieren, dass Cluster, die mit einem bestimmten Anbieter bereitgestellt werden, über Turtles in Rancher importiert werden können. Wir implementieren jedoch einen Zertifizierungsprozess für diejenigen Anbieter, die:
+
+* Aktiv als Teil unserer E2E-Testsuite getestet werden.
+* Diese E2E-Testsuite auf dem neuesten Stand gehalten wird, um aktuelle Versionen des Anbieters zu validieren.
+
+== Zertifizieren Sie Ihren benutzerdefinierten Anbieter
+
+Darüber hinaus haben Sie, wenn Sie ein Anbieterentwickler sind oder einfach einen anderen Anbieter verwenden möchten, der nicht als zertifiziert aufgeführt ist, 2 Optionen:
+
+* Verwenden Sie die vorhandene Turtles E2E-Suite, um mit der Anfrage nach dem Zertifizierungsstatus zu beginnen. Detailliertere Informationen finden Sie hier im Abschnitt xref:./certification.adoc#_provider_certification_using_turtles_test_suite[Anbieterzertifizierung mit der Turtles-Testsuite].
+* Verwenden Sie Ihre eigene Integrationssuite, um Ihren Anbieter zu zertifizieren. Detailliertere Informationen finden Sie hier im Abschnitt xref:./certification.adoc#_certify_provider_with_custom_integration_suite[Zertifizieren Sie den Anbieter mit der benutzerdefinierten Integrationssuite].
+
+[discrete]
+==== *Warum möchte ich meinen Anbieter validieren?*
+
+Die Anzahl der CAPI-Anbieter wächst ständig, und die Gemeinschaft entwickelt neue Projekte für verschiedene Infrastruktur-Hosts. Diese Offenheit trägt zur Bereicherung des CAPI-Ökosystems bei, macht es jedoch unmöglich, alle Anbieter, mit denen Turtles arbeiten wird, im gesamten CAPI-Projekt zu kontrollieren und zu testen. Die Entwickler von Turtles werden eine xref:../overview/certified.adoc[Liste der zertifizierten Anbieter] führen, die aktiv getestet und durch CI-Mechanismen validiert werden, aber diese Liste wird auf wichtige und bekannte Anbieter beschränkt sein. Deshalb ermutigen wir die Nutzer von nicht gelisteten Anbietern, die Testsuite von Turtles wiederzuverwenden und die Integration zwischen dem Anbieter und Turtles zu validieren.
+
+[discrete]
+==== *Kann ich Turtles mit einem nicht zertifizierten Anbieter verwenden?*
+
+Turtles ist ein Projekt, das darauf abzielt, agnostisch zu sein und sich mit dem gesamten CAPI-Ökosystem zu integrieren, und Sie können es verwenden, ohne irgendwelche Anbieter zu validieren. Die Wahrscheinlichkeit ist hoch, dass Sie bei den meisten Upstream-Projekten keine Probleme finden werden.
+
+[discrete]
+==== *Was ist der Unterschied zwischen zertifiziert und unterstützt?*
+
+Da CAPI-Anbieter Projekte sind, die von der Kubernetes-Community gepflegt werden, können wir keine Unterstützung für einen bestimmten Anbieter garantieren. Deshalb konzentrieren wir uns auf die ständige Validierung von xref:../overview/certified.adoc[zertifizierten Anbietern] und bieten den Nutzern die Möglichkeit, sich mit der bestehenden Test-Suite zu integrieren, um ihre bevorzugten Anbieter zu überprüfen.
+
+== Anbieterzertifizierung mit der Turtles-Test-Suite
+
+Der Zertifizierungsprozess basiert auf der Überprüfung der {product_name} Integration mit CAPI-Anbietern. Um diese Aufgabe zu vereinfachen, haben wir einen generischen Test vorbereitet, der die Bereitstellung und den Import eines Downstream-CAPI-Clusters validiert.
+
+[TIP]
+====
+Wir empfehlen Ihnen, sich auf dieses https://github.com/rancher-sandbox/turtles-integration-suite-example[Beispiel] zu beziehen, wie Sie die Test-Suite von Turtles verwenden können.
+====
+
+=== Testen und Zertifizieren Sie Ihren Anbieter
+
+Der erste Schritt zur Validierung, dass Ihr Anbieter mit Turtles kompatibel ist und dass Sie CAPI-Cluster bereitstellen und über Turtles in Rancher importieren können, besteht darin, sich mit unserer Test-Suite zu integrieren. Wir stellen ein Repository mit einem https://github.com/rancher-sandbox/turtles-integration-suite-example[Integrationsbeispiel] zur Verfügung, das Sie als Referenz für Ihre Integration verwenden können.
+
+Turtles als Projekt enthält eine https://github.com/rancher/turtles/tree/main/test/e2e/suites[Anzahl von Suiten], um verschiedene Funktionen und Prozesse zu überprüfen, aber für die Anbieterzertifizierung verlangen wir, dass Sie nur einen Test durchführen, der einen GitOps-Flow verwendet. Turtles ist ein Projekt, das gut mit einem GitOps-Ansatz für die Clusterbereitstellung integriert, und deshalb ist dies unser primärer Weg, die Anbieterintegration mit Rancher zu validieren. Das Ausführen der vollständigen Suite für einen bestimmten CAPI-Anbieter wird:
+
+* Ein Management-Cluster in der gewünschten Umgebung erstellen.
+* Rancher und Turtles mit allen Voraussetzungen installieren.
+* Gitea installieren.
+* Führen Sie die Suite aus, die ein Git-Repo erstellt, eine Cluster-Vorlage mit Fleet anwendet und überprüft, dass der Cluster erstellt und erfolgreich in Rancher importiert wurde.
+
+==== Testkonfiguration
+
+Um die Test-Suite erfolgreich auszuführen, müssen Sie eine Reihe von Umgebungsvariablen bereitstellen. Einige davon sind agnostisch, was bedeutet, dass sie für jeden Anbieter erforderlich sind, den Sie testen möchten, während andere spezifisch für den Anbieter sind, den Sie validieren. Bitte beachten Sie die besonderen Spezifikationen des getesteten Anbieters, wie z. B. Anmeldeinformationen, Endpunkte usw.
+
+[TIP]
+====
+Als Nächstes empfehlen wir Ihnen, den xref:../operator/certificationsuite.adoc[Test Suite Leitfaden] zu lesen.
+====
+
+== Zertifizieren Sie den Anbieter mit der benutzerdefinierten Integrationssuite.
+
+Um Ihren Anbieter mit einer benutzerdefinierten Integrationssuite zu zertifizieren, stellen Sie sicher, dass er die folgenden wichtigen Anforderungen erfüllt:
+
+=== Anforderungen
+
+* Der Anbieter muss über die `CAPIProvider` API bereitgestellt werden.
+* Cluster, die mit dem Anbieter erstellt wurden, müssen erfolgreich über Turtles in Rancher importiert werden.
+
+=== Zertifizierungsprozess
+
+1. **Entwickeln Sie eine Integrationssuite** 
+   * Installieren und konfigurieren Sie Rancher und Turtles.
+   * Stellen Sie den CAPI-Anbieter bereit.
+   * Provisionieren Sie einen Cluster und importieren Sie ihn in Rancher.
+
+2. **Führen Sie Tests aus und validieren Sie diese**
+   * Stellen Sie sicher, dass Cluster erfolgreich erstellt und importiert werden.
+
+3. **Reichen Sie einen Antrag auf Zertifizierung ein**
+   * Geben Sie Testergebnisse, Protokolle und die durchgeführten Schritte an.
+   * Reichen Sie ein GitHub-Problem mit der folgenden https://github.com/rancher/turtles/issues/new?template=certification_request.yaml[Vorlage] ein.
+
+== Antrag auf Zertifizierung
+
+Die Integration mit der Test-Suite von Turtles und das Ausführen von Prüfungen an Ihrem interessierenden Anbieter reicht aus, um zu validieren, dass er mit {product_name} kompatibel ist. Da es uns nicht möglich ist, jeden CAPI-Anbieter kontinuierlich zu testen, ermöglicht Ihnen dieser Zertifizierungsworkflow, die erwartete Funktionalität zu überprüfen. Da wir jedoch nicht aktiv neuere Iterationen des Anbieters (mit neueren Versionen von Turtles) testen, ist die Unterstützung und Garantie für den gegebenen Anbieter begrenzt, und Sie sind verantwortlich für die Validierung zukünftiger Versionen.
+
+Wenn Sie nach erfolgreichem Durchlaufen der Überprüfungen Ihres Anbieters möchten, dass dieser zur Liste der xref:../overview/certified.adoc[zertifizierten Anbieter] hinzugefügt und in die regelmäßige E2E-Suite des Projekts aufgenommen wird, können Sie die Zertifizierung beantragen, indem Sie ein GitHub-Problem unter Verwendung der https://github.com/rancher/turtles/issues/new?template=certification_request.yaml[Vorlage zur Beantragung der Zertifizierung] einreichen. Die Gemeinschaft wird den Vorschlag überprüfen und die Machbarkeit der Hinzufügung des Anbieters zur Zertifizierungsmatrix bestimmen.

@@ -1,0 +1,82 @@
+= Fonctions
+:revdate: 2026-03-05
+:page-revdate: {revdate}
+
+Cette section décrit les fonctionnalités et les phases de fonctionnalités dans {product_name}.
+
+== Liste des fonctionnalités
+
+|===
+| Fonctionnalité | Nom de la fonctionnalité Helm | Sous-fonctionnalité | Par défaut | Étape 
+
+| *Fournisseur de produits complémentaires pour Fleet*
+| `addon-provider-fleet`
+| _aucune_
+| activé
+| bêta
+
+| *Mode TLS de l'agent*
+| `agent-tls-mode`
+| _aucune_
+| activé
+| bêta
+
+| *Aucun gestionnaire de certificats*
+| `no-cert-manager`
+| _aucune_
+| activé
+| bêta
+
+| *Utiliser le registre par défaut de Rancher*
+| `use-rancher-default-registry`
+| _aucune_
+| activé
+| bêta
+
+|===
+
+=== Fournisseur de produits complémentaires pour Fleet
+Cette fonctionnalité installe Cluster API Add-on Provider for Fleet (CAAPF) afin de fournir une intégration avec https://github.com/rancher/fleet[Fleet] et de permettre le déploiement facile d'applications sur des clusters provisionnés par CAPI. CAAPF installe automatiquement Fleet dans le cluster de gestion et enregistre les clusters CAPI nouvellement provisionnés avec Fleet, afin que les applications puissent être déployées sur ces clusters via GitOps, `Bundle` ou `HelmOp` ressources. CAAPF inclut également un support pour regrouper les clusters CAPI qui référencent la même ClusterClass via le ClusterGroup de Fleet, simplifiant ainsi les déploiements d'applications sur de grands groupes de clusters. Cette fonctionnalité est en phase GA et activée par défaut.
+
+=== Mode TLS de l'agent
+Ce portail de fonctionnalités est utilisé pour indiquer aux Turtles s'ils doivent suivre le paramètre `agent-tls-mode` de Rancher lors de la récupération des manifestes d'enregistrement de cluster pour l'importation de clusters. Lorsqu'il est activé, les Turtles rechercheront la valeur du paramètre `agent-tls-mode` de Rancher pour déterminer s'il a été défini sur `system-store` ou `strict`. S'il est défini sur `system-store`, les Turtles feront confiance à tout certificat généré par une autorité de certification publique contenue dans le magasin de confiance du système d'exploitation, y compris ceux signés par des autorités telles que Let's Encrypt. S'il est défini sur `strict`, les Turtles ne feront confiance qu'aux certificats générés par l'autorité de certification contenue dans le paramètre `cacerts` de Rancher. Lorsque ce paramètre est désactivé, les Turtles reviendront à fonctionner en mode `system-store`. Cette fonctionnalité est en phase bêta et activée par défaut.
+
+=== Aucun gestionnaire de certificats
+Ce portail de fonctionnalités convertit les manifestes des fournisseurs CAPI pour remplacer l'utilisation de cert-manager par https://github.com/rancher/wrangler/[wrangler].
+
+En particulier, les webhooks d'admission validants et mutables seront mis à jour pour utiliser des certificats générés par wrangler, au lieu de cert-manager, permettant un environnement sans cert-manager.
+
+Attention, l'utilisation de la `CATTLE_SYNC_ONLY_CHANGED_OBJECTS` https://documentation.suse.com/cloudnative/rancher-manager/latest/en/installation-and-upgrade/best-practices/tuning-rancher-at-scale.html#_reducing_event_handler_executions[fonctionnalité] de Rancher peut empêcher le renouvellement des certificats après la date d'expiration par défaut d'un an.
+
+Il est possible de désactiver cette fonctionnalité pour restaurer tous les manifestes des fournisseurs à l'utilisation originale de cert-manager.
+
+=== Utiliser le registre par défaut de Rancher
+
+Ce portail de fonctionnalités indique à {product_name} d'utiliser le paramètre de gestion de `system-default-registry` de Rancher lors de la construction des références d'image pour les composants du fournisseur CAPI. Lorsqu'il est activé, {product_name} lit ce paramètre et, si un registre est configuré, réécrit le dépôt pour chaque image de fournisseur afin d'utiliser ce registre.
+Si le paramètre est vide, {product_name} revient aux références d'image par défaut. Les remplacements d'image définis dans la ressource `ClusterctlConfig` ont toujours la priorité. Pour une utilisation détaillée dans des environnements isolés physiquement, voir xref:operator/airgapped.adoc[Environnement isolé physiquement]. Cette fonctionnalité est en phase alpha et activée par défaut.
+
+== Phases de fonctionnalités
+
+{product_name} suit le processus de https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/#feature-stages[phases de fonctionnalités] de Kubernetes. Une fonctionnalité peut être dans l'une des phases suivantes : Alpha, Bêta ou Disponibilité Générale (GA).
+
+=== Phase Alpha
+- Désactivée par défaut.
+- Peut contenir des bogues, sans support à long terme.
+- L'API peut changer sans préavis.
+- Recommandé uniquement pour des clusters de test à courte durée de vie.
+
+=== Phase bêta
+- Toujours activé par défaut.
+- Bien testé et considéré comme sûr.
+- Le support est stable, mais le schéma peut changer dans les futures versions.
+- Recommandé pour des usages non critiques sur le plan commercial en raison de changements potentiellement incompatibles.
+
+[NOTE]
+====
+Veuillez fournir des retours sur les fonctionnalités Alpha et Bêta !
+====
+
+=== Phase de disponibilité générale (GA)
+- Toujours activé, ne peut pas être désactivé.
+- Aucun portail de fonctionnalités nécessaire.
+- Stable, avec un support à long terme dans les futures versions.

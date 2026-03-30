@@ -1,0 +1,123 @@
+= {product_name}中的群集资源关系
+:revdate: 2026-01-06
+:page-revdate: {revdate}
+
+== 概述
+
+Rancher 集成了多个组件，这些组件定义了它们自己的 `Cluster` 自定义资源。{product_name} 在此基础上构建，使用 Cluster API 和 Fleet，这可能导致关于这些 `Cluster` 资源如何交互以及用户应该编辑什么的混淆。
+
+本文档解释了以下群集资源的目的、行为和关系：
+
+* `clusters.cluster.x-k8s.io`（CAPI 群集）
+* `clusters.fleet.cattle.io`（Fleet 群集）
+* `clusters.provisioning.cattle.io`（配置群集）
+* `clusters.management.cattle.io`（管理群集）
+
+== 资源摘要
+
+|===
+| API 组 | 群集资源 | 角色
+
+| `cluster.x-k8s.io`
+| CAPI 群集
+| 定义群集的生命周期和拓扑结构。在 Turtles 中充当真实来源。
+
+| `fleet.cattle.io`
+| Fleet 群集
+| 用于通过 Fleet 进行 GitOps 包目标和应用程序同步。
+
+| `provisioning.cattle.io`
+| 配置群集
+| Rancher 早期的通用群集抽象。封装基础设施无关和特定于提供者的配置，并且在生成群集注册令牌和清单时是必需的。在 {product_name} 中，此资源已用于包装导入的 CAPI 群集，但正在逐步淘汰。
+
+| `management.cattle.io`
+| 管理群集
+| Rancher 当前的群集表示。`management.cattle.io/v3` 群集现在是 Turtles 创建和管理的默认资源。这不应与 CAPI 管理的群集混淆，其中“管理”指的是 Cluster API 生命周期管理，而不是 Rancher 的 `management.cattle.io` API 组。
+|===
+
+== 关系
+
+=== CAPI 群集 → Fleet 群集
+
+当启用 Cluster API Add-on Provider for Fleet (CAAPF) 时，它会将标签和注释从 CAPI `Cluster` 传播到相应的 Fleet `Cluster`。这使得通过标签选择器来定位 GitOps 包成为可能。CAAPF 在 CAPI `Cluster` 达到 `ControlPlaneInitialized` 条件后创建相应的 Fleet `Cluster` 资源。
+
+=== CAPI 群集 → 配置群集（遗留）
+
+可以创建一个 `provisioning.cattle.io.Cluster` 来包装 CAPI 群集并暴露 Rancher 特定字段（例如，显示名称，RKE 配置）。然而，在大多数 {product_name} 工作流中，它正在逐步淘汰，用户不需要与此资源进行交互。
+
+=== 管理群集 → 配置群集
+
+对于遗留集群，可以从 `management.cattle.io/v3.Cluster` 生成一个 `provisioning.cattle.io/v1.Cluster`。该对象由 Rancher 的 UI 和 API 使用，并不打算由用户直接修改。
+仅通过 Turtles 管理的新群集不会自动创建 `provisioning.cattle.io` 群集。
+
+== 传播行为
+
+|===
+| 从 → 到 | 传播 | 注意
+
+| CAPI → Fleet
+| 是
+| 由 CAAPF 传播
+
+| CAPI → 配置
+| 否
+| 不自动创建；仅通过 Turtles 为遗留群集生成
+
+| CAPI → 管理
+| 否
+| 仅通过遗留群集的配置群集
+
+| 配置 → Fleet
+| 否
+| 不支持
+
+| Fleet → CAPI
+| 否
+| 不支持
+
+| 管理 → 配置
+| 视情况而定
+| 仅适用于遗留集群；新的 Turtles 管理的集群不会生成配置集群
+|===
+
+== 用户应该编辑什么？
+
+=== 推荐：`cluster.x-k8s.io.Cluster`
+
+CAPI 群集是 {product_name} 中群集定义的权威资源。
+标签必须放置在 CAPI 群集对象上。它们将自动传播到 Fleet 群集，使基于标签的包选择器按预期工作。
+
+=== 视情况而定：`provisioning.cattle.io.Cluster`
+
+仅在使用 Rancher 原生配置功能时需要（例如，`spec.rkeConfig`，基于 UI 的流程）。除非明确要求，否则请避免编辑。
+
+=== 避免：`fleet.cattle.io.Cluster`
+
+Fleet 集群是自动管理的。除非在处理 Fleet 内部内容，否则不鼓励进行编辑。
+
+=== 避免：`management.cattle.io.Cluster`
+
+这些资源是内部的，并由 Rancher 完全管理。请勿修改它们。
+
+[NOTE]
+====
+* **CAPI 群集** 是事实来源。
+* **Fleet 群集** 是通过 CAAPF 从 CAPI 群集自动生成的。
+* **配置** 和 **管理群集** 是*不需要*，除非涉及 Rancher 预配。
+====
+
+[TIP]
+====
+使用 CAPI 群集的标签来驱动 Fleet 包的部署。CAAPF 控制器确保这些标签与 Fleet 群集对象同步。
+====
+
+== 参考资料
+
+* https://github.com/rancher/cluster-api-addon-provider-fleet[Cluster API Add-on Provider for Fleet (CAAPF)]
+ifeval::["{build-type}" == "product"]
+* https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/index.html[Fleet文档]
+endif::[]
+ifeval::["{build-type}" == "community"]
+* https://fleet.rancher.io[Fleet文档]
+endif::[]
+* https://extensions.rancher.io/internal/code-base-works/cluster-management-resources#cluster-resources[Rancher 群集内部]

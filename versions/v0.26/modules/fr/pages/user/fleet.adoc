@@ -1,0 +1,182 @@
+= Créer un cluster avec Fleet
+:revdate: 2025-08-01
+:page-revdate: {revdate}
+
+Cette section vous guidera à travers la création d'un cluster qui utilise ClusterClass en utilisant un flux de travail GitOps avec Fleet.
+
+[NOTE]
+====
+Ce guide utilise le dépôt https://github.com/rancher/turtles/tree/main/examples[exemples].
+====
+
+
+== Conditions préalables
+
+* Cluster Rancher Manager avec {product_name} installé.
+* Fournisseurs d'API de cluster installés pour votre scénario - nous utiliserons les fournisseurs https://github.com/kubernetes-sigs/cluster-api/tree/main/test/infrastructure/docker[infrastructure Docker] et https://github.com/rancher/cluster-api-provider-rke2[RKE2 bootstrap/plan de contrôle] dans ces instructions - voir xref:../reference/capiprovider.adoc[Initialisation pour les fournisseurs communs utilisant Turtles' `CAPIProvider`]
+
+== Configurer Rancher Manager
+
+*Configurer votre dépôt Fleet*
+
+Pour simplifier le processus de provisionnement de cluster, nous utiliserons une série d'exemples préconfigurés que vous pouvez trouver dans le dépôt https://github.com/rancher/turtles/tree/main/examples.
+En inspectant le contenu de ce dépôt, vous trouverez :
+
+. Un dossier *applications* pour des applications supplémentaires qui peuvent être déployées en utilisant Fleet (CNI, CSI, CPI).
+. Un dossier *clusterclasses* avec plusieurs exemples de ClusterClass.
+. Un dossier *clusters/docker/rke2* avec un exemple de définition de cluster Docker.
+
+[NOTE]
+Si vous le souhaitez, vous pouvez créer votre propre dépôt Fleet en utilisant la même structure de base.
+
+Les définitions de cluster seront importées dans le cluster Rancher Manager (qui agit également comme un cluster de gestion d'API de cluster) en utilisant la fonctionnalité *Livraison Continue* (qui utilise Fleet).
+
+Il y a 2 options pour fournir la configuration. La première consiste à utiliser l'interface utilisateur de Rancher Manager et la seconde à appliquer du YAML à votre cluster. Les deux options sont présentées ci-dessous.
+
+=== Importer les définitions de Cluster et ClusterClass
+
+[tabs]
+======
+Utiliser l'interface utilisateur de Rancher Manager::
++
+--
+. Allez sur Rancher Manager.
+. Sélectionnez *Continuous Delivery* dans le menu :
+image:sidebar.png[barre latérale]
+. Sélectionnez *fleet-local* comme l'espace de noms en haut à droite.
+image:ns.png[namespace]
+. Sélectionnez *Git Repos* dans la barre latérale.
+. Cliquez sur *Add Repository*.
+. Entrez *clusters* comme nom.
+. Obtenez l'URL de clonage *HTTPS* de votre dépôt git.
+image:gh_clone.png[git clone url]
+. Ajoutez l'URL dans le champ *Repository URL*.
+. Changez le nom de la branche en *main*.
+. Ajoutez les chemins suivants pour spécifier quels répertoires déployer :
++
+image:paths.png[Configuration des chemins Fleet]
++
+----
+examples/clusterclasses/docker/rke2
+examples/applications/cni/calico
+examples/applications/lb/docker
+examples/clusters/docker/rke2
+----
+. Cliquez sur *Next*
+. Cliquez sur *Create*
+. Cliquez sur le nom *clusters*
+. Regardez les ressources devenir prêtes
+. Sélectionnez *Cluster Management* dans le menu
+. Vérifiez que votre cluster a été importé
+--
+
+Manuellement en utilisant kubectl::
++
+--
+. Obtenez l'URL de clonage *HTTPS* de votre dépôt git.
+. Créez un nouveau fichier appelé *repo.yaml*.
+. Ajoutez le contenu suivant au nouveau fichier :
++
+[source,yaml]
+----
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: clusters
+  namespace: fleet-local
+spec:
+  branch: main
+  repo: https://github.com/rancher/turtles.git
+  paths:
+    - examples/clusterclasses/docker/rke2
+    - examples/applications/cni/calico
+    - examples/applications/lb/docker
+    - examples/clusters/docker/rke2
+  targets: []
+----
+
+. Appliquez le fichier au cluster Rancher Manager en utilisant *kubectl* :
++
+[source,bash]
+----
+kubectl apply -f repo.yaml
+----
+
+. Allez sur Rancher Manager.
+. Sélectionnez *Continuous Delivery* dans la barre latérale
+. Sélectionnez *fleet-local* comme l'espace de noms en haut à droite.
+. Sélectionnez *Git Repos* dans la barre latérale.
+. Cliquez sur le nom des *clusters*.
+. Regardez les ressources devenir prêtes.
+. Sélectionnez *Cluster Management* dans le menu.
+. Vérifiez que votre cluster a été importé.
+--
+======
+
+=== Importer les définitions de cluster
+
+Maintenant que les classes ont été importées, il est possible de les utiliser avec les définitions de cluster.
+
+[tabs]
+======
+Utiliser l'interface utilisateur de Rancher Manager::
++
+--
+. Allez sur Rancher Manager.
+. Sélectionnez *Continuous Delivery* dans le menu.
+. Sélectionnez *fleet-local* comme l'espace de noms en haut à droite.
+. Sélectionnez *Git Repos* dans la barre latérale.
+. Cliquez sur *Add Repository*.
+. Entrez *clusters* comme nom.
+. Obtenez l'URL de clonage *HTTPS* de votre dépôt git.
+. Ajoutez l'URL dans le champ *Repository URL*.
+. Changez le nom de la branche en *clusterclass*.
+. Cliquez sur *Add Path*.
+. Saisissez le nom de fichier `/clusters`.
+. Cliquez sur *Next*.
+. Cliquez sur *Create*.
+. Cliquez sur le nom des *clusters*.
+. Regardez les ressources devenir prêtes.
+. Sélectionnez *Cluster Management* dans le menu.
+. Vérifiez que votre cluster a été importé.
+--
+
+Manuellement en utilisant kubectl::
++
+--
+. Obtenez l'URL de clonage *HTTPS* de votre dépôt git.
+. Créez un nouveau fichier appelé *repo.yaml*.
+. Ajoutez le contenu suivant au nouveau fichier :
++
+[source,yaml]
+----
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: clusters
+  namespace: fleet-local
+spec:
+  branch: clusterclass
+  repo: https://github.com/rancher-sandbox/rancher-turtles-fleet-example.git
+  paths:
+    - /clusters
+  targets: []
+----
+
+. Appliquez le fichier au cluster Rancher Manager en utilisant *kubectl* :
++
+[source,bash]
+----
+kubectl apply -f repo.yaml
+----
+
+. Allez sur Rancher Manager.
+. Sélectionnez *Continuous Delivery* dans la barre latérale.
+. Sélectionnez *fleet-local* comme l'espace de noms en haut à droite.
+. Sélectionnez *Git Repos* dans la barre latérale.
+. Cliquez sur le nom des *classes*.
+. Regardez les ressources devenir prêtes.
+. Sélectionnez *Cluster Management* dans le menu.
+. Vérifiez que votre cluster a été importé.
+--
+======

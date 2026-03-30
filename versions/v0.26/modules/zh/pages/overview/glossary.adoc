@@ -1,0 +1,329 @@
+= 词汇表
+:revdate: 2025-11-14
+:page-revdate: {revdate}
+
+== 目录
+
+[cols=14*]
+|===
+| xref:./glossary.adoc#_a[A]
+| xref:./glossary.adoc#_b[B]
+| xref:./glossary.adoc#_c[C]
+| xref:./glossary.adoc#_f[传真]
+| xref:./glossary.adoc#_i[I]
+| xref:./glossary.adoc#_k[K]
+| xref:./glossary.adoc#_m[M]
+| xref:./glossary.adoc#_n[N]
+| xref:./glossary.adoc#_o[O]
+| xref:./glossary.adoc#_p[P]
+| xref:./glossary.adoc#_r[R]
+| xref:./glossary.adoc#_s[S]
+| xref:./glossary.adoc#_t[T]
+| xref:./glossary.adoc#_w[周三]
+|===
+
+== A
+
+=== 附加组件
+
+超出部署符合 Kubernetes 标准的集群所需的基本组件的服务，分为两种类型：
+
+* *核心附加组件*：部署符合 Kubernetes 标准的集群所需的附加组件：DNS、kube-proxy、CNI。
+* *其他附加组件*：不需要用于符合 Kubernetes 标准的集群的附加组件（例如，metrics/Heapster、Dashboard）。
+
+=== 隔离的环境
+
+在没有直接访问互联网的情况下设置和运行 Kubernetes 集群。
+
+== B
+
+=== 引导
+
+将服务器转变为 Kubernetes 节点的过程。这可能涉及在创建支持该机器的服务器时提供的数据的汇总，以及对在该服务器上运行的软件的运行时配置。
+
+=== 引导集群
+
+用于配置目标管理集群的临时集群。
+
+=== 引导提供程序
+
+指实现 <<_bootstrap,引导>> 过程解决方案的 <<_provider,提供程序>>.
+
+== C
+
+=== CAPI
+
+核心集群 API
+
+=== CAPA
+
+集群 API 提供程序 AWS
+
+=== CAPD
+
+Cluster API 提供程序 Docker
+
+=== CAPG
+
+Cluster API Google Cloud 提供程序
+
+=== CAPIO
+
+Cluster API 操作员
+
+=== CAPRKE2
+
+Cluster API 提供程序 RKE2。有关 CAPRKE2 的详细信息，请查看其文档 https://caprke2.docs.rancher.com[在这里]。
+
+=== CAPV
+
+Cluster API 提供程序 vSphere
+
+=== CAPZ
+
+Cluster API 提供程序 Azure
+
+=== CAPI 提供程序
+
+一个公共 API，便于对 <<_cluster_api_operator,CAPI 操作员>> 和 <<_cluster_api,Cluster API>> 资源进行配置和操作。
+
+=== 子集群
+
+与 <<_workload_cluster,工作负载集群>> 交替使用的术语。
+
+=== 群集
+
+完整的 Kubernetes 部署。请参见管理集群和工作负载集群。
+
+=== ClusterClass
+
+一组定义拓扑（控制平面和工作器）的模板，用于持续协调一个或多个集群.
+请参见 xref:../user/clusterclass.adoc[ClusterClass]
+
+=== Cluster API
+
+或 *Cluster API 项目*
+
+Cluster API 是 SIG-cluster-lifecycle 的一个子项目。它也用于指代生成这些软件组件、API 和社区。
+
+参见 <<_core_provider,核心提供程序>>
+
+=== Cluster API 操作员
+
+或 *Cluster API Operator 项目*
+
+Cluster API Operator 是 SIG-cluster-lifecycle 的一个子项目。它旨在使集群管理员能够使用声明性方法在管理集群中处理 Cluster API 提供程序的生命周期。
+
+=== Cluster API 提供程序 RKE2
+
+<<_caprke2,Cluster API 提供程序 RKE2>> 是两种提供程序类型的组合：用于配置 Kubernetes 控制平面节点的 Cluster API 控制平面提供程序和用于在使用 <<_rke2,RKE2>> 作为 Kubernetes 发行版的机器上引导 Kubernetes 的 Cluster API 引导提供程序。
+
+=== 控制平面
+
+构成集群基础的 Kubernetes 服务集。另见 https://kubernetes.io/docs/concepts/#_kubernetes-control-plane 会有两种变体：
+
+* *自我配置*：一个由单个 Cluster API 部署完全管理的由 pod 或机器组成的 Kubernetes 控制平面。
+* *外部* 或 *托管*：由 Cluster API 以外的某个系统提供和控制的控制平面（例如，GKE、AKS、EKS、IKS）。
+
+=== 控制平面提供程序
+
+指实现 Kubernetes <<_control_plane,控制平面>> 管理解决方案的 <<_provider,提供程序>>。
+
+参见 <<_caprke2,CAPRRKE2>>，<<_kcp,KCP>>。
+
+=== 核心提供程序
+
+指的是一个 <<_provider,提供程序>>，它实现了 Cluster API 核心控制器；如果您考虑到在管理集群中必须首先部署的项目是 Cluster API 本身，那么很明显为什么 Cluster API 项目也被称为核心提供程序。
+
+请参见 <<_cluster_api,CAPI>>。
+
+== 传真
+
+=== Fleet
+
+ifeval::["{build-type}" == "product"]
+一个容器管理和部署引擎，旨在为用户提供对本地群集的更多控制，并通过 GitOps 进行持续监控.查看 https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/index.html/[Fleet 文档] 以了解更多关于 Fleet 的信息。
+endif::[]
+ifeval::["{build-type}" == "community"]
+一个容器管理和部署引擎，旨在为用户提供对本地群集的更多控制，并通过 GitOps 进行持续监控.查看 https://fleet.rancher.io/[Fleet 文档] 以了解更多关于 Fleet 的信息。
+endif::[]
+
+== I
+
+=== 基础设施提供程序
+
+指的是一个 <<_provider,提供程序>>，它实现了集群或机器（例如虚拟机、网络等）所需的基础设施/计算资源的配置。
+云基础设施提供程序包括 AWS、Azure 或 Google；而 VMware、MAAS 或 metal3.io 可以定义为裸机提供程序。
+
+=== IPAM 提供程序
+
+指的是一个 <<_provider,提供程序>>，它允许 Cluster API 与 IPAM 解决方案进行交互。
+IPAM 提供程序与 Cluster API 的交互基于 `IPAddressClaim` 和 `IPAddress` API 类型。
+
+== K
+
+=== 符合 Kubernetes 标准
+
+或 *Kubernetes 兼容*
+
+一个通过 Kubernetes 兼容性测试的集群。
+
+=== Kubernetes 操作员
+
+Kubernetes 操作员是一种打包、部署和管理 Kubernetes 应用程序的方法。另请参见 https://kubernetes.io/docs/concepts/extend-kubernetes/operator/ 以获取更多信息。
+
+=== k/k
+
+指的是 https://github.com/kubernetes/kubernetes[主要 Kubernetes git 仓库] 或主要 Kubernetes 项目。
+
+=== KCP
+
+Kubeadm 控制平面提供程序
+
+== M
+
+=== 计算机
+
+或 *机器资源*
+
+Kubernetes 的自定义资源，表示托管 Kubernetes 节点的基础设施组件。
+
+=== 管理群集
+
+对群集执行创建、扩展、升级或销毁操作。
+
+=== 托管 Kubernetes
+
+托管 Kubernetes 指的是任何 Kubernetes 群集的配置和维护抽象，通常以 API 的形式暴露，原生可在云提供商中使用。例如：https://aws.amazon.com/eks/[EKS]、https://www.oracle.com/cloud/cloud-native/container-engine-kubernetes/[OKE]、https://azure.microsoft.com/en-us/products/kubernetes-service[AKS]、https://cloud.google.com/kubernetes-engine[GKE]、https://www.ibm.com/cloud/kubernetes-service[IBM Cloud Kubernetes Service]、https://www.digitalocean.com/products/kubernetes[DOKS]，以及 Kubernetes 云原生生态系统中的许多其他服务。
+
+=== 托管拓扑
+
+见 <<_topology,拓扑>>
+
+=== 管理集群
+
+一个或多个基础设施提供者运行的集群，存储资源（例如机器）。通常在配置多个工作负载集群时提及.
+
+== N
+
+=== 节点池
+
+节点池是集群中一组具有相同配置的节点.
+
+== O
+
+=== 操作系统
+
+或 *操作系统*
+
+一种通用理解的内核和系统级用户空间接口的组合，例如 Linux 或 Windows，而不是特定的发行版。
+
+== P
+
+=== 转换
+
+转换是将提供者组件和声明的集群 API 资源从源管理集群移动到目标管理集群的过程.
+
+转换过程也用于删除管理集群，并且在管理集群的升级过程中也可以使用.
+
+=== 提供器
+
+或 *集群 API 提供者*
+
+这个术语最初是作为<<_infrastructure_provider,基础设施提供者>>的缩写使用，但目前它用于指代任何可以部署并为集群 API 管理集群提供功能的项目.
+
+请参见<<_bootstrap_provider,引导提供者>>、<<_control_plane_provider,控制平面提供者>>、<<_core_provider,核心提供者>>、<<_infrastructure_provider,基础设施提供者>>、<<_ipam_provider,IPAM 提供者>>、<<_runtime_extension_provider,运行时扩展提供者>>。
+
+=== 提供者组件
+
+指的是作为<<_provider,提供者>>发布过程的一部分发布的 YAML 工件；它通常包括自定义资源定义（CRD）、部署（用于运行控制器管理器）、RBAC 等。
+
+在某些情况下，同样的表达用于指代在管理集群中部署的上述组件的实例。
+
+请参见<<_provider_repository,提供者储存库>>
+
+=== 提供者储存库
+
+指的是托管<<_provider_components,提供者组件>>的 YAML 的位置；通常，提供者储存库托管多个版本的提供者组件，每个发布版本一个。
+
+== R
+
+=== Rancher
+
+一个开源的https://www.rancher.com/[平台]，旨在简化 Kubernetes 集群的部署和管理。
+
+=== Rancher 集群代理
+
+Rancher 在其管理的每个 Kubernetes 集群中部署的组件。其主要角色是建立 Rancher 服务器与 Kubernetes 集群之间的安全通信通道，使 Rancher 能够管理和与集群交互。
+
+=== Rancher Manager
+
+Rancher 管理器（或 Rancher 服务器）是托管 Rancher UI 和 API 的地方，它通过像<<_rancher_cluster_agent,Rancher 集群代理>>这样的组件与管理的集群进行通信。它允许用户管理他们的 Kubernetes 集群、应用程序以及 Rancher 特定的资源，如目录、用户、全局角色等。
+
+=== RKE2
+
+ifeval::["{build-type}" == "product"]
+Rancher 的下一代、完全合规的 Kubernetes 发行版，专注于美国的安全和合规性。安全和合规要求。请参见https://documentation.suse.com/cloudnative/rke2/latest/en/introduction.html[文档]以获取更多详细信息。
+endif::[]
+ifeval::["{build-type}" == "community"]
+Rancher 的下一代、完全合规的 Kubernetes 发行版，专注于美国的安全和合规性。安全和合规要求。请参见https://docs.rke2.io/[文档]以获取更多详细信息。
+endif::[]
+
+=== 运行时扩展
+
+一个外部组件，是构建在集群 API 之上的系统的一部分，可以处理特定运行时钩子的请求。
+
+=== 运行时扩展提供者
+
+指的是一个<<_provider,提供者>>，它实现一个或多个<<_runtime_extension,运行时扩展>>。
+
+== S
+
+=== 伸缩
+
+除非另有说明，否则指的是横向伸缩。
+
+=== 堆叠控制平面
+
+一个控制平面节点，其中 etcd 与 Kubernetes API 服务器共存，并作为静态 Pod 运行。
+
+=== 服务器
+
+支持 <<_machine,机器资源>> 的基础设施，通常是云实例、虚拟机或物理主机。
+
+=== {product_name}
+
+一个 <<_kubernetes_operator,Kubernetes 操作器>>，它提供 Rancher 管理器与 Cluster API (CAPI) 之间的集成，旨在为 Rancher 提供完整的 CAPI 支持。
+
+== T
+
+=== 拓朴
+
+Cluster 对象规范中的一个字段，允许从单一控制点定义和管理 Cluster 的控制平面和工作节点的形状。Cluster 的拓扑基于 <<_clusterclass,ClusterClass>>。
+有时也称为托管拓扑。
+
+请参见 <<_clusterclass,ClusterClass>>
+
+ifeval::["{build-type}" == "product"]
+=== 海龟
+
+指 <<_suse_rancher_prime_cluster_api,{product_name}>>
+endif::[]
+
+ifeval::["{build-type}" == "community"]
+=== 海龟
+
+指 <<_rancher_turtles,{product_name}>>
+endif::[]
+
+== 周三
+
+=== 工作负载集群
+
+由 ClusterAPI 控制器创建的集群，它 _不是_ 启动集群，旨在供最终用户使用，而不是供 CAPI 工具使用。
+
+=== WorkerClass
+
+定义集群中一组工作节点的模板集合。ClusterClass 包含零个或多个 WorkerClass 定义。
+
+请参见 <<_clusterclass,ClusterClass>>

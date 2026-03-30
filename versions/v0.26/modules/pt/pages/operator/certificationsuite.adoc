@@ -1,0 +1,121 @@
+= Conjunto de Testes do Provedor
+:revdate: 2025-09-16
+:page-revdate: {revdate}
+
+Esta seção contém informações sobre como você pode aproveitar o conjunto E2E existente para integrar qualquer provedor CAPI com Turtles e verificar se o provisionamento e a importação de clusters funcionam como esperado. A validação realiza as seguintes ações:
+
+* Crie um cluster de gerenciamento no ambiente desejado.
+* Instale o Rancher e o Turtles com todos os pré-requisitos.
+* Instale o Gitea.
+* Execute o conjunto que criará um repositório git, aplicará o modelo de cluster usando o Fleet e verificará se o cluster foi criado e importado com sucesso no Rancher.
+
+O conjunto de testes pode ser usado para certificação de provedores não listados na xref:../overview/certified.adoc[Tabela de Certificação], conforme detalhado em xref:../operator/certification.adoc[Certificação de Provedor].
+
+== Como Usá-lo
+
+A principal referência para reutilizar o conjunto de testes é https://github.com/rancher-sandbox/turtles-integration-suite-example[este repositório], que contém um exemplo de como integrar um determinado provedor CAPI com {product_name} e aplica uma série de verificações com base em um fluxo de trabalho GitOps.
+
+== Antes da execução
+
+O ambiente de teste de ponta a ponta usado no Turtles oferece uma série de alternativas de configuração, dependendo do tipo de teste que você está executando e do tipo de verificações que está realizando. Se você está começando com o conjunto de testes, recomendamos que mantenha sua configuração o mais simples possível e limite o número de personalizações para que você possa entender o processo e os detalhes de configuração. Você pode começar sua jornada em testes de provedores clonando o repositório de exemplo:
+
+----
+git clone https://github.com/rancher-sandbox/turtles-integration-suite-example.git
+----
+
+A execução de teste mais simples que você pode realizar cria um ambiente local que não usa um endpoint exposto à internet. Isso limita as verificações apenas a clusters downstream locais (efetivamente, clusters CAPI provisionados via CAPD), mas é suficiente para executar a integração de exemplo. Você pode simplesmente executar esta versão local especificando que pretende executá-la localmente.
+
+----
+MANAGEMENT_CLUSTER_ENVIRONMENT="isolated-kind" make test
+----
+
+Ao verificar a integração com outros provedores de infraestrutura (por exemplo, provedores para fornecedores de nuvem), você terá que tornar sua instância do Rancher disponível via endpoint para os clusters downstream, que não estão mais em seu ambiente local. A variável `MANAGEMENT_CLUSTER_ENVIRONMENT` que usamos antes, suporta os seguintes valores:
+
+----
+MANAGEMENT_CLUSTER_ENVIRONMENT: "kind" # supported options are eks, isolated-kind, kind
+----
+
+`isolated-kind`, que é o valor que usamos para testes locais, e `kind` irá implantar ambientes locais equivalentes. A diferença é que `kind` também configurará um endpoint acessível publicamente via https://ngrok.com/[ngrok]. Você pode obter um endpoint `ngrok` gratuito (limitado) e usá-lo para executar testes. Antes de executar `make test`, você também precisará definir as seguintes variáveis de ambiente:
+
+----
+NGROK_API_KEY: ""
+NGROK_AUTHTOKEN: ""
+----
+
+Usando esta configuração, durante a criação do ambiente, a instância do Rancher será configurada para ser acessível via seu endpoint `ngrok` e os clusters downstream poderão se comunicar com ele.
+
+A seção <<_other_options,Outras opções>> contém mais informações sobre o que você pode configurar antes da execução.
+
+== Fluxo de Trabalho Básico
+
+Nas seções anteriores, apresentamos as principais ações realizadas na integração de teste de exemplo:
+
+[discrete]
+==== Crie um cluster de gerenciamento no ambiente desejado.
+
+* Este não é um requisito específico do Turtles, pois, ao trabalhar com CAPI, é necessário ter um cluster de gerenciamento que será usado para criar recursos que representam clusters downstream. Esta é a parte principal do ambiente de teste e, dependendo das variáveis de ambiente passadas para a suíte de teste, pode ser hospedada localmente (usando `kind`) ou na nuvem (`eks`).
+
+[discrete]
+==== Instale o Rancher e o Turtles com todos os pré-requisitos.
+
+* Turtles é uma extensão do Rancher e, como tal, precisa de uma instalação do Rancher para ser implantada. O Rancher Manager será executado no cluster de gerenciamento que criamos na primeira etapa e o chart do Turtles será instalado quando o Rancher estiver disponível. Se estiver usando uma configuração voltada para a internet, um controlador de ingress fará com que o Rancher seja acessível a partir de uma rede externa (por exemplo, cluster implantado na nuvem).
+
+[discrete]
+==== Execute o conjunto que criará um repositório git, aplicará o modelo de cluster usando o Fleet e verificará se o cluster foi criado e importado com sucesso no Rancher.
+
+* A suíte de teste principal, e a que foi usada como exemplo, é baseada em um fluxo GitOps e usa https://github.com/rancher/fleet[Fleet] como uma ferramenta orquestradora GitOps. Com base nos modelos de cluster fornecidos (você pode verificar os que vêm com a integração de exemplo https://github.com/rancher-sandbox/turtles-integration-suite-example/tree/main/suites/data/cluster-templates[aqui]), ele criará os clusters CAPI definidos nos arquivos YAML. Uma vez que este(s) cluster(s) esteja(m) disponível(eis), eles serão configurados para serem xref:../tutorials/first-cluster.adoc[importados no Rancher usando Turtles] e será verificado se o(s) cluster(s) downstream é(são) acessível(eis) via Rancher. Ele também verificará se a exclusão pode ser realizada em clusters downstream e se eles não estão mais disponíveis no Rancher.
+
+== Outras opções
+:kubernetes-version: v1.31.4
+
+Você pode dar uma olhada no `config.yaml` https://github.com/rancher-sandbox/turtles-integration-suite-example/blob/main/config/config.yaml[arquivo] no repositório `turtles-integration-suite-example`, que contém uma lista de variáveis de ambiente usadas durante a implantação do ambiente de teste e a execução do teste. A seguir está uma versão truncada do arquivo YAML mencionado acima:
+
+[source,yaml,subs=attributes+]
+----
+...
+variables:
+  CLUSTERCTL_BINARY_PATH: ""
+  USE_EXISTING_CLUSTER: "false"
+  SKIP_RESOURCE_CLEANUP: "false"
+  ARTIFACTS_FOLDER: "_artifacts"
+  MANAGEMENT_CLUSTER_ENVIRONMENT: "kind" # supported options are eks, isolated-kind, kind
+  RANCHER_VERSION: "{rancher_version}"
+  KUBERNETES_VERSION: "{kubernetes-version}"
+  KUBERNETES_MANAGEMENT_VERSION: "{kubernetes-version}"
+  KUBERNETES_MANAGEMENT_AWS_REGION: "eu-west-2"
+  RKE2_VERSION: "{kubernetes-version}+rke2r1"
+  TURTLES_PATH: "turtles/rancher-turtles"
+  TURTLES_REPO_NAME: "turtles"
+  TURTLES_URL: https://rancher.github.io/turtles
+  TURTLES_VERSION: "{turtles_version}"
+  RANCHER_HOSTNAME: "localhost"
+  RANCHER_FEATURES: ""
+  RANCHER_PATH: "rancher-latest/rancher"
+  RANCHER_REPO_NAME: "rancher-latest"
+  RANCHER_URL: "https://releases.rancher.com/server-charts/latest"
+  CERT_MANAGER_URL: "https://charts.jetstack.io"
+  CERT_MANAGER_REPO_NAME: "jetstack"
+  CERT_MANAGER_PATH: "jetstack/cert-manager"
+  ...
+  ...
+  ...
+  HELM_BINARY_PATH: "helm"
+  HELM_EXTRA_VALUES_FOLDER: "/tmp"
+  # Additional setup for establishing rancher ingress
+  NGROK_REPO_NAME: "ngrok"
+  NGROK_URL: "https://ngrok.github.io/kubernetes-ingress-controller"
+  NGROK_PATH: "ngrok/kubernetes-ingress-controller"
+  NGROK_API_KEY: ""
+  NGROK_AUTHTOKEN: ""
+  GITEA_REPO_NAME: "gitea-charts"
+  GITEA_REPO_URL: "https://dl.gitea.com/charts/"
+  GITEA_CHART_NAME: "gitea"
+  GITEA_CHART_VERSION: "10.6.0"
+  ...
+----
+
+[TIP]
+====
+Você pode consultar https://github.com/rancher/turtles/tree/main/test/e2e#e2e-tests[repositório do Turtles] para ver todas as suítes e parâmetros que você pode usar para personalizar a execução do teste. Recomendamos fazer isso apenas se você estiver familiarizado com a implantação do ambiente de teste e tiver requisitos específicos de integração.
+====
+

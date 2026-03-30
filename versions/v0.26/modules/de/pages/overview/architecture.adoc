@@ -1,0 +1,38 @@
+= Architektur
+:revdate: 2025-06-30
+:page-revdate: {revdate}
+
+Dieser Leitfaden bietet einen umfassenden Überblick über die Kernelkomponenten und die Struktur, die {product_name} antreiben und deren Integration in das Rancher-Ökosystem.
+
+*Ein Rancher-Benutzer wird Rancher verwenden, um Cluster zu verwalten. Rancher wird in der Lage sein, die Cluster-API zu nutzen, um den Lebenszyklus von untergeordneten Kubernetes-Clustern zu verwalten.*
+
+image::in_cluster_topology.png[turtles-diagram,640,480]
+
+== Komponenten
+
+Im Folgenden finden Sie eine visuelle Darstellung der Architekturkomponenten von Rancher Turtles. Dieses Diagramm veranschaulicht die Schlüsselelemente und deren Beziehungen innerhalb des {product_name}-Systems. Das Verständnis dieser Komponenten ist entscheidend, um Einblicke zu gewinnen, wie Rancher die Cluster-API (CAPI) für das Cluster-Management nutzt.
+
+image::30000ft_view.png[Übersicht,640,480]
+
+=== Rancher Manager
+
+Dies ist die Kernelkomponente von Rancher, und Benutzer können die vorhandene Explorer-Funktion im Dashboard nutzen, um auf die Arbeitslastdetails der Cluster zuzugreifen.
+
+=== Rancher Cluster Agent
+
+Der Agent wird innerhalb der untergeordneten Cluster bereitgestellt, wodurch Rancher in der Lage ist, diese Cluster zu importieren und eine Verbindung zu ihnen herzustellen. Diese Verbindung ermöglicht es Rancher, die untergeordneten Cluster effektiv von seiner Plattform aus zu verwalten.
+
+=== {product_name} - Rancher CAPI Erweiterung
+
+Es bietet eine Integration zwischen CAPI und Rancher und unterstützt derzeit die folgenden Funktionen:
+
+* *Importieren von CAPI-Clustern in Rancher:* Installation des Rancher Cluster Agent in CAPI-bereitgestellten Clustern.
+* *CAPI Operator-Konfiguration:* Konfigurationsunterstützung für den CAPI-Operator.
+
+== Implementierungstopologie
+
+=== Rancher Manager & CAPI-Management kombiniert
+
+Dies ist die einzige derzeit unterstützte Topologie, bei der sowohl Rancher Manager als auch {product_name} im selben Kubernetes-Cluster bereitgestellt werden und als zentrales Management-Cluster fungiert.
+
+Diese Architektur bietet eine vereinfachte Implementierung von Komponenten und ermöglicht eine einheitliche Ansicht aller Cluster. Auf der anderen Seite ist es wichtig zu berücksichtigen, dass die Anzahl der Cluster, die effektiv von Cluster API (CAPI) verwaltet werden kann, durch die Ressourcen innerhalb des einzelnen Management-Clusters begrenzt ist.

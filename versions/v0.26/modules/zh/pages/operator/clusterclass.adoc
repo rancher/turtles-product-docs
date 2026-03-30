@@ -1,0 +1,37 @@
+= 启用 ClusterClass
+:revdate: 2025-06-30
+:page-revdate: {revdate}
+
+在本节中，我们将讨论如何为 CAPIProvider 启用 https://cluster-api.sigs.k8s.io/tasks/experimental-features/cluster-class/[*ClusterClass*] 功能。
+
+[TIP]
+====
+在使用 ClusterClass 功能之前，请研究提供者文档并确认该功能是否受支持。本文件包括在 xref:../overview/certified.adoc[认证提供者] 部分的矩阵，其中包含 xref:../overview/certified.adoc#_clusterclass_support_for_certified_providers[集群拓扑支持状态]。
+====
+
+== 启用 ClusterClass
+
+为了使用 ClusterClass 功能，需要为内核 Cluster API 和任何支持该功能的提供者启用它。通过将 `CLUSTER_TOPOLOGY` 变量设置为 `true` 来完成此操作。
+
+安装 CAPI 时，{product_name} Helm 图表将自动启用该功能。但是，在启用其他提供者时，请确保在提供者配置中设置 `CLUSTER_TOPOLOGY`。Turtles 的 xref:../reference/capiprovider.adoc[CAPIProvider] 资源支持通过 `variables` 将安装参数传递给提供者，如下所示：
+
+[source,yaml]
+----
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: azure
+  namespace: capz-system
+spec:
+  type: infrastructure
+  name: azure
+  configSecret:
+    name: azure-variables
+  variables:
+    CLUSTER_TOPOLOGY: "true"
+    EXP_CLUSTER_RESOURCE_SET: "true"
+    EXP_MACHINE_POOL: "true"
+    EXP_AKS_RESOURCE_HEALTH: "true"
+----
+
+此 YAML 文件中定义的资源将安装 CAPZ，并支持多个功能，包括 `CLUSTER_TOPOLOGY`。

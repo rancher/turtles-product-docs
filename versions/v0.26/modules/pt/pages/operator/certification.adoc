@@ -1,0 +1,90 @@
+= Certificação de Provedor 
+:revdate: 2025-06-30
+:page-revdate: {revdate}
+
+== O que é um Provedor Certificado?
+
+Como a maioria dos provedores CAPI são projetos upstream mantidos pela comunidade aberta, não há uma maneira segura de garantir que quaisquer clusters provisionados com um determinado provedor possam ser importados para o Rancher via Turtles. No entanto, implementamos um processo de certificação para aqueles provedores que são:
+
+* Testados ativamente como parte do nosso conjunto de testes E2E.
+* Mantido este conjunto de testes E2E atualizado para validar versões recentes do provedor.
+
+== Certifique Seu Provedor Personalizado
+
+Além disso, se você é um desenvolvedor de provedor ou simplesmente deseja usar um provedor diferente que não está listado como certificado, você tem 2 opções:
+
+* Reutilizar o conjunto de testes E2E existente do Turtles para começar com o pedido de status de certificação. Informações mais detalhadas podem ser encontradas aqui na seção xref:./certification.adoc#_provider_certification_using_turtles_test_suite[Certificação de Provedor Usando a Suíte de Testes Turtles].
+* Use seu próprio conjunto de integração para certificar seu provedor. Informações mais detalhadas podem ser encontradas aqui na seção xref:./certification.adoc#_certify_provider_with_custom_integration_suite[Certifique seu provedor com a suíte de integração personalizada].
+
+[discrete]
+==== *Por que eu gostaria de validar meu provedor?*
+
+O número de provedores CAPI continua crescendo e a comunidade está criando novos projetos para diferentes hosts de infraestrutura. Essa abertura ajuda a enriquecer o ecossistema CAPI, mas torna impossível controlar e testar todos os provedores com os quais o Turtles funcionará em todo o projeto CAPI. Os desenvolvedores do Turtles manterão uma xref:../overview/certified.adoc[lista de provedores certificados] que são testados e validados ativamente por mecanismos de CI, mas essa lista será limitada a provedores chave e bem conhecidos. É por isso que incentivamos os usuários de provedores não listados a reutilizar o conjunto de testes do Turtles e validar a integração entre o provedor e o Turtles.
+
+[discrete]
+==== *Posso usar o Turtles com um provedor não certificado?*
+
+O Turtles é um projeto que visa ser agnóstico e integrar-se com todo o ecossistema CAPI e você é livre para usá-lo sem validar quaisquer provedores. É provável que você não encontre problemas na maioria dos projetos upstream.
+
+[discrete]
+==== *Qual é a diferença entre certificado e suportado?*
+
+Como os provedores CAPI são projetos mantidos pela comunidade Kubernetes, não podemos garantir suporte para um determinado provedor. É por isso que optamos por focar na validação constante dos xref:../overview/certified.adoc[Provedores Certificados] e oferecer aos usuários a possibilidade de integrar com a suíte de testes existente para verificar os provedores de sua escolha.
+
+== Certificação de Provedor Usando a Suíte de Testes Turtles
+
+O processo de certificação é baseado na verificação da {product_name} integração com provedores CAPI. Para simplificar essa tarefa, preparamos um teste genérico que valida o provisionamento e a importação de um cluster CAPI downstream.
+
+[TIP]
+====
+Recomendamos que você consulte este https://github.com/rancher-sandbox/turtles-integration-suite-example[exemplo] sobre como usar a suíte de testes do Turtles.
+====
+
+=== Teste e Certifique Seu Provedor
+
+O primeiro passo para validar se seu provedor é compatível com o Turtles e se você pode provisionar clusters CAPI e importá-los no Rancher via Turtles é integrar-se com nossa suíte de testes. Fornecemos um repositório com um https://github.com/rancher-sandbox/turtles-integration-suite-example[exemplo de integração] que você pode usar como referência para sua integração.
+
+Turtles, como projeto, contém um https://github.com/rancher/turtles/tree/main/test/e2e/suites[número de suítes] para verificar diferentes recursos e processos, mas, para a certificação do provedor, exigimos que você execute apenas um teste que utilize um fluxo GitOps. O Turtles é um projeto que se integra bem com uma abordagem GitOps para o provisionamento de clusters e é por isso que essa é nossa principal forma de validar a integração do provedor com o Rancher. Executar a suíte completa para um determinado provedor de CAPI irá:
+
+* Criar um cluster de gerenciamento no ambiente desejado.
+* Instalar o Rancher e o Turtles com todos os pré-requisitos.
+* Instalar o Gitea.
+* Executar a suíte que criará um repositório git, aplicará o template do cluster usando o Fleet e verificará se o cluster foi criado e importado com sucesso no Rancher.
+
+==== Configuração de Teste
+
+Para executar a suíte de testes com sucesso, você terá que fornecer um número de variáveis de ambiente. Alguns deles são agnósticos, o que significa que são necessários para qualquer provedor que você deseja testar, mas outros serão específicos para o provedor que você está validando. Por favor, esteja ciente das especificações particulares do provedor que está sendo testado, como credenciais, endpoints, etc.
+
+[TIP]
+====
+Em seguida, recomendamos que você leia o xref:../operator/certificationsuite.adoc[Guia da suíte de testes].
+====
+
+== Certifique seu provedor com a suíte de integração personalizada
+
+Para certificar seu provedor usando uma suíte de integração personalizada, assegure-se de que ele atenda aos seguintes requisitos principais:
+
+=== Requisitos
+
+* O provedor deve ser implantado usando a API `CAPIProvider`.
+* Os clusters criados com o provedor devem ser importados com sucesso no Rancher via Turtles.
+
+=== Processo de Certificação.
+
+1. **Desenvolva uma Suíte de Integração**. 
+   * Instale e configure o Rancher e o Turtles.
+   * Implante o provedor CAPI.
+   * Provisione um cluster e importe-o para o Rancher.
+
+2. **Execute e Valide Testes**.
+   * Assegure-se de que os clusters sejam criados e importados com sucesso.
+
+3. **Envie um pedido de Certificação**.
+   * Forneça resultados de testes, logs e etapas seguidas.
+   * Envie uma issue no GitHub usando o seguinte https://github.com/rancher/turtles/issues/new?template=certification_request.yaml[modelo].
+
+== Pedido de Certificação.
+
+Integrar-se à suíte de testes do Turtles e executar verificações no seu provedor de interesse é suficiente para validar que ele é compatível com {product_name}. Como não é viável para nós testarmos continuamente todos os provedores CAPI, este fluxo de trabalho de certificação permitirá que você, como usuário, verifique a funcionalidade esperada. No entanto, como não estamos testando ativamente iterações mais recentes do provedor (com versões mais novas do Turtles), o suporte e a garantia para o provedor dado são limitados, e você será responsável por validar lançamentos futuros.
+
+Se, após executar com sucesso as verificações em seu provedor, você desejar solicitar que ele seja adicionado à lista de xref:../overview/certified.adoc[Provedores Certificados] e incluído na suíte E2E periódica do projeto, você pode solicitar a certificação abrindo uma issue no GitHub usando o https://github.com/rancher/turtles/issues/new?template=certification_request.yaml[modelo de solicitação de certificação]. A comunidade irá revisar a proposta e determinar a viabilidade de adicionar o provedor à matriz de certificação.

@@ -1,0 +1,60 @@
+= 概要
+:revdate: 2025-11-20
+:page-revdate: {revdate}
+
+[IMPORTANT]
+====
+Rancher v2.14はCAPI v1.12.2を搭載し、新しい`v1beta2` API契約を採用します。この新しいAPIバージョンで導入された変更の詳細については、xref:tutorials/capi-v1beta2.adoc[Upgrading to CAPI v1beta2]を参照してください。
+====
+
+== {product_name}とは
+
+RancherのためのCluster API拡張、通称{product_name}は、Kubernetesオペレーターであり、**Rancher ManagerとCluster API (CAPI)の統合**を提供し、Rancherに完全なCAPIサポートをもたらすことを目的としています。
+
+{product_name}を使用して、以下のことができます。
+
+* CAPIでプロビジョニングされたクラスターにRancher Cluster Agentをインストールすることで、**自動的にCAPIクラスターをRancherにインポートする**ことができます。
+* RancherでKubernetesクラスターを管理するための**GitOpsネイティブ**ワークフローを実装します。
+* CAPIオペレーターを使用して、**簡素化されたCAPIプロバイダーの管理**を行います。
+
+image::intro.png[イントロ,640,480]
+
+== ドキュメントを閲覧する
+
+{product_name}を使い始めるのを簡単にするために、基本的な概念から高度な機能まで自然にガイドするようにドキュメントを構成しました。ステップバイステップで進むことをお勧めしますが、特定のトピックにすでに精通している場合は、関連するセクションにスキップしても構いません。
+
+=== チュートリアル
+
+{product_name}を初めて使用する場合で、すぐに始めたい場合は、xref:tutorials/first-cluster.adoc[最初のクラスターを作成してインポートするガイド]をお勧めします。これにより、CAPIを使用して新しいワークロードクラスターをプロビジョニングし、それをRancherにインポートするプロセスを案内します。
+
+=== 概要
+
+{product_name}のxref:./overview/architecture.adoc[アーキテクチャ]、xref:./overview/features.adoc[機能]、xref:./overview/certified.adoc[`Certified Providers`]の概念、オペレーターの機能のxref:./overview/glossary.adoc[コア概念]を理解します。
+
+=== リファレンス
+
+すべての{product_name}カスタムリソースのリファレンスドキュメントが含まれています。
+
+=== ユーザーガイド
+
+{product_name}を使用してClusterClassを活用し、xref:./user/clusterclass.adoc[RancherでCAPIクラスターを管理する方法を学びます。]
+
+=== オペレーターガイド
+
+{product_name}をxref:operator/airgapped.adoc[エアギャップ(された)環境]のために構成するなど、より高度なメンテナンスタスクに取り組むことを検討するかもしれません、またはxref:operator/certification.adoc[選択したプロバイダーを認証する]こともあります。
+
+=== 開発者ガイド
+
+{product_name}に貢献することに興味がある場合、このセクションではxref:./developer/development.adoc[開発環境]を設定するプロセスと、貢献のためのxref:./developer/guidelines.adoc[ガイドライン]を理解する方法を案内します。
+
+=== トラブルシューティング
+
+このセクションでは、{product_name}およびCluster APIプロバイダーに関連する問題に対する基本的なxref:./troubleshooting/troubleshooting.adoc[トラブルシューティングアプローチ]を扱います。
+
+=== セキュリティ
+
+{product_name}は、https://slsa.dev/spec/v1.0/levels#build-l3[SLSAレベル3]の要件を満たすために、堅牢なプラットフォーム上で一貫したビルド処理と来歴の配布を行います。xref:./security/slsa.adoc[このセクション]では、セキュリティ関連のトピックに関する詳細情報を提供します。
+
+=== リリースノート
+
+{product_name}の最新の変更、バグ修正、新機能については、xref:./changelogs/index.adoc[こちら]で最新情報を確認してください。

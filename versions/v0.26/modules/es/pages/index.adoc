@@ -1,0 +1,60 @@
+= Descripción general
+:revdate: 2025-11-20
+:page-revdate: {revdate}
+
+[IMPORTANT]
+====
+Rancher v2.14 lanza CAPI v1.12.2 y adopta el nuevo `v1beta2` contrato de API. Consulta xref:tutorials/capi-v1beta2.adoc[Actualización a CAPI v1beta2] para más detalles sobre los cambios introducidos en esta nueva versión de la API.
+====
+
+== ¿Qué es {product_name}?
+
+La Cluster API Extension for Rancher, también conocida como {product_name}, es un Operador de Kubernetes que proporciona **integración entre Rancher Manager y Cluster API (CAPI)** con el objetivo de llevar el soporte completo de CAPI a Rancher.
+
+Con {product_name}, puedes:
+
+* **Importar automáticamente clústeres CAPI en Rancher**, instalando el Agente de Clúster de Rancher en clústeres provisionados por CAPI.
+* Implementar un flujo de trabajo **nativo de GitOps** para gestionar clústeres de Kubernetes en Rancher.
+* **Gestión simplificada de Proveedores CAPI** utilizando el Operador CAPI.
+
+image::intro.png[intro,640,480]
+
+== Navegar por la Documentación
+
+Para facilitar el inicio con {product_name}, hemos estructurado la documentación para guiarte de forma natural desde conceptos básicos hasta características avanzadas. Recomendamos seguir paso a paso, pero si ya estás familiarizado con ciertos temas, siéntete libre de saltar a las secciones relevantes.
+
+=== Tutoriales
+
+Si es tu primera vez utilizando {product_name} y quieres empezar rápidamente, te recomendamos la guía xref:tutorials/first-cluster.adoc[Crear e Importar Tu Primer Clúster]. Esto te guiará a través del proceso de usar CAPI para provisionar un nuevo clúster de trabajo e importarlo en Rancher.
+
+=== Descripción general
+
+Entiende la xref:./overview/architecture.adoc[arquitectura] de {product_name}, las xref:./overview/features.adoc[características], el concepto de xref:./overview/certified.adoc[`Certified Providers`] y los xref:./overview/glossary.adoc[conceptos del kernel] de las características del operador.
+
+=== Referencia
+
+Contiene la documentación de referencia para todos los recursos personalizados de {product_name}.
+
+=== Guía del usuario
+
+Aprende a usar {product_name} para xref:./user/clusterclass.adoc[gestionar tus clústeres CAPI con Rancher, utilizando ClusterClass].
+
+=== Guía del Operador
+
+Puede que quieras profundizar en tareas de mantenimiento más avanzadas, como configurar {product_name} para xref:operator/airgapped.adoc[entornos aislados], o xref:operator/certification.adoc[certificar el proveedor de tu elección].
+
+=== Guía para Desarrolladores
+
+Si estás interesado en contribuir a {product_name}, esta sección te guiará a través del proceso de configuración de tu xref:./developer/development.adoc[entorno de desarrollo] y de la comprensión de las xref:./developer/guidelines.adoc[directrices] para contribuir.
+
+=== Solución de problemas
+
+Esta sección cubre enfoques básicos de xref:./troubleshooting/troubleshooting.adoc[solución de problemas] para cuestiones relacionadas con {product_name} y los proveedores de Cluster API.
+
+=== Seguridad
+
+{product_name} cumple con los requisitos de https://slsa.dev/spec/v1.0/levels#build-l3[Nivel SLSA 3] al ejecutar compilaciones en una plataforma reforzada con procesos de compilación consistentes y distribución de procedencia. xref:./security/slsa.adoc[Esta sección] contiene más detalles sobre temas relacionados con la seguridad.
+
+=== Notas de la versión
+
+Mantente al día con los últimos cambios, correcciones de fallos y nuevas características en {product_name} xref:./changelogs/index.adoc[aquí].

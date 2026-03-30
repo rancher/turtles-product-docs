@@ -1,0 +1,60 @@
+= 概述
+:revdate: 2025-11-20
+:page-revdate: {revdate}
+
+[IMPORTANT]
+====
+Rancher v2.14 发布了 CAPI v1.12.2，并采用了新的 `v1beta2` API 协议。有关此新 API 版本引入的更改的更多详细信息，请参阅 xref:tutorials/capi-v1beta2.adoc[升级到 CAPI v1beta2]。
+====
+
+== 什么是 {product_name}？
+
+Cluster API Extension for Rancher，也称为 {product_name}，是一个 Kubernetes Operator，提供 **Rancher Manager 与 Cluster API (CAPI) 之间的集成**，旨在为 Rancher 带来完整的 CAPI 支持。
+
+使用 {product_name}，您可以：
+
+* **自动将 CAPI 集群导入到 Rancher**，方法是在 CAPI 提供的集群中安装 Rancher 集群代理。
+* 实施 **GitOps 原生** 工作流来管理 Rancher 中的 Kubernetes 集群。
+* 使用 CAPI Operator 可简化 **CAPI 提供程序的管理**。
+
+image::intro.png[intro,640,480]
+
+== 浏览文档
+
+为了让您更容易入门 {product_name}，我们已将文档结构化，以自然引导您从基本概念到高级功能。我们建议您逐步跟随，但如果您已经熟悉某些主题，可以随意跳到相关部分。
+
+=== 教程
+
+如果这是您第一次使用 {product_name} 并希望快速入门，我们建议您查看 xref:tutorials/first-cluster.adoc[创建和导入您的第一个集群指南]。这将指导您如何使用 CAPI 配置新的工作负载集群，并将其导入到 Rancher 中。
+
+=== 概述
+
+了解 xref:./overview/architecture.adoc[架构] {product_name}、xref:./overview/features.adoc[功能]、xref:./overview/certified.adoc[`Certified Providers`] 的概念，以及 Operator 功能的 xref:./overview/glossary.adoc[核心概念]。
+
+=== 参考手册
+
+包含所有 {product_name} 自定义资源的参考文档。
+
+=== 用户指南
+
+了解如何使用 {product_name}，xref:./user/clusterclass.adoc[借助 ClusterClass，在 Rancher 中管理您的 CAPI 集群]。
+
+=== Operator 指南
+
+您可能想深入了解更高级的维护任务，例如为 {product_name} 配置 xref:operator/airgapped.adoc[隔离的环境]，或 xref:operator/certification.adoc[认证您选择的提供者]。
+
+=== 开发人员指南
+
+如果您有兴趣为 {product_name} 做贡献，本节将指导您如何设置 xref:./developer/development.adoc[开发环境] 并了解 xref:./developer/guidelines.adoc[贡献指南]。
+
+=== 查错
+
+本节涵盖与 {product_name} 和 CAPI 提供程序 相关的基本 xref:./troubleshooting/troubleshooting.adoc[故障排除方法]。
+
+=== 安全性
+
+通过在经过强化的平台上运行构建，并确保构建过程和溯源分发的一致性，{product_name} 满足了 https://slsa.dev/spec/v1.0/levels#build-l3[SLSA 级别3] 的要求。xref:./security/slsa.adoc[本节]包含有关安全相关主题的更多细节。
+
+=== 发行说明
+
+请随时关注{product_name} xref:./changelogs/index.adoc[此处]的最新更改、Bug 修复和新功能。

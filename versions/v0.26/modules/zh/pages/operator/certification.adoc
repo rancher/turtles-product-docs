@@ -1,0 +1,90 @@
+= 提供者认证 
+:revdate: 2025-06-30
+:page-revdate: {revdate}
+
+== 什么是认证提供者？
+
+由于大多数CAPI提供者是由开放社区维护的上游项目，因此没有安全的方法来保证使用特定提供者配置的任何集群可以通过Turtles导入到Rancher中。然而，我们确实为那些提供者实施了认证流程：
+
+* 作为我们E2E测试套件的一部分进行积极测试。
+* 保持此E2E测试套件的最新状态，以验证提供者的最新版本。
+
+== 认证您的自定义提供者
+
+此外，如果您是提供者开发者或只是想使用未列为认证的其他提供者，您有两个选择：
+
+* 重用现有的Turtles E2E套件以开始认证状态请求。更详细的信息可以在xref:./certification.adoc#_provider_certification_using_turtles_test_suite[使用Turtles测试套件的提供者认证]部分找到。
+* 使用您自己的集成套件来认证您的提供者。更详细的信息可以在xref:./certification.adoc#_certify_provider_with_custom_integration_suite[使用自定义集成套件认证提供者]部分找到。
+
+[discrete]
+==== *我为什么要验证我的提供者？*
+
+CAPI提供者的数量不断增长，社区正在为不同的基础设施主机提出新的项目。这种开放性有助于丰富CAPI生态系统，但使得无法控制和测试所有Turtles将与之合作的提供者。Turtles的开发者将维护一个xref:../overview/certified.adoc[经过CI机制积极测试和验证的认证提供者列表]，但该列表将限于关键和知名的提供者。这就是为什么我们鼓励未列出的提供者用户重用Turtles的测试套件，并验证提供者与Turtles之间的集成。
+
+[discrete]
+==== *我可以使用未认证的提供者与Turtles吗？*
+
+Turtles是一个旨在保持中立并与整个CAPI生态系统集成的项目，您可以自由使用它，而无需验证任何提供者。您可能会发现大多数上游项目没有问题。
+
+[discrete]
+==== *认证和支持之间有什么区别？*
+
+由于 CAPI 提供者是由 Kubernetes 社区维护的项目，我们无法保证对特定提供者的支持。这就是为什么我们选择专注于对 xref:../overview/certified.adoc[认证提供者] 的持续验证，并为用户提供与现有测试套件集成的可能性，以验证他们选择的提供者。
+
+== 使用 Turtles 测试套件进行提供者认证
+
+认证过程基于验证 {product_name} 与 CAPI 提供者的集成。为了简化此任务，我们准备了一个通用测试，以验证下游 CAPI 集群的配置和导入。
+
+[TIP]
+====
+我们建议您参考这个 https://github.com/rancher-sandbox/turtles-integration-suite-example[示例]，了解如何使用 Turtles 的测试套件。
+====
+
+=== 测试与认证您的提供者
+
+要验证您的提供者是否与 Turtles 兼容，以及您是否可以通过 Turtles 配置 CAPI 集群并将其导入 Rancher，第一步是与我们的测试套件集成。我们提供一个包含 https://github.com/rancher-sandbox/turtles-integration-suite-example[集成示例] 的储存库，您可以将其作为集成的参考。
+
+Turtles 作为一个项目包含 https://github.com/rancher/turtles/tree/main/test/e2e/suites[多个套件] 来验证不同的功能和处理，但对于提供者认证，我们要求您仅运行一个使用 GitOps 流的测试。Turtles 是一个与 GitOps 方法很好集成的项目，用于集群配置，这也是我们验证提供者与 Rancher 集成的主要方式。对特定 CAPI 提供者运行完整套件将：
+
+* 在所需环境中创建一个管理集群。
+* 安装 Rancher 和 Turtles 及所有先决条件。
+* 安装 Gitea。
+* 运行将创建 git 仓库的套件，使用 Fleet 应用集群模板，并验证集群已创建并成功导入到 Rancher 中。
+
+==== 测试配置
+
+要成功运行测试套件，您需要提供多个环境变量。其中一些是通用的，这意味着它们是任何您想要测试的提供者所必需的，但其他的将是特定于您正在验证的提供者。请注意被测试提供者的特定规格，例如凭据、端点等。
+
+[TIP]
+====
+接下来，我们建议您阅读xref:../operator/certificationsuite.adoc[测试套件指南]。
+====
+
+== 使用自定义集成套件认证提供者
+
+要使用自定义集成套件认证您的提供者，请确保其满足以下关键要求：
+
+=== 要求
+
+* 提供者必须使用`CAPIProvider` API 部署。
+* 使用该提供者创建的集群必须通过 Turtles 成功导入到 Rancher 中。
+
+=== 认证流程
+
+1. **开发集成套件**
+   * 安装并配置 Rancher 和 Turtles。
+   * 部署 CAPI 提供者。
+   * 配置一个集群并将其导入到 Rancher 中。
+
+2. **运行和验证测试**
+   * 确保集群成功创建并导入。
+
+3. **提交认证请求**
+   * 提供测试结果、日志和遵循的步骤。
+   * 使用以下https://github.com/rancher/turtles/issues/new?template=certification_request.yaml[模板]提交 GitHub 问题。
+
+== 认证请求
+
+与 Turtles 的测试套件集成并对您感兴趣的提供者进行检查，足以验证其与{product_name}的兼容性。由于我们无法持续测试每个 CAPI 提供者，因此此认证工作流程将允许您作为用户验证预期功能。然而，由于我们并未积极测试提供者的新版本（与 Turtles 的新版本），因此对该提供者的支持和保证是有限的，您将负责验证未来的版本。
+
+如果在成功检查您的提供者后，您希望请求将其添加到 xref:../overview/certified.adoc[认证提供者] 列表中，并纳入项目的定期 E2E 套件，您可以通过使用 https://github.com/rancher/turtles/issues/new?template=certification_request.yaml[认证请求模板] 提交 GitHub 问题来请求认证。社区将审查提案，并确定将该提供者添加到认证矩阵的可行性。

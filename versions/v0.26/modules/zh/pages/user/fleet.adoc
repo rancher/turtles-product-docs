@@ -1,0 +1,181 @@
+= 使用 Fleet 创建集群
+:revdate: 2025-08-01
+:page-revdate: {revdate}
+
+本节将指导您通过使用 Fleet 的 GitOps 工作流创建一个利用 ClusterClass 的集群。
+
+[NOTE]
+====
+本指南使用 https://github.com/rancher/turtles/tree/main/examples[示例储存库]。
+====
+
+
+== 先决条件
+
+* 安装了 {product_name} 的 Rancher Manager 集群。
+* 为您的场景安装了 Cluster API 提供程序 — 我们将在这些说明中使用 https://github.com/kubernetes-sigs/cluster-api/tree/main/test/infrastructure/docker[Docker 基础设施] 和 https://github.com/rancher/cluster-api-provider-rke2[RKE2 启动/控制平面] 提供程序 — 请参见 xref:../reference/capiprovider.adoc[使用 Turtles 的 `CAPIProvider` 进行常见提供程序初始化]。
+
+== 配置 Rancher Manager
+
+*配置您的 Fleet 储存库*
+
+为了简化集群配置的过程，我们将使用一系列预配置的示例，您可以在储存库 https://github.com/rancher/turtles/tree/main/examples. 中找到。通过检查该储存库的内容，您将发现：
+
+. 一个 *应用程序* 文件夹，用于可以使用 Fleet 部署的附加应用程序（CNI、CSI、CPI）。
+. 一个 *集群类* 文件夹，包含多个 ClusterClass 示例。
+. 一个 *clusters/docker/rke2* 文件夹，里面有 Docker 集群定义的示例。
+
+[NOTE]
+如果您愿意，您可以使用相同的基础结构创建自己的 Fleet 储存库。
+
+集群定义将通过 *持续交付* 功能（使用 Fleet）导入到 Rancher Manager 集群中（它也充当 Cluster API 管理集群）。
+
+有 2 种选项来提供配置。第一种是使用 Rancher Manager UI，第二种是通过将一些 YAML 应用到您的集群。这两者将在下面介绍。
+
+=== 导入集群和 ClusterClass 定义
+
+[tabs]
+======
+使用 Rancher Manager UI::
++
+--
+. 前往 Rancher Manager。
+. 从菜单中选择 *持续交付*：
+image:sidebar.png[侧边栏]
+. 从右上角选择*fleet-local*作为命名空间。
+image:ns.png[名称空间]
+. 从侧边栏选择*Git Repos*。
+. 单击*添加储存库*。
+. 将*clusters*作为名称输入。
+. 从您的git储存库获取*HTTPS*克隆URL。
+image:gh_clone.png[git clone url]
+. 将URL添加到*储存库URL*字段中。
+. 将分支名称更改为*main*。
+. 添加以下路径以指定要部署的目录：
++
+image:paths.png[Fleet路径配置]
++
+----
+examples/clusterclasses/docker/rke2
+examples/applications/cni/calico
+examples/applications/lb/docker
+examples/clusters/docker/rke2
+----
+. 单击*下一步*。
+. 单击*创建*。
+. 单击*clusters*名称。
+. 观察资源变为可用。
+. 从菜单中选择*集群管理*。
+. 检查您的集群是否已被导入。
+--
+
+手动使用kubectl。::
++
+--
+. 从您的git储存库获取*HTTPS*克隆URL。
+. 创建一个名为*repo.yaml*的新文件。
+. 将以下内容添加到新文件中：
++
+[source,yaml]
+----
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: clusters
+  namespace: fleet-local
+spec:
+  branch: main
+  repo: https://github.com/rancher/turtles.git
+  paths:
+    - examples/clusterclasses/docker/rke2
+    - examples/applications/cni/calico
+    - examples/applications/lb/docker
+    - examples/clusters/docker/rke2
+  targets: []
+----
+
+. 使用*kubectl*将文件应用于 Rancher Manager 集群：
++
+[source,bash]
+----
+kubectl apply -f repo.yaml
+----
+
+. 前往 Rancher Manager。
+. 从侧边栏选择*持续交付*
+. 从右上角选择*fleet-local*作为名称空间。
+. 从侧边栏选择*Git Repos*。
+. 单击*clusters*名称。
+. 观察资源变为可用。
+. 从菜单中选择*集群管理*。
+. 检查您的集群是否已被导入。
+--
+======
+
+=== 导入集群定义
+
+现在类已被导入，可以与集群定义一起使用。
+
+[tabs]
+======
+使用 Rancher Manager UI::
++
+--
+. 前往 Rancher Manager。
+. 从菜单中选择*持续交付*。
+. 从右上角选择*fleet-local*作为名称空间。
+. 从侧边栏选择*Git Repos*。
+. 单击*添加储存库*。
+. 将*clusters*作为名称输入。
+. 从您的git储存库获取*HTTPS*克隆URL。
+. 将URL添加到*储存库URL*字段中。
+. 将分支名称更改为*clusterclass*。
+. 单击*添加路径*。
+. 输入 `/clusters`。
+. 单击*下一步*。
+. 单击*创建*。
+. 单击*clusters*名称。
+. 观察资源变为可用。
+. 从菜单中选择*集群管理*。
+. 检查您的集群是否已被导入。
+--
+
+手动使用kubectl。::
++
+--
+. 从您的git储存库获取*HTTPS*克隆URL。
+. 创建一个名为*repo.yaml*的新文件。
+. 将以下内容添加到新文件中：
++
+[source,yaml]
+----
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: clusters
+  namespace: fleet-local
+spec:
+  branch: clusterclass
+  repo: https://github.com/rancher-sandbox/rancher-turtles-fleet-example.git
+  paths:
+    - /clusters
+  targets: []
+----
+
+. 使用*kubectl*将文件应用于 Rancher Manager 集群：
++
+[source,bash]
+----
+kubectl apply -f repo.yaml
+----
+
+. 前往 Rancher Manager。
+. 从侧边栏选择*持续交付*。
+. 从右上角选择*fleet-local*作为名称空间。
+. 从侧边栏选择*Git Repos*。
+. 单击*classes*名称。
+. 观察资源变为可用。
+. 从菜单中选择*集群管理*。
+. 检查您的集群是否已被导入。
+--
+======

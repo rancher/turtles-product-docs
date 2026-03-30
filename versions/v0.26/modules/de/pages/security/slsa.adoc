@@ -1,0 +1,57 @@
+= SLSA
+:revdate: 2025-04-04
+:page-revdate: {revdate}
+
+== Übersicht
+
+https://slsa.dev/spec/v1.0/about[SLSA] ist ein Satz von schrittweise übernehmbaren Richtlinien für die Sicherheit der Lieferkette, die durch Branchenkonsens festgelegt wurden. Die von SLSA festgelegte Spezifikation ist sowohl für Softwareproduzenten als auch für -verbraucher nützlich: Produzenten können die Richtlinien von SLSA befolgen, um ihre Software-Lieferkette sicherer zu machen, und Verbraucher können SLSA nutzen, um Entscheidungen darüber zu treffen, ob sie einem Softwarepaket vertrauen.
+
+{product_name} erfüllt die Anforderungen von https://slsa.dev/spec/v1.0/levels[SLSA Level 3].
+
+|===
+| Anforderung | Erforderlich bei SLSA L3 | Erfüllt durch {product_name}
+
+| Wählen Sie eine geeignete Build-Plattform
+| Ja
+| Ja
+
+| Befolgen Sie einen konsistenten Build-Prozess
+| Ja
+| Ja
+
+| Verteilen Sie Provenance
+| Ja
+| Ja
+|===
+
+== Build-Plattform
+
+* Das {product_name}-Projekt verwendet Git zur Verwaltung des Quellcodes.
+* Alle {product_name}-Betreuer müssen die Zwei-Faktor-Authentifizierung aktiviert haben, um alle ihre Beiträge zu signieren und zu genehmigen.
+* Das {product_name}-Projekt verwendet GitHub Actions und GitHub Runners zum Erstellen aller seiner Release-Artefakte.
+* Der Build- und Freigabeprozess läuft isoliert in einer temporären Umgebung, die von GitHub-gehosteten Runners bereitgestellt wird.
+
+== Build-Prozess
+
+* Der Build- und Freigabeprozess ist in Code definiert und wird unter Versionskontrolle gehalten.
+* Die GitHub-Workflows nutzen GitHub Actions, die auf bestimmte Versionen festgelegt sind, und werden mit GitHub Dependabot auf dem neuesten Stand gehalten.
+* Alle Änderungen am Build- und Freigabeprozess erfolgen über Pull Requests, die von mindestens einem {product_name}-Betreuer genehmigt werden müssen.
+* Der Freigabeprozess kann nur von einem {product_name}-Betreuer durch das Pushen eines Git-Tags im Semver-Format gestartet werden.
+
+== Provenance
+
+* Das {product_name} Projekt verwendet das offizielle https://github.com/slsa-framework/slsa-github-generator[SLSA GitHub Generator] Projekt zur Generierung und Verteilung von Provenance.
+* Die Provenance für die veröffentlichten Artefakte im GitHub Container Registry und im Rancher Prime Registry wird mit dem GitHub Workflow generator_container_slsa3 erstellt, der vom https://github.com/slsa-framework/slsa-github-generator[SLSA GitHub Generator] Projekt bereitgestellt wird.
+* Die Provenance identifiziert die {product_name} Container-Images anhand ihres Digests im SHA-256-Format.
+* Die Provenance wird von Sigstore Cosign mit der GitHub OIDC-Identität signiert, und der öffentliche Schlüssel zur Überprüfung der Provenance wird im öffentlichen https://docs.sigstore.dev/logging/overview/[Rekor-Transparenzprotokoll] gespeichert.
+* Der Freigabeprozess und die Provenance-Generierung laufen isoliert in einer temporären Umgebung, die von GitHub-gehosteten Runnern bereitgestellt wird.
+* Die Provenance der {product_name} Container-Images kann mit dem offiziellen https://github.com/slsa-framework/slsa-verifier[SLSA Verifier-Tool] überprüft werden.
+* Die Workflows zur Generierung der Provenance laufen auf temporären und isolierten virtuellen Maschinen, die vollständig von GitHub verwaltet werden.
+* Die Geheimnisse zur Signierung der Provenance sind temporär und werden durch das https://github.com/sigstore/cosign/blob/main/KEYLESS.md[keyless] Signierungsverfahren von Sigstore generiert.
+* Der https://github.com/slsa-framework/slsa-github-generator[SLSA GitHub Generator] läuft auf separaten virtuellen Maschinen als der Build- und Freigabeprozess, sodass die {product_name} Build-Skripte keinen Zugriff auf die Signierungsgeheimnisse haben.
+
+== Isolation
+
+* Der Freigabeprozess und die Provenance-Generierung laufen isoliert in einer temporären Umgebung, die von GitHub-gehosteten Runnern bereitgestellt wird.
+* Die Provenance-Generierung ist vom Build-Prozess entkoppelt; der https://github.com/slsa-framework/slsa-github-generator[SLSA GitHub Generator] läuft auf separaten virtuellen Maschinen, die vollständig von GitHub verwaltet werden.
+* Der Freigabeprozess kann nicht auf den Schlüssel zur Signierung der Provenance zugreifen, da der Provenance-Generator isoliert auf separaten GitHub-gehosteten Runnern läuft.

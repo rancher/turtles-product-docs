@@ -1,0 +1,57 @@
+= SLSA
+:revdate: 2025-04-04
+:page-revdate: {revdate}
+
+== 概要
+
+https://slsa.dev/spec/v1.0/about[SLSA]は、業界の合意に基づいて確立されたサプライチェーンセキュリティのための段階的に採用可能なガイドラインのセットです。SLSAによって定められた仕様は、ソフトウェアの生産者と消費者の両方にとって有用です。生産者はSLSAのガイドラインに従ってソフトウェアのサプライチェーンをより安全にし、消費者はSLSAを使用してソフトウェアパッケージを信頼するかどうかの判断を行うことができます。
+
+{product_name}はhttps://slsa.dev/spec/v1.0/levels[SLSAレベル3]の要件を満たしています。
+
+|===
+| 要件 | SLSA L3で必要です | {product_name}によって満たされました
+
+| 適切なビルドプラットフォームを選択してください
+| はい
+| はい
+
+| 一貫したビルドプロセスに従ってください
+| はい
+| はい
+
+| 来歴を配布してください
+| はい
+| はい
+|===
+
+== ビルドプラットフォーム
+
+* {product_name}プロジェクトはソースコード管理にGitを使用しています。
+* すべての{product_name}メンテナーは、二要素認証を有効にし、すべての貢献に対して署名および承認を行うことが求められます。
+* {product_name}プロジェクトは、すべてのリリースアーティファクトをビルドするためにGitHub ActionsとGitHub Runnersを使用しています。
+* ビルドおよびリリースプロセスは、GitHubホストのランナーによって提供される一時的な環境で隔離されて実行されます。
+
+== ビルドプロセス
+
+* ビルドおよびリリースプロセスはコードで定義され、バージョン管理されています。
+* GitHub Workflowsは、特定のバージョンに固定されたGitHub Actionsを利用し、GitHub Dependabotを使用して最新の状態に保たれています。
+* ビルドおよびリリースプロセスへのすべての変更は、少なくとも1人の{product_name}メンテナーによって承認されなければならないプルリクエストを介して行われます。
+* リリースプロセスは、{product_name}メンテナーがsemver形式のGitタグをプッシュすることによってのみ開始できます。
+
+== 来歴
+
+* {product_name}プロジェクトは、来歴生成と配布のために公式のhttps://github.com/slsa-framework/slsa-github-generator[SLSA GitHub Generator]プロジェクトを使用しています。
+* GitHub Container RegistryおよびRancher Prime Registryに公開されたリリースアーティファクトの来歴は、https://github.com/slsa-framework/slsa-github-generator[SLSA GitHub Generator]プロジェクトによって提供されるgenerator_container_slsa3 GitHub Workflowを使用して生成されます。
+* 来歴は、SHA-256形式のダイジェストを使用して{product_name}コンテナイメージを特定します。
+* 来歴は、GitHub OIDCアイデンティティを使用してSigstore Cosignによって署名され、来歴を検証するための公開鍵は、公開のhttps://docs.sigstore.dev/logging/overview/[Rekor transparency log]に保存されています。
+* リリースプロセスと来歴生成は、GitHubホストのランナーによって提供される一時的な環境で隔離して実行されます。
+* {product_name}コンテナイメージの来歴は、公式のhttps://github.com/slsa-framework/slsa-verifier[SLSA verifier tool]を使用して検証できます。
+* 来歴生成ワークフローは、一時的で隔離された仮想マシン上で実行され、GitHubによって完全に管理されています。
+* 来歴署名の秘密は一時的であり、Sigstoreのhttps://github.com/sigstore/cosign/blob/main/KEYLESS.md[keyless]署名手続きによって生成されます。
+* https://github.com/slsa-framework/slsa-github-generator[SLSA GitHub Generator]は、ビルドおよびリリースプロセスとは別の仮想マシンで実行されるため、{product_name}ビルドスクリプトは署名の秘密にアクセスできません。
+
+== 分離
+
+* リリースプロセスと来歴生成は、GitHubホストのランナーによって提供される一時的な環境で隔離して実行されます。
+* 来歴生成はビルドプロセスから切り離されており、https://github.com/slsa-framework/slsa-github-generator[SLSA GitHub Generator]はGitHubによって完全に管理される別の仮想マシンで実行されます。
+* リリースプロセスは、来歴生成が別のGitHubホストのランナーで隔離して実行されるため、来歴署名鍵にアクセスできません。

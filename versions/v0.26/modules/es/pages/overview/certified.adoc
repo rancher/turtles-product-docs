@@ -1,0 +1,120 @@
+= Proveedores CAPI Certificados
+:revdate: 2025-10-14
+:page-revdate: {revdate}
+
+== ¿Qué significa Proveedores Certificados?
+
+Los Proveedores Certificados son Proveedores CAPI que están **activamente probados** por los flujos de trabajo de CI del equipo de Turtles para validar que funcionan correctamente con la extensión CAPI para Rancher. Sin embargo, dado que la mayoría de los Proveedores CAPI son proyectos upstream mantenidos por la comunidad abierta de Kubernetes, **no podemos garantizar** que no se introduzcan problemas a medida que se lanzan nuevas versiones de los proveedores.
+
+== Lista de proveedores certificados
+
+[NOTE]
+====
+Esta lista está en constante evolución para reflejar el desarrollo continuo del proyecto.
+====
+
+
+Esta es una lista de los Proveedores CAPI oficialmente certificados por Turtles. Estos proveedores están cubiertos por nuestra suite de pruebas y aseguramos activamente que funcionan correctamente con la extensión CAPI para Rancher.
+
+|===
+| Plataforma | Nombre en código | Tipo de proveedor | Documentos
+
+| *RKE2*
+| CAPRKE2
+| Bootstrap/Plano de Control
+| https://rancher.github.io/cluster-api-provider-rke2[LIBRO de CAPRKE2]
+
+| *Kubeadm*
+| Kubeadm
+| Bootstrap/Plano de Control
+| https://cluster-api.sigs.k8s.io/tasks/bootstrap/kubeadm-bootstrap[documentos de CABPK]
+
+| *AWS*
+| CAPA
+| Infraestructura
+| https://cluster-api-aws.sigs.k8s.io[LIBRO de CAPA]
+
+| *Docker**
+| CAPD
+| Infraestructura
+| https://cluster-api.sigs.k8s.io[LIBRO de CAPI]
+
+| *vSphere*
+| CAPV
+| Infraestructura
+| https://github.com/kubernetes-sigs/cluster-api-provider-vsphere/blob/main/docs/getting_started.md[documentos de CAPV]
+
+| *Azure*
+| CAPZ
+| Infraestructura
+| https://capz.sigs.k8s.io/[LIBRO de CAPZ]
+
+| *GCP* (Solo clústeres downstream de GKE)
+| CAPG
+| Infraestructura
+| https://cluster-api-gcp.sigs.k8s.io/[LIBRO de CAPG]
+
+| *Proveedor de Complemento Fleet*
+| CAAPF
+| Complemento
+| https://rancher.github.io/cluster-api-addon-provider-fleet/[LIBRO de CAAPF]
+|===
+
+*Recomendado solo para fines de desarrollo.
+
+== Lista de proveedores en modo experimental
+
+Esta es una lista de proveedores que están en un estado avanzado de desarrollo y pronto se certificarán.
+
+|===
+| Plataforma | Nombre en código | Tipo de proveedor | Documentos
+|===
+
+== Soporte de ClusterClass para Proveedores Certificados
+
+A continuación se presenta una matriz de soporte para cada proveedor certificado y su soporte de la función de topología de clústeres:
+
+[tabs]
+======
+CAPZ::
++
+--
+- **Soporte completo** de `ClusterClass`: se pueden aprovisionar clústeres tanto downstream (AKS) como no gestionados (máquinas virtuales) a través de la topología.
+--
+
+CAPA::
++
+--
+- **Soporte completo** de `ClusterClass`: se pueden aprovisionar clústeres tanto downstream (EKS) como no gestionados (EC2-based) a través de la topología.
+--
+
+CAPG::
++
+--
+- **Soporte completo** de `ClusterClass`: se pueden aprovisionar clústeres tanto downstream (GKE) como no gestionados (máquinas virtuales) a través de la topología.
+--
+
+CAPRKE2::
++
+--
+- **Soporte completo** de `ClusterClass`.
+--
+
+CABPK::
++
+--
+- **Soporte completo** de `ClusterClass`.
+--
+
+CAPV::
++
+--
+- **Soporte completo** de `ClusterClass`.
+--
+
+CAPD::
++
+--
+- **Soporte completo** de `ClusterClass`.
+--
+======

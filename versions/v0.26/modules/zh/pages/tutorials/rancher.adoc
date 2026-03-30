@@ -1,0 +1,77 @@
+= Rancher 设置
+:revdate: 2026-02-18
+:page-revdate: {revdate}
+
+== 安装 Rancher
+
+_如果您已经在运行 Rancher v2.13 或更高版本，可以跳过此部分，直接跳转到 xref:tutorials/first-cluster.adoc[您的第一个集群]。_
+
+[NOTE]
+====
+从 Rancher v2.13 开始，{product_name} 作为 Rancher 系统图表预先安装。不再需要单独安装 {product_name}。只需安装 Rancher v2.13 或更高版本即可开始使用集群 API (CAPI)。
+
+====
+
+Helm 是在现有或新 Kubernetes 集群中安装 Rancher 的推荐方式。
+
+ifeval::["{build-type}" == "product"]
+[TIP]
+====
+请确保遵循官方的 https://documentation.suse.com/cloudnative/rancher-manager/latest/en/installation-and-upgrade/installation-and-upgrade.html[安装指南] 来安装 Rancher。
+====
+endif::[]
+ifeval::["{build-type}" == "community"]
+[TIP]
+====
+请确保遵循官方的 https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade[安装指南] 来安装 Rancher。
+====
+endif::[]
+
+以下是使用 Helm 安装 Rancher 的最小示例：
+
+[source,bash]
+----
+helm install rancher rancher-stable/rancher \
+    --namespace cattle-system \
+    --create-namespace \
+    --set hostname=<rancher-hostname> \
+    --version <rancher-version> \
+    --wait
+----
+
+将 `<rancher-hostname>` 替换为您的 Rancher 服务器的实际主机名，并使用 `--version` 指定 Rancher 版本为 `v2.13.0` 或更高。
+
+== 安装内容
+
+当安装 Rancher v2.13 或更高版本时，{product_name} 会自动作为系统组件部署在 `cattle-turtles-system` 名称空间中。包括以下内容：
+
+* 处理所有 CAPI 相关资源的 `rancher-turtles-controller-manager` pod
+* 内核 CAPI CRD 和内核 CAPI 控制器
+* 允许声明性定义 CAPI 提供程序的 `CAPIProvider` 自定义资源
+
+[NOTE]
+====
+内核 CAPI 控制器清单嵌入在 ConfigMap 中，简化了在隔离的环境中的操作。
+====
+
+== 安装 CAPI 提供程序
+
+由于 {product_name} 嵌入在 Rancher 中，CAPI 提供程序不再默认捆绑。提供程序通过 `CAPIProvider` 自定义资源以声明方式进行管理，并且有一个单独的提供程序图表可用于安装认证的提供程序。有关提供程序图表的更多信息，请参阅 xref:user/providers.adoc[安装认证提供程序]。
+
+例如，定义一个提供程序：
+
+[source,yaml]
+----
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: aws
+  namespace: cattle-turtles-system
+spec:
+  type: infrastructure
+  name: aws
+----
+
+请参考xref:reference/capiprovider.adoc[CAPIProvider 参考]以获取完整的配置选项列表。
+
+您现在可以使用{product_name}了！🎉

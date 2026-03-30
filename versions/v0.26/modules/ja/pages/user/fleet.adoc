@@ -1,0 +1,182 @@
+= Fleetを使用してクラスターを作成する
+:revdate: 2025-08-01
+:page-revdate: {revdate}
+
+このセクションでは、Fleetを使用したGitOpsワークフローを利用するClusterClassを使用してクラスターを作成する手順を案内します。
+
+[NOTE]
+====
+このガイドでは、https://github.com/rancher/turtles/tree/main/examples[examplesリポジトリ]を使用します。
+====
+
+
+== 前提条件
+
+* {product_name}がインストールされたRancher Managerクラスター。
+* シナリオに応じたCluster APIプロバイダーがインストールされています - この手順では、https://github.com/kubernetes-sigs/cluster-api/tree/main/test/infrastructure/docker[Docker infrastructure]とhttps://github.com/rancher/cluster-api-provider-rke2[RKE2 bootstrap/control plane]プロバイダーを使用します - xref:../reference/capiprovider.adoc[Initialization for common providers using Turtles' `CAPIProvider`]を参照してください。
+
+== Rancher Managerを設定する
+
+*あなたのFleetリポジトリを設定する*
+
+クラスターのプロビジョニングプロセスを簡素化するために、リポジトリhttps://github.com/rancher/turtles/tree/main/examples.にある一連の事前設定された例を使用します。
+このリポジトリの内容を確認すると、次のものが見つかります：
+
+. Fleetを使用してデプロイできる追加アプリ用の*applications*フォルダー（CNI、CSI、CPI）。
+. ClusterClassの例が多数含まれている*clusterclasses*フォルダー。
+. Dockerクラスター定義の例が含まれている*clusters/docker/rke2*フォルダー。
+
+[NOTE]
+お好みで、同じ基本構造を使用して独自のFleetリポジトリを作成することもできます。
+
+クラスター定義は、*継続的デリバリ*機能（Fleetを使用）を使用してRancher Managerクラスターにインポートされます（これはCluster API管理クラスターとしても機能します）。
+
+設定を提供するための2つのオプションがあります。最初のオプションはRancher Manager UIを使用することで、2番目のオプションはクラスターにYAMLを適用することです。両方の方法については以下で説明します。
+
+=== クラスターおよびClusterClass定義をインポートする
+
+[tabs]
+======
+Rancher Manager UIを使用する::
++
+--
+. Rancher Managerに移動します。
+. メニューから*継続的デリバリ*を選択します：
+image:sidebar.png[sidebar]
+. 右上から *fleet-local* をネームスペースとして選択します。
+image:ns.png[namespace]
+. サイドバーから *Git Repos* を選択します。
+. *Add Repository* をクリックします。
+. 名前として *clusters* を入力します。
+. Git リポジトリから *HTTPS* クローン URL を取得します。
+image:gh_clone.png[git clone url]
+. URL を *Repository URL* フィールドに追加します。
+. ブランチ名を *main* に変更します。
+. デプロイするディレクトリを指定するために、以下のパスを追加します：
++
+image:paths.png[Fleet パス設定]
++
+----
+examples/clusterclasses/docker/rke2
+examples/applications/cni/calico
+examples/applications/lb/docker
+examples/clusters/docker/rke2
+----
+. *次へ* をクリックします。
+. *作成* をクリックします。
+. *clusters* の名前をクリックします。
+. リソースが準備完了になるのを確認します。
+. メニューから *Cluster Management* を選択します。
+. クラスターがインポートされていることを確認します。
+--
+
+kubectl を使用して手動で行います。::
++
+--
+. Git リポジトリから *HTTPS* クローン URL を取得します。
+. *repo.yaml* という新しいファイルを作成します。
+. 新しいファイルに以下の内容を追加します：
++
+[source,yaml]
+----
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: clusters
+  namespace: fleet-local
+spec:
+  branch: main
+  repo: https://github.com/rancher/turtles.git
+  paths:
+    - examples/clusterclasses/docker/rke2
+    - examples/applications/cni/calico
+    - examples/applications/lb/docker
+    - examples/clusters/docker/rke2
+  targets: []
+----
+
+. *kubectl* を使用してファイルを Rancher Manager クラスターに適用します：
++
+[source,bash]
+----
+kubectl apply -f repo.yaml
+----
+
+. Rancher Managerに移動します。
+. サイドバーから *Continuous Delivery* を選択します。
+. 右上からネームスペースとして *fleet-local* を選択します。
+. サイドバーから *Git Repos* を選択します。
+. *clusters* の名前をクリックします。
+. リソースが準備完了になるのを見守ります。
+. メニューから *Cluster Management* を選択します。
+. クラスターがインポートされていることを確認します。
+--
+======
+
+=== クラスター定義をインポートします。
+
+クラスがインポートされたので、クラスター定義で使用できるようになりました。
+
+[tabs]
+======
+Rancher Manager UIを使用する::
++
+--
+. Rancher Managerに移動します。
+. メニューから *継続的デリバリ* を選択します。
+. 右上から名前空間として *fleet-local* を選択します。
+. サイドバーから *Git Repos* を選択します。
+. *Add Repository* をクリックします。
+. 名前として *clusters* を入力します。
+. Git リポジトリから *HTTPS* クローン URL を取得します。
+. URL を *Repository URL* フィールドに追加します。
+. ブランチ名を *clusterclass* に変更します。
+. *Add Path* をクリックします。
+. 「`/clusters`.
+. *次へ* をクリックします。
+. ［*作成*］をクリックします。
+. *clusters* の名前をクリックします。
+. リソースが準備完了になるのを見守ります。
+. メニューから *Cluster Management* を選択します。
+. クラスターがインポートされていることを確認します。
+--
+
+kubectl を使用して手動で行います。::
++
+--
+. Git リポジトリから *HTTPS* クローン URL を取得します。
+. *repo.yaml* という新しいファイルを作成します。
+. 新しいファイルに以下の内容を追加します：
++
+[source,yaml]
+----
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: clusters
+  namespace: fleet-local
+spec:
+  branch: clusterclass
+  repo: https://github.com/rancher-sandbox/rancher-turtles-fleet-example.git
+  paths:
+    - /clusters
+  targets: []
+----
+
+. *kubectl* を使用してファイルを Rancher Manager クラスターに適用します：
++
+[source,bash]
+----
+kubectl apply -f repo.yaml
+----
+
+. Rancher Managerに移動します。
+. サイドバーから *継続的デリバリ* を選択します。
+. 右上から名前空間として *fleet-local* を選択します。
+. サイドバーから *Git Repos* を選択します。
+. *classes* の名前をクリックします。
+. リソースが準備完了になるのを確認します。
+. メニューから *Cluster Management* を選択します。
+. クラスターがインポートされていることを確認します。
+--
+======

@@ -1,0 +1,120 @@
+= Fournisseurs CAPI certifiés
+:revdate: 2025-10-14
+:page-revdate: {revdate}
+
+== Que signifient les Fournisseurs certifiés ?
+
+Les fournisseurs CAPI certifiés sont des fournisseurs CAPI qui sont **activement testés** par les workflows CI de l'équipe Turtles pour valider qu'ils fonctionnent correctement avec l'extension CAPI pour Rancher. Cependant, comme la plupart des fournisseurs CAPI sont des projets en amont maintenus par la communauté ouverte de Kubernetes, **nous ne pouvons pas garantir** qu'aucun problème n'est introduit lors de la publication de nouvelles versions de fournisseurs.
+
+== Liste des fournisseurs certifiés
+
+[NOTE]
+====
+Cette liste évolue constamment pour refléter le développement continu du projet.
+====
+
+
+Ceci est une liste des fournisseurs CAPI officiellement certifiés par Turtles. Ces fournisseurs sont couverts par notre suite de tests et nous veillons activement à ce qu'ils fonctionnent correctement avec l'extension CAPI pour Rancher.
+
+|===
+| Plate-forme | Nom de code | Type de fournisseur | Docs
+
+| *RKE2*
+| CAPRKE2
+| Bootstrap/Plan de contrôle
+| https://rancher.github.io/cluster-api-provider-rke2[livre CAPRKE2]
+
+| *Kubeadm*
+| Kubeadm
+| Bootstrap/Plan de contrôle
+| https://cluster-api.sigs.k8s.io/tasks/bootstrap/kubeadm-bootstrap[docs CABPK]
+
+| *AWS*
+| CAPA
+| Infrastructure
+| https://cluster-api-aws.sigs.k8s.io[livre CAPA]
+
+| *Docker**
+| CAPD
+| Infrastructure
+| https://cluster-api.sigs.k8s.io[livre CAPI]
+
+| *vSphere*
+| CAPV
+| Infrastructure
+| https://github.com/kubernetes-sigs/cluster-api-provider-vsphere/blob/main/docs/getting_started.md[docs CAPV]
+
+| *Azure*
+| CAPZ
+| Infrastructure
+| https://capz.sigs.k8s.io/[livre CAPZ]
+
+| *GCP* (Seulement des clusters gérés par GKE)
+| CAPG
+| Infrastructure
+| https://cluster-api-gcp.sigs.k8s.io/[livre CAPG]
+
+| *Fleet de fournisseurs d'addon*
+| CAAPF
+| Addon
+| https://rancher.github.io/cluster-api-addon-provider-fleet/[livre CAAPF]
+|===
+
+*Recommandé uniquement à des fins de développement.
+
+== Liste des fournisseurs en mode expérimental
+
+Ceci est une liste de fournisseurs qui sont dans un état avancé de développement et deviendront bientôt certifiés.
+
+|===
+| Plate-forme | Nom de code | Type de fournisseur | Docs
+|===
+
+== Support ClusterClass pour les fournisseurs certifiés
+
+Ce qui suit est une matrice de support pour chaque fournisseur certifié et leur support de la fonctionnalité de topologie de cluster :
+
+[tabs]
+======
+CAPZ::
++
+--
+- **Support complet** de `ClusterClass` : les clusters gérés (AKS) et non gérés (machines virtuelles) peuvent être provisionnés via la topologie.
+--
+
+CAPA::
++
+--
+- **Support complet** de `ClusterClass` : les clusters gérés (EKS) et non gérés (basés sur EC2) peuvent être provisionnés via la topologie.
+--
+
+CAPG::
++
+--
+- **Support complet** de `ClusterClass` : les clusters gérés (GKE) et non gérés (machines virtuelles) peuvent être provisionnés via la topologie.
+--
+
+CAPRKE2::
++
+--
+- **Support complet** de `ClusterClass`.
+--
+
+CABPK::
++
+--
+- **Support complet** de `ClusterClass`.
+--
+
+CAPV::
++
+--
+- **Support complet** de `ClusterClass`.
+--
+
+CAPD::
++
+--
+- **Support complet** de `ClusterClass`.
+--
+======

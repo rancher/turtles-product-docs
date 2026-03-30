@@ -1,0 +1,120 @@
+= Zertifizierte CAPI-Anbieter
+:revdate: 2025-10-14
+:page-revdate: {revdate}
+
+== Was bedeutet zertifizierte Anbieter?
+
+Zertifizierte Anbieter sind CAPI-Anbieter, die **aktiv getestet** von den CI-Workflows des Turtles-Teams werden, um zu validieren, dass sie ordnungsgemäß mit der CAPI-Erweiterung für Rancher funktionieren. Da die meisten CAPI-Anbieter jedoch Upstream-Projekte sind, die von der Kubernetes-Open-Community gepflegt werden, **können wir nicht garantieren**, dass keine Probleme auftreten, wenn neue Anbieter-Versionen veröffentlicht werden.
+
+== Liste der zertifizierten Anbieter
+
+[NOTE]
+====
+Diese Liste entwickelt sich ständig weiter, um die fortlaufende Entwicklung des Projekts widerzuspiegeln.
+====
+
+
+Dies ist eine Liste der offiziell zertifizierten CAPI-Anbieter von Turtles. Diese Anbieter sind durch unsere Test-Suite abgedeckt, und wir stellen aktiv sicher, dass sie ordnungsgemäß mit der CAPI-Erweiterung für Rancher funktionieren.
+
+|===
+| Plattform | Code Name | Anbietertyp | Dokumente
+
+| *RKE2*
+| CAPRKE2
+| Bootstrap/Control Plane
+| https://rancher.github.io/cluster-api-provider-rke2[CAPRKE2-Buch]
+
+| *Kubeadm*
+| Kubeadm
+| Bootstrap/Control Plane
+| https://cluster-api.sigs.k8s.io/tasks/bootstrap/kubeadm-bootstrap[CABPK-Dokumente]
+
+| *AWS*
+| CAPA
+| Infrastruktur
+| https://cluster-api-aws.sigs.k8s.io[CAPA-Buch]
+
+| *Docker**
+| CAPD
+| Infrastruktur
+| https://cluster-api.sigs.k8s.io[CAPI-Buch]
+
+| *vSphere*
+| CAPV
+| Infrastruktur
+| https://github.com/kubernetes-sigs/cluster-api-provider-vsphere/blob/main/docs/getting_started.md[CAPV-Dokumente]
+
+| *Azure*
+| CAPZ
+| Infrastruktur
+| https://capz.sigs.k8s.io/[CAPZ-Buch]
+
+| *GCP* (Nur GKE verwaltete Cluster)
+| CAPG
+| Infrastruktur
+| https://cluster-api-gcp.sigs.k8s.io/[CAPG-Buch]
+
+| *Add-on-Anbieter Fleet*
+| CAAPF
+| Add-on
+| https://rancher.github.io/cluster-api-addon-provider-fleet/[CAAPF-Buch]
+|===
+
+*Empfohlen nur für Entwicklungszwecke.
+
+== Liste der Anbieter im experimentellen Modus
+
+Dies ist eine Liste von Anbietern, die sich in einem fortgeschrittenen Entwicklungsstadium befinden und bald zertifiziert werden.
+
+|===
+| Plattform | Code Name | Anbietertyp | Dokumente
+|===
+
+== ClusterClass-Unterstützung für zertifizierte Anbieter
+
+Die folgende Unterstützungsmatrix zeigt jeden zertifizierten Anbieter und deren Unterstützung der Cluster-Topologie-Funktion:
+
+[tabs]
+======
+CAPZ::
++
+--
+- **Vollständige Unterstützung** von `ClusterClass`: sowohl verwaltete (AKS) als auch nicht verwaltete (virtuelle Maschinen) Cluster können über die Topologie bereitgestellt werden.
+--
+
+CAPA::
++
+--
+- **Vollständige Unterstützung** von `ClusterClass`: sowohl verwaltete (EKS) als auch nicht verwaltete (EC2-basierte) Cluster können über die Topologie bereitgestellt werden.
+--
+
+CAPG::
++
+--
+- **Vollständige Unterstützung** von `ClusterClass`: sowohl verwaltete (GKE) als auch nicht verwaltete (virtuelle Maschinen) Cluster können über die Topologie bereitgestellt werden.
+--
+
+CAPRKE2::
++
+--
+- **Vollständige Unterstützung** von `ClusterClass`.
+--
+
+CABPK::
++
+--
+- **Vollständige Unterstützung** von `ClusterClass`.
+--
+
+CAPV::
++
+--
+- **Vollständige Unterstützung** von `ClusterClass`.
+--
+
+CAPD::
++
+--
+- **Vollständige Unterstützung** von `ClusterClass`.
+--
+======

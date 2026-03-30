@@ -1,0 +1,73 @@
+= Fornecedor de CAPI
+:revdate: 2025-08-25
+:page-revdate: {revdate}
+
+O recurso `CAPIProvider` permite gerenciar manifestos do Operador da API de Cluster de forma declarativa. É utilizado para provisionar e configurar provedores da API de Cluster como AWS, vSphere etc.
+
+`CAPIProvider` segue um modelo GitOps - os campos de especificação são entradas declarativas do usuário. O controlador apenas atualiza o status.
+
+Todos os campos fornecidos pelo recurso upstream do CAPI Operator `CAPIProviderSpec` também estão disponíveis na especificação do recurso `CAPIProvider`. Sinta-se à vontade para consultar os link:https://cluster-api-operator.sigs.k8s.io/03_topics/02_configuration/05_provider-spec-configuration[guias] de configuração upstream para cenários avançados.
+
+Todos os Provedores CAPI xref:../overview/certified.adoc[certificados] são configurados usando uma configuração incorporada. Para substituí-la, uma xref:./clusterctlconfig.adoc#_override_a_certified_provider_version[ClusterctlConfig] personalizada precisa ser criada.
+
+== Uso
+
+Para usar o recurso `CAPIProvider`:
+
+. Crie um recurso `CAPIProvider` com o nome do provedor desejado, tipo, credenciais, configuração e recursos.
+. O controlador `CAPIProvider` cuidará da geração dos manifestos necessários do Operador da API de Cluster com base na especificação do `CAPIProvider`.
+. O campo de status no recurso `CAPIProvider` refletirá o estado dos manifestos gerados.
+. Gerencie o objeto `CAPIProvider` de forma declarativa para aplicar alterações aos manifestos do provedor gerados.
+
+Aqui está um exemplo de manifesto `CAPIProvider`:
+
+[source,yaml]
+----
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: aws-infra
+  namespace: capi-providers
+spec:
+  name: aws
+  type: infrastructure
+  enableAutomaticUpdate: true
+  credentials:
+    rancherCloudCredential: aws-creds # Rancher credentials secret for AWS
+  configSecret:
+    name: aws-config
+  features:
+    clusterResourceSet: true
+----
+
+Isso irá gerar um provedor de infraestrutura AWS com o mapeamento fornecido para o segredo de credencial do Rancher e recursos personalizados habilitados.
+
+O controlador `CAPIProvider` será responsável por todos os recursos do provedor gerados, permitindo a coleta de lixo ao excluir o objeto `CAPIProvider`.
+
+== Especificação
+
+Os campos-chave na especificação do `CAPIProvider` são:
+
+* `name` - Nome do provedor (aws, vsphere etc). Herdado de `metadata.name` se não especificado.
+* `type` - Tipo de recurso do provedor (pode ser definido como `core`, `controlPlane`, `bootstrap`, `infrastructure`, `addon`, `ipam` ou `runtimeextension`).
+* `credentials` - Credenciais de origem para a especificação do provedor.
+* `configSecret` - Nome do segredo de configuração do provedor, onde as variáveis e credenciais sincronizadas serão armazenadas. Por padrão, se não especificado, herdará o nome do recurso `CAPIProvider`.
+* `features` - Recursos do provedor habilitados.
+* `variables` - Variáveis é um mapa de variáveis de ambiente a serem adicionadas ao conteúdo do `configSecret`.
+* `version` - Indica a versão do provedor.
+* `enableAutomaticUpdate` - Permitir que o provedor atualize automaticamente. Somente habilitado por padrão em provedores instalados do gráfico Turtles.
+* `fetchConfig` - FetchConfig determina como o operador buscará os componentes e metadados para o provedor.
+** `oci` - OCI a ser usado para buscar os componentes e metadados do provedor a partir de um artefato OCI. Você deve definir o campo `providerSpec.Version` para que o operador escolha a versão desejada do lançamento no GitHub. Se o providerSpec.Version estiver ausente, a versão mais recente do provedor dos padrões do clusterctl é utilizada.
+** `selector` - Seletor a ser usado para buscar os componentes e metadados do provedor a partir de ConfigMaps armazenados dentro do cluster. Cada ConfigMap deve conter componentes e metadados apenas para uma versão específica.
+** `url` - URL a ser usada para buscar os componentes e metadados do provedor de um repositório remoto do GitHub.
+
+== Fixação de versões e atualizações automáticas
+
+O `CAPIProvider` `version` pode ser definido a qualquer momento para fixar o provedor a uma versão específica. Além disso, `automaticUpdates` pode ser alternado para permitir atualizações automáticas para a versão mais recente disponível. A versão mais recente disponível é determinada pela configuração incorporada do clusterctl para provedores xref:../overview/certified.adoc[certificados], e pode ser substituída ou configurada para provedores personalizados usando xref:../reference/clusterctlconfig.adoc[ClusterctlConfig].
+
+== Exclusão
+
+Quando um recurso `CAPIProvider` é excluído, a coleta de lixo do Kubernetes limpará todos os recursos de provedor gerados dos quais ele é proprietário. Ela inclui:
+
+* Instância de recurso do Operador da API do Cluster
+* Segredo referenciado pelo `configSecret`

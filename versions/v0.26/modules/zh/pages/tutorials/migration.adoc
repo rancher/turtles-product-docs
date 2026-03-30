@@ -1,0 +1,25 @@
+= 迁移指南
+:revdate: 2025-11-14
+:page-revdate: {revdate}
+
+== 环境
+
+从 Rancher v2.13 开始，{product_name} 作为 Rancher 的一部分进行安装，无需单独部署。在升级到 Rancher v2.13 之前，用户需要遵循本指南以确保顺利的升级过程。
+
+== 迁移
+
+在升级到 Rancher v2.13 之前，请按以下步骤操作：_before_
+
+. 确保将 {product_name} 升级到 v0.24.3。此步骤很重要，因为所有 v0.24 的补丁版本为升级到 Rancher v2.13 准备了集群。
+. 卸载 {product_name}。这是必要的，因为从 Rancher v2.13 开始，{product_name} 不再是可选的附加组件，而是 Rancher 系统组件。因此，Rancher 将其安装在与之前不同的名称空间中，因此之前安装的版本需要先手动卸载。卸载 {product_name} 的 v0.24.3 会移除内核 CAPI 提供程序本身，但保留内核 CAPI CRD。在迁移期间，内核 CAPI 控制器不会在管理集群上运行，但任何下游 CAPI 集群应继续正常运行，不受影响。
+. 运行以下 kubectl 命令：
++
+[source,bash]
+----
+kubectl patch crd capiproviders.turtles-capi.cattle.io --type=json -p='[{"op": "add", "path": "/metadata/annotations/meta.helm.sh~1release-namespace", "value": "cattle-turtles-system"}]'
+kubectl patch crd clusterctlconfigs.turtles-capi.cattle.io --type=json -p='[{"op": "add", "path": "/metadata/annotations/meta.helm.sh~1release-namespace", "value": "cattle-turtles-system"}]'
+----
+
+这些命令将为 `capiprovider` 和 `clusterctlconfig` CRD 打补丁，以便在作为 Rancher v2.13 的一部分安装时被 {product_name} 采用。
+
+请注意，上述迁移对于运行 {product_name} 版本 &le; v0.24.3 的用户是必要的。新用户在安装 Rancher v2.13 时无需执行任何迁移。

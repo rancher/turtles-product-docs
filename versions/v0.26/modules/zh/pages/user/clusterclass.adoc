@@ -1,0 +1,1564 @@
+= ClusterClass
+:revdate: 2026-02-18
+:page-revdate: {revdate}
+
+在本节中，我们将介绍如何使用 https://cluster-api.sigs.k8s.io/tasks/experimental-features/cluster-class/[ClusterClass] 与 {product_name}。
+
+== 先决条件
+
+* 安装了 {product_name} 的 Rancher Manager 集群
+* 必须安装 https://github.com/rancher/cluster-api-addon-provider-fleet[CAAPF] 提供程序，作为使用所有 ClusterClasses 的前提。
+** CAAPF 提供程序安装示例：
++
+.点击展开
+[%collapsible]
+======
+[,yaml]
+----
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fleet-addon-system
+---
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: fleet
+  namespace: fleet-addon-system
+spec:
+  name: rancher-fleet
+  type: addon
+----
+======
+
+[WARNING]
+====
+CAAPF 依赖于 `WatchList` Kubernetes 功能开关。此功能需要在 Kubernetes `1.33` 版本上显式启用。有关更多信息，请参见 https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/[Kubernetes 上游文档]。
+====
+
+* 根据您的引擎，必须在进一步的 CAPIProvider 设置之前，安装 https://github.com/rancher/cluster-api-provider-rke2[CAPRKE2] 或 https://github.com/kubernetes-sigs/cluster-api[Kubeadm] 启动/控制平面：
++
+[tabs]
+======
+CAPRKE2::
++
+--
+
+启动和控制平面提供程序安装：
+
+.点击展开
+[%collapsible]
+=======
+[source,yaml]
+----
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: rke2-bootstrap-system
+---
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: rke2-bootstrap
+  namespace: rke2-bootstrap-system
+spec:
+  name: rke2
+  type: bootstrap
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: rke2-control-plane-system
+---
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: rke2-control-plane
+  namespace: rke2-control-plane-system
+spec:
+  name: rke2
+  type: controlPlane
+----
+=======
+
+--
+
+Kubeadm::
++
+--
+
+启动和控制平面提供程序安装：
+
+.点击展开
+[%collapsible]
+=======
+[source,yaml]
+----
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: capi-kubeadm-bootstrap-system
+---
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: kubeadm-bootstrap
+  namespace: capi-kubeadm-bootstrap-system
+spec:
+  name: kubeadm
+  type: bootstrap
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: capi-kubeadm-control-plane-system
+---
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: kubeadm-control-plane
+  namespace: capi-kubeadm-control-plane-system
+spec:
+  name: kubeadm
+  type: controlPlane
+----
+=======
+
+--
+
+======
+
+== 设置
+
+ifeval::["{build-type}" == "community"]
+[NOTE]
+.版本固定
+====
+CAPIProvider `spec.version` 可以在任何时候设置，以将提供程序固定到特定版本。为了保持不可变性，您还可以设置 `spec.enableAutomaticUpdate: false` 以禁用相应 CAPIProvider 的自动版本更新。
+====
+endif::[]
+
+[tabs]
+======
+Azure::
++
+--
+为了准备管理集群，我们将安装 https://capz.sigs.k8s.io/[Cluster API Provider Azure]，并创建一个 https://capz.sigs.k8s.io/topics/identities#service-principal[ServicePrincipal] 身份，以在 Azure 上配置新的集群。
+
+在我们开始之前，需要创建一个 ServicePrincipal，至少具有对 Azure 订阅的贡献者访问权限。
+有关更多详细信息，请参阅 https://capz.sigs.k8s.io/topics/identities[CAPZ 文档]。
+
+* 提供程序安装
++
+[source,yaml]
+----
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: capz-system
+---
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: azure
+  namespace: capz-system
+spec:
+  type: infrastructure
+  name: azure
+----
+
+* 身份设置
++
+[WARNING]
+.AKS 集群配置的身份验证
+====
+如果您在 **AKS** 上部署托管集群，可以跳过 **身份设置** 步骤，直接跳到 xref:#_create_a_cluster_from_a_clusterclass[从 ClusterClass 创建集群]。
+您将创建一个 `Secret`，使用服务主体凭据供 Azure 服务操作员在应用集群清单时使用，而不是使用 `AzureClusterIdentity`。
+====
++
+在这个例子中，我们将使用一个 `AzureClusterIdentity` 来配置 Azure 集群。
+需要首先创建一个包含服务主体凭据的 Secret，以供 `AzureClusterIdentity` 资源引用。
+请注意，`AzureClusterIdentity` 是一个名称空间资源，需要在与集群相同的名称空间中创建。
+有关使用 Azure 身份的最佳实践的更多信息，请参考官方 https://capz.sigs.k8s.io/topics/identities-use-cases[文档]。
++
+请注意，某些变量留给用户进行替换。
++
+[source,yaml]
+----
+apiVersion: v1
+kind: Secret
+metadata:
+  name: <AZURE_CLUSTER_IDENTITY_SECRET_NAME>
+  namespace: <AZURE_CLUSTER_IDENTITY_SECRET_NAMESPACE>
+type: Opaque
+stringData:
+  clientSecret: <AZURE_CLIENT_SECRET>
+---
+apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+kind: AzureClusterIdentity
+metadata:
+  labels:
+    clusterctl.cluster.x-k8s.io/move-hierarchy: "true"
+  name: cluster-identity
+spec:
+  allowedNamespaces: {}
+  clientID: <AZURE_APP_ID>
+  clientSecret:
+    name: <AZURE_CLUSTER_IDENTITY_SECRET_NAME>
+    namespace: <AZURE_CLUSTER_IDENTITY_SECRET_NAMESPACE>
+  tenantID: <AZURE_TENANT_ID>
+  type: ServicePrincipal
+----
+--
+
+AWS::
++
+--
+为了准备管理集群，我们将安装 https://cluster-api-aws.sigs.k8s.io/[Cluster API Provider AWS]，并创建一个包含所需凭据的 Secret，以便在 AWS 上配置新集群。
+全局凭据设置为空，因为我们将使用 `AWSClusterStaticIdentity`。
+
+* 提供程序安装
++
+[source,yaml]
+----
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: aws
+  namespace: capa-system
+spec:
+  type: infrastructure
+  variables:
+    AWS_B64ENCODED_CREDENTIALS: ""
+----
+
+* 身份设置
++
+在这个例子中，我们将使用一个 `AWSClusterStaticIdentity` 来配置 AWS 集群。 +
+需要在安装 AWS 提供程序的名称空间中创建一个包含凭据的 Secret。 +
+有关如何设置凭据的更多信息，请参考 link:https://cluster-api-aws.sigs.k8s.io/clusterawsadm/clusterawsadm[clusterawsadm 文档]。 +
+`AWSClusterStaticIdentity` 可以引用此 Secret 以允许集群配置。在这个例子中，我们允许在所有名称空间中使用该身份，以便可以轻松重用。 +
+您可以参考 link:https://cluster-api-aws.sigs.k8s.io/topics/multitenancy[官方文档] 以了解更多关于身份管理的信息。
++
+请注意，某些变量留给用户进行替换。 +
++
+[source,yaml]
+----
+apiVersion: v1
+kind: Secret
+metadata:
+  name: <AWS_IDENTITY_SECRET_NAME>
+  namespace: capa-system
+type: Opaque
+stringData:
+  AccessKeyID: <AWS_ACCESS_KEY_ID>
+  SecretAccessKey: <AWS_SECRET_ACCESS_KEY>
+---
+apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
+kind: AWSClusterStaticIdentity
+metadata:
+  name: cluster-identity
+spec:
+  secretRef: <AWS_IDENTITY_SECRET_NAME>
+  allowedNamespaces: {}
+----
+--
+
+GCP::
++
+--
+为了准备管理集群，我们将安装 https://cluster-api-gcp.sigs.k8s.io/[Cluster API Provider GCP]，并创建一个 Secret，其中包含在 GCP 上配置新集群所需的凭据。
+在 GCP 中创建和管理集群需要一个服务账户，并且这将需要 `Editor` 权限。您可以参考来自https://cluster-api-gcp.sigs.k8s.io/quick-start#create-a-service-account[CAPG Book]的官方指南。
+需要在提供者的`GCP_B64ENCODED_CREDENTIALS`变量中设置base64编码的服务账户密钥。
+
+* 提供程序安装
++
+[source,yaml]
+----
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: gcp
+  namespace: capg-system
+spec:
+  type: infrastructure
+  variables:
+    GCP_B64ENCODED_CREDENTIALS: xxx
+----
+
+* 网络安装
++
+配置自管理的GCP集群需要配置GCP网络，以允许Kubernetes节点与控制平面通信，并从容器注册表中拉取镜像，机器需要具有NAT访问或公共IP。
+默认的提供者行为是创建没有附加公共IP的虚拟机，因此需要一个https://cloud.google.com/nat/docs/overview[Cloud NAT]以允许节点与负载均衡器和外部世界建立连接。
+请参考官方https://cluster-api-gcp.sigs.k8s.io/prerequisites#configure-network-and-cloud-nat[CAPG Book]指南，了解如何准备您的GCP网络以配置自管理的GCP集群。
++
+[NOTE]
+====
+准备GCP网络以进行集群配置需要以下步骤：
+
+- 创建一个路由器。
+- 创建一个与路由器关联的NAT。
+====
+--
+
+Docker::
++
+--
+为了准备管理集群，我们将安装Docker集群API提供者。
+
+* 基础设施Docker提供者安装
++
+[source,yaml]
+----
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: capd-system
+---
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: docker
+  namespace: capd-system
+spec:
+  type: infrastructure
+----
+
+--
+
+vSphere::
++
+--
+为了准备管理集群，我们将安装https://github.com/kubernetes-sigs/cluster-api-provider-vsphere/blob/main/docs/getting_started.md[Cluster API Provider vSphere]。
+全局凭据设置为空，因为我们将使用 `VSphereClusterIdentity`。
+
+* 提供程序安装
++
+[source,yaml]
+----
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: capv-system
+---
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: vsphere
+  namespace: capv-system
+spec:
+  type: infrastructure
+  variables:
+    VSPHERE_USERNAME: "" 
+    VSPHERE_PASSWORD: ""
+----
+
+* 身份设置
++
+在这个例子中，我们将使用一个`VSphereClusterIdentity`来配置vSphere集群。 +
+需要在安装vSphere提供者的名称空间中创建一个包含凭据的Secret。
+`VSphereClusterIdentity`可以引用此Secret以允许集群配置。在这个例子中，我们允许在所有名称空间中使用该身份，以便可以轻松重用。
+您可以参考https://github.com/kubernetes-sigs/cluster-api-provider-vsphere/blob/main/docs/identity_management.md[官方文档]以了解更多关于身份管理的信息。
++
+[source,yaml]
+----
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cluster-identity
+  namespace: capv-system
+type: Opaque
+stringData:
+  username: xxx
+  password: xxx
+---
+apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+kind: VSphereClusterIdentity
+metadata:
+  name: cluster-identity
+spec:
+  secretName: cluster-identity
+  allowedNamespaces:
+    selector:
+      matchLabels: {}
+----
+--
+======
+
+
+== 从 ClusterClass 创建集群
+
+[tabs]
+======
+
+Azure RKE2::
++
+--
+* 可以在 https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles 示例] 中找到 Azure ClusterClass。
++
+像Azure Cloud Provider和Calico CNI这样的应用程序将安装在下游集群上。在集群创建时，针对具有特定标签的集群（如`cloud-provider: azure`和`cni: calico`）会自动完成此操作。
++
+[tabs]
+=======
+CLI::
++
+可以使用示例工具应用 Azure RKE2 ClusterClass 及相关应用程序：
++
+[source,bash, subs="attributes"]
+----
+go run github.com/rancher/turtles/examples@{turtles_version} -r azure-rke2 | kubectl apply -f -
+----
+kubectl::
++
+* 或者，您可以直接使用 kubectl 应用 Azure RKE2 ClusterClass：
++
+[source,bash, subs="attributes"]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/clusterclasses/azure/rke2/clusterclass-rke2-example.yaml
+----
+
+* 此外，https://capz.sigs.k8s.io/self-managed/cloud-provider-config[Azure Cloud Provider] 需要在每个下游集群上安装，以便节点能够正确初始化。
+在这个示例中，我们还将安装 https://docs.tigera.io/calico/latest/about/[Calico] 作为默认的 CNI。
++
+我们可以在集群创建时使用 https://rancher.github.io/cluster-api-addon-provider-fleet/[Cluster API Add-on Provider Fleet] 自动完成此操作。
+首先需要创建两个 `HelmOps`，以通过标签选择器应用于新集群。
++
+[source,bash, subs="attributes"]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/ccm/azure/helm-chart.yaml
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/cni/calico/helm-chart.yaml
+----
+=======
+
+* 从示例 ClusterClass 创建 Azure 集群
++
+请注意，某些变量留给用户进行替换。
++
+[source,yaml]
+----
+apiVersion: cluster.x-k8s.io/v1beta2
+kind: Cluster
+metadata:
+  labels:
+    cluster-api.cattle.io/rancher-auto-import: "true"
+    cloud-provider: azure
+    cni: calico
+  name: azure-quickstart
+spec:
+  clusterNetwork:
+    pods:
+      cidrBlocks:
+      - 192.168.0.0/16
+  topology:
+    classRef: 
+      name: azure-rke2-example
+    controlPlane:
+      replicas: 1
+    variables:
+    - name: subscriptionID
+      value: <AZURE_SUBSCRIPTION_ID>
+    - name: location
+      value: <AZURE_LOCATION>
+    - name: resourceGroup
+      value: <AZURE_RESOURCE_GROUP>
+    - name: azureClusterIdentityName
+      value: cluster-identity
+    version: v1.34.3+rke2r1
+    workers:
+      machineDeployments:
+      - class: rke2-default-worker
+        name: md-0
+        replicas: 1
+----
+--
+
+Azure AKS::
++
+--
+* 可以在 https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles 示例] 中找到 Azure AKS ClusterClass。
++
+[tabs]
+=======
+CLI::
++
+可以使用示例工具应用 Azure AKS ClusterClass：
++
+[source,bash, subs="attributes"]
+----
+go run github.com/rancher/turtles/examples@{turtles_version} -r azure-aks | kubectl apply -f -
+----
+kubectl::
++
+* 或者，您可以直接使用 kubectl 应用 Azure AKS ClusterClass：
++
+[source,bash, subs="attributes"]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/clusterclasses/azure/aks/clusterclass-aks-example.yaml
+----
+=======
+
+* 从示例 ClusterClass 创建 Azure AKS 集群。
++
+Azure AKS `ClusterClass` 是从 `Cluster` 创建的，使用 Azure 服务操作员管理的 `AzureASOManagedCluster`、`AzureASOManagedControlPlane` 和 `AzureASOManagedMachinePool` 资源。
+因此，您不会像自管理 Azure 集群（例如，使用 RKE2 的 Azure）那样使用 `AzureClusterIdentity`。相反，`Secret` 将在与 `Cluster` 相同的命名空间中使用服务主体凭据创建。
+请注意，`Secret` 定义嵌入在 `Cluster` 清单中以简化操作，但也可以提前创建。
++
+有关这种身份验证方法的更多信息，您可以参考 https://azure.github.io/azure-service-operator/guide/authentication/[Azure Service Operator 文档]。
++
+请注意，某些变量留给用户进行替换。
++
+[source,yaml]
+----
+apiVersion: v1
+kind: Secret
+metadata:
+  name: aks-credentials
+stringData:
+  AZURE_SUBSCRIPTION_ID: <AZURE_SUBSCRIPTION_ID>
+  AZURE_TENANT_ID: <AZURE_TENANT_ID>
+  AZURE_CLIENT_ID: <AZURE_CLIENT_ID>
+  AZURE_CLIENT_SECRET: <AZURE_CLIENT_SECRET>
+type: Opaque
+---
+apiVersion: cluster.x-k8s.io/v1beta2
+kind: Cluster
+metadata:
+  labels:
+    cluster-api.cattle.io/rancher-auto-import: "true"
+  name: azure-aks-quickstart
+spec:
+  clusterNetwork:
+    pods:
+      cidrBlocks:
+      - 192.168.0.0/16
+  topology:
+    class: azure-aks-example
+    variables:
+    - name: location
+      value: <AZURE_LOCATION>
+    - name: resourceGroup
+      value: <AZURE_RESOURCE_GROUP>
+    - name: asoCredentialSecretName
+      value: aks-credentials
+    version: v1.34.2
+    workers:
+      machinePools:
+      - class: default-system
+        name: system-1
+        replicas: 1
+      - class: default-worker
+        name: worker-1
+        replicas: 1
+----
+--
+
+Azure Kubeadm::
++
+--
+* 可以在 https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles 示例] 中找到 Azure ClusterClass。
++
+像Azure Cloud Provider和Calico CNI这样的应用程序将安装在下游集群上。在集群创建时，针对具有特定标签的集群（如`cloud-provider: azure`和`cni: calico`）会自动完成此操作。
++
+[tabs]
+=======
+CLI::
++
+可以使用示例工具应用 Azure RKE2 ClusterClass 及相关应用程序：
++
+[source,bash, subs="attributes"]
+----
+go run github.com/rancher/turtles/examples@{turtles_version} -r azure-rke2 | kubectl apply -f -
+----
+
+kubectl::
++
+* 或者，您可以直接使用 kubectl 应用 Azure RKE2 ClusterClass：
++
+[source,bash, subs="attributes"]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/clusterclasses/azure/kubeadm/clusterclass-kubeadm-example.yaml
+----
+
+* 此外，https://capz.sigs.k8s.io/self-managed/cloud-provider-config[Azure Cloud Provider] 需要在每个下游集群上安装，以便节点能够正确初始化。在这个示例中，我们还将安装 https://docs.tigera.io/calico/latest/about/[Calico] 作为默认的 CNI。
++
+我们可以在集群创建时使用 https://rancher.github.io/cluster-api-addon-provider-fleet/[Cluster API Add-on Provider Fleet] 自动完成此操作。首先需要创建两个 `HelmOps`，以通过标签选择器应用于新集群。
++
+[source,bash, subs="attributes"]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/ccm/azure/helm-chart.yaml
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/cni/calico/helm-chart.yaml
+----
+=======
+
+* 从示例 ClusterClass 创建 Azure 集群。
++
+请注意，某些变量留给用户进行替换。
++
+[source,yaml]
+----
+apiVersion: cluster.x-k8s.io/v1beta2
+kind: Cluster
+metadata:
+  labels:
+    cluster-api.cattle.io/rancher-auto-import: "true"
+    cloud-provider: azure
+    cni: calico
+  name: azure-kubeadm-quickstart
+spec:
+  clusterNetwork:
+    pods:
+      cidrBlocks:
+      - 192.168.0.0/16
+  topology:
+    classRef: 
+      name: azure-kubeadm-example
+    controlPlane:
+      replicas: 1
+    variables:
+    - name: subscriptionID
+      value: <AZURE_SUBSCRIPTION_ID>
+    - name: location
+      value: <AZURE_LOCATION>
+    - name: resourceGroup
+      value: <AZURE_RESOURCE_GROUP>
+    - name: azureClusterIdentityName
+      value: cluster-identity
+    version: v1.34.3
+    workers:
+      machineDeployments:
+      - class: kubeadm-default-worker
+        name: md-0
+        replicas: 1
+----
+--
+
+AWS EKS::
++
+--
+* 可以在 https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles 示例] 中找到 AWS EKS ClusterClass。
++
+[tabs]
+=======
+
+CLI::
++
+可以使用示例工具应用AWS EKS ClusterClass及相关应用程序：
++
+[source,bash]
+----
+go run github.com/rancher/turtles/examples@main -r aws-eks | kubectl apply -f -
+----
+
+kubectl::
++
+* 或者，您可以直接使用kubectl应用AWS EKS ClusterClass：
++
+[source,bash]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/clusterclasses/aws/eks/clusterclass-eks-example.yaml
+----
+=======
++
+* 从示例ClusterClass创建AWS集群 +
++
+请注意，某些变量留给用户进行替换。 +
++
+[source,yaml]
+----
+apiVersion: cluster.x-k8s.io/v1beta2
+kind: Cluster
+metadata:
+  labels:
+    cluster-api.cattle.io/rancher-auto-import: "true"
+  name: aws-quickstart
+spec:
+  clusterNetwork:
+    pods:
+      cidrBlocks:
+      - 192.168.0.0/16
+  topology:
+    classRef:
+      name: aws-eks-example
+    variables:
+    - name: region
+      value: eu-west-2
+    - name: instanceType
+      value: <AWS_NODE_MACHINE_TYPE>
+    - name: awsClusterIdentityName
+      value: cluster-identity
+    version: v1.32.0
+    workers:
+      machineDeployments:
+      - class: default-worker
+        name: md-0
+        replicas: 1
+----
+--
+
+AWS Kubeadm::
++
+--
+* 可以在https://github.com/rancher/turtles/tree/main/examples/clusterclasses[乌龟示例]中找到AWS Kubeadm ClusterClass。
++
+像https://docs.tigera.io/calico/latest/about/[Calico CNI]、https://github.com/kubernetes/cloud-provider-aws[AWS云控制器管理器]和https://github.com/kubernetes-sigs/aws-ebs-csi-driver[AWS EBS CSI驱动程序]这样的应用程序将会被安装在下游集群上。在集群创建时，针对具有特定标签的目标集群会自动完成此操作，例如`cni: calico`、`cloud-provider: aws`和`csi: aws-ebs-csi-driver`。
++
+[tabs]
+=======
+
+CLI::
++
+可以使用示例工具应用AWS Kubeadm ClusterClass及相关应用程序：
++
+[source,bash, subs="attributes"]
+----
+go run github.com/rancher/turtles/examples@{turtles_version} -r aws-kubeadm | kubectl apply -f -
+----
+
+kubectl::
++
+* 或者，您可以直接使用kubectl应用AWS Kubeadm ClusterClass：
++
+[source,bash, subs="attributes"]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/clusterclasses/aws/kubeadm/clusterclass-kubeadm-example.yaml
+----
+
+* 在这个示例中，我们还将安装https://docs.tigera.io/calico/latest/about/[Calico]作为默认CNI。
+* 每个下游集群都需要安装https://github.com/kubernetes/cloud-provider-aws[AWS云控制器管理器]，以使节点能够正常工作。
+* 此外，我们还将启用https://github.com/kubernetes-sigs/aws-ebs-csi-driver[AWS EBS CSI驱动程序]。
++
+我们可以在集群创建时使用 https://rancher.github.io/cluster-api-addon-provider-fleet/[Cluster API附加产品提供程序Fleet] 自动完成此操作。
+需要先创建`HelmOps`，以便通过标签选择器应用到新集群。这将负责在工作负载集群中部署Calico、EBS CSI驱动程序和AWS云控制器管理器。
++
+[source,bash, subs="attributes"]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/csi/aws/helm-chart.yaml
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/cni/aws/calico/helm-chart.yaml
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/ccm/aws/helm-chart.yaml
+----
+=======
+
+* 从示例ClusterClass创建AWS集群。
++
+请注意，某些变量留给用户进行替换。
++
+[source,yaml]
+----
+apiVersion: cluster.x-k8s.io/v1beta2
+kind: Cluster
+metadata:
+  labels:
+    cluster-api.cattle.io/rancher-auto-import: "true"
+    cni: calico
+    cloud-provider: aws
+    csi: aws-ebs-csi-driver
+  name: aws-quickstart
+spec:
+  clusterNetwork:
+    pods:
+      cidrBlocks:
+      - 192.168.0.0/16
+  topology:
+    classRef: 
+      name: aws-kubeadm-example
+    controlPlane:
+      replicas: 3
+    variables:
+    - name: region
+      value: eu-west-2
+    - name: sshKeyName
+      value: <AWS_SSH_KEY_NAME>
+    - name: controlPlaneMachineType
+      value: <AWS_CONTROL_PLANE_MACHINE_TYPE>
+    - name: workerMachineType
+      value: <AWS_NODE_MACHINE_TYPE>
+    - name: awsClusterIdentityName
+      value: cluster-identity
+    version: v1.32.0
+    workers:
+      machineDeployments:
+      - class: default-worker
+        name: md-0
+        replicas: 1
+----
+--
+
+AWS RKE2::
++
+--
+[WARNING]
+====
+在创建AWS+RKE2工作负载集群之前，需要为将要安装在集群上的RKE2版本构建AMI，或者找到一个适用于非隔离安装的AMI。
+您可以按照https://github.com/rancher/cluster-api-provider-rke2/tree/main/image-builder#aws[RKE2镜像构建者README]中的步骤构建AMI。
+====
+
+* 可以在https://github.com/rancher/turtles/tree/main/examples/clusterclasses[乌龟示例]中找到AWS RKE2 ClusterClass。
++
+像https://docs.tigera.io/calico/latest/about/[Calico CNI]、https://github.com/kubernetes/cloud-provider-aws[AWS云控制器管理器]和https://github.com/kubernetes-sigs/aws-ebs-csi-driver[AWS EBS CSI驱动程序]这样的应用程序将会被安装在下游集群上。在集群创建时，针对具有特定标签的目标集群会自动完成此操作，例如`cni: calico`、`cloud-provider: aws`和`csi: aws-ebs-csi-driver`。
++
+[tabs]
+=======
+CLI::
++
+可以使用示例工具应用AWS RKE2 ClusterClass及相关应用程序：
++
+[source,bash, subs="attributes"]
+----
+go run github.com/rancher/turtles/examples@{turtles_version} -r aws-rke2 | kubectl apply -f -
+----
+
+kubectl::
++
+* 或者，您可以直接使用kubectl应用AWS RKE2 ClusterClass：
++
+[source,bash, subs="attributes"]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/clusterclasses/aws/rke2/clusterclass-ec2-rke2-example.yaml
+----
+=======
+
+* 在这个示例中，我们还将安装https://docs.tigera.io/calico/latest/about/[Calico]作为默认CNI。
+* 每个下游集群都需要安装https://github.com/kubernetes/cloud-provider-aws[AWS云控制器管理器]，以使节点能够正常工作。
+* 此外，我们还将启用https://github.com/kubernetes-sigs/aws-ebs-csi-driver[AWS EBS CSI驱动程序]。
++
+我们可以在集群创建时使用https://rancher.github.io/cluster-api-addon-provider-fleet/[Cluster API附加产品提供程序Fleet]自动完成此操作。
+需要先创建`HelmOps`，以便通过标签选择器应用到新集群。这将负责在工作负载集群中部署Calico、EBS CSI驱动程序和AWS云控制器管理器。
++
+[source,bash, subs="attributes"]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/csi/aws/helm-chart.yaml
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/cni/aws/calico/helm-chart.yaml
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/ccm/aws/helm-chart.yaml
+----
+
+* 从示例ClusterClass创建AWS集群
++ 
+请注意，某些变量留给用户进行替换。
++
+[source,yaml]
+----
+apiVersion: cluster.x-k8s.io/v1beta2
+kind: Cluster
+metadata:
+  labels:
+    cloud-provider: aws
+    cni: calico
+    csi: aws-ebs-csi-driver
+    cluster-api.cattle.io/rancher-auto-import: "true"
+  name: aws-quickstart
+spec:
+  clusterNetwork:
+    pods:
+      cidrBlocks:
+      - 192.168.0.0/16
+  topology:
+    classRef: 
+      name: aws-rke2-example
+    controlPlane:
+      replicas: 3
+    variables:
+    - name: cni
+      value: none
+    - name: region
+      value: <AWS_REGION>
+    - name: sshKeyName
+      value: <AWS_SSH_KEY_NAME>
+    - name: controlPlaneMachineType
+      value: <AWS_RKE2_CONTROL_PLANE_MACHINE_TYPE>
+    - name: workerMachineType
+      value: <AWS_RKE2_NODE_MACHINE_TYPE>
+    - name: amiID
+      value: <AWS_AMI_ID>
+    - name: awsClusterIdentityName
+      value: cluster-identity
+    version: v1.35.0+rke2r1
+    workers:
+      machineDeployments:
+      - class: default-worker
+        name: md-0
+        replicas: 1
+----
+--
+
+GCP GKE::
++
+--
+* 可以在https://github.com/rancher/turtles/tree/main/examples/clusterclasses[乌龟示例]中找到GCP GKE ClusterClass。
++
+[tabs]
+=======
+
+CLI::
++
+可以使用示例工具应用GCP GKE ClusterClass及相关应用程序：
++
+[source,bash]
+----
+go run github.com/rancher/turtles/examples@main -r gcp-gke | kubectl apply -f -
+----
+
+kubectl::
++
+* 或者，您可以直接使用kubectl应用GCP GKE ClusterClass：
++
+[source,bash]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/clusterclasses/gcp/gke/clusterclass-gke-example.yaml
+----
+=======
++
+* 从示例ClusterClass创建GCP集群 +
++
+请注意，某些变量留给用户进行替换。 +
++
+[source,yaml]
+----
+apiVersion: cluster.x-k8s.io/v1beta2
+kind: Cluster
+metadata:
+  labels:
+    cluster-api.cattle.io/rancher-auto-import: "true"
+  name: gcp-quickstart
+spec:
+  clusterNetwork:
+    pods:
+      cidrBlocks:
+      - 192.168.0.0/16
+  topology:
+    classRef:
+      name: gcp-gke-example
+    variables:
+      - name: project
+        value: ${GCP_PROJECT}
+      - name: region
+        value: ${GCP_REGION}
+      - name: networkName
+        value: ${GCP_NETWORK_NAME}
+    version: v1.35.0
+    workers:
+      machinePools:
+        - class: default-system
+          name: system-pool
+          replicas: ${WORKER_MACHINE_COUNT}
+        - class: default-worker
+          name: worker-pool
+          replicas: ${WORKER_MACHINE_COUNT}
+----
+--
+
+GCP Kubeadm::
++
+--
+[WARNING]
+====
+在创建GCP+Kubeadm工作负载集群之前，必须构建一个将要安装在集群上的Kubernetes版本的镜像，或者找到一个适合您用例的镜像。
+您可以按照https://image-builder.sigs.k8s.io/capi/providers/gcp[Kubernetes GCP镜像构建器书籍]中的步骤进行操作。
+====
+
+* 可以在https://github.com/rancher/turtles/tree/main/examples/clusterclasses[乌龟示例]中找到GCP Kubeadm ClusterClass。
++
+像https://docs.tigera.io/calico/latest/about/[Calico CNI]和https://github.com/kubernetes/cloud-provider-gcp[GCP云控制器管理器]这样的应用程序将安装在下游集群上。在集群创建时，针对具有特定标签的集群会自动完成此操作，例如`cni: calico`和`cloud-provider: gcp`。
++
+[tabs]
+=======
+CLI::
++
+可以使用示例工具应用GCP Kubeadm ClusterClass及相关应用程序：
++
+[source,bash, subs="attributes"]
+----
+go run github.com/rancher/turtles/examples@{turtles_version} -r gcp-kubeadm | kubectl apply -f -
+----
+
+kubectl::
++
+* 或者，您可以直接使用kubectl应用GCP Kubeadm ClusterClass：
++
+[source,bash, subs="attributes"]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/clusterclasses/gcp/kubeadm/clusterclass-kubeadm-example.yaml
+----
++
+* 在这个示例中，我们还将安装https://docs.tigera.io/calico/latest/about/[Calico]作为默认CNI。
+* https://github.com/kubernetes/cloud-provider-gcp[GCP云控制器管理器]需要在每个下游集群上安装，以使节点能够正常工作。
++
+ifeval::["{build-type}" == "product"]
+我们可以在集群创建时使用https://rancher.github.io/cluster-api-addon-provider-fleet/[Cluster API附加产品提供程序Fleet]和https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/how-tos-for-users/bundle-add.html[Fleet Bundle]的组合自动完成此操作。
+endif::[]
+ifeval::["{build-type}" == "community"]
+我们可以在集群创建时使用https://rancher.github.io/cluster-api-addon-provider-fleet/[Cluster API附加产品提供程序Fleet]和https://fleet.rancher.io/bundle-add[Fleet Bundle]的组合自动完成此操作。
+endif::[]
+`HelmOps`需要首先创建，以便通过标签选择器应用于新集群。这将负责部署Calico。
++
+[source,bash, subs="attributes"]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/cni/calico/helm-chart.yaml
+----
++
+一个 `Bundle` 将负责部署 GCP Cloud Controller Manager。不使用附加产品提供程序Fleet的原因是 https://github.com/kubernetes/cloud-provider-gcp[GCP Cloud Controller Manager] 不提供 Helm 图表，因此我们选择直接创建 Fleet `Bundle` 资源。
++
+[source,bash, subs="attributes"]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/ccm/gcp/bundle.yaml
+----
+=======
++
+* 从示例ClusterClass创建GCP集群
++ 
+请注意，某些变量留给用户进行替换。
+GCP云控制器管理器的默认配置被设置为使用单区集群，因此 `clusterFailureDomains` 变量被设置为单个区域。如果您需要配置多区域集群，我们建议您检查 https://github.com/kubernetes/cloud-provider-gcp/blob/master/providers/gce/gce.go#L120[GCP云控制器管理器] 提供的参数，以及 https://github.com/kubernetes-sigs/cluster-api-provider-gcp/blob/main/test/e2e/data/infrastructure-gcp/cluster-template-ci.yaml#L59[CAPG 如何利用这些变量] 来创建特定于集群的配置。
++
+[source,yaml]
+----
+apiVersion: cluster.x-k8s.io/v1beta2
+kind: Cluster
+metadata:
+  labels:
+    cluster-api.cattle.io/rancher-auto-import: "true"
+    cni: calico
+    cloud-provider: gcp
+  name: gcp-quickstart
+spec:
+  clusterNetwork:
+    pods:
+      cidrBlocks: 
+      - 192.168.0.0/16
+  topology:
+    classRef:
+      name: gcp-kubeadm-example
+    controlPlane:
+      replicas: 1
+    workers:
+      machineDeployments:
+        - class: "default-worker"
+          name: "md-0"
+          replicas: 1
+    variables:
+      - name: gcpProject
+        value: <GCP_PROJECT>
+      - name: region
+        value: <GCP_REGION>
+      - name: gcpNetworkName
+        value: <GCP_NETWORK_NAME>
+      - name: clusterFailureDomains
+        value:
+          - "<GCP_REGION>-a"
+      - name: imageId
+        value: <GCP_IMAGE_ID>
+      - name: machineType
+        value: <GCP_MACHINE_TYPE>
+    version: v1.34.1
+----
+--
+
+Docker Kubeadm::
++
+--
+* 在 https://github.com/rancher/turtles/tree/main/examples/clusterclasses[乌龟示例] 中可以找到 Docker Kubeadm ClusterClass。
++
+像 https://docs.tigera.io/calico/latest/about/[Calico CNI] 这样的应用程序将安装在下游集群上。在集群创建时，具有特定标签的目标集群会自动完成此操作，例如 `cni: calico`。
++
+[tabs]
+=======
+CLI::
++
+可以使用示例工具应用 Docker Kubeadm ClusterClass 和相关应用程序：
++
+[source,bash, subs="attributes"]
+----
+go run github.com/rancher/turtles/examples@{turtles_version} -r docker-kubeadm | kubectl apply -f -
+----
+
+kubectl::
++
+* 或者，您可以直接使用 kubectl 应用 Docker Kubeadm ClusterClass：
++
+[source,bash, subs="attributes"]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/clusterclasses/docker/kubeadm/clusterclass-docker-kubeadm.yaml
+----
+
+* 在此示例中，我们还将安装 Calico 作为默认 CNI。
++
+我们可以在集群创建时使用 https://rancher.github.io/cluster-api-addon-provider-fleet/[Cluster API附加产品提供程序Fleet] 自动完成此操作。
+首先需要创建两个 `HelmOps`，以通过标签选择器应用于新集群。
++
+[source,bash, subs="attributes"]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/cni/calico/helm-chart.yaml
+----
+=======
+
+* 从示例 ClusterClass 创建 Docker Kubeadm 集群。
++
+请注意，某些变量留给用户进行替换。
++
+[source,yaml]
+----
+apiVersion: cluster.x-k8s.io/v1beta2
+kind: Cluster
+metadata:
+  name: docker-kubeadm-quickstart
+  labels:
+    cni: calico
+spec:
+  clusterNetwork:
+    pods:
+      cidrBlocks:
+        - 192.168.0.0/16
+    serviceDomain: cluster.local
+    services:
+      cidrBlocks:
+        - 10.96.0.0/24
+  topology:
+    classRef: 
+      name: docker-kubeadm-example
+    controlPlane:
+      replicas: 1
+    version: v1.35.0
+    workers:
+      machineDeployments:
+        - class: default-worker
+          name: md-0
+          replicas: 1
+----
+--
+
+Docker RKE2::
++
+--
+* 在 https://github.com/rancher/turtles/tree/main/examples/clusterclasses[乌龟示例] 中可以找到 Docker RKE2 ClusterClass。
++
+像 https://docs.tigera.io/calico/latest/about/[Calico CNI] 这样的应用程序将安装在下游集群上。在集群创建时，具有特定标签的目标集群会自动完成此操作，例如 `cni: calico`。
++
+[tabs]
+=======
+CLI::
++
+可以使用示例工具应用 Docker RKE2 ClusterClass 和相关应用程序：
++
+[source,bash, subs="attributes"]
+----
+go run github.com/rancher/turtles/examples@{turtles_version} -r docker-rke2 | kubectl apply -f -
+----
+
+kubectl::
++
+* 或者，您可以直接使用 kubectl 应用 Docker RKE2 ClusterClass：
++
+[source,bash, subs="attributes"]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/clusterclasses/docker/rke2/clusterclass-docker-rke2.yaml
+----
+
+* 在此示例中，我们还将安装 Calico 作为默认 CNI。
++
+我们可以在集群创建时使用 https://rancher.github.io/cluster-api-addon-provider-fleet/[Cluster API附加产品提供程序Fleet] 自动完成此操作。
+首先需要创建两个 `HelmOps`，以通过标签选择器应用于新集群。
++
+[source,bash, subs="attributes"]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/cni/calico/helm-chart.yaml
+----
+
+* 为 Docker RKEv2 集群创建 LoadBalancer ConfigMap。
++
+[source,bash, subs="attributes"]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/lb/docker/configmap.yaml
+----
+=======
+
+* 从示例ClusterClass创建Docker Kubeadm集群。
++
+[source,yaml]
+----
+apiVersion: cluster.x-k8s.io/v1beta2
+kind: Cluster 
+metadata:
+  name: docker-rke2-example
+  labels:
+    cni: calico
+  annotations:
+    cluster-api.cattle.io/upstream-system-agent: "true"
+spec:
+  clusterNetwork:
+    pods:
+      cidrBlocks:
+      - 192.168.0.0/16
+    services:
+      cidrBlocks:
+      - 10.96.0.0/24
+    serviceDomain: cluster.local
+  topology:
+    classRef: 
+      name: docker-rke2-example
+    controlPlane:
+      replicas: 1
+    variables:
+    - name: rke2CNI
+      value: none
+    - name: dockerImage
+      value: kindest/node:v1.35.0
+    version: v1.35.0+rke2r1
+    workers:
+      machineDeployments:
+      - class: default-worker
+        name: md-0
+        replicas: 1
+----
+--
+
+vSphere Kubeadm::
++
+--
+* 在 https://github.com/rancher/turtles/tree/main/examples/clusterclasses[乌龟示例] 中可以找到 vSphere ClusterClass。
++
+像 vSphere云提供程序、vSphere CSI 驱动程序和 Calico CNI 这样的应用程序将安装在下游集群上。在集群创建时，针对具有特定标签的目标集群会自动完成此操作，例如`cloud-provider: vsphere`、`csi: vsphere`和`cni: calico`。
++
+[tabs]
+=======
+CLI::
++
+可以使用示例工具应用vSphere Kubeadm ClusterClass及相关应用程序：
++
+[source,bash, subs="attributes"]
+----
+go run github.com/rancher/turtles/examples@{turtles_version} -r vsphere-kubeadm | kubectl apply -f -
+----
+
+kubectl::
++
+* 或者，您可以直接使用kubectl应用vSphere Kubeadm ClusterClass：
++
+[source,bash, subs="attributes"]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/clusterclasses/vsphere/kubeadm/clusterclass-kubeadm-example.yaml
+----
+
+* 此外，https://github.com/kubernetes/cloud-provider-vsphere[vSphere云提供程序]需要在每个下游集群上安装，以便节点能够正确初始化。
+将使用https://github.com/kubernetes-sigs/vsphere-csi-driver[vSphere的容器存储接口（CSI）驱动程序]作为存储解决方案。
+最后，在本示例中，我们将安装https://docs.tigera.io/calico/latest/about/[Calico]作为默认的CNI。
+我们可以在集群创建时使用https://rancher.github.io/cluster-api-addon-provider-fleet/[Cluster API附加产品提供程序Fleet]自动安装所有应用程序。
+首先需要创建两个`HelmOps`，以便通过标签选择器应用于新集群。
++
+[source,bash, subs="attributes"]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/ccm/vsphere/helm-chart.yaml
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/cni/calico/helm-chart.yaml
+----
++
+由于vSphere CSI驱动程序未打包在Helm中，我们将把其整个清单包含在一个Fleet包中，该包将应用于下游集群。
++
+[source,bash, subs="attributes"]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/csi/vsphere/bundle.yaml
+----
+=======
+
+* 集群配置
++
+vSphere云提供程序和vSphere CSI控制器需要额外的配置，以便应用于下游集群。
+与上述步骤类似，我们可以创建两个额外的Fleet包，这些包将应用于下游集群。
+请注意，这些包被配置为通过名称定位下游集群：`vsphere-kubeadm-quickstart`。
+如果您为集群使用不同的名称，请相应地更改包的目标。
++
+[source,yaml]
+----
+kind: Bundle
+apiVersion: fleet.cattle.io/v1alpha1
+metadata:
+  name: vsphere-csi-config
+spec:
+  resources:
+  - content: |-
+      apiVersion: v1
+      kind: Secret
+      type: Opaque
+      metadata:
+        name: vsphere-config-secret
+        namespace: vmware-system-csi
+      stringData:
+        csi-vsphere.conf: |+
+          [Global]
+          thumbprint = "<VSPHERE_THUMBPRINT>"
+          [VirtualCenter "<VSPHERE_SERVER>"]
+          user = "<VSPHERE_USER>"
+          password = "<VSPHERE_PASSWORD>"
+          datacenters = "<VSPHERE_DATACENTED>"
+          [Network]
+          public-network = "<VSPHERE_NETWORK>"
+          [Labels]
+          zone = ""
+          region = ""
+  targets:
+  - clusterSelector:
+      matchLabels:
+        csi: vsphere
+        cluster.x-k8s.io/cluster-name: 'vsphere-kubeadm-quickstart'
+---
+kind: Bundle
+apiVersion: fleet.cattle.io/v1alpha1
+metadata:
+  name: vsphere-cloud-credentials
+spec:
+  resources:
+  - content: |-
+      apiVersion: v1
+      kind: Secret
+      type: Opaque
+      metadata:
+        name: vsphere-cloud-secret
+        namespace: kube-system
+      stringData:
+        <VSPHERE_SERVER>.password: "<VSPHERE_PASSWORD>"
+        <VSPHERE_SERVER>.username: "<VSPHERE_USER>"
+  targets:
+  - clusterSelector:
+      matchLabels:
+        cloud-provider: vsphere
+        cluster.x-k8s.io/cluster-name: 'vsphere-kubeadm-quickstart'
+----
+
+* 从示例ClusterClass创建vSphere集群
++
+请注意，在本示例中，我们使用https://kube-vip.io/[kube-vip]作为控制平面负载均衡器。
+`KUBE_VIP_INTERFACE`将用于在ARP模式下绑定`CONTROL_PLANE_IP`。根据您的操作系统和网络设备配置，您需要相应地配置此值，例如，设置为`eth0`。
+`kube-vip`静态清单嵌入在ClusterClass定义中。有关如何为您自己的ClusterClasses生成静态kube-vip清单的更多信息，请查阅官方https://kube-vip.io/docs/installation/static/[文档]。
++
+[source,yaml]
+----
+apiVersion: cluster.x-k8s.io/v1beta2
+kind: Cluster
+metadata:
+  labels:
+    cni: calico
+    cloud-provider: vsphere
+    csi: vsphere
+    cluster-api.cattle.io/rancher-auto-import: "true"
+  name: 'vsphere-kubeadm-quickstart'
+spec:
+  clusterNetwork:
+    pods:
+      cidrBlocks:
+      - 192.168.0.0/16
+  topology:
+    classRef: 
+      name: vsphere-kubeadm-example
+    version: v1.35.0
+    controlPlane:
+      replicas: 3
+    workers:
+      machineDeployments:
+      - class: vsphere-kubeadm-example-worker
+        name: md-0
+        replicas: 1
+    variables:
+    - name: vSphereClusterIdentityName
+      value: cluster-identity
+    - name: vSphereTLSThumbprint
+      value: <VSPHERE_THUMBPRINT>
+    - name: vSphereDataCenter
+      value: <VSPHERE_DATACENTER>
+    - name: vSphereDataStore
+      value: <VSPHERE_DATASTORE>
+    - name: vSphereFolder
+      value: <VSPHERE_FOLDER>
+    - name: vSphereNetwork
+      value: <VSPHERE_NETWORK>
+    - name: vSphereResourcePool
+      value: <VSPHERE_RESOURCE_POOL>
+    - name: vSphereServer
+      value: <VSPHERE_SERVER>
+    - name: vSphereTemplate
+      value: <VSPHERE_TEMPLATE>
+    - name: controlPlaneIpAddr
+      value: <CONTROL_PLANE_IP>
+    - name: controlPlanePort
+      value: 6443
+    - name: sshKey
+      value: <SSH_KEY>
+    - name: kubeVIPInterface
+      value: <KUBE_VIP_INTERFACE>
+----
+--
+
+vSphere RKE2::
++
+--
+* 在 https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles 示例] 中可以找到 vSphere ClusterClass。
++
+像 vSphere Cloud Provider、vSphere CSI 驱动程序和 Calico CNI 这样的应用程序将安装在下游集群上。在集群创建时，针对具有特定标签的目标集群会自动完成此操作，例如`cloud-provider: vsphere`、`csi: vsphere`和`cni: calico`。
++
+[tabs]
+=======
+
+CLI::
++
+可以使用示例工具应用 vSphere RKE2 ClusterClass 及相关应用程序：
++
+[source,bash, subs="attributes"]
+----
+go run github.com/rancher/turtles/examples@{turtles_version} -r vsphere-rke2 | kubectl apply -f -
+----
+
+kubectl::
++
+* 或者，您可以直接使用 kubectl 应用 vSphere RKE2 ClusterClass：
++
+[source,bash, subs="attributes"]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/clusterclasses/vsphere/rke2/clusterclass-rke2-example.yaml
+----
+
+* 此外，https://github.com/kubernetes/cloud-provider-vsphere[vSphere Cloud Provider]需要在每个下游集群上安装，以便节点能够正确初始化。
+将使用https://github.com/kubernetes-sigs/vsphere-csi-driver[vSphere的容器存储接口（CSI）驱动程序]作为存储解决方案。
+最后，在本示例中，我们将安装https://docs.tigera.io/calico/latest/about/[Calico]作为默认的CNI。
++
+我们可以在集群创建时使用 https://rancher.github.io/cluster-api-addon-provider-fleet/[集群 API 附加产品提供程序 Fleet] 自动安装所有应用程序。
+首先需要创建两个 `HelmOps`，以通过标签选择器应用于新集群。
++
+[source,bash, subs="attributes"]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/ccm/vsphere/helm-chart.yaml
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/cni/calico/helm-chart.yaml
+----
++
+由于 vSphere CSI 驱动程序未打包在 Helm 中，我们将把其整个清单包含在一个 Fleet 包中，该包将应用于下游集群。
++
+[source,bash, subs="attributes"]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/csi/vsphere/bundle.yaml
+----
+=======
+
+* 集群配置
++
+vSphere Cloud Provider 和 vSphere CSI控制器需要额外的配置，以便应用于下游集群。
+与上述步骤类似，我们可以创建两个额外的 Fleet 包，这些包将应用于下游集群。
+请注意，这些包被配置为通过名称定位下游集群：`vsphere-rke2-quickstart`。
+如果您为集群使用不同的名称，请相应地更改包的目标。
++
+[source,yaml]
+----
+kind: Bundle
+apiVersion: fleet.cattle.io/v1alpha1
+metadata:
+  name: vsphere-csi-config
+spec:
+  resources:
+  - content: |-
+      apiVersion: v1
+      kind: Secret
+      type: Opaque
+      metadata:
+        name: vsphere-config-secret
+        namespace: vmware-system-csi
+      stringData:
+        csi-vsphere.conf: |+
+          [Global]
+          thumbprint = "<VSPHERE_THUMBPRINT>"
+          [VirtualCenter "<VSPHERE_SERVER>"]
+          user = "<VSPHERE_USER>"
+          password = "<VSPHERE_PASSWORD>"
+          datacenters = "<VSPHERE_DATACENTED>"
+          [Network]
+          public-network = "<VSPHERE_NETWORK>"
+          [Labels]
+          zone = ""
+          region = ""
+  targets:
+  - clusterSelector:
+      matchLabels:
+        csi: vsphere
+        cluster.x-k8s.io/cluster-name: 'vsphere-rke2-quickstart'
+---
+kind: Bundle
+apiVersion: fleet.cattle.io/v1alpha1
+metadata:
+  name: vsphere-cloud-credentials
+spec:
+  resources:
+  - content: |-
+      apiVersion: v1
+      kind: Secret
+      type: Opaque
+      metadata:
+        name: vsphere-cloud-secret
+        namespace: kube-system
+      stringData:
+        <VSPHERE_SERVER>.password: "<VSPHERE_PASSWORD>"
+        <VSPHERE_SERVER>.username: "<VSPHERE_USER>"
+  targets:
+  - clusterSelector:
+      matchLabels:
+        cloud-provider: vsphere
+        cluster.x-k8s.io/cluster-name: 'vsphere-rke2-quickstart'
+----
+
+* 从示例ClusterClass创建vSphere集群
++
+请注意，在本示例中，我们使用https://kube-vip.io/[kube-vip]作为控制平面负载均衡器。
+`KUBE_VIP_INTERFACE`将用于在ARP模式下绑定`CONTROL_PLANE_IP`。根据您的操作系统和网络设备配置，您需要相应地配置此值，例如，设置为`eth0`。
+`kube-vip`静态清单嵌入在ClusterClass定义中。有关如何为您自己的ClusterClasses生成静态kube-vip清单的更多信息，请查阅官方https://kube-vip.io/docs/installation/static/[文档]。
+如果您使用基于 SUSE Linux Micro 的虚拟机模板，您可以选择提供一个 `productKey` 变量，以便自动注册 SL Micro 到 SUSE 客户中心。
++
+[source,yaml]
+----
+apiVersion: cluster.x-k8s.io/v1beta2
+kind: Cluster
+metadata:
+  labels:
+    cni: calico
+    cloud-provider: vsphere
+    csi: vsphere
+    cluster-api.cattle.io/rancher-auto-import: "true"
+  name: 'vsphere-rke2-quickstart'
+spec:
+  clusterNetwork:
+    pods:
+      cidrBlocks:
+      - 192.168.0.0/16
+  topology:
+    classRef: 
+      name: vsphere-rke2-example
+    version: v1.35.0+rke2r1
+    controlPlane:
+      replicas: 3
+    workers:
+      machineDeployments:
+      - class: vsphere-rke2-example-worker
+        name: md-0
+        replicas: 1
+    variables:
+    - name: vSphereClusterIdentityName
+      value: cluster-identity
+    - name: vSphereTLSThumbprint
+      value: <VSPHERE_THUMBPRINT>
+    - name: vSphereDataCenter
+      value: <VSPHERE_DATACENTER>
+    - name: vSphereDataStore
+      value: <VSPHERE_DATASTORE>
+    - name: vSphereFolder
+      value: <VSPHERE_FOLDER>
+    - name: vSphereNetwork
+      value: <VSPHERE_NETWORK>
+    - name: vSphereResourcePool
+      value: <VSPHERE_RESOURCE_POOL>
+    - name: vSphereServer
+      value: <VSPHERE_SERVER>
+    - name: vSphereTemplate
+      value: <VSPHERE_TEMPLATE>
+    - name: controlPlaneIpAddr
+      value: <CONTROL_PLANE_IP>
+    - name: controlPlanePort
+      value: 6443
+    - name: sshKey
+      value: <SSH_KEY>
+    - name: kubeVIPInterface
+      value: <KUBE_VIP_INTERFACE>
+    - name: productKey
+      value: <SL_MICRO_PRODUCT_KEY>
+----
+--
+======

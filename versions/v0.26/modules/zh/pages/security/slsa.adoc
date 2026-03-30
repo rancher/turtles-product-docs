@@ -1,0 +1,57 @@
+= SLSA
+:revdate: 2025-04-04
+:page-revdate: {revdate}
+
+== 概述
+
+https://slsa.dev/spec/v1.0/about[SLSA] 是一套可逐步采用的供应链安全指南，由行业共识建立。SLSA 制定的规范对软件生产者和消费者都很有用：生产者可以遵循 SLSA 的指南来增强他们的软件供应链安全性，而消费者可以使用 SLSA 来决定是否信任某个软件包。
+
+{product_name} 满足 https://slsa.dev/spec/v1.0/levels[SLSA Level 3] 的要求。
+
+|===
+| 要求 | 在 SLSA L3 中是必需的 | 由 {product_name} 满足
+
+| 选择合适的构建平台
+| 是
+| 是
+
+| 遵循一致的构建过程
+| 是
+| 是
+
+| 分发溯源
+| 是
+| 是
+|===
+
+== 构建平台
+
+* {product_name} 项目使用 Git 进行源代码管理。
+* 所有 {product_name} 维护者都必须启用双因素身份验证，以签署和确认他们的所有贡献。
+* {product_name} 项目使用 GitHub Actions 和 GitHub Runners 来构建所有发布工件。
+* 构建和发布过程在 GitHub 托管的运行器提供的临时环境中独立运行。
+
+== 构建过程
+
+* 构建和发布过程在代码中定义，并保持版本控制。
+* GitHub 工作流利用固定到特定版本的 GitHub Actions，并通过 GitHub Dependabot 保持最新。
+* 对构建和发布过程的所有更改都通过拉取请求进行，必须获得至少一位 {product_name} 维护者的批准。
+* 发布过程只能由 {product_name} 维护者通过推送符合 semver 格式的 Git 标签来启动。
+
+== 溯源
+
+* {product_name} 项目使用官方的 https://github.com/slsa-framework/slsa-github-generator[SLSA GitHub Generator] 项目生成和分发溯源。
+* 发布到 GitHub 容器注册表和 Rancher Prime 注册表的发布工件的溯源是使用 https://github.com/slsa-framework/slsa-github-generator[SLSA GitHub 生成器] 项目提供的 generator_container_slsa3 GitHub 工作流生成的。
+* 溯源通过其 SHA-256 格式的摘要来识别 {product_name} 容器镜像。
+* 溯源由 Sigstore Cosign 使用 GitHub OIDC 身份签名，验证溯源的公钥存储在公共 https://docs.sigstore.dev/logging/overview/[Rekor 透明日志] 中。
+* 发布过程和溯源生成在 GitHub 托管的运行器提供的临时环境中隔离运行。
+* 可以使用官方 https://github.com/slsa-framework/slsa-verifier[SLSA 验证工具] 验证 容器镜像{product_name}的溯源。
+* 溯源生成工作流在临时和隔离的虚拟机上运行，这些虚拟机由 GitHub 完全管理。
+* 溯源签名密钥是临时的，并通过 Sigstore 的 https://github.com/sigstore/cosign/blob/main/KEYLESS.md[无密钥] 签名程序生成。
+* https://github.com/slsa-framework/slsa-github-generator[SLSA GitHub 生成器] 在与构建和发布过程不同的虚拟机上运行，因此 {product_name} 构建脚本无法访问签名密钥。
+
+== 隔离
+
+* 发布过程和溯源生成在 GitHub 托管的运行器提供的临时环境中隔离运行。
+* 溯源生成与构建过程解耦；https://github.com/slsa-framework/slsa-github-generator[SLSA GitHub 生成器] 在由 GitHub 完全管理的不同虚拟机上运行。
+* 发布过程无法访问溯源签名密钥，因为溯源生成器在与 GitHub 托管的不同运行器上隔离运行。

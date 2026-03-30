@@ -1,0 +1,91 @@
+= ClusterctlConfig
+:revdate: 2025-11-14
+:page-revdate: {revdate}
+
+`ClusterctlConfig` 资源允许以声明式方式管理 clusterctl (CAPI Operator) 配置的覆盖。它用于配置 clusterctl 提供者及其 URL，以及版本限制。
+
+`ClusterctlConfig` 遵循 GitOps 模型 —— spec 字段是声明式的用户输入。Turtles 不会创建或更新该资源，用户需要指定提供者 URL 覆盖并维护其状态。它优先于嵌入的默认值或 `clusterctl` 默认提供者定义集。
+
+https://github.com/rancher/turtles/blob/main/docs/adr/0012-clusterctl-provider.md[ADR]
+
+== 用法
+
+要使用 `ClusterctlConfig` 资源：
+
+. 在 `ClusterctlConfig` 名称空间中创建一个名为 `clusterctl-config` 的 `turtles` 资源。
+. `ClusterctlConfig` 控制器将处理挂载到 `ConfigMap` 的 `cluster-api-operator` 的更新，所需的 clusterctl 配置基于 `ClusterctlConfig` 配置。
+. 以声明式方式管理 `ClusterctlConfig` 对象，以应用对生成的提供者配置的更改。更改生效可能需要一些时间，因为 `kubelet` 会根据 `ConfigMap` 状态更新安装点。
+
+这是一个示例 `ClusterctlConfig` 清单：
+
+[,yaml]
+----
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: ClusterctlConfig
+metadata:
+  name: clusterctl-config
+  namespace: cattle-turtles-system
+spec:
+  providers:
+  - name: metal3
+    url: https://github.com/metal3-io/cluster-api-provider-metal3/releases/v1.10.1/infrastructure-components.yaml
+    type: InfrastructureProvider
+  images:
+  - name: metal3
+    repository: "my.registry.mirror"
+    tag: customTag
+----
+
+此示例将为指定 URL 和类型的 `metal3` 提供者生成 clusterctl 配置。
+
+== 明细单
+
+`ClusterctlConfig` spec 中的关键字段是：
+
+* `providers[].name` - 提供者的名称（例如 metal3）
+* `providers[].url` - 提供者配置的 URL（例如。
+https://github.com/metal3-io/cluster-api-provider-metal3/releases/v1.10.1/infrastructure-components.yaml). 如果支持，可以使用 `latest` 版本，或者将最大版本固定为 `v1.10.1`。
+* `providers[].type` - 提供者的类型（例如 InfrastructureProvider）
+
+* `images[].name` - 要覆盖的镜像名称（例如 infrastructure-metal3、cluster-api、bootstrap-rke2、control-plane-rke2）
+* `images[].repository` - 设置容器注册表覆盖以拉取镜像
+* `images[].tag` - 允许为镜像指定标签
+
+== 覆盖认证提供者版本
+
+{product_name} 嵌入了一个经过验证的配置，其中所有认证提供者版本都被固定。 +
+通常版本会随着 {product_name} 的任何发布而更新。
+
+[WARNING]
+====
+- {product_name} 仅验证嵌入的认证提供者配置。对嵌入配置的任何自定义最终可能导致不兼容和不支持的场景。
+====
+
+为了覆盖提供者版本，或使用不同的注册表来拉取镜像，可以定义一个 `ClusterctlConfig`。 +
+有关镜像覆盖的更多信息，请参考上游 link:https://cluster-api.sigs.k8s.io/clusterctl/configuration#image-overrides[文档]。
+
+[source,yaml]
+----
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: ClusterctlConfig
+metadata:
+  name: clusterctl-config
+  namespace: cattle-turtles-system
+spec:
+  providers:
+  - name: rke2
+    url: "https://github.com/rancher/cluster-api-provider-rke2/releases/v0.20.1/control-plane-components.yaml"
+    type: ControlPlaneProvider
+  - name: rke2
+    url: "https://github.com/rancher/cluster-api-provider-rke2/releases/v0.20.1/bootstrap-components.yaml"
+    type: BootstrapProvider
+  images:
+  - name: control-plane-rke2
+    repository: "ghcr.io/rancher"
+  - name: bootstrap-rke2
+    repository: "ghcr.io/rancher"
+----
+
+== 删除
+
+当 `ClusterctlConfig` 资源被删除时，配置映射将恢复到其原始状态，由 Turtles 管理。

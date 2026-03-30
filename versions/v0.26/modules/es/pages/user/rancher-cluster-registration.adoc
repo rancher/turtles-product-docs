@@ -1,0 +1,96 @@
+= Registro de Clúster de Rancher
+:revdate: 2026-03-06
+:page-revdate: {revdate}
+
+== Cómo registrar un clúster CAPI en Rancher utilizando la auto-importación de Turtles
+
+El único flujo de trabajo soportado para registrar clústeres CAPI en Rancher utilizando Turtles, es mediante el uso de la etiqueta `cluster-api.cattle.io/rancher-auto-import`:
+
+. Etiqueta un espacio de nombres para que todos los clústeres contenidos en él sean importados.
++
+[source,bash]
+----
+kubectl label namespace capi-clusters cluster-api.cattle.io/rancher-auto-import=true
+----
+. Etiqueta una definición de clúster individual para que sea importada.
++
+[source,bash]
+----
+kubectl label clusters.cluster.x-k8s.io cluster1 cluster-api.cattle.io/rancher-auto-import=true
+----
+
+Cuando se utiliza la etiqueta de auto-importación, Turtles esperará a que el clúster CAPI tenga la condición `ControlPlaneAvailable` establecida en `True`.
+Esta condición destaca que el clúster está completamente inicializado y disponible para procesar solicitudes.
+Turtles entonces creará automáticamente el recurso `clusters.management.cattle.io` de Rancher en el clúster de gestión, lo que llevará a la instalación del `cattle-cluster-agent` en el clúster CAPI de sentido descendente.
+Si la ampliación del agente tiene éxito, el clúster importado debería aparecer en el Panel de Control de Rancher.
+
+[NOTE]
+====
+Un espacio de nombres (o clúster) puede ser marcado para auto-importación en cualquier momento: antes o después de que el clúster haya sido creado.
+====
+
+[CAUTION]
+====
+Marcar un clúster para auto-importación desencadena el registro automático por parte del controlador de Turtles, no se soporta la ejecución manual de comandos de registro.
+====
+
+== Añadir una descripción personalizada al clúster de Rancher
+
+La descripción predeterminada asignada a un clúster de Rancher importado es "Clúster CAPI importado a Rancher".
+image:imported-cluster-default-description.png[Clúster de Rancher importado con descripción predeterminada]
+
+Para añadir una descripción personalizada al clúster de Rancher importado, puedes añadir la anotación `cluster-api.cattle.io/cluster-description` a tu clúster CAPI.
+
+[source,yaml]
+----
+apiVersion: cluster.x-k8s.io/v1beta1
+kind: Cluster
+metadata:
+  name: docker-kubeadm-quickstart
+  labels:
+    cni: calico
+  annotations:
+    cluster-api.cattle.io/cluster-description: "This is a custom description of Rancher Cluster"
+----
+
+image:imported-cluster-custom-description.png[Clúster de Rancher importado con descripción personalizada]
+
+Si un clúster CAPI ya está importado, añadir la anotación no hará nada. Puede que tengas que eliminar tu clúster de Rancher importado y reimportarlo.
+
+== Eliminar el clúster importado de Rancher
+
+Las etiquetas `cluster-api.cattle.io/capi-cluster-owner` y `cluster-api.cattle.io/capi-cluster-owner-ns` pueden ser utilizadas para eliminar el clúster de Rancher:
+
+[source,bash]
+----
+kubectl delete clusters.management.cattle.io -l cluster-api.cattle.io/capi-cluster-owner=cluster1 -l cluster-api.cattle.io/capi-cluster-owner-ns=capi-clusters
+----
+
+Una vez que el clúster importado esté marcado para eliminación:
+
+. El controlador de Turtles anotará el clúster CAPI con `imported: true`.
+. Esta anotación impide que el clúster sea reimportado automáticamente por Rancher.
+. Verifica la anotación utilizando el siguiente comando:
++
+[source,bash]
+----
+kubectl -n capi-clusters get clusters.cluster.x-k8s.io cluster1 -o json | jq .metadata.annotations
+{
+"imported": "true"
+...
+}
+----
+
+[NOTE]
+====
+Eliminar el clúster de Rancher solo elimina el recurso `clusters.management.cattle.io` y desactiva la auto-importación para el clúster CAPI asociado. El clúster CAPI subyacente permanece intacto.
+====
+
+== Reimportar clúster
+
+Si necesitas reimportar el mismo clúster CAPI en Rancher, elimina la anotación `imported: true` mediante el comando a continuación:
+
+[source, bash]
+----
+kubectl -n capi-clusters patch clusters.cluster.x-k8s.io <cluster-name> --type='json' -p='[{"op": "remove", "path": "/metadata/annotations/imported"}]'
+----

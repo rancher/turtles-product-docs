@@ -1,0 +1,121 @@
+= プロバイダーテストスイート
+:revdate: 2025-09-16
+:page-revdate: {revdate}
+
+このセクションでは、既存のE2Eスイートを活用して、任意のCAPIプロバイダーをTurtlesに統合し、クラスターのプロビジョニングとインポートが期待通りに機能するかを検証する方法についての情報を提供します。検証は以下のアクションを実行します：
+
+* 希望する環境に管理クラスターを作成します。
+* すべての前提条件を満たしてRancherとTurtlesをインストールします。
+* Giteaをインストールします。
+* Gitリポジトリを作成し、Fleetを使用してクラスターのテンプレートを適用し、クラスターが作成され、Rancherに正常にインポートされたことを確認するスイートを実行します。
+
+テストスイートは、xref:../overview/certified.adoc[認証テーブル]にリストされていないプロバイダーの認証に使用できます。詳細はxref:../operator/certification.adoc[プロバイダー認証]を参照してください。
+
+== ハウツー
+
+テストスイートを再利用するための主な参照はhttps://github.com/rancher-sandbox/turtles-integration-suite-example[このリポジトリ]であり、特定のCAPIプロバイダーを{product_name}と統合する方法の例が含まれており、GitOpsワークフローに基づいて一連のチェックを適用します。
+
+== 実行前
+
+Turtlesで使用されるエンドツーエンドテスト環境は、実行しているテストの種類や実施しているチェックの種類に応じて、いくつかの設定オプションを提供します。テストスイートを始める場合は、構成をできるだけシンプルに保ち、カスタマイズの数を制限することをお勧めします。そうすることで、プロセスとその構成の詳細を理解できます。サンプルリポジトリをクローンすることで、プロバイダーのテストの旅を始めることができます：
+
+----
+git clone https://github.com/rancher-sandbox/turtles-integration-suite-example.git
+----
+
+実行できる最も簡単なテストは、インターネットに接続されていないローカル環境を作成します。これにより、チェックはローカルのダウンストリームクラスター（実際にはCAPDを介してプロビジョニングされたCAPIクラスター）のみに制限されますが、例の統合を実行するには十分です。ローカルで実行する意図を指定することで、このローカルバージョンを簡単に実行できます。
+
+----
+MANAGEMENT_CLUSTER_ENVIRONMENT="isolated-kind" make test
+----
+
+他のインフラプロバイダー（例：クラウドベンダーのプロバイダー）との統合を確認する際には、Rancherインスタンスをダウンストリームクラスターに対してエンドポイントを介して利用可能にする必要があります。これらはもはやローカル環境にはありません。以前に使用した`MANAGEMENT_CLUSTER_ENVIRONMENT`変数は、以下の値をサポートしています：
+
+----
+MANAGEMENT_CLUSTER_ENVIRONMENT: "kind" # supported options are eks, isolated-kind, kind
+----
+
+`isolated-kind`はローカルテストに使用した値であり、`kind`は同等のローカル環境をデプロイする。違いは、`kind`がhttps://ngrok.com/[ngrok]を介して公開アクセス可能なエンドポイントも構成することです。無料の（制限付き）`ngrok`エンドポイントを取得し、テストの実行に使用できます。`make test`を実行する前に、次の環境変数を設定する必要があります。
+
+----
+NGROK_API_KEY: ""
+NGROK_AUTHTOKEN: ""
+----
+
+この構成を使用すると、環境の作成中にRancherインスタンスがあなたの`ngrok`エンドポイントを介してアクセス可能に構成され、ダウンストリームクラスターがそれと通信できるようになります。
+
+<<_other_options,その他のオプション>>セクションには、実行前に設定できる内容に関する詳細情報が含まれています。
+
+== 基本的なワークフロー
+
+前のセクションでは、サンプルテスト統合で実行される主なアクションを紹介しました。
+
+[discrete]
+==== 希望する環境に管理クラスターを作成します。
+
+* これはTurtles特有の要件ではなく、CAPIを使用する際には、ダウンストリームクラスターを表すリソースを作成するために使用される管理クラスターが必要です。これはテスト環境の主要な部分であり、テストスイートに渡される環境変数に応じて、ローカル（`kind`を使用）またはクラウド（`eks`）でホストされることができます。
+
+[discrete]
+==== すべての前提条件を満たしてRancherとTurtlesをインストールします。
+
+* TurtlesはRancherの拡張機能であり、そのためデプロイするにはRancherのインストールが必要です。Rancher Managerは、最初のステップで作成した管理クラスターで実行され、Rancherが利用可能になるとTurtlesチャートがインストールされます。インターネットに面した構成を使用する場合、イングレスコントローラーがRancherを外部ネットワークからアクセス可能にします（例：クラウドにデプロイされたクラスター）。
+
+[discrete]
+==== Gitリポジトリを作成し、Fleetを使用してクラスターのテンプレートを適用し、クラスターが作成され、Rancherに正常にインポートされたことを確認するスイートを実行します。
+
+* 主要なテストスイート、そして例として使用されるものは、GitOpsフローに基づいており、https://github.com/rancher/fleet[Fleet]をGitOpsオーケストレーターツールとして使用します。提供されたクラスターのテンプレートに基づいて（例の統合に付属するものを確認できますhttps://github.com/rancher-sandbox/turtles-integration-suite-example/tree/main/suites/data/cluster-templates[こちら]）、YAMLファイルで定義されたCAPIクラスターを作成します。このクラスターが利用可能になると、xref:../tutorials/first-cluster.adoc[RancherにTurtlesを使用してインポートされるように構成され、ダウンストリームクラスターがRancherを介してアクセス可能であることを確認します。また、ダウンストリームクラスターで削除が実行できること、そしてそれらがRancherで利用できなくなることを確認します。
+
+== その他のオプション
+:kubernetes-version: v1.31.4
+
+テスト環境のデプロイおよびテスト実行中に使用される環境変数のリストを含む`config.yaml` https://github.com/rancher-sandbox/turtles-integration-suite-example/blob/main/config/config.yaml[ファイル]を`turtles-integration-suite-example`リポジトリで確認できます。以下は、上記のYAMLファイルの省略版です：
+
+[source,yaml,subs=attributes+]
+----
+...
+variables:
+  CLUSTERCTL_BINARY_PATH: ""
+  USE_EXISTING_CLUSTER: "false"
+  SKIP_RESOURCE_CLEANUP: "false"
+  ARTIFACTS_FOLDER: "_artifacts"
+  MANAGEMENT_CLUSTER_ENVIRONMENT: "kind" # supported options are eks, isolated-kind, kind
+  RANCHER_VERSION: "{rancher_version}"
+  KUBERNETES_VERSION: "{kubernetes-version}"
+  KUBERNETES_MANAGEMENT_VERSION: "{kubernetes-version}"
+  KUBERNETES_MANAGEMENT_AWS_REGION: "eu-west-2"
+  RKE2_VERSION: "{kubernetes-version}+rke2r1"
+  TURTLES_PATH: "turtles/rancher-turtles"
+  TURTLES_REPO_NAME: "turtles"
+  TURTLES_URL: https://rancher.github.io/turtles
+  TURTLES_VERSION: "{turtles_version}"
+  RANCHER_HOSTNAME: "localhost"
+  RANCHER_FEATURES: ""
+  RANCHER_PATH: "rancher-latest/rancher"
+  RANCHER_REPO_NAME: "rancher-latest"
+  RANCHER_URL: "https://releases.rancher.com/server-charts/latest"
+  CERT_MANAGER_URL: "https://charts.jetstack.io"
+  CERT_MANAGER_REPO_NAME: "jetstack"
+  CERT_MANAGER_PATH: "jetstack/cert-manager"
+  ...
+  ...
+  ...
+  HELM_BINARY_PATH: "helm"
+  HELM_EXTRA_VALUES_FOLDER: "/tmp"
+  # Additional setup for establishing rancher ingress
+  NGROK_REPO_NAME: "ngrok"
+  NGROK_URL: "https://ngrok.github.io/kubernetes-ingress-controller"
+  NGROK_PATH: "ngrok/kubernetes-ingress-controller"
+  NGROK_API_KEY: ""
+  NGROK_AUTHTOKEN: ""
+  GITEA_REPO_NAME: "gitea-charts"
+  GITEA_REPO_URL: "https://dl.gitea.com/charts/"
+  GITEA_CHART_NAME: "gitea"
+  GITEA_CHART_VERSION: "10.6.0"
+  ...
+----
+
+[TIP]
+====
+テスト実行をカスタマイズするために使用できるすべてのスイートとパラメータを確認するには、https://github.com/rancher/turtles/tree/main/test/e2e#e2e-tests[Turtlesリポジトリ]を参照してください。テスト環境のデプロイ/設定に精通しており、特定の統合要件がある場合にのみ、これを行うことをお勧めします。
+====
+

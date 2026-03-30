@@ -1,0 +1,120 @@
+= 认证的 CAPI 提供者
+:revdate: 2025-10-14
+:page-revdate: {revdate}
+
+== 认证提供者是什么意思？
+
+认证提供者是由 Turtles 团队的 CI 工作流 **积极测试** 的 CAPI 提供者，以验证它们与 Rancher 的 CAPI 扩展正常工作。然而，由于大多数 CAPI 提供者是由 Kubernetes 开放社区维护的上游项目，**我们无法保证** 在发布新提供者版本时不会引入问题。
+
+== 认证提供者列表
+
+[NOTE]
+====
+该列表不断演变，以反映项目的持续发展。
+====
+
+
+这是 Turtles 官方认证的 CAPI 提供者列表。这些提供者包含在我们的测试套件中，我们积极确保它们与 Rancher 的 CAPI 扩展正常工作。
+
+|===
+| 平台 | 代号 | 提供者类型 | 文档
+
+| *RKE2*
+| CAPRKE2
+| 启动/控制平面
+| https://rancher.github.io/cluster-api-provider-rke2[CAPRKE2 书籍]
+
+| *Kubeadm*
+| Kubeadm
+| 启动/控制平面
+| https://cluster-api.sigs.k8s.io/tasks/bootstrap/kubeadm-bootstrap[CABPK 文档]
+
+| *AWS*
+| CAPA
+| 基础结构
+| https://cluster-api-aws.sigs.k8s.io[CAPA 书籍]
+
+| *Docker**
+| CAPD
+| 基础结构
+| https://cluster-api.sigs.k8s.io[CAPI 书籍]
+
+| *vSphere*
+| CAPV
+| 基础结构
+| https://github.com/kubernetes-sigs/cluster-api-provider-vsphere/blob/main/docs/getting_started.md[CAPV 文档]
+
+| *Azure*
+| CAPZ
+| 基础结构
+| https://capz.sigs.k8s.io/[CAPZ 书籍]
+
+| *GCP*（仅限 GKE 管理的集群）
+| CAPG
+| 基础结构
+| https://cluster-api-gcp.sigs.k8s.io/[CAPG 书籍]
+
+| *附加提供者 Fleet*
+| CAAPF
+| 附加
+| https://rancher.github.io/cluster-api-addon-provider-fleet/[CAAPF 书籍]
+|===
+
+*仅推荐用于开发目的。
+
+== 实验模式下的提供者列表
+
+这是一个处于高级开发状态的提供者列表，预计很快将获得认证。
+
+|===
+| 平台 | 代号 | 提供者类型 | 文档
+|===
+
+== 对认证提供者的 ClusterClass 支持
+
+以下是每个认证提供者及其对集群拓扑功能支持的支持矩阵：
+
+[tabs]
+======
+CAPZ::
++
+--
+- **完全支持** `ClusterClass`：可以通过拓扑配置管理的（AKS）和非管理的（虚拟机）集群。
+--
+
+CAPA::
++
+--
+- **完全支持** `ClusterClass`：可以通过拓扑配置管理的（EKS）和非管理的（基于EC2）集群。
+--
+
+CAPG::
++
+--
+- **完全支持** `ClusterClass`：可以通过拓扑配置管理的（GKE）和非管理的（虚拟机）集群。
+--
+
+CAPRKE2::
++
+--
+- **完全支持** `ClusterClass`。
+--
+
+CABPK::
++
+--
+- **完全支持** `ClusterClass`。
+--
+
+CAPV::
++
+--
+- **完全支持** `ClusterClass`。
+--
+
+CAPD::
++
+--
+- **完全支持** `ClusterClass`。
+--
+======

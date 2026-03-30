@@ -1,0 +1,90 @@
+= Certification de fournisseur 
+:revdate: 2025-06-30
+:page-revdate: {revdate}
+
+== Qu'est-ce qu'un fournisseur certifié ?
+
+Comme la plupart des fournisseurs CAPI sont des projets en amont maintenus par la communauté ouverte, il n'existe aucun moyen sûr de garantir que des clusters provisionnés avec un fournisseur donné peuvent être importés dans Rancher via Turtles. Cependant, nous mettons en œuvre un processus de certification pour les fournisseurs qui sont :
+
+* Testés activement dans le cadre de notre suite de tests E2E.
+* Cette suite de tests E2E est maintenue à jour pour valider les versions récentes du fournisseur.
+
+== Certifiez votre fournisseur personnalisé
+
+De plus, si vous êtes un développeur de fournisseur ou si vous souhaitez simplement utiliser un autre fournisseur qui n'est pas listé comme certifié, vous avez 2 options :
+
+* Réutilisez la suite E2E Turtles existante pour commencer la demande de statut de certification. Des informations plus détaillées peuvent être trouvées ici dans la section xref:./certification.adoc#_provider_certification_using_turtles_test_suite[Certification de fournisseur utilisant la suite de tests Turtles].
+* Utilisez votre propre suite d'intégration pour certifier votre fournisseur. Des informations plus détaillées peuvent être trouvées ici dans la section xref:./certification.adoc#_certify_provider_with_custom_integration_suite[Certifiez le fournisseur avec la suite d'intégration personnalisée].
+
+[discrete]
+==== *Pourquoi voudrais-je valider mon fournisseur ?*
+
+Le nombre de fournisseurs CAPI continue de croître et la communauté propose de nouveaux projets pour différents hôtes d'infrastructure. Cette ouverture contribue à enrichir l'écosystème CAPI mais rend impossible le contrôle et le test de tous les fournisseurs avec lesquels Turtles fonctionnera dans l'ensemble du projet CAPI. Les développeurs de Turtles maintiendront une xref:../overview/certified.adoc[liste de fournisseurs certifiés] qui sont activement testés et validés par des mécanismes CI, mais cette liste sera limitée aux fournisseurs clés et bien connus. C'est pourquoi nous encourageons les utilisateurs de fournisseurs non listés à réutiliser la suite de tests de Turtles et à valider l'intégration entre le fournisseur et Turtles.
+
+[discrete]
+==== *Puis-je utiliser Turtles avec un fournisseur non certifié ?*
+
+Turtles est un projet qui vise à être agnostique et à s'intégrer avec l'ensemble de l'écosystème CAPI et vous êtes libre de l'utiliser sans valider aucun fournisseur. Il est probable que vous ne rencontriez aucun problème avec la plupart des projets en amont.
+
+[discrete]
+==== *Quelle est la différence entre certifié et supporté ?*
+
+Étant donné que les fournisseurs CAPI sont des projets maintenus par la communauté Kubernetes, nous ne pouvons garantir le support d'un fournisseur donné. C'est pourquoi nous choisissons de nous concentrer sur la validation constante des xref:../overview/certified.adoc[fournisseurs certifiés] et d'offrir aux utilisateurs la possibilité de s'intégrer à la suite de tests existante pour vérifier leurs fournisseurs de choix.
+
+== Certification des fournisseurs à l'aide de la suite de tests Turtles
+
+Le processus de certification est basé sur la vérification de l'intégration de {product_name} avec les fournisseurs CAPI. Pour simplifier cette tâche, nous avons préparé un test générique qui valide le provisionnement et l'importation d'un cluster CAPI en aval.
+
+[TIP]
+====
+Nous vous recommandons de vous référer à cet https://github.com/rancher-sandbox/turtles-integration-suite-example[exemple] sur la façon d'utiliser la suite de tests de Turtles.
+====
+
+=== Tester et certifier votre fournisseur
+
+La première étape pour valider que votre fournisseur est compatible avec Turtles et que vous pouvez provisionner des clusters CAPI et les importer dans Rancher via Turtles est de vous intégrer à notre suite de tests. Nous fournissons un dépôt avec un https://github.com/rancher-sandbox/turtles-integration-suite-example[exemple d'intégration] que vous pouvez utiliser comme référence pour votre intégration.
+
+Turtles, en tant que projet, contient un https://github.com/rancher/turtles/tree/main/test/e2e/suites[nombre de suites] pour vérifier différentes fonctionnalités et processus, mais pour la certification des fournisseurs, nous exigeons que vous exécutiez uniquement un test qui utilise un flux GitOps. Turtles est un projet qui s'intègre bien à une approche GitOps pour le provisionnement de clusters, c'est pourquoi c'est notre principale méthode de validation de l'intégration des fournisseurs avec Rancher. Exécuter la suite complète pour un fournisseur CAPI donné va :
+
+* Créer un cluster de gestion dans l'environnement souhaité.
+* Installer Rancher et Turtles avec tous les prérequis.
+* Installer Gitea.
+* Exécuter la suite qui créera un dépôt git, appliquera le modèle de cluster en utilisant Fleet et vérifiera que le cluster est créé et importé avec succès dans Rancher.
+
+==== Configuration de test
+
+Pour exécuter avec succès la suite de tests, vous devrez fournir un certain nombre de variables d'environnement. Certains d'entre eux sont agnostiques, ce qui signifie qu'ils sont requis pour tout fournisseur que vous souhaitez tester, mais d'autres seront spécifiques au fournisseur que vous validez. Veuillez prendre en compte les spécifications particulières du fournisseur testé, telles que les identifiants, les points de terminaison, etc.
+
+[TIP]
+====
+Ensuite, nous vous recommandons de lire le xref:../operator/certificationsuite.adoc[Guide de la suite de tests].
+====
+
+== Certifier le fournisseur avec la suite d'intégration personnalisée.
+
+Pour certifier votre fournisseur en utilisant une suite d'intégration personnalisée, assurez-vous qu'il répond aux exigences clés suivantes :
+
+=== Configuration requise
+
+* Le fournisseur doit être déployé en utilisant l'API `CAPIProvider`.
+* Les clusters créés avec le fournisseur doivent être importés avec succès dans Rancher via Turtles.
+
+=== Processus de certification
+
+1. **Développer une suite d'intégration** 
+   * Installez et configurez Rancher et Turtles.
+   * Déployez le fournisseur CAPI.
+   * Provisionnez un cluster et importez-le dans Rancher.
+
+2. **Exécuter et valider les tests**.
+   * Assurez-vous que les clusters sont créés et importés avec succès.
+
+3. **Soumettre une demande de certification**
+   * Fournissez les résultats des tests, les journaux et les étapes suivies.
+   * Soumettez un problème GitHub en utilisant le https://github.com/rancher/turtles/issues/new?template=certification_request.yaml[modèle] suivant.
+
+== Demande de certification
+
+L'intégration avec la suite de tests de Turtles et l'exécution de vérifications sur votre fournisseur d'intérêt suffisent à valider qu'il est compatible avec {product_name}. Comme il n'est pas faisable pour nous de tester continuellement chaque fournisseur CAPI, ce flux de travail de certification vous permettra, en tant qu'utilisateur, de vérifier la fonctionnalité attendue. Cependant, comme nous ne testons pas activement les nouvelles itérations du fournisseur (avec les nouvelles versions de Turtles), le support et la garantie pour le fournisseur donné sont limités, et vous serez responsable de la validation des futures versions.
+
+Si, après avoir réussi à vérifier votre fournisseur, vous souhaitez demander qu'il soit ajouté à la liste des xref:../overview/certified.adoc[Fournisseurs Certifiés] et inclus dans la suite E2E périodique du projet, vous pouvez demander la certification en soumettant un problème sur GitHub en utilisant le https://github.com/rancher/turtles/issues/new?template=certification_request.yaml[modèle de Demande de Certification]. La communauté examinera la proposition et déterminera la faisabilité d'ajouter le fournisseur à la matrice de certification.

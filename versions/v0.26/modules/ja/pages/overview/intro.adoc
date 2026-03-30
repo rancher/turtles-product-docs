@@ -1,0 +1,5 @@
+= 概要
+:revdate: 2025-06-30
+:page-revdate: {revdate}
+
+このセクションでは、{product_name}の参照を見ていきます。

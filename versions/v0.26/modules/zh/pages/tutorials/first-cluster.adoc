@@ -1,0 +1,113 @@
+= 创建并导入您的第一个集群
+:revdate: 2025-11-20
+:page-revdate: {revdate}
+
+本节将指导您创建第一个集群并将其导入到 Rancher Manager 中。提供了两种集群配置的替代方法：**使用 Fleet 的 GitOps 工作流** 和 **通过 `kubectl` 手动应用清单**。
+
+== 先决条件
+
+* Rancher Manager 集群
+* 为您的场景安装的集群 API 提供程序 - 在这些说明中，我们将使用 https://github.com/kubernetes-sigs/cluster-api/tree/main/test/infrastructure/docker[Docker 基础设施] 和 https://github.com/rancher/cluster-api-provider-rke2[RKE2 启动/控制平面] 提供程序 - 请参见 xref:../reference/capiprovider.adoc[使用 Turtles 的 `CAPIProvider` 初始化常见提供程序]
+
+== 配置 CAPI 工作负载集群
+
+[tabs]
+======
+使用 Fleet 的 GitOps::
++
+--
+*配置您的 Fleet 储存库*
+
+为了简化集群配置过程，我们将使用一系列预配置的示例，您可以在储存库 https://github.com/rancher/turtles/tree/main/examples. 中找到。通过检查该储存库的内容，您将发现：
+
+. 一个 *applications* 文件夹，包含可以使用 Fleet 部署的其他应用程序（CNI、CSI、CPI）。
+. 一个 *clusterclasses* 文件夹，里面有一堆 ClusterClass 示例。
+. 一个 *clusters/docker/rke2* 文件夹，里面有 Docker 集群定义的示例。
++
+[NOTE]
+如果您愿意，可以使用相同的基础结构创建自己的 Fleet 储存库。
+
+*使用 Rancher UI 添加您的 Fleet 储存库*
+
+现在集群定义已提交到 git 储存库，可以用于配置集群。为此，它们需要通过 *持续交付* 功能（使用 Fleet）导入到 Rancher Manager 集群中（该集群也充当集群 API 管理集群）。
+
+. 前往 Rancher Manager
+. 从菜单中选择 *持续交付*：
+image:sidebar.png[侧边栏]
+. 从右上角选择 *fleet-local* 作为名称空间
+image:ns.png[名称空间]
+. 从侧边栏选择 *Git Repos*
+. 单击*添加储存库*
+. 将*clusters*作为名称输入
+. 从您的 git 储存库获取*HTTPS* 克隆 URL
+image:gh_clone.png[git clone url]
+. 将 URL 添加到*储存库 URL*字段中
+. 将分支名称更改为*main*
+. 添加以下路径以指定要部署的目录：
++
+image:paths.png[Fleet 路径配置]
++
+----
+examples/clusterclasses/docker/rke2
+examples/applications/cni/calico
+examples/applications/lb/docker
+examples/clusters/docker/rke2
+----
+. 单击*下一步*
+. 单击*创建*
+. 单击*clusters*名称
+. 观察资源变为就绪
+. 从菜单中选择*集群管理*
+. 检查您的集群是否已导入
+--
+
+手动使用 kubectl::
++
+--
+*应用集群资源*
+
+要使用 kubectl 创建集群，请运行以下命令：
+
+. 打开终端并应用 ClusterClass 和相关模板：
++
+[source,bash]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/examples/clusterclasses/docker/rke2/clusterclass-docker-rke2.yaml
+----
+
+. 应用负载均衡器配置：
++
+[source,bash]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/examples/applications/lb/docker/configmap.yaml
+----
+
+. 应用 CNI (Calico) 配置：
++
+[source,bash]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/examples/applications/cni/calico/helm-chart.yaml
+----
+
+. 创建集群：
++
+[source,bash]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/examples/clusters/docker/rke2/cluster.yaml
+----
+. 查看资源准备就绪：
++
+[source,bash]
+----
+kubectl get clusters -w
+----
+. 从菜单中选择*集群管理*
+. 检查您的集群是否已导入
+--
+======
+
+== 后续步骤：等待集群在 Rancher 仪表板中出现
+
+本教程中配置的集群包含`cluster-api.cattle.io/rancher-auto-import`标签。
+该标签将指示Turtles自动将集群导入Rancher。
+有关更多信息，请参阅xref:user/rancher-cluster-registration.adoc[Rancher 集群注册]。

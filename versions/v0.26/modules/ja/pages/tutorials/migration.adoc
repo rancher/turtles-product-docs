@@ -1,0 +1,25 @@
+= マイグレーションガイド
+:revdate: 2025-11-14
+:page-revdate: {revdate}
+
+== コンテキスト
+
+Rancher v2.13から、{product_name}はRancherの一部としてインストールされるため、別途のデプロイメントが不要になります。Rancher v2.13にアップグレードする前に、ユーザーはスムーズなアップグレードを実現するためにこのガイドに従う必要があります。
+
+== マイグレーション
+
+Rancher v2.13にアップグレードする_前に_、以下の手順に従ってください：
+
+. {product_name}をv0.24.3にアップグレードしてください。このステップは重要です。なぜなら、v0.24のすべてのパッチリリースは、Rancher v2.13へのアップグレードのためにクラスターを準備するからです。
+. {product_name}をアンインストールしてください。これは必要です。なぜなら、Rancher v2.13以降、{product_name}はオプトインのアドオンではなく、Rancherのシステムコンポーネントになるからです。そのため、Rancherは以前とは異なるネームスペースにインストールされるので、以前にインストールされたバージョンは、まず手動でアンインストールする必要があります。{product_name}のv0.24.3をアンインストールすると、コアCAPIプロバイダー自体が削除されますが、コアCAPI CRDは保持されます。マイグレーション中、コアCAPIコントローラーは管理クラスター上で実行されませんが、ダウンストリームのCAPIクラスターは通常通り実行され、影響を受けることはありません。
+. 以下のkubectlコマンドを実行してください：
++
+[source,bash]
+----
+kubectl patch crd capiproviders.turtles-capi.cattle.io --type=json -p='[{"op": "add", "path": "/metadata/annotations/meta.helm.sh~1release-namespace", "value": "cattle-turtles-system"}]'
+kubectl patch crd clusterctlconfigs.turtles-capi.cattle.io --type=json -p='[{"op": "add", "path": "/metadata/annotations/meta.helm.sh~1release-namespace", "value": "cattle-turtles-system"}]'
+----
+
+これらのコマンドは、`capiprovider`と`clusterctlconfig`のCRDをパッチして、Rancher v2.13の一部としてインストールされたときに{product_name}によって採用されるようにします。
+
+上記のマイグレーションは、{product_name}のバージョンが&le; v0.24.3であるユーザーにとって必要です。Rancher v2.13をインストールする新しいユーザーは、マイグレーションを行う必要はありません。

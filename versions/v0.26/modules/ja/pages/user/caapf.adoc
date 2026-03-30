@@ -1,0 +1,78 @@
+= Cluster APIアドオンプロバイダー Fleet
+:revdate: 2025-11-20
+:page-revdate: {revdate}
+
+== 概要
+
+ifeval::["{build-type}" == "product"]
+`Fleet`のためのクラスターAPIアドオンプロバイダー（CAAPF）は、https://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/index.html[`Fleet`]との統合を提供するクラスターAPI（CAPI）プロバイダーであり、CAPIによってプロビジョニングされたクラスターにアプリケーションを簡単にデプロイできるようにします。
+endif::[]
+ifeval::["{build-type}" == "community"]
+`Fleet`のためのクラスターAPIアドオンプロバイダー（CAAPF）は、https://fleet.rancher.io/[`Fleet`]との統合を提供するクラスターAPI（CAPI）プロバイダーであり、CAPIによってプロビジョニングされたクラスターにアプリケーションを簡単にデプロイできるようにします。
+endif::[]
+
+[TIP]
+====
+プロバイダーに関する詳細情報は、https://rancher.github.io/cluster-api-addon-provider-fleet/[CAAPFの書籍]を参照してください。
+====
+
+[WARNING]
+====
+CAAPFは、`WatchList` Kubernetes機能ゲートに依存しています。この機能は、Kubernetes `1.33` バージョンで明示的に有効にする必要があります。さらなる情報については、https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/[Kubernetesのアップストリームドキュメント]を参照してください。
+====
+
+== 機能
+
+* プロバイダーは、新しくプロビジョニングされたCAPIクラスターを`Fleet`に登録し、同じ`name`と`namespace`を持つ`Fleet``Cluster`インスタンスを作成します。アプリケーションは、`GitOps`を使用して作成されたクラスターに自動的にデプロイできます。
+* プロバイダーは、`ClusterClass`ネームスペース内のすべてのCAPI `ClusterClass`に対して自動的にFleet `ClusterGroup`を作成します。これにより、同じ`ClusterClass`から作成されたすべてのクラスターに同じアプリケーションをデプロイできます。
+* プロバイダーは、`ClusterClass`とは異なるネームスペースにある`Cluster`によって参照されるすべてのCAPI `ClusterClass`に対して自動的にFleet `ClusterGroup`を作成します。これにより、特定のネームスペース内で同じ`ClusterClass`を参照するすべてのクラスターに同じアプリケーションをデプロイできます。
+
+ifeval::["{build-type}" == "product"]
+これにより、ユーザーは生のアプリケーションワークロードを持つhttps://documentation.suse.com/cloudnative/continuous-delivery/latest/en/reference/ref-bundle.html[`Bundle`]リソース、またはgitからアプリケーションをインストールするためのhttps://documentation.suse.com/cloudnative/continuous-delivery/latest/en/reference/ref-gitrepo.html[`GitRepo`]を指定できます。各リソースは、次の任意の組み合わせでhttps://documentation.suse.com/cloudnative/continuous-delivery/latest/en/how-tos-for-users/gitrepo-targets.html#_defining_targets[`targets`]を提供できます：
+endif::[]
+ifeval::["{build-type}" == "community"]
+これにより、ユーザーは生のアプリケーションワークロードを持つhttps://fleet.rancher.io/ref-bundle[`Bundle`]リソース、またはgitからアプリケーションをインストールするためのhttps://fleet.rancher.io/ref-gitrepo[`GitRepo`]を指定できます。各リソースは、次の任意の組み合わせでhttps://fleet.rancher.io/gitrepo-targets#defining-targets[`targets`]を提供できます：
+endif::[]
+
+[source,yaml]
+----
+  targets:
+  - clusterGroup: <cluster-class-name> # If the cluster is created from cluster-class
+  - clusterName: <a specific CAPI cluster name>
+----
+
+さらに、`CAAPF`は`CAPI`クラスターラベルを`Fleet`クラスターリソースに自動的に伝播させるため、ユーザーは共通のクラスターラベルに一致するターゲットを指定できます：
+
+[source,yaml]
+----
+  targets:
+  - clusterSelector: <label selector for the cluster instances, inherited from CAPI clusters>
+  - clusterGroupSelector: <label selector for the cluster group instances, labels inherited from ClusterClass>
+----
+
+== CAPI `Cluster`および`ControlPlane`に基づくHelmチャートのテンプレート化
+
+ifeval::["{build-type}" == "product"]
+*クラスターAPIアドオンプロバイダーフリート*は、マッチングクラスター状態に基づいてインポートされたCAPIクラスターのアプリケーションhttps://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/ref-fleet-yaml.html#_templating[テンプレート化]を自動化します。この機能により、CAPIクラスターとリソースの状態が常にFleetクラスターリソースの`spec.templateValues.ClusterValues`フィールドで最新の状態に保たれます。これにより、ユーザーは次のことができます：
+endif::[]
+ifeval::["{build-type}" == "community"]
+*クラスターAPIアドオンプロバイダーフリート*は、マッチングクラスター状態に基づいてインポートされたCAPIクラスターのアプリケーションhttps://fleet.rancher.io/ref-fleet-yaml#templating[テンプレート化]を自動化します。この機能により、CAPIクラスターとリソースの状態が常にFleetクラスターリソースの`spec.templateValues.ClusterValues`フィールドで最新の状態に保たれます。これにより、ユーザーは次のことができます：
+endif::[]
+
+- CAPIクラスターの特定の部分を、`.ClusterValues.Cluster`データを参照するHelm置換パターンを介して直接参照します。
+- `.ClusterValues.ControlPlane`フィールドを介してコントロールプレーンリソースの状態に基づいて置換します。
+- `.ClusterValues.InfrastructureCluster`フィールドを介してインフラストラクチャクラスターリソースの状態に基づいて置換します。
+- 異なるクラスター間で一貫したアプリケーション状態を維持します。
+- 複数の一致するクラスターに対して同じテンプレートを使用して、デプロイメントと管理を簡素化します。
+
+この機能に関する詳細は、書籍のhttps://rancher.github.io/cluster-api-addon-provider-fleet/04_reference/02_templating-strategy.html[テンプレートドキュメント]を参照してください。
+
+== 例 - kindnet CNIのデプロイ
+
+*デモ*: image:https://asciinema.org/a/seEFHKz5DVpUe5CQvWcddSJBp.svg[asciicast,link=https://asciinema.org/a/seEFHKz5DVpUe5CQvWcddSJBp]
+
+== 例 - GitRepoを使用したCalico CNIのデプロイ
+
+*デモ*: image:https://asciinema.org/a/706570.svg[asciicast,link=https://asciinema.org/a/706570]
+
+チュートリアルと前提条件については、書籍のhttps://rancher.github.io/cluster-api-addon-provider-fleet/03_tutorials/04_installing_calico_via_gitrepo.html[gitrepoチュートリアル]セクションを参照してください。

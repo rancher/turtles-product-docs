@@ -1,0 +1,230 @@
+= ガイドライン
+:revdate: 2025-10-02
+:page-revdate: {revdate}
+
+// START doctoc generated TOC please keep comment here to allow auto update
+
+// DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE
+
+* <<_how_to_get_involved,どのように関与するか？>>
+* <<_submitting_prs,PRの提出>>
+ ** <<_choosing_something_to_work_on,どの作業に取り組むかを選ぶ>>
+ ** <<_developing_rancher_turtles,Rancher Turtlesの開発>>
+ ** <<_asking_for_help,助けを求める>>
+ ** <<_pr_submission_guidelines,PR提出ガイドライン>>
+  *** <<_commit_message_formatting,コミットメッセージのフォーマット>>
+* <<_opening_issues,イシューを開く>>
+* <<_how_the_maintainers_process_contributions,メンテナーが貢献を処理する方法>>
+ ** <<_prioritizing_issues,イシューの優先順位付け>>
+ ** <<_reviewing_prs,PRのレビュー>>
+* <<_adrs_architectural_decision_records,ADR（アーキテクチャ的決定記録）>>
+ ** <<_process,プロセス>>
+
+// END doctoc generated TOC please keep comment here to allow auto update
+
+Rancher CAPI拡張機能プロジェクトへのご貢献にお時間を割いていただき、ありがとうございます https://github.com/rancher?q=turtles&type=all&language=&sort=[プロジェクト]。
+
+コードからドキュメント、バグ報告から機能設計やUIの改善まで、プロジェクトのすべての分野に対する改善を心より歓迎します。
+このガイドは、プロジェクトへの関わり方のすべての側面と、できるだけスムーズに開発に参加する方法をカバーしています。
+
+ドキュメントを読むのはしばしば退屈なので、重要な貢献ルールを最初に置きましょう：*常に親切でいてください！*
+
+リポジトリでのあなたの貢献を楽しみにしています！
+
+== どのように関与するか？
+
+私たちは、プロジェクト開発のほぼすべての分野であなたのパッチを歓迎します！
+
+プロジェクトに新しく参加して助けたいが、どこから始めればよいかわからない場合、以下はあなたが手助けできる方法の非網羅的なリストです：
+
+. <<_submitting_prs,プルリクエスト>>を提出する
++
+バグを修正したり新機能を提出したりすることに加えて、コードベースに関わるすべての人に深く感謝される、目立たない他のことを提出することもできます：
+
+ ** テストカバレッジを拡張する！
+ ** リファクタリング！
+ifeval::["{build-type}" == "product"]
+ ** xref:index.adoc[ドキュメント]をレビューして更新する！
+endif::[]
+ifeval::["{build-type}" == "community"]
+ ** xref:index.adoc[ドキュメント]をレビューして更新する！
+endif::[]
+ ** 新しいUI機能を追加する！
+
++
+（下記の<<_choosing_something_to_work_on,作業するものを選ぶ>>も参照してください。）
+
+. <<_opening_issues,イシュー>>を開く
++
+私たちは、バグ報告と機能リクエストの2種類のイシューがあります。どのカテゴリが必要かわからない場合は、最善の推測をしてできるだけ多くの情報を提供してください。
+
+. 改善に興味がありますか：
+
+* Rancher CAPI拡張機能バックエンド？https://github.com/rancher/turtles/issues?q=is%3Aopen+is%3Aissue+label%3Akind%2Fbug+[`bugs`]またはhttps://github.com/rancher/turtles/labels/help-wanted[`help wanted`イシュー]に参加してください。
+  より大きな挑戦を求めているか、より経験豊富な貢献者を探している場合は、https://github.com/rancher/turtles/issues?q=is%3Aopen+is%3Aissue+label%3Akind%2Ffeature[`feature requests`]をチェックしてください。
+* 拡張機能UI？https://github.com/rancher/capi-ui-extension[`open`]を見て、またはhttps://github.com/rancher/capi-ui-extension/labels/help-wanted[`help wanted`イシュー]を見てください。
+* もしかしたら、ユーザードキュメント？それなら、ドキュメントリポジトリのhttps://github.com/rancher/turtles-product-docs/issues[`open`イシュー]に直接飛び込んでください。
+
+== イシューを開く
+
+これらのガイドは、イシューができるだけ早く処理されるように書く手助けをすることを目的としています。
+
+_以下を参照して、<<_prioritizing_issues,イシューの優先順位付けの方法>>_。
+
+*一般的な規則*：
+
+. 何かを開く前に、既存のイシューをよく見てください。
+. 多ければ多いほど良い：人間が提供できる限りの情報を提供してください。
+  詳細なイシューは、優先順位を付けて作業のスケジュールを早く行うことができるため、選ばれる可能性が高くなります。また、コミュニティにとってもアクセスしやすくなり、コアチームが対応するのを待つ必要がなくなるかもしれません。
+. 説明が*ただの*他のイシューへのリンク、スラックの会話へのリンク、またはそれらのいずれかからの引用、または同様に不明瞭なものであるイシューを開かないでください。これにより、参加のハードルが上がり、コミュニティが関与するのが難しくなります。適切な説明を書く時間を取り、重要なポイントを要約してください。
+. フォーマットに注意してください。https://docs.github.com/en/free-pro-team@latest/github/writing-on-github/getting-started-with-writing-and-formatting-on-github[マークダウンが整然としていることを確認し]、https://docs.github.com/en/free-pro-team@latest/github/writing-on-github/creating-and-highlighting-code-blocks[コードブロック]などを使用してください。
+  何かが速く読まれるほど、速く対処できます。
+. 礼儀正しく保ってください。はい、物事がうまくいかないとイライラしますが、...最悪ではない人を助ける方がずっと楽しいです。テキストでの会話は、誰もがネガティビティバイアスを悪化させることを忘れないでください。疑わしいときは、絵文字を入れてください。
+
+== PRを提出する
+
+=== どの作業に取り組むかを選ぶ
+
+助けを求めたり、新しい動作をリクエストしたりするためにここにいる場合は、これがあなたのためのセクションです。私たちは、オープンソースの信頼性を高めたいと考えている方々のために、一連の課題をキュレーションしました。
+
+* https://github.com/search?q=org%3Agithub%2Francher+repo%3Arancher%2Fturtles+repo%3Arancher%2Fcapi-ui-extension+repo%3Arancher%2Fturtles-docs+is%3Aopen+label%3A%22goodfirstissue%22+&type=issues&ref=advsearch[`good first issues`]
+は、リポジトリに新しい方々やオープンソース全般にとってアクセスしやすいものであるべきです。
++
+これらのイシューは、詳細な説明、簡単に従える再現手順（該当する場合）、そして誰でも取り組めるための十分な文脈が提供されていれば、参入障壁が低いか、ほとんど存在しないものとなるはずです。
+目的は明確であるべきで、提案された解決策や擬似コードが含まれている可能性があります。
+もし類似の作業が行われている場合、その作業へのリンクを提供するべきです。
++
+`good first issue`というタグが付けられたイシューに出会い、請求したいと思っているが100%明確でない場合は、もっと情報を求めてください！人々がイシューを書くとき、_非常に多くの_前提知識があると想定されることが多く、これはしばしば当然のこととされています。これは私たち全員が改善できることなので、素晴らしい仕事をするために必要なことを尋ねることをためらわないでください。
++
+以下の<<_asking_for_help,助けを求める>>についてもっと見てください！
+
+* https://github.com/search?q=org%3Agithub%2Francher+repo%3Arancher%2Fturtles+repo%3Arancher%2Fcapi-ui-extension+repo%3Arancher%2Fturtles-docs+is%3Aopen+label%3A%22help+wanted%22+&type=issues&ref=advsearch[`help wanted`のイシュー]
+は、コードベースに少し慣れている方々のためのもので、しかし新参者にも十分にアクセス可能であるべきです。
+* `kind/<x>`または`area/<x>`というラベルが付けられた他のすべてのイシューも利用可能ですが、かなりの文脈が必要になる可能性があります。
+
+=== Rancher Turtlesの開発
+
+開発を始めるための専用のxref:../developer/development.adoc[ノート]をチェックしてください。
+
+=== 助けを求めること
+
+作業のどの段階でも助けが必要な場合は、遠慮せずに尋ねてください！
+
+* 選択したイシューの詳細を得るためには、それを作成した人にもっと情報を提供してもらうように尋ねるのが良いアイデアです。
+* PRに取り組んでいるときに何かに苦労している場合や、自分のアプローチに確信が持てない場合は、https://github.blog/2019-02-14-introducing-draft-pull-requests/[ドラフト]を開いて（タイトルの先頭に`WIP:`を付けて）、考えていることを説明することができます。
+
+=== PR提出ガイドライン
+
+. 希望するリポジトリをフォークし、コードの変更を開発およびテストします。
+. フォークしたブランチに変更をプッシュし、元のリポジトリの`main`ブランチに対してプルリクエストを提出します。
+
+[source,bash]
+----
+git push <remote-name> <feature-name>
+----
+
+. プルリクエストを提出してください。
+ .. すべてのコードPRには、次のいずれかのラベルを付ける必要があります。
+  *** ⚠️ (`:warning:`、重大または破壊的な変更)
+  *** ✨ (`:sparkles:`、機能追加)
+  *** 🐛 (`:bug:`、パッチおよびバグ修正)
+  *** 📖 (`:book:`、ドキュメントまたは提案)
+  *** 🌱 (`:seedling:`、マイナーまたはその他)
+
+可能な限り、コミットをスクワッシュして、整理された説明的な履歴を確保してください。
+
+PRがまだ作業中の場合は、https://github.blog/2019-02-14-introducing-draft-pull-requests/[ドラフトPR]を開き、タイトルの先頭に`WIP`という言葉を付けてください。PRがレビューの準備が整ったら、タイトルを変更し、ドラフト設定を削除できます。
+
+定期的に元のリポジトリの`main`からリベースすることをお勧めします。これにより、ブランチが最新の状態に保たれます。
+
+一般的に、メンテイナーがPRをレビューして承認したら、PRをマージします。
+些細な変更（例：スペルの修正）は、そのまま承認される場合があります。
+大幅な変更の場合、より多くの人が関与する可能性があり、PRを再提出するか、変更を複数のPRに分割するように求められることがあります。
+
+==== コミットメッセージのフォーマット
+
+_素晴らしいコミットメッセージを書く方法と、その理由については、https://chris.beams.io/posts/git-commit/[この優れたブログ記事]をチェックしてください。_
+
+コミットメッセージには、何が変更されたのか、なぜ変更が行われたのか、どのように行ったのかの3つの質問に答えるための大まかな規則に従っています。
+
+件名には_何_が含まれ、コミットの本文には_なぜ_と_どのように_が記述されるべきです。
+途中で何か奇妙なことに遭遇した場合は、ここに発見したこととその解決方法を記載するのが良いでしょう。
+
+フォーマットは、次のようにより正式に説明できます：
+
+[source,text]
+----
+<short title for what changed>
+<BLANK LINE>
+<why this change was made and what changed>
+<BLANK LINE>
+<any interesting details>
+<footer>
+----
+
+最初の行は主題であり、70文字以内であるべきです。2行目は常に空白で、他の行は最大80文字で折り返されるべきです。
+これにより、メッセージはGitHubやさまざまなgitツールで読みやすくなります。
+
+使用を推奨するテンプレートがあります https://gist.github.com/yitsushi/656e68c7db141743e81b7dcd23362f1a[ここ]。
+
+== メンテイナーが貢献を処理する方法
+
+=== 問題の優先順位付け
+
+コアチームは定期的に受信した問題を処理します。休日の期間中は遅延が生じる可能性があります。
+
+すべての問題には`priority/<x>`ラベルが付けられます。優先順位のレベルは次のとおりです：
+
+* https://github.com/rancher/turtles/labels/priority%2Fcritical-urgent[`critical-urgent`]：これらは時間に敏感な問題であり、すぐに取り組むべきです。
+`critical`ラベルが付けられた問題が割り当てられていないか、積極的に作業されていない場合、誰かがすぐに自分の作業を中断して取り組むことが期待されます。
+通常はコアチームを意味しますが、コミュニティメンバーも、最初に到着した場合は、どの優先順位レベルの問題でも担当することができます。_ただし、緊急の時間枠を考慮すると、非コア貢献者が`critical`の問題に割り当てられることを要求した場合、彼らはコアチームメンバーとペアになり、追跡、コミュニケーション、修正のリリースを管理し、すべての進捗に対する責任を負うことになります。_
+* https://github.com/rancher/turtles/labels/priority%2Fimportant-soon[`important-soon`]:キャパシティが利用可能になるとすぐに割り当てられる必要があります。
+理想的には、次のリリースのために何かが時間通りに提供されるべきです。
+* https://github.com/rancher/turtles/labels/priority%2Fimportant-longterm[`important-longterm`]:長期的には重要ですが、現在はスタッフがいない可能性があり、完了するために複数のリリースが必要な場合があります。
+* https://github.com/rancher/turtles/labels/priority%2Fbacklog[`backlog`]:これがあれば良いという一般的な合意があるようですが、今すぐまたは近い将来に取り組むことができる人がいない可能性があります。
+PRは引き続き大歓迎ですが、レビュアーが高優先度の問題に完全に占有されている場合、レビューを受けるまでに時間がかかることがあります。たとえば、リリースの直前などです。
+
+これらの優先順位カテゴリは、https://github.com/kubernetes/community/blob/master/contributors/guide/issue-triage.md[Kubernetesの貢献ガイド]に触発されています。
+
+他のラベルには次のものが含まれます：
+
+* https://github.com/rancher/turtles/labels/adr-required[`adr-required`]:
+この問題またはPRには、<<_adrs_architectural_decision_records,ADR>>で文書化する必要がある決定が、作業を開始する_前_に含まれていることを示します。
+* https://github.com/rancher/turtles/labels/needs-investigation[`needs-investigation`]： 現在、適切に分類するための情報が不足しているか、解決策を理解して実装するための情報が不足しています。これは、問題を提起した人が十分な関連情報を提供しなかったためか、作業を開始する前により詳細な調査が必要なためかもしれません。
+
+=== PRのレビュー
+
+コアチームは、PRキューをできるだけ早くクリアすることを目指しています。コミュニティメンバーも、物事を見守り、自分の考えや専門知識を提供することを自由に行ってください。
+
+高価値または高優先度の貢献はできるだけ早く処理されますが、優先度が低いものやあれば良いものは承認に少し時間がかかる場合があります。
+
+スムーズで迅速なレビューを促進するために、<<_pr_submission_guidelines,上記のガイドライン>>に従ってください。
+基準を満たさない提出物は、レビューの優先度が下げられます。
+
+== ADR（アーキテクチャ決定記録）
+
+[NOTE]
+====
+以下の<<_adrs_architectural_decision_records,this>>と<<_process,sub-section>>は、https://github.com/rancher/turtles[rancher-turtles]リポジトリにのみ関連しているため、スキップしても構いません。
+====
+
+
+rancher-turtlesのアーキテクチャ、デザイン、開発、動作に影響を与える重要な決定は、https://engineering.atspotify.com/2020/04/14/when-should-i-write-an-architecture-decision-record/[ADR]の形式で記録する必要があります。
+
+テンプレートはリポジトリのhttps://github.com/rancher/turtles/blob/main/docs/adr/0000-template.md[`docs/adr/0000-template.md`]にあり、同じディレクトリ内に完了した記録の多数の例があります。
+
+貢献者が不足しているADRを補完することも歓迎します。
+
+=== プロセス
+
+. 新しいhttps://github.com/rancher/turtles/discussions/new?category=adr[ディスカッション]を、`ADR`カテゴリを使用して開始してください。
+. 適切で明確かつ簡潔なタイトルを選択してください（例：`ADR: Implement X in Go`）。
+. 決定を下すための文脈を提供してください。複数の選択肢がある場合は、さまざまなオプションを説明し、利点と欠点を説明してください。レビュアーに注意を払ってほしい領域や、特に意見を求めたい領域を強調してください。
+. https://github.com/rancher/turtles/blob/main/CODEOWNERS[メンテナー]を「決定者」としてタグ付けし、彼らを参加させ、決定とその結果について意見を述べるよう招待します。
+. 決定が下されたら、新しいADRをhttps://github.com/rancher/turtles/blob/main/docs/adr[ディレクトリ]に追加するPRを開きます。
+  https://github.com/rancher/turtles/blob/main/docs/adr/0000-template.md[テンプレート]をコピーして完成させてください。
+ ** ファイル番号を1つ増やします。
+ ** ステータスを「承認済み」と設定します。
+ ** 決定者を議論の結果を承認した者として設定します。
+ ** 議論スレッドから決定とその結果を要約します。
+ ** ADR文書から議論にリンクを戻します。

@@ -1,0 +1,121 @@
+= Suite de Pruebas del Proveedor
+:revdate: 2025-09-16
+:page-revdate: {revdate}
+
+Esta sección contiene información sobre cómo puedes aprovechar la suite E2E existente para integrar a los proveedores CAPI con Turtles y verificar que el aprovisionamiento y la importación de clústeres funcionan como se espera. La validación realiza las siguientes acciones:
+
+* Crear un clúster de gestión en el entorno deseado.
+* Instalar Rancher y Turtles con todos los requisitos previos.
+* Instalar Gitea.
+* Ejecutar la suite que creará un repositorio git, aplicará la plantilla del clúster utilizando Fleet y verificará que el clúster se crea e importa correctamente en Rancher.
+
+La suite de pruebas se puede utilizar para la certificación de proveedores no listados en la xref:../overview/certified.adoc[tabla de Certificación], como se detalla en xref:../operator/certification.adoc[Certificación de Proveedores].
+
+== Cómo Usarlo
+
+La referencia principal para reutilizar la suite de pruebas es https://github.com/rancher-sandbox/turtles-integration-suite-example[este repositorio], que contiene un ejemplo de cómo integrar un proveedor CAPI dado con {product_name} y aplica una serie de comprobaciones basadas en un flujo de trabajo GitOps.
+
+== Antes de la ejecución
+
+El entorno de prueba de extremo a extremo utilizado en Turtles proporciona una serie de alternativas de configuración dependiendo del tipo de prueba que estés realizando y del tipo de comprobaciones que estés llevando a cabo. Si estás comenzando con la suite de pruebas, te recomendamos que mantengas tu configuración lo más simple posible y limites el número de personalizaciones para que puedas entender el proceso y sus detalles de configuración. Puedes comenzar tu viaje en la prueba de proveedores clonando el repositorio de ejemplo:
+
+----
+git clone https://github.com/rancher-sandbox/turtles-integration-suite-example.git
+----
+
+La ejecución de prueba más simple que puedes realizar crea un entorno local que no utiliza un punto final accesible por internet. Esto limita las comprobaciones solo a clústeres locales en sentido descendente (efectivamente, clústeres CAPI aprovisionados a través de CAPD), pero es suficiente para ejecutar la integración de ejemplo. Puedes simplemente ejecutar esta versión local especificando que pretendes ejecutarla localmente.
+
+----
+MANAGEMENT_CLUSTER_ENVIRONMENT="isolated-kind" make test
+----
+
+Al verificar la integración con otros proveedores de infraestructura (por ejemplo, proveedores para vendedores de la nube), tendrás que hacer que tu instancia de Rancher esté disponible a través de un punto final para los clústeres en sentido descendente, que ya no están en tu entorno local. La variable `MANAGEMENT_CLUSTER_ENVIRONMENT` que utilizamos antes, admite los siguientes valores:
+
+----
+MANAGEMENT_CLUSTER_ENVIRONMENT: "kind" # supported options are eks, isolated-kind, kind
+----
+
+`isolated-kind`, que es el valor que utilizamos para las pruebas locales, y `kind` desplegará entornos locales equivalentes. La diferencia es que `kind` también configurará un punto de acceso público a través de https://ngrok.com/[ngrok]. Puedes obtener un punto de acceso `ngrok` gratuito (limitado) y usarlo para ejecutar pruebas. Antes de ejecutar `make test`, también necesitarás establecer las siguientes variables de entorno:
+
+----
+NGROK_API_KEY: ""
+NGROK_AUTHTOKEN: ""
+----
+
+Usando esta configuración, durante la creación del entorno, la instancia de Rancher se configurará para ser accesible a través de tu punto final `ngrok` y los clústeres en sentido descendente podrán comunicarse con él.
+
+La sección <<_other_options,Otras opciones>> contiene más información sobre lo que puedes configurar antes de la ejecución.
+
+== Flujo de trabajo básico
+
+En secciones anteriores introdujimos las principales acciones realizadas en la integración de prueba de muestra:
+
+[discrete]
+==== Crear un clúster de gestión en el entorno deseado.
+
+* Este no es un requisito específico de Turtles, ya que, al trabajar con CAPI, debe haber un clúster de gestión que se utilizará para crear recursos que representen clústeres en sentido descendente. Esta es la parte principal del entorno de prueba y, dependiendo de las variables de entorno pasadas a la suite de pruebas, puede ser alojado localmente (usando `kind`) o en la nube (`eks`).
+
+[discrete]
+==== Instalar Rancher y Turtles con todos los requisitos previos.
+
+* Turtles es una extensión de Rancher y, como tal, necesita una instalación de Rancher para ser desplegada. Rancher Manager se ejecutará en el clúster de gestión que creamos en el primer paso y el chart de Turtles se instalará cuando Rancher esté disponible. Si se utiliza una configuración accesible desde Internet, un controlador de ingreso hará que Rancher sea accesible desde una red externa (por ejemplo, clúster desplegado en la nube).
+
+[discrete]
+==== Ejecutar la suite que creará un repositorio git, aplicará la plantilla del clúster utilizando Fleet y verificará que el clúster se crea e importa correctamente en Rancher.
+
+* La suite de pruebas principal, y la que se utiliza como ejemplo, se basa en un flujo de GitOps y utiliza https://github.com/rancher/fleet[Fleet] como herramienta orquestadora de GitOps. Basado en las plantillas de clúster proporcionadas (puedes consultar las que vienen con la integración de ejemplo https://github.com/rancher-sandbox/turtles-integration-suite-example/tree/main/suites/data/cluster-templates[aquí]), creará los clústeres CAPI definidos en los archivos YAML. Una vez que este/estos clúster/s estén disponibles, se configurarán para ser xref:../tutorials/first-cluster.adoc[importados a Rancher usando Turtles] y se verificará que el/los clúster/es en sentido descendente sea/n accesible/s a través de Rancher. También comprobará que se puede realizar la eliminación en los clústeres en sentido descendente y que ya no están disponibles en Rancher.
+
+== Otras opciones
+:kubernetes-version: v1.31.4
+
+Puedes echar un vistazo al `config.yaml` https://github.com/rancher-sandbox/turtles-integration-suite-example/blob/main/config/config.yaml[archivo] en el repositorio `turtles-integration-suite-example`, que contiene una lista de variables de entorno utilizadas durante la ampliación del entorno de prueba y la ejecución de pruebas. Lo siguiente es una versión truncada del archivo YAML mencionado anteriormente:
+
+[source,yaml,subs=attributes+]
+----
+...
+variables:
+  CLUSTERCTL_BINARY_PATH: ""
+  USE_EXISTING_CLUSTER: "false"
+  SKIP_RESOURCE_CLEANUP: "false"
+  ARTIFACTS_FOLDER: "_artifacts"
+  MANAGEMENT_CLUSTER_ENVIRONMENT: "kind" # supported options are eks, isolated-kind, kind
+  RANCHER_VERSION: "{rancher_version}"
+  KUBERNETES_VERSION: "{kubernetes-version}"
+  KUBERNETES_MANAGEMENT_VERSION: "{kubernetes-version}"
+  KUBERNETES_MANAGEMENT_AWS_REGION: "eu-west-2"
+  RKE2_VERSION: "{kubernetes-version}+rke2r1"
+  TURTLES_PATH: "turtles/rancher-turtles"
+  TURTLES_REPO_NAME: "turtles"
+  TURTLES_URL: https://rancher.github.io/turtles
+  TURTLES_VERSION: "{turtles_version}"
+  RANCHER_HOSTNAME: "localhost"
+  RANCHER_FEATURES: ""
+  RANCHER_PATH: "rancher-latest/rancher"
+  RANCHER_REPO_NAME: "rancher-latest"
+  RANCHER_URL: "https://releases.rancher.com/server-charts/latest"
+  CERT_MANAGER_URL: "https://charts.jetstack.io"
+  CERT_MANAGER_REPO_NAME: "jetstack"
+  CERT_MANAGER_PATH: "jetstack/cert-manager"
+  ...
+  ...
+  ...
+  HELM_BINARY_PATH: "helm"
+  HELM_EXTRA_VALUES_FOLDER: "/tmp"
+  # Additional setup for establishing rancher ingress
+  NGROK_REPO_NAME: "ngrok"
+  NGROK_URL: "https://ngrok.github.io/kubernetes-ingress-controller"
+  NGROK_PATH: "ngrok/kubernetes-ingress-controller"
+  NGROK_API_KEY: ""
+  NGROK_AUTHTOKEN: ""
+  GITEA_REPO_NAME: "gitea-charts"
+  GITEA_REPO_URL: "https://dl.gitea.com/charts/"
+  GITEA_CHART_NAME: "gitea"
+  GITEA_CHART_VERSION: "10.6.0"
+  ...
+----
+
+[TIP]
+====
+Puedes referirte al https://github.com/rancher/turtles/tree/main/test/e2e#e2e-tests[Turtles repository] para ver todas las suites y parámetros que puedes utilizar para personalizar la ejecución de pruebas. Recomendamos hacer esto solo si estás familiarizado con el despliegue/configuración del entorno de pruebas y tienes requisitos específicos de integración.
+====
+

@@ -1,0 +1,73 @@
+= CAPIプロバイダ
+:revdate: 2025-08-25
+:page-revdate: {revdate}
+
+`CAPIProvider`リソースは、Cluster API Operatorマニフェストを宣言的に管理することを可能にします。これは、AWS、vSphereなどのCluster APIプロバイダをプロビジョニングおよび設定するために使用されます。
+
+`CAPIProvider`はGitOpsモデルに従い、specフィールドは宣言的なユーザー入力です。コントローラーはステータスのみを更新します。
+
+アップストリームのCAPI Operator `CAPIProviderSpec`リソースによって提供されるすべてのフィールドは、`CAPIProvider`リソースのspecにも利用可能です。高度なシナリオについては、アップストリームの設定link:https://cluster-api-operator.sigs.k8s.io/03_topics/02_configuration/05_provider-spec-configuration[ガイド]を参照してください。
+
+すべてのxref:../overview/certified.adoc[認定]CAPIプロバイダは、埋め込まれた設定を使用して設定されています。これを上書きするには、カスタムxref:./clusterctlconfig.adoc#_override_a_certified_provider_version[ClusterctlConfig]を作成する必要があります。
+
+== 使用方法
+
+`CAPIProvider`リソースを使用するには：
+
+. 希望するプロバイダ名、タイプ、資格情報、設定、および機能を持つ`CAPIProvider`リソースを作成します。
+. `CAPIProvider`コントローラーは、`CAPIProvider` specに基づいて必要なCluster API Operatorマニフェストのテンプレート処理を行います。
+. `CAPIProvider`リソースのステータスフィールドは、生成されたマニフェストの状態を反映します。
+. 生成されたプロバイダーマニフェストに変更を適用するために、`CAPIProvider`オブジェクトを宣言的に管理します。
+
+以下は`CAPIProvider`マニフェストの例です：
+
+[source,yaml]
+----
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: aws-infra
+  namespace: capi-providers
+spec:
+  name: aws
+  type: infrastructure
+  enableAutomaticUpdate: true
+  credentials:
+    rancherCloudCredential: aws-creds # Rancher credentials secret for AWS
+  configSecret:
+    name: aws-config
+  features:
+    clusterResourceSet: true
+----
+
+これにより、提供されたマッピングに基づいて、Rancher資格情報シークレットおよびカスタムで有効な機能を持つAWSインフラストラクチャプロバイダーが生成されます。
+
+`CAPIProvider`コントローラーは、生成されたすべてのプロバイダーリソースを所有し、`CAPIProvider`オブジェクトを削除することでガーベジコレクションを可能にします。
+
+== 仕様
+
+`CAPIProvider` specの主要なフィールドは次のとおりです：
+
+* `name` - プロバイダーの名前（aws、vsphereなど）。指定されていない場合は`metadata.name`から継承されます。
+* `type` - プロバイダーリソースの種類（`core`、`controlPlane`、`bootstrap`、`infrastructure`、`addon`、`ipam`、または`runtimeextension`に設定できます）。
+* `credentials` - プロバイダー仕様のためのソース認証情報。
+* `configSecret` - 変数と同期された認証情報が保存されるプロバイダー設定シークレットの名前。デフォルトでは、指定されていない場合、`CAPIProvider`リソースの名前を継承します。
+* `features` - 有効なプロバイダー機能。
+* `variables` - 変数は、`configSecret`の内容に追加する環境変数のマップです。
+* `version` - バージョンはプロバイダーのバージョンを示します。
+* `enableAutomaticUpdate` - プロバイダーが自動的に更新されることを許可します。デフォルトでは、Turtlesチャートがインストールされたプロバイダーでのみ有効です。
+* `fetchConfig` - FetchConfigは、オペレーターがプロバイダーのコンポーネントとメタデータを取得する方法を決定します。
+** `oci` - OCIは、OCIアーティファクトからプロバイダーのコンポーネントとメタデータを取得するために使用されます。オペレーターがGitHubからリリースの希望するバージョンを取得するために、`providerSpec.Version`フィールドを設定する必要があります。providerSpec.Versionが欠けている場合、clusterctlのデフォルトから最新のプロバイダーバージョンが使用されます。
+** `selector` - クラスター内に保存されたConfigMapsからプロバイダーのコンポーネントとメタデータを取得するために使用されるセレクター。各ConfigMapは、特定のバージョンのコンポーネントとメタデータを含むことが期待されています。
+** `url` - リモートGitHubリポジトリからプロバイダーのコンポーネントとメタデータを取得するために使用されるURL。
+
+== バージョンの固定と自動更新
+
+`CAPIProvider` `version`は、プロバイダーを特定のバージョンに固定するためにいつでも設定できます。さらに、`automaticUpdates`を切り替えることで、最新の利用可能なバージョンへの自動更新を許可できます。最新の利用可能なバージョンは、xref:../overview/certified.adoc[certified]プロバイダーの埋め込まれたclusterctl設定によって決定され、xref:../reference/clusterctlconfig.adoc[ClusterctlConfig]を使用してカスタムプロバイダーのために上書きまたは設定できます。
+
+== 削除
+
+`CAPIProvider`リソースが削除されると、Kubernetesのガーベジコレクションがその所有するすべての生成されたプロバイダーリソースをクリーンアップします。これには以下のものが含まれます。
+
+* クラスターAPIオペレーターリソースインスタンス
+* `configSecret`によって参照されるシークレット

@@ -1,0 +1,120 @@
+= 認定CAPIプロバイダ
+:revdate: 2025-10-14
+:page-revdate: {revdate}
+
+== 認定プロバイダとは何ですか？
+
+認定プロバイダは、TurtlesチームのCIワークフローによって**積極的にテストされている**CAPIプロバイダであり、RancherのCAPI拡張機能と適切に動作することを検証しています。ただし、ほとんどのCAPIプロバイダはKubernetesオープンコミュニティによって維持されているアップストリームプロジェクトであるため、**新しいプロバイダのバージョンがリリースされる際に**問題が発生しないことを保証することはできません。
+
+== 認定プロバイダのリスト
+
+[NOTE]
+====
+このリストは、プロジェクトの進行中の開発を反映するために常に進化しています。
+====
+
+
+これは、Turtlesによって公式に認定されたCAPIプロバイダのリストです。これらのプロバイダは私たちのテストスイートに含まれており、RancherのCAPI拡張機能と適切に動作することを積極的に確認しています。
+
+|===
+| プラットフォーム | コード名 | プロバイダタイプ | マニュアル
+
+| *RKE2*
+| CAPRKE2
+| 起動する/コントロールプレーン
+| https://rancher.github.io/cluster-api-provider-rke2[CAPRKE2ブック]
+
+| *Kubeadm*
+| Kubeadm
+| 起動する/コントロールプレーン
+| https://cluster-api.sigs.k8s.io/tasks/bootstrap/kubeadm-bootstrap[CABPKマニュアル]
+
+| *AWS*
+| CAPA
+| インフラストラクチャ
+| https://cluster-api-aws.sigs.k8s.io[CAPAブック]
+
+| *Docker**
+| CAPD
+| インフラストラクチャ
+| https://cluster-api.sigs.k8s.io[CAPIブック]
+
+| *vSphere*
+| CAPV
+| インフラストラクチャ
+| https://github.com/kubernetes-sigs/cluster-api-provider-vsphere/blob/main/docs/getting_started.md[CAPVマニュアル]
+
+| *Azure*
+| CAPZ
+| インフラストラクチャ
+| https://capz.sigs.k8s.io/[CAPZブック]
+
+| *GCP*（GKE管理クラスターのみ）
+| CAPG
+| インフラストラクチャ
+| https://cluster-api-gcp.sigs.k8s.io/[CAPGブック]
+
+| *Addon Provider Fleet*
+| CAAPF
+| アドオン
+| https://rancher.github.io/cluster-api-addon-provider-fleet/[CAAPFブック]
+|===
+
+*開発目的のみに推奨されます。
+
+== 実験モードのプロバイダのリスト
+
+これは、開発が進んでおり、まもなく認定されるプロバイダのリストです。
+
+|===
+| プラットフォーム | コード名 | プロバイダタイプ | マニュアル
+|===
+
+== 認定プロバイダのためのクラスタークラスサポート
+
+以下は、各認定プロバイダとそのクラスター トポロジー機能のサポートに関するサポートマトリックスです。
+
+[tabs]
+======
+CAPZ::
++
+--
+- **完全なサポート** `ClusterClass`：管理された（AKS）および管理されていない（仮想マシン）クラスターの両方がトポロジーを介してプロビジョニングできます。
+--
+
+CAPA::
++
+--
+- **完全なサポート** `ClusterClass`：管理された（EKS）および管理されていない（EC2ベース）クラスターの両方がトポロジーを介してプロビジョニングできます。
+--
+
+CAPG::
++
+--
+- **完全なサポート** `ClusterClass`：管理された（GKE）および管理されていない（仮想マシン）クラスターの両方がトポロジーを介してプロビジョニングできます。
+--
+
+CAPRKE2::
++
+--
+- **完全なサポート** `ClusterClass`.
+--
+
+CABPK::
++
+--
+- **完全なサポート** `ClusterClass`.
+--
+
+CAPV::
++
+--
+- **完全なサポート** `ClusterClass`.
+--
+
+CAPD::
++
+--
+- **完全なサポート** `ClusterClass`.
+--
+======

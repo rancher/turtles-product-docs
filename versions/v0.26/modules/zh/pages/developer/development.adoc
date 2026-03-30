@@ -1,0 +1,66 @@
+= 开发设置
+:revdate: 2025-07-01
+:page-revdate: {revdate}
+
+== 先决条件：
+
+* https://kind.sigs.k8s.io/[kind]
+* https://helm.sh/[helm]
+* https://tilt.dev/[Tilt]
+
+== 创建本地开发环境
+
+. 在本地克隆 https://github.com/rancher/turtles[{product_name}] 储存库
+. 创建 *tilt-settings.yaml*：
++
+[source,yaml]
+----
+{
+    "k8s_context": "k3d-rancher-test",
+    "default_registry": "ghcr.io/turtles-dev",
+    "debug": {
+        "turtles": {
+            "continue": true,
+            "port": 40000,
+            "insecure_skip_verify": "true"
+        }
+    }
+}
+----
++
+. 在 {product_name} 储存库的 root 打开终端
+. 运行以下命令：
++
+[source,bash]
+----
+make dev-env
+
+# Or if you want to use a custom hostname for Rancher and your ngrok credentials
+NGROK_API_KEY=`key` NGROK_AUTHTOKEN=`token` RANCHER_HOSTNAME=my.customhost.dev make dev-env
+----
++
+. 如果您没有 ngrok 凭据并且在之前的步骤中未提供它们，您也可以在 tilt 启动后打开一个新终端并启动 ngrok 或 inlets：
++
+[source,bash]
+----
+kubectl port-forward --namespace cattle-system svc/rancher 10000:443
+ngrok http https://localhost:10000
+----
+
+== 运行 `make dev-env` 会发生什么？
+
+. 将使用以下 https://github.com/rancher/turtles/blob/main/scripts/kind-cluster-with-extramounts.yaml[配置] 创建一个 https://kind.sigs.k8s.io/[kind] 集群。
+. 将使用 Helm 安装以下先决组件：
+ ** Rancher 管理器。
+ ** 证书管理器。
+ ** ngrok Kubernetes Operator。
+. Docker 镜像将在本地构建，Helm 将在集群中部署以下控制器：
+ ** 内核集群 API 控制器。
+ ** RKE2 启动/控制平面提供程序控制器。
+ ** Docker 基础设施提供程序控制器。
+ ** Fleet 控制器的 CAPI 附加产品提供程序。
+ ** {product_name} 控制器。
+ ** {product_name} 集群 API Operator 控制器。
+ ** {product_name} ClusterClass 控制器。
+ ** {product_name} Day 2 操作控制器。
+. 开发环境将使用 `tilt up` 启动。

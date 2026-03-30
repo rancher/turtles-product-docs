@@ -1,0 +1,5 @@
+= Introduction
+:revdate: 2025-06-30
+:page-revdate: {revdate}
+
+Dans cette section, nous explorerons les références dans {product_name}.

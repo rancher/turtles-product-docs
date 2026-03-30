@@ -1,0 +1,173 @@
+= Mise à niveau vers CAPI v1beta2
+
+La version `v0.26.0` de Rancher Turtles adopte le contrat CAPI `v1beta2`, qui est accompagné de CAPI noyau v1.12.2. Si vous utilisez un provisionnement basé sur CAPI, il y a quelques éléments à examiner avant de procéder à la mise à niveau.
+
+Les changements se répartissent en trois domaines :
+
+* xref:#_clusterclass[Comment `ClusterClass` les ressources sont structurées].
+* xref:#_cluster[Comment `Cluster` la topologie fait référence à sa classe].
+* xref:#_rke2_provider_caprke2[Ce qui a changé dans le fournisseur RKE2].
+
+Lisez les sections qui s'appliquent à votre configuration avant d'apporter des modifications.
+
+== Une note sur la compatibilité descendante
+
+CAPI v1.12 continue de servir `v1beta1` ressources aux côtés de `v1beta2`. Les ressources existantes sur votre cluster continueront de fonctionner sans migration immédiate, car le serveur API convertit entre les deux versions de manière transparente. Cela dit, tous les nouveaux manifestes que vous écrivez devraient cibler `v1beta2`, et vous devriez planifier de migrer vos manifestes existants au fil du temps. L'API `v1beta1` est prévue pour être supprimée dans une future version de CAPI (août 2026) une fois que l'écosystème aura eu le temps de se stabiliser sur `v1beta2`.
+
+*Recommandation* : évaluez d'abord si vous êtes prêt à adopter `v1beta2` et agissez en conséquence. Si vous choisissez de ne pas migrer immédiatement, créez un plan pour passer à l'utilisation de la nouvelle API afin d'éviter des interruptions à l'avenir.
+
+De plus, la communauté en amont fournit un guide de migration officiel :
+
+* https://cluster-api.sigs.k8s.io/developer/providers/migrations/v1.10-to-v1.11[CAPI v1.10 à v1.11] : cela couvre tous les changements de `v1beta1` à `v1beta2` dans le CAPI noyau.
+* https://cluster-api.sigs.k8s.io/developer/providers/migrations/v1.11-to-v1.12[CAPI v1.11 à v1.12] : la plupart des changements dans CAPI v1.12 peuvent être considérés comme mineurs.
+
+== ClusterClass
+
+=== Références de modèle
+
+Dans `v1beta1`, le champ qui pointe vers les objets de modèle `ClusterClass` s'appelait `ref`. Dans `v1beta2`, il s'appelle `templateRef`. Cela s'applique à `spec.infrastructure`, `spec.controlPlane` et `spec.controlPlane.machineInfrastructure`.
+
+Avant :
+
+[,yaml]
+----
+spec:
+  infrastructure:
+    ref:
+      apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+      kind: DockerClusterTemplate
+      name: my-cluster-template
+----
+
+Après :
+
+[,yaml]
+----
+spec:
+  infrastructure:
+    templateRef:
+      apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
+      kind: DockerClusterTemplate
+      name: my-cluster-template
+----
+
+=== Section de travail
+
+Dans `v1beta1`, les références de démarrage et d'infrastructure pour les déploiements de machines étaient imbriquées sous un champ `template`. Cette clé racine a disparu dans `v1beta2`. `bootstrap` et `infrastructure` sont maintenant des enfants directs de l'entrée de déploiement de machines.
+
+Avant :
+
+[,yaml]
+----
+workers:
+  machineDeployments:
+    - class: default-worker
+      template:
+        bootstrap:
+          ref:
+            apiVersion: bootstrap.cluster.x-k8s.io/v1beta1
+            kind: KubeadmConfigTemplate
+            name: my-bootstrap-template
+        infrastructure:
+          ref:
+            apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+            kind: DockerMachineTemplate
+            name: my-worker-template
+----
+
+Après :
+
+[,yaml]
+----
+workers:
+  machineDeployments:
+    - class: default-worker
+      bootstrap:
+        templateRef:
+          apiVersion: bootstrap.cluster.x-k8s.io/v1beta2
+          kind: KubeadmConfigTemplate
+          name: my-bootstrap-template
+      infrastructure:
+        templateRef:
+          apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
+          kind: DockerMachineTemplate
+          name: my-worker-template
+----
+
+== Grappe
+
+La ressource `Cluster` référence maintenant son `ClusterClass` à travers un objet structuré plutôt qu'une chaîne en ligne. Dans `v1beta1`, le nom de la classe et l'espace de noms étaient spécifiés comme `spec.topology.class` et `spec.topology.classNamespace`. Dans `v1beta2`, les deux champs sont remplacés par un seul objet `spec.topology.classRef`.
+
+Avant :
+
+[,yaml]
+----
+apiVersion: cluster.x-k8s.io/v1beta1
+kind: Cluster
+spec:
+  topology:
+    class: my-clusterclass
+    classNamespace: capi-system
+----
+
+Après :
+
+[,yaml]
+----
+apiVersion: cluster.x-k8s.io/v1beta2
+kind: Cluster
+spec:
+  topology:
+    classRef:
+      name: my-clusterclass
+      namespace: capi-system
+----
+
+Le reste de la spécification `Cluster` (paramètres réseau, `controlPlane.replicas`, `workers.machineDeployments`, `variables`, `version`, etc.) reste inchangé.
+
+== Fournisseur RKE2 (CAPRKE2)
+
+Cette version inclut CAPRKE2 v0.23.1, contre v0.22.1. L'API `v1beta2` pour les ressources de démarrage et de plan de contrôle RKE2 a été introduite dans v0.22.0 avec le support de CAPI v1.11, et v0.23.0 a complété ce travail en passant à CAPI v1.12.2. Les versions v0.22.1 et v0.23.1 sont des correctifs basés sur ces versions mineures respectives.
+
+*Note* : lisez la documentation du fournisseur sur les changements d'API du link:https://caprke2.docs.rancher.com/05_reference/01_api_versions.html#v1beta1-to-v1beta2[CAPI Provider RKE2 book]
+
+=== Nouvelle API v1beta2
+
+CAPRKE2 propose maintenant sa propre API `v1beta2` pour `RKE2ControlPlane`, `RKE2ControlPlaneTemplate` et `RKE2Config`/`RKE2ConfigTemplate`. L'API `v1beta1` reste disponible, mais plusieurs champs qui avaient été marqués pour cesser la prise en charge dans `v1beta1` sont maintenant supprimés dans `v1beta2`.
+
+=== Champs supprimés dans RKE2ControlPlane
+
+Les champs suivants ont été supprimés de `RKE2ControlPlane.spec` dans `v1beta2` :
+
+* `infrastructureRef` — utilisez `spec.machineTemplate.spec.infrastructureRef` à la place.
+* `nodeDrainTimeout` — utilisez `spec.machineTemplate.spec.deletion.nodeDrainTimeout` à la place.
+
+=== Champs de délai renommés
+
+Les champs de délai dans `RKE2ControlPlaneMachineTemplate` ont été déplacés sous un sous-objet `deletion` et renommés. Ils ont également changé de type de `metav1.Duration` à `int32`, et attendent maintenant des valeurs exprimées en secondes plutôt qu'une chaîne de durée.
+
+|===
+| v1beta1 | v1beta2
+
+| `nodeDrainTimeout`
+| `deletion.nodeDrainTimeoutSeconds`
+
+| `nodeVolumeDetachTimeout`
+| `deletion.nodeVolumeDetachTimeoutSeconds`
+
+| `nodeDeletionTimeout`
+| `deletion.nodeDeletionTimeoutSeconds`
+|===
+
+L'objet `RKE2ControlPlaneMachineTemplate` nécessite également maintenant un champ `spec`.
+
+=== Cessation de la prise en charge de v1alpha1.
+
+L'API `v1alpha1` a cessé d'être prise en charge dans CAPRKE2 v0.22.0. Si vous utilisez encore des ressources `v1alpha1`, c'est le bon moment pour migrer vers au moins `v1beta1`.
+
+== Étapes recommandées à suivre avant la mise à niveau
+
+. Mettez à jour tous les manifests `ClusterClass` que vous maintenez : renommez `ref` en `templateRef`, supprimez le wrapper `template` dans la section de travail, et mettez à jour les chaînes CAPI `apiVersion` du noyau en `v1beta2`.
+. Mettez à jour tous les manifests `Cluster` : remplacez `spec.topology.class` et `spec.topology.classNamespace` par `spec.topology.classRef.name` et `spec.topology.classRef.namespace`.
+. Si vous utilisez des ressources CAPRKE2 `v1beta2`, supprimez tous les champs `infrastructureRef` ou `nodeDrainTimeout` directs de `RKE2ControlPlane.spec` et déplacez-les vers `spec.machineTemplate.spec`.
+. Vérifiez les exemples mis à jour dans `examples/clusterclasses/` pour des manifests complets et fonctionnels pour chaque fournisseur CAPI certifié.

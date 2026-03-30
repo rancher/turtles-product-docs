@@ -1,0 +1,82 @@
+= 功能
+:revdate: 2026-03-05
+:page-revdate: {revdate}
+
+本节描述了{product_name}中的功能和功能阶段。
+
+== 功能列表
+
+|===
+| 功能 | Helm 功能名称 | 子功能 | 默认值 | 阶段 
+
+| *Cluster API Add-on Provider for Fleet*
+| `addon-provider-fleet`
+| _无_
+| 已启用
+| Beta
+
+| *代理 TLS 模式*
+| `agent-tls-mode`
+| _无_
+| 已启用
+| Beta
+
+| *无证书管理器*
+| `no-cert-manager`
+| _无_
+| 已启用
+| Beta
+
+| *使用 Rancher 默认注册表*
+| `use-rancher-default-registry`
+| _无_
+| 已启用
+| Beta
+
+|===
+
+=== Cluster API Add-on Provider for Fleet
+此功能安装 Cluster API Add-on Provider for Fleet（CAAPF），以提供与https://github.com/rancher/fleet[Fleet]的集成，并支持将应用程序轻松部署到 CAPI 提供的集群。CAAPF 会自动在管理集群中安装 Fleet，并将新提供的 CAPI 集群注册到 Fleet，以便可以通过 GitOps、`Bundle` 或 `HelmOp` 资源将应用程序部署到这些集群。CAAPF 还支持通过 Fleet 的 ClusterGroup 将引用相同 ClusterClass 的 CAPI 集群进行分组，从而简化了在大量集群上部署应用程序。此功能处于 GA 阶段，默认启用。
+
+=== 代理 TLS 模式
+此功能门控用于指示 Turtles 在检索用于导入集群的集群注册清单时，是否应遵循 Rancher 的 `agent-tls-mode` 设置。启用时，Turtles 将查找 Rancher 的 `agent-tls-mode` 设置的值，以确定其是否已设置为 `system-store` 或 `strict`。如果设置为 `system-store`，Turtles 将信任操作系统信任存储中包含的由公共证书颁发机构生成的任何证书，包括由 Let's Encrypt 等机构签署的证书。如果设置为 `strict`，Turtles 将仅信任 Rancher 的 `cacerts` 设置中包含的证书颁发机构生成的证书。当此设置被禁用时，Turtles 将回退到 `system-store` 模式工作。此功能处于测试阶段，默认启用。
+
+=== 无证书管理器
+此功能门控将CAPI提供者的清单转换为用https://github.com/rancher/wrangler/[wrangler]替换证书管理器的用法。
+
+特别是，验证和变更的准入Webhook将更新为使用wrangler生成的证书，而不是证书管理器，从而允许无证书管理器的环境。
+
+请注意，使用Rancher `CATTLE_SYNC_ONLY_CHANGED_OBJECTS` https://documentation.suse.com/cloudnative/rancher-manager/latest/en/installation-and-upgrade/best-practices/tuning-rancher-at-scale.html#_reducing_event_handler_executions[功能]可能会导致证书在默认过期时间一年后无法续订。
+
+可以禁用此功能以恢复所有提供者清单到原始的证书管理器用法。
+
+=== 使用 Rancher 默认注册表
+
+此功能门控指示{product_name}在为CAPI提供者组件构建镜像引用时利用Rancher的`system-default-registry`管理设置。启用时，{product_name}读取此设置，并且如果配置了注册表，则为每个提供者镜像重写存储库以使用该注册表。
+如果设置为空，{product_name}将回退到默认镜像引用。在`ClusterctlConfig`资源中定义的镜像覆盖始终优先。有关在隔离的环境中详细使用的信息，请参见xref:operator/airgapped.adoc[隔离的环境]。此功能处于初始阶段，默认启用。
+
+== 功能阶段
+
+{product_name} 遵循 Kubernetes https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/#feature-stages[功能阶段]流程。功能可以处于以下阶段之一：初始阶段、测试阶段或正式发布（GA）。
+
+=== Alpha Stage
+- 默认已禁用。
+- 可能存在错误，且没有长期支持。
+- API可能会在没有通知的情况下更改。
+- 仅推荐用于短期测试集群。
+
+=== 测试阶段
+- 默认情况下始终启用。
+- 经过充分测试，认为是安全的。
+- 支持稳定，但架构可能在未来版本中发生变化。
+- 由于可能存在不兼容的更改，建议用于非业务关键用途。
+
+[NOTE]
+====
+请对 Alpha 和 Beta 功能提供反馈！
+====
+
+=== 正式发布 (GA) 阶段
+- 始终启用，无法禁用。
+- 无需功能门控。
+- 稳定，未来版本将提供长期支持。

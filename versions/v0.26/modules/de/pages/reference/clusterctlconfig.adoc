@@ -1,0 +1,91 @@
+= ClusterctlConfig
+:revdate: 2025-11-14
+:page-revdate: {revdate}
+
+Die `ClusterctlConfig` Ressource ermöglicht die Verwaltung von Überschreibungen für clusterctl (CAPI Operator) Konfiguration auf deklarative Weise. Sie wird verwendet, um clusterctl Anbieter und deren URLs sowie Versionsbeschränkungen zu konfigurieren.
+
+`ClusterctlConfig` folgt einem GitOps-Modell - die Spezifikationsfelder sind deklarative Benutzereingaben. Turtles erstellt oder aktualisiert die Ressource nicht, es liegt am Benutzer, die Anbieter-URL-Überschreibungen anzugeben und ihren Zustand zu verwalten. Es hat Vorrang vor eingebetteten Standardwerten oder dem `clusterctl` Standardset an Anbieterdefinitionen.
+
+https://github.com/rancher/turtles/blob/main/docs/adr/0012-clusterctl-provider.md[ADR]
+
+== Verwendung
+
+Um die `ClusterctlConfig` Ressource zu verwenden:
+
+. Erstellen Sie eine `ClusterctlConfig` Ressource mit dem `clusterctl-config` Namen im `turtles` Namespace.
+. Der `ClusterctlConfig` Controller übernimmt Aktualisierungen für den `ConfigMap`, der am `cluster-api-operator` angebunden ist, basierend auf der erforderlichen clusterctl-Konfiguration und der `ClusterctlConfig` Spezifikation.
+. Verwalten Sie das `ClusterctlConfig` Objekt deklarativ, um Änderungen an den generierten Anbieterkonfigurationen anzuwenden. Es kann einige Zeit in Anspruch nehmen, bis Änderungen wirksam werden, da `kubelet` sich um die Aktualisierung des Einhängepunkts basierend auf dem `ConfigMap` Zustands kümmert.
+
+Hier ist ein Beispiel für ein `ClusterctlConfig` Manifest:
+
+[,yaml]
+----
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: ClusterctlConfig
+metadata:
+  name: clusterctl-config
+  namespace: cattle-turtles-system
+spec:
+  providers:
+  - name: metal3
+    url: https://github.com/metal3-io/cluster-api-provider-metal3/releases/v1.10.1/infrastructure-components.yaml
+    type: InfrastructureProvider
+  images:
+  - name: metal3
+    repository: "my.registry.mirror"
+    tag: customTag
+----
+
+Dieses Beispiel generiert eine clusterctl-Konfiguration für den `metal3` Anbieter mit der angegebenen URL und dem Typ.
+
+== Spezifikation
+
+Die wichtigsten Felder in der `ClusterctlConfig` Konfiguration sind:
+
+* `providers[].name` - Name des Anbieters (z.B. metal3)
+* `providers[].url` - URL der Anbieter-Konfiguration (z.B.
+https://github.com/metal3-io/cluster-api-provider-metal3/releases/v1.10.1/infrastructure-components.yaml). Dies kann `latest` Release verwenden, wenn unterstützt, oder die maximale Version auf `v1.10.1` festlegen, zum Beispiel.
+* `providers[].type` - Typ des Anbieters (z.B. InfrastructureProvider)
+
+* `images[].name` - Der Name des Bildes, das überschrieben werden soll (z. B. infrastructure-metal3, cluster-api, bootstrap-rke2, control-plane-rke2)
+* `images[].repository` - Setzt die Container-Registry-Überschreibung, um Bilder abzurufen
+* `images[].tag` - Ermöglicht die Angabe eines Tags für die Bilder
+
+== Überschreiben Sie eine zertifizierte Anbieter-Version
+
+{product_name} bettet eine validierte Konfiguration ein, in der alle zertifizierten Anbieter-Versionen festgelegt sind. +
+Typischerweise werden Versionen mit jeder Veröffentlichung von {product_name} aktualisiert.
+
+[WARNING]
+====
+- {product_name} validiert nur die eingebettete Konfiguration für zertifizierte Anbieter. Jede Anpassung der eingebetteten Konfiguration kann letztendlich zu Inkompatibilitäten und nicht unterstützten Szenarien führen. 
+====
+
+Um eine Anbieter-Version zu überschreiben oder eine andere Registry zum Abrufen von Bildern zu verwenden, kann ein `ClusterctlConfig` definiert werden. +
+Für weitere Informationen zur Bildüberschreibung konsultieren Sie bitte die Upstream link:https://cluster-api.sigs.k8s.io/clusterctl/configuration#image-overrides[Dokumentation].
+
+[source,yaml]
+----
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: ClusterctlConfig
+metadata:
+  name: clusterctl-config
+  namespace: cattle-turtles-system
+spec:
+  providers:
+  - name: rke2
+    url: "https://github.com/rancher/cluster-api-provider-rke2/releases/v0.20.1/control-plane-components.yaml"
+    type: ControlPlaneProvider
+  - name: rke2
+    url: "https://github.com/rancher/cluster-api-provider-rke2/releases/v0.20.1/bootstrap-components.yaml"
+    type: BootstrapProvider
+  images:
+  - name: control-plane-rke2
+    repository: "ghcr.io/rancher"
+  - name: bootstrap-rke2
+    repository: "ghcr.io/rancher"
+----
+
+== Löschung
+
+Wenn eine `ClusterctlConfig`-Ressource gelöscht wird, wird die Konfiguration auf ihren ursprünglichen Zustand zurückgesetzt, der von Turtles verwaltet wird.
