@@ -1,4 +1,5 @@
 = Crie um cluster usando o Fleet
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 2025-08-01
 :page-revdate: {revdate}
 

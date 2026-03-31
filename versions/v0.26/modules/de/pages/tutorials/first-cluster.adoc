@@ -1,4 +1,5 @@
 = Erstellen und importieren Sie Ihren ersten Cluster
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 2025-11-20
 :page-revdate: {revdate}
 

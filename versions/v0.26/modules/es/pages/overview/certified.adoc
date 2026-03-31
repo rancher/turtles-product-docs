@@ -1,4 +1,5 @@
 = Proveedores CAPI Certificados
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 2025-10-14
 :page-revdate: {revdate}
 

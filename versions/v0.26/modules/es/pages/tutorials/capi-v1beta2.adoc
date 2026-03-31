@@ -1,4 +1,5 @@
 = Actualización a CAPI v1beta2
+:page-languages: [en, de, es, fr, ja, pt, zh]
 
 La versión `v0.26.0` de Rancher Turtles adopta el contrato CAPI `v1beta2`, que viene con CAPI kernel v1.12.2. Si está utilizando aprovisionamiento basado en CAPI, hay algunas cosas que revisar antes de actualizar.
 

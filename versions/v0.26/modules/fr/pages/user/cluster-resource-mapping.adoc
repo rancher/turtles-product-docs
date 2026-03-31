@@ -1,4 +1,5 @@
 = Relations entre les ressources du cluster dans {product_name}
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 2026-01-06
 :page-revdate: {revdate}
 

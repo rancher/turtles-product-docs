@@ -1,4 +1,5 @@
 = 使用 Fleet 创建集群
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 2025-08-01
 :page-revdate: {revdate}
 

@@ -1,4 +1,5 @@
 = 创建并导入您的第一个集群
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 2025-11-20
 :page-revdate: {revdate}
 

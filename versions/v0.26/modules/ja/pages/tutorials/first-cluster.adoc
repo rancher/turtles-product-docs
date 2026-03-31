@@ -1,4 +1,5 @@
 = 最初のクラスターを作成およびインポート
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 2025-11-20
 :page-revdate: {revdate}
 

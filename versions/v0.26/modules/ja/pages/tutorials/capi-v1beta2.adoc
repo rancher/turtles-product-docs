@@ -1,4 +1,5 @@
 = CAPI v1beta2へのアップグレード
+:page-languages: [en, de, es, fr, ja, pt, zh]
 
 Rancher Turtlesのリリース`v0.26.0`は、CAPIコアv1.12.2を伴うCAPI `v1beta2`契約を採用しています。CAPIベースのプロビジョニングを使用している場合、アップグレード前に確認すべきいくつかの事項があります。
 

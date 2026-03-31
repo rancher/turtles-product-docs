@@ -1,4 +1,5 @@
 = Mise à niveau vers CAPI v1beta2
+:page-languages: [en, de, es, fr, ja, pt, zh]
 
 La version `v0.26.0` de Rancher Turtles adopte le contrat CAPI `v1beta2`, qui est accompagné de CAPI noyau v1.12.2. Si vous utilisez un provisionnement basé sur CAPI, il y a quelques éléments à examiner avant de procéder à la mise à niveau.
 

@@ -1,4 +1,5 @@
 = {product_name}中的群集资源关系
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 2026-01-06
 :page-revdate: {revdate}
 

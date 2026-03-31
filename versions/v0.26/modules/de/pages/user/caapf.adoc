@@ -1,4 +1,5 @@
 = Cluster API Add-on Provider Fleet
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 2025-11-20
 :page-revdate: {revdate}
 

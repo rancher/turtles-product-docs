@@ -1,4 +1,5 @@
 = Configuración de Rancher
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 18-02-2026
 :page-revdate: {revdate}
 

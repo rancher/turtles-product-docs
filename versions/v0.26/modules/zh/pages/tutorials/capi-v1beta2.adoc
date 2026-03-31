@@ -1,4 +1,5 @@
 = 升级到 CAPI v1beta2
+:page-languages: [en, de, es, fr, ja, pt, zh]
 
 Rancher Turtles 的 `v0.26.0` 版本采用了 CAPI `v1beta2` 合同，随之而来的是 CAPI 内核 v1.12.2。如果您正在使用基于 CAPI 的配置，请在升级前查看一些事项。
 

@@ -1,4 +1,5 @@
 = Guia de migração
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 2025-11-14
 :page-revdate: {revdate}
 

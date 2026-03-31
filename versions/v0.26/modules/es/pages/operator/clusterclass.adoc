@@ -1,4 +1,5 @@
 = Habilitando ClusterClass
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 30-06-2025
 :page-revdate: {revdate}
 

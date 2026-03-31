@@ -1,6 +1,7 @@
 :doctype: book
 
 = Solución de problemas de Rancher Turtles
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 17-12-2025
 :page-revdate: {revdate}
 

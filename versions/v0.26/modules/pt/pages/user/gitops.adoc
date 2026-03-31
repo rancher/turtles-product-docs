@@ -1,4 +1,5 @@
 = Melhores Práticas de GitOps para Tartarugas e CAPI
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 2025-10-02
 :page-revdate: {revdate}
 

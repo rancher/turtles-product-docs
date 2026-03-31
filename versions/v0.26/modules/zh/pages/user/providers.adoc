@@ -1,4 +1,5 @@
 = 安装认证提供者
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 2026-02-17
 :page-revdate: {revdate}
 

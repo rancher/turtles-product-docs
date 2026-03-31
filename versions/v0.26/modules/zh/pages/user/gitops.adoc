@@ -1,4 +1,5 @@
 = GitOps最佳实践：海龟与CAPI
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 2025-10-02
 :page-revdate: {revdate}
 
