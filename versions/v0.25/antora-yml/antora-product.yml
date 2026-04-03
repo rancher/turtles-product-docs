@@ -8,11 +8,6 @@ asciidoc:
     build-type: product
     product_name: SUSE® Rancher Prime Cluster API
     #Prerequisite and Component version attributes
-    cert_manager_version: v1.16.3
-    cluster_api_version: v1.10.5
-    cluster_api_provider_RKE2_version: v0.20.1
-    helm_version: v3.17.1
-    k8s_cluster_version: v1.31.4
     rancher_version: v2.13.3
     turtles_version: v0.25.4
 nav:

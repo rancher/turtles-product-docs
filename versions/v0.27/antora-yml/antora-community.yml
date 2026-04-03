@@ -1,7 +1,7 @@
 name: turtles
 title: Rancher Turtles
-version: 'v0.26'
-display_version: 'v0.26'
+version: 'v0.27'
+prerelease: -dev
 start_page: en:index.adoc
 asciidoc:
   attributes:
@@ -9,6 +9,6 @@ asciidoc:
     product_name: Rancher Turtles
     #Prerequisite and Component version attributes
     rancher_version: v2.14.0
-    turtles_version: v0.26.0
+    turtles_version: v0.27.0
 nav:
   - modules/en/nav.adoc
