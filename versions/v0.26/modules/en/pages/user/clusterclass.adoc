@@ -267,9 +267,10 @@ spec:
 GCP::
 +
 --
-To prepare the management Cluster, we are going to install the https://cluster-api-gcp.sigs.k8s.io/[Cluster API Provider GCP], and create a secret with the credentials required to provision a new Cluster on GCP.
+To prepare the management Cluster, we are going to install the https://cluster-api-gcp.sigs.k8s.io/[Cluster API Provider GCP].
 A Service Account is required to create and manage clusters in GCP and this will require `Editor` permissions. You can follow the offical guide from the https://cluster-api-gcp.sigs.k8s.io/quick-start#create-a-service-account[CAPG Book].
-The base64-encoded Service Account key needs to be set in the `GCP_B64ENCODED_CREDENTIALS` variable of the provider.
+
+GCP credentials are provided per-cluster using `credentialsRef` on `GCPCluster` and `GCPManagedCluster` resources, rather than as a global controller variable. The credential Secret is created alongside each workload Cluster (see the <<_creating_a_cluster,Creating a Cluster>> section below).
 
 * Provider installation
 +
@@ -282,8 +283,6 @@ metadata:
   namespace: capg-system
 spec:
   type: infrastructure
-  variables:
-    GCP_B64ENCODED_CREDENTIALS: xxx
 ----
 
 * Network Setup
@@ -911,6 +910,27 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{tu
 +
 Note that some variables are left to the user to substitute. +
 +
+First, create a Secret containing the GCP Service Account credentials in the same namespace where the Cluster will be created. The Secret must have a `credentials` key containing the raw Service Account JSON:
++
+[source,yaml]
+----
+apiVersion: v1
+kind: Secret
+metadata:
+  name: gcp-quickstart-credentials
+  namespace: default
+type: Opaque
+stringData:
+  credentials: |
+    {
+      "type": "service_account",
+      "project_id": "<GCP_PROJECT>",
+      ...
+    }
+----
++
+Then create the Cluster, referencing the credential Secret via the `credentialSecretName` and `credentialSecretNamespace` variables:
++
 [source,yaml]
 ----
 apiVersion: cluster.x-k8s.io/v1beta2
@@ -934,6 +954,10 @@ spec:
         value: ${GCP_REGION}
       - name: networkName
         value: ${GCP_NETWORK_NAME}
+      - name: credentialSecretName
+        value: gcp-quickstart-credentials
+      - name: credentialSecretNamespace
+        value: default
     version: v1.35.0
     workers:
       machinePools:
@@ -1008,6 +1032,27 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{tu
 Note that some variables are left to the user to substitute.
 The default configuration of GCP Cloud Controller Manager is configured to use a single zone cluster, so the `clusterFailureDomains` variable is set to a single zone. If you need to provision a multi-zone cluster, we recommend you inspect the parameters provided by https://github.com/kubernetes/cloud-provider-gcp/blob/master/providers/gce/gce.go#L120[GCP Cloud Controller Manager] and how https://github.com/kubernetes-sigs/cluster-api-provider-gcp/blob/main/test/e2e/data/infrastructure-gcp/cluster-template-ci.yaml#L59[CAPG leverages these variables] to create cluster-specific configurations.
 +
+First, create a Secret containing the GCP Service Account credentials in the same namespace where the Cluster will be created. The Secret must have a `credentials` key containing the raw Service Account JSON:
++
+[source,yaml]
+----
+apiVersion: v1
+kind: Secret
+metadata:
+  name: gcp-quickstart-credentials
+  namespace: default
+type: Opaque
+stringData:
+  credentials: |
+    {
+      "type": "service_account",
+      "project_id": "<GCP_PROJECT>",
+      ...
+    }
+----
++
+Then create the Cluster, referencing the credential Secret via the `credentialSecretName` and `credentialSecretNamespace` variables:
++
 [source,yaml]
 ----
 apiVersion: cluster.x-k8s.io/v1beta2
@@ -1047,6 +1092,10 @@ spec:
         value: <GCP_IMAGE_ID>
       - name: machineType
         value: <GCP_MACHINE_TYPE>
+      - name: credentialSecretName
+        value: gcp-quickstart-credentials
+      - name: credentialSecretNamespace
+        value: default
     version: v1.34.1
 ----
 --
