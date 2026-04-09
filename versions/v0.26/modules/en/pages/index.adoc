@@ -9,7 +9,7 @@ Rancher v2.14 ships CAPI v1.12.2 and adopts the new `v1beta2` API contract. Refe
 
 [CAUTION]
 ====
-Cluster API Add-on Provider for Fleet (CAAPF) is no longer installed by default. If you have been using Fleet to deploy workloads to your downstream CAPI clusters, refer to the xref:user/caapf.adoc[CAAPF user guide] for more information.
+Cluster API Add-on Provider for Fleet (CAAPF) is deprecated as of Rancher v2.14.1 and is no longer installed by default. We encourage you to move away from CAAPF in preparation for its eventual removal (following Rancher deprecation policies). If you wish to continue using it, refer to the xref:user/caapf.adoc[CAAPF user guide] for more information.
 ====
 
 
