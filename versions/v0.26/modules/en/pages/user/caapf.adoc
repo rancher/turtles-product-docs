@@ -18,7 +18,15 @@ For more information about the provider, please refer to https://rancher.github.
 
 [CAUTION]
 ====
-In previous versions of {product_name}, CAAPF was installed by default. From Rancher 2.14.1 onwards, it is no longer part of {product_name} and if required it needs to be installed separately. See the <<_prerequisites,Prerequisites section>> below for information on how to enable it.
+Starting with Rancher v2.14.1, CAAPF is no longer installed by default. While standard Fleet integration is still available through Rancher, advanced CAAPF features require manual installation. Review the following scenarios to determine if CAAPF is necessary for your environment:
+
+* **Standard Rancher-Fleet integration**
++
+If you only require your CAPI workload clusters to be registered with Fleet for basic application deployment via Rancher, you **do not need to install CAAPF**. No manual steps are necessary, and when you use the `cluster-api.cattle.io/rancher-auto-import` label, Rancher will automatically register the cluster with Fleet and install the `fleet-agent` as part of the standard import process. Upgrading to Rancher v2.14.1 will result in Rancher updating the `fleet-agent` on any existing downstream clusters.
+
+* **Advanced CAAPF automation**
++
+If you want to use advanced automation provided by CAAPF—such as automatic creation of Fleet `ClusterGroups` based on `ClusterClasses`, automatic label propagation from CAPI to Fleet resources, or CAPI-based Helm templating—you **must install and enable CAAPF manually**. Refer to the <<_prerequisites,prerequisites below>> for more information. In this scenario, CAAPF takes over the responsibility of registering the cluster with Fleet.
 ====
 
 [WARNING]
@@ -28,10 +36,23 @@ CAAPF depends on the `WatchList` Kubernetes feature gate. This feature needs to 
 
 == Prerequisites
 
-Starting with Rancher 2.14.1, CAAPF needs to be installed and enabled manually, if required. To enable CAAPF, two configuration changes are required:
+If you have chosen the **Advanced CAAPF automation** scenario and want to continue using CAAPF for its advanced features, two configuration changes are required:
 
 ifeval::["{build-type}" == "product"]
 * Set `providers.addonFleet.enabled: true` in the {product_name} Providers chart values to deploy the CAAPF provider.
+** CAAPF provider installation example:
++
+.Click to Expand
+[%collapsible]
+======
+[,bash]
+----
+helm upgrade --install rancher-turtles-providers oci://<REGISTRY_URL>/rancher/charts/rancher-turtles-providers \
+    --namespace cattle-turtles-system \
+    --set providers.addonFleet.enabled=true \
+    --wait
+----
+======
 endif::[]
 ifeval::["{build-type}" == "community"]
 * Apply a xref:reference/capiprovider.adoc[`CAPIProvider`] manifest for CAAPF in your management cluster.
@@ -117,3 +138,10 @@ For more information on the feature, please refer to https://rancher.github.io/c
 *Demo*: image:https://asciinema.org/a/706570.svg[asciicast,link=https://asciinema.org/a/706570]
 
 For a tutorial and prerequisites, please refer to https://rancher.github.io/cluster-api-addon-provider-fleet/03_tutorials/04_installing_calico_via_gitrepo.html[gitrepo tutorial] section in the book.
+
+== Disabling CAAPF
+
+To disable CAAPF and return to Rancher's default Fleet management, you only need to disable the feature gate: Set `features.use-caapf.enabled: false` (the default value) in your {product_name} Helm chart configuration.
+
+Once the feature gate is disabled, Turtles will automatically remove the `provisioning.cattle.io/externally-managed` annotation from any previously managed clusters, and Rancher will resume responsibility for installing and managing the Fleet agent on the workload clusters.
+

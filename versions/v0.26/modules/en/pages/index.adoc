@@ -7,6 +7,12 @@
 Rancher v2.14 ships CAPI v1.12.2 and adopts the new `v1beta2` API contract. Refer to xref:tutorials/capi-v1beta2.adoc[Upgrading to CAPI v1beta2] for more details on the changes introduced in this new API version.
 ====
 
+[CAUTION]
+====
+Cluster API Add-on Provider for Fleet (CAAPF) is no longer installed by default. If you have been using Fleet to deploy workloads to your downstream CAPI clusters, refer to the xref:user/caapf.adoc[CAAPF user guide] for more information.
+====
+
+
 == What is {product_name}?
 
 The Cluster API Extension for Rancher, also known as {product_name}, is a Kubernetes Operator that provides **integration between Rancher Manager and Cluster API (CAPI)** with the aim of bringing full CAPI support to Rancher.
