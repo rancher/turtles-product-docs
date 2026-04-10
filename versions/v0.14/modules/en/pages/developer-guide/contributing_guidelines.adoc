@@ -67,8 +67,6 @@ We have 2 forms of issues: bug reports and feature requests. If you are not sure
 * Rancher CAPI extension backend? Chime in on https://github.com/rancher/turtles/issues?q=is%3Aopen+is%3Aissue+label%3Akind%2Fbug+[`bugs`] or
   https://github.com/rancher/turtles/labels/help-wanted[`help wanted` issues].
   If you are seeking to take on a bigger challenge or a more experienced contributor, check out https://github.com/rancher/turtles/issues?q=is%3Aopen+is%3Aissue+label%3Akind%2Ffeature[`feature requests`].
-* extension UI? Take a look at https://github.com/rancher/capi-ui-extension[`open`] or
-  https://github.com/rancher/capi-ui-extension/labels/help-wanted[`help wanted` issues].
 * maybe, user-docs? Then, jump straight into https://github.com/rancher/turtles-product-docs/issues[`open` issues] in the docs repository.
 
 == Opening Issues
@@ -104,7 +102,7 @@ If you are here to ask for help or request some new behaviour, this
 is the section for you. We have curated a set of issues for anyone who simply
 wants to build up their open-source cred.
 
-* Issues labelled https://github.com/search?q=org%3Agithub%2Francher+repo%3Arancher%2Fturtles+repo%3Arancher%2Fcapi-ui-extension+repo%3Arancher%2Fturtles-docs+is%3Aopen+label%3A%22good+first+issue%22+&type=issues&ref=advsearch[`good first issues`]
+* Issues labelled https://github.com/search?q=org%3Agithub%2Francher+repo%3Arancher%2Fturtles+repo%3Arancher%2Fturtles-docs+is%3Aopen+label%3A%22good+first+issue%22+&type=issues&ref=advsearch[`good first issues`]
 should be accessible to folks new to the repos, as well as to open source in general.
 +
 These issues should present a low/non-existent barrier to entry with a thorough description,
@@ -120,7 +118,7 @@ to do great work.
 +
 See more on <<_asking_for_help,asking for help>> below!
 
-* https://github.com/search?q=org%3Agithub%2Francher+repo%3Arancher%2Fturtles+repo%3Arancher%2Fcapi-ui-extension+repo%3Arancher%2Fturtles-docs+is%3Aopen+label%3A%22help+wanted%22+&type=issues&ref=advsearch[`help wanted` issues]
+* https://github.com/search?q=org%3Agithub%2Francher+repo%3Arancher%2Fturtles+repo%3Arancher%2Fturtles-docs+is%3Aopen+label%3A%22help+wanted%22+&type=issues&ref=advsearch[`help wanted` issues]
 are for those a little more familiar with the code base, but should still be accessible enough
 to newcomers.
 * All other issues labelled `kind/<x>` or `area/<x>` are also up for grabs, but
