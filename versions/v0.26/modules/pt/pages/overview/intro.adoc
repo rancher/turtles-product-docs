@@ -1,0 +1,6 @@
+= Introdução
+:page-languages: [en, de, es, fr, ja, pt, zh]
+:revdate: 2025-06-30
+:page-revdate: {revdate}
+
+Nesta seção, exploraremos referências em {product_name}.

@@ -1,0 +1,67 @@
+= Configuração de desenvolvimento
+:page-languages: [en, de, es, fr, ja, pt, zh]
+:revdate: 2025-07-01
+:page-revdate: {revdate}
+
+== Pré-requisitos:
+
+* https://kind.sigs.k8s.io/[tipo]
+* https://helm.sh/[helm]
+* https://tilt.dev/[tilt]
+
+== Crie um ambiente de desenvolvimento local
+
+. Clone o repositório https://github.com/rancher/turtles[{product_name}] localmente
+. Crie *tilt-settings.yaml*:
++
+[source,yaml]
+----
+{
+    "k8s_context": "k3d-rancher-test",
+    "default_registry": "ghcr.io/turtles-dev",
+    "debug": {
+        "turtles": {
+            "continue": true,
+            "port": 40000,
+            "insecure_skip_verify": "true"
+        }
+    }
+}
+----
++
+. Abra um terminal na raiz do repositório {product_name}
+. Execute o seguinte:
++
+[source,bash]
+----
+make dev-env
+
+# Or if you want to use a custom hostname for Rancher and your ngrok credentials
+NGROK_API_KEY=`key` NGROK_AUTHTOKEN=`token` RANCHER_HOSTNAME=my.customhost.dev make dev-env
+----
++
+. Se você não tiver credenciais do ngrok e não as forneceu na etapa anterior, você também pode abrir um novo terminal e iniciar o ngrok ou inlets após o tilt ter iniciado:
++
+[source,bash]
+----
+kubectl port-forward --namespace cattle-system svc/rancher 10000:443
+ngrok http https://localhost:10000
+----
+
+== O que acontece quando você executa `make dev-env`?
+
+. Um cluster https://kind.sigs.k8s.io/[tipo] será criado usando a seguinte https://github.com/rancher/turtles/blob/main/scripts/kind-cluster-with-extramounts.yaml[configuração].
+. Os seguintes componentes pré-requisitos serão instalados usando o Helm:
+ ** Gerenciador Rancher.
+ ** Gerenciador de Certificados.
+ ** ngrok Kubernetes Operator.
+. Imagens Docker serão construídas localmente, e o Helm implantará os seguintes controladores no cluster:
+ ** Controlador Core Cluster API.
+ ** Controladores RKE2 Bootstrap/Control Plane Provider.
+ ** Controlador Docker Infrastructure Provider.
+ ** Provedor de complemento CAPI para o controlador Fleet.
+ ** {product_name} controlador.
+ ** {product_name} controlador do Cluster API Operator.
+ ** {product_name} controlador da ClusterClass.
+ ** {product_name} controlador de operações do Dia 2.
+. O ambiente de desenvolvimento será iniciado usando `tilt up`.

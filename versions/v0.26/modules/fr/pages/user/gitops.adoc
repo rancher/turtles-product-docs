@@ -1,0 +1,218 @@
+= Meilleures pratiques GitOps pour les tortues et CAPI
+:page-languages: [en, de, es, fr, ja, pt, zh]
+:revdate: 2025-10-02
+:page-revdate: {revdate}
+
+ifeval::["{build-type}" == "product"]
+Cette section fournit des meilleures pratiques pour mettre en œuvre GitOps avec les tortues et l'API de cluster (CAPI), en se concentrant sur l'utilisation de https://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/index.html[Livraison Continue] en combinaison avec le *Fournisseur d'Addon de l'API de Cluster Fleet*(`CAAPF`) pour automatiser le provisionnement des agents et leur intégration dans l'écosystème `CAPI`.
+endif::[]
+ifeval::["{build-type}" == "community"]
+Cette section fournit des meilleures pratiques pour mettre en œuvre GitOps avec les tortues et l'API de cluster (CAPI), en se concentrant sur l'utilisation de https://fleet.rancher.io/[Fleet] en combinaison avec le *Fournisseur d'Addon de l'API de Cluster Fleet*(`CAAPF`) pour automatiser le provisionnement des agents et leur intégration dans l'écosystème `CAPI`.
+endif::[]
+
+Ces conseils sont transférables et peuvent être appliqués même lors de l'utilisation d'une solution GitOps différente.
+
+== Conseils communs
+
+ifeval::["{build-type}" == "product"]
+- **Séparer les clusters CAPI et les configurations de ClusterClass :**
+  Gardez les configurations de cluster CAPI (`clusters/`) distinctes des définitions CAPI `ClusterClass` (`templates/`). Cette séparation permet de provisionner plusieurs clusters à partir de modèles partagés tout en réduisant le risque de modifications non intentionnelles de l'infrastructure.
+- **Isoler les configurations d'addon :**
+  Stockez les manifestes d'application dans `applications/`, en veillant à ce qu'ils soient indépendants de `Clusters` et `ClusterClasses`. Cela permet un provisionnement sélectif ou groupé basé sur la demande des utilisateurs ou des sélecteurs correspondants, empêchant toute interférence avec l'infrastructure du cluster. Veuillez noter que les dépendances des charts Helm doivent être https://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/gitrepo-content.html#_fleet_yaml[rafraîchies] avant le provisionnement des addons.
+- **Utiliser des ressources GitRepo imbriquées :**
+  Exploitez les ressources https://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/gitrepo-content.html#_nested_gitrepo_crs[imbriquées] `GitRepo` dans Fleet pour structurer efficacement le contenu du dépôt. Cette approche permet un provisionnement modulaire, combinant les définitions `ClusterClass`, les addons/applications requis et les configurations de cluster tout en maintenant une séparation des préoccupations.
+- **Utiliser des outils d'intégration GitOps lorsqu'ils sont disponibles :**
+  Lors de la configuration d'un environnement GitOps, tenez compte des outils disponibles et des fonctionnalités qu'ils offrent. Un exemple de cela est https://rancher.github.io/cluster-api-addon-provider-fleet/00_intro.html[`CAAPF`], qui automatise l'installation de GitOps Fleet sur des clusters `CAPI` et fournit une automatisation pratique.
+- **Appliquer des superpositions Kustomize pour une personnalisation spécifique à l'environnement :**
+  Utilisez `overlays/` pour stocker des superpositions Kustomize pour différents environnements. Cela garantit que les modifications de configuration, telles que les ajustements d'échelle, les modifications de réseau ou les mises à niveau de composants, peuvent être appliquées dynamiquement sans modifier les manifestes de base.
+- **Utiliser les correctifs de comparaison :**
+  Fleet permet d'ignorer sélectivement les différences de ressources si le bundle contient des règles appropriées pour la détection de https://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/troubleshooting.html#_suse_rancher_prime_continuous_delivery_deployment_stuck_in_modified_state[`diff` ]. Cela empêcherait les bundles d'être bloqués dans un état modifié.
+endif::[]
+ifeval::["{build-type}" == "community"]
+- **Séparer les clusters CAPI et les configurations de ClusterClass :**
+  Gardez les configurations de cluster CAPI (`clusters/`) distinctes des définitions CAPI `ClusterClass` (`templates/`). Cette séparation permet de provisionner plusieurs clusters à partir de modèles partagés tout en réduisant le risque de modifications non intentionnelles de l'infrastructure.
+- **Isoler les configurations d'addon :**
+  Stockez les manifestes d'application dans `applications/`, en veillant à ce qu'ils soient indépendants de `Clusters` et `ClusterClasses`. Cela permet un provisionnement sélectif ou groupé basé sur la demande des utilisateurs ou des sélecteurs correspondants, empêchant toute interférence avec l'infrastructure du cluster. Veuillez noter que les dépendances des charts Helm doivent être https://fleet.rancher.io/gitrepo-content#fleetyaml[rafraîchies] avant le provisionnement des addons.
+- **Utiliser des ressources GitRepo imbriquées :**
+  Exploitez les ressources https://fleet.rancher.io/gitrepo-content#nested-gitrepo-crs[imbriquées] `GitRepo` dans Fleet pour structurer efficacement le contenu du dépôt. Cette approche permet un provisionnement modulaire, combinant les définitions `ClusterClass`, les addons/applications requis et les configurations de cluster tout en maintenant une séparation des préoccupations.
+- **Utiliser des outils d'intégration GitOps lorsqu'ils sont disponibles :**
+  Lors de la configuration d'un environnement GitOps, tenez compte des outils disponibles et des fonctionnalités qu'ils offrent. Un exemple de cela est https://rancher.github.io/cluster-api-addon-provider-fleet/00_intro.html[`CAAPF`], qui automatise l'installation de GitOps Fleet sur des clusters `CAPI` et fournit une automatisation pratique.
+- **Appliquer des superpositions Kustomize pour une personnalisation spécifique à l'environnement :**
+  Utilisez `overlays/` pour stocker des superpositions Kustomize pour différents environnements. Cela garantit que les modifications de configuration, telles que les ajustements d'échelle, les modifications de réseau ou les mises à niveau de composants, peuvent être appliquées dynamiquement sans modifier les manifestes de base.
+- **Utiliser les correctifs de comparaison :**
+  Fleet permet d'ignorer sélectivement les différences de ressources si le bundle contient des règles appropriées pour la détection de https://fleet.rancher.io/troubleshooting#fleet-deployment-stuck-in-modified-state[`diff`]. Cela empêcherait les bundles d'être bloqués dans un état modifié.
+endif::[]
+
+== Stratégie de séparation des dossiers
+
+Un dépôt bien structuré simplifie la gestion et améliore la clarté. La stratégie de séparation des dossiers suivante est recommandée :
+
+----
+repo-root/
+│── fleet/
+│   ├── providers/         # CAPIProvider files to use with templates
+│   │   ├── core/          # Core provider configuration
+│   │   ├── infra-docker/  # Docker provider configuration
+│   │   ├── infra-aws/     # AWS provider configuration
+│   ├── clusters/          # Cluster-specific configurations
+│   │   ├── prod/          # Production clusters
+│   │   ├── staging/       # Staging clusters
+│   │   ├── dev/           # Development clusters
+│   ├── addons/            # Application-specific manifests focused on cluster bootstrapping, like CNI, CCM, CPI configurations.
+│   │   ├── cni/           # Group applications based on purpose. Provide fleet.yaml per each sub-directory to maintain bundle separation.
+│   │   ├── ccm/
+│   ├── templates/         # CAPI ClusterClass templates for cluster provisioning
+│   ├── fleet.yaml         # Fleet bundle configuration
+│── overlays/              # Kustomize overlays for different environments
+│   ├── prod/.             # Kustomize overlays for production environments
+│   ├── staging/.          # Kustomize overlays for staging environments
+│   ├── dev/.              # Kustomize overlays for development environments
+----
+
+== Configuration des fournisseurs
+
+Les fournisseurs CAPI définissent les composants d'infrastructure nécessaires au provisionnement de clusters. Une configuration simple peut ressembler à :
+
+----
+repo-root/
+│── fleet/
+│   ├── providers/
+│   │   ├── core/
+│   │   |   ├── core.yaml  # Core `CAPIProvider` definition
+│   │   |   ├── fleet.yaml # Fleet.yaml definition for the provider setup
+----
+
+où le fournisseur noyau contient :
+
+[source,yaml]
+----
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: cluster-api
+spec:
+  type: core
+----
+
+== Configuration des modèles
+
+Spécifiez `dependsOn` dans `fleet.yaml` pour des bundles `CAPIProvider` spécifiques ou des composants externes `GitRepo`. Cela garantit que les modèles se déploient dans le bon ordre et empêche les problèmes où les contrôleurs de composants sont manquants ou non prêts à accepter les définitions `ClusterClass`.
+
+[source,yaml]
+----
+namespace: capa-clusters
+dependsOn:
+  - name: core      # Ensure core bundle is installed first
+  - name: infra-aws # Wait for AWS provider installation
+----
+
+== Configuration des clusters
+
+Utilisez des étiquettes pour faire correspondre dynamiquement les clusters avec les addons requis, permettant le déploiement uniquement des charges de travail nécessaires.
+
+Exemple d'utilisation des étiquettes :
+
+[source,yaml]
+----
+apiVersion: cluster.x-k8s.io/v1beta1
+kind: Cluster
+metadata:
+  name: aws-cluster
+  labels:
+    cni: calico
+    ccm: aws
+    env: dev
+----
+
+[WARNING]
+====
+Il est recommandé de séparer les définitions de cluster des modèles, car la suppression de tels bundles de cluster permettrait au contrôleur CAPI de traiter la suppression dans le bon ordre. Supprimer `Clusters` et `ClusterClasses` simultanément peut entraîner des résultats inattendus.
+====
+
+== Configuration des addons
+
+La configuration des addons est essentielle pour rationaliser le provisionnement des clusters, en veillant à ce qu'ils atteignent l'état `Ready` sans intervention manuelle ni outils tiers.
+
+Les addons de cluster doivent définir des règles de sélection précises pour correspondre aux clusters correctement étiquetés.
+
+L'exemple ci-dessous présente un cluster qui nécessite l'installation du CNI `Calico` et du Cloud Controller Manager (CCM) `AWS` :
+
+[source,yaml]
+----
+apiVersion: cluster.x-k8s.io/v1beta1
+kind: Cluster
+metadata:
+  name: aws-cluster
+  labels:
+    cni: calico
+    ccm: aws
+----
+
+Cette configuration nécessite deux ressources `GitRepo`, chacune responsable du provisionnement des addons en fonction d'étiquettes spécifiques - une pour `cni: calico` et une autre pour `ccm: aws`.
+
+Voici un exemple d'une ressource `GitRepo` pour déployer le CNI `Calico` :
+
+[source,yaml]
+----
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: calico
+spec:
+  branch: main
+  paths:
+  - /fleet/applications/calico
+  repo: https://github.com/rancher-sandbox/cluster-api-addon-provider-fleet.git
+  targets:
+  - clusterSelector:
+      matchLabels:
+        cni: calico
+        env: dev
+----
+
+Cela garantit que le CNI `Calico` est déployé uniquement sur les clusters étiquetés avec `cni: calico` et `env: dev`, permettant un provisionnement sélectif de l'environnement.
+
+=== Modèles de valeurs de Helm Chart
+
+La configuration des addons doit ajuster dynamiquement la charge de travail `Calico` en fonction de la définition de cluster correspondante et de l'état spécifique du cluster. Cela peut être réalisé en utilisant une configuration `fleet.yaml`, similaire à la structure suivante :
+
+----
+repo-root/
+│── fleet/
+│   ├── applications/
+│   │   ├── calico/
+│   │   │   ├── fleet.yaml # Fleet configuration for the Calico setup
+----
+
+Le fichier `fleet.yaml` définit des règles de modélisation et `comparePatches` pour garantir un déploiement fluide, indépendamment de la configuration du cluster. Pour en savoir plus sur la modélisation `CAAPF`, qui est utilisée ici, consultez la https://rancher.github.io/cluster-api-addon-provider-fleet/04_reference/02_templating-strategy.html[documentation] officielle.
+
+[source,yaml]
+----
+helm:
+  releaseName: projectcalico
+  repo: https://docs.tigera.io/calico/charts
+  chart: tigera-operator
+  templateValues:
+    installation: |-
+      cni:
+        type: Calico
+        ipam:
+          type: HostLocal
+      calicoNetwork:
+        bgp: Disabled
+        mtu: 1350
+        ipPools:
+          ${- range $cidr := .ClusterValues.Cluster.spec.clusterNetwork.pods.cidrBlocks }
+          - cidr: "${ $cidr }"
+            encapsulation: None
+            natOutgoing: Enabled
+            nodeSelector: all()${- end}
+
+diff:
+  comparePatches:
+  - apiVersion: operator.tigera.io/v1
+    kind: Installation
+    name: default
+    operations:
+    - {"op":"remove", "path":"/spec/kubernetesProvider"}
+----

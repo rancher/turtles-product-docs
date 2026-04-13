@@ -1,4 +1,5 @@
 = Upgrading to CAPI v1beta2
+:page-languages: [en, de, es, fr, ja, pt, zh]
 
 Release `v0.26.0` of Rancher Turtles adopts the CAPI `v1beta2` contract, which comes with CAPI core v1.12.2. If you are using CAPI-based provisioning, there are a few things to review before upgrading.
 

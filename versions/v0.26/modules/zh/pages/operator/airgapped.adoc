@@ -1,0 +1,541 @@
+= 隔离的环境
+:page-languages: [en, de, es, fr, ja, pt, zh]
+:revdate: 2026-01-06
+:page-revdate: {revdate}
+
+{product_name} 通过利用集群 API 操作员的功能，开箱即用地支持隔离的环境，这是安装 {product_name} 的必要依赖项。
+
+为了配置和管理集群 API 提供者，Turtles 使用 *CAPIProvider* 资源以声明的方式管理集群 API 操作员清单。上游 CAPI 操作员资源为所需的 `spec.type` 提供的每个字段也可在 *CAPIProvider* 资源的 `spec` 中找到。
+
+新的 {product_name} 安装仅包括核心 CAPI 提供者及其 CRD。该提供者的默认安装机制不需要从远程源获取清单，因此在隔离环境中完全可用，因为它从应用程序图表中嵌入的本地 `ConfigMap` 中检索 YAML 定义。
+
+[TIP]
+====
+与 {product_name} 一起提供的核心 CAPI 版本经过积极测试和验证，图表预配置为默认选择此版本，使用 CAPI 操作员。但是，如果您对版本或使用哪个储存库有特定要求，您仍然可以使用自己的 https://github.com/rancher/turtles/blob/5b6b33d894edf265e5d2b09d2718538892e83cd0/charts/rancher-turtles/values.yaml#L80[fetchConfig] 自定义 CAPI 操作员的行为。
+====
+
+ifeval::["{build-type}" == "product"]
+== Prime 用户
+
+*Prime 用户*:Rancher Prime 用户可以从 Rancher Prime 注册表 (`registry.rancher.com`) 中获得预镜像的 CAPI 提供者 OCI 工件。这些提供者会自动验证、测试和维护，以适应您的 Turtles 版本。要查看您的 Turtles 版本可用的提供者和版本，请参考 https://github.com/rancher/turtles/blob/main/internal/controllers/clusterctl/config-prime.yaml[config-prime.yaml] 配置文件。
+endif::[]
+ifeval::["{build-type}" == "community"]
+== 社区用户
+*社区用户*:社区用户可以访问核心 CAPI 提供者，但没有预镜像的提供者 OCI 工件。他们可以根据自己的需求手动镜像任何 CAPI 提供者或使用获取的清单。https://github.com/rancher/turtles/blob/main/internal/controllers/clusterctl/config-community.yaml[config-community.yaml] 配置显示没有提供者版本固定的最小社区设置。
+endif::[]
+
+本节提供有关如何在不同隔离的场景中使用 `CAPIProvider` 和 CAPI 操作员功能的指导。
+
+== 使用 Rancher 默认注册表实现自动添加注册表前缀
+
+=== 先决条件
+
+确保在Rancher的`system-default-registry`设置中配置的私有注册表包含您打算使用的所有CAPI提供者的镜像。镜像注册表中的镜像路径必须保留原始的名称空间和镜像名称结构（例如，`cluster-api/cluster-api-controller`）。
+请参阅嵌入的clusterctl配置文件（https://github.com/rancher/turtles/blob/main/internal/controllers/clusterctl/config-community.yaml[config-community.yaml] / https://github.com/rancher/turtles/blob/main/internal/controllers/clusterctl/config-prime.yaml[config-prime.yaml]）以获取需要镜像的提供者镜像的完整列表。
+
+{product_name}包含一个alpha功能开关`use-rancher-default-registry`，简化了隔离的环境中的镜像管理。启用时（默认），{product_name} 读取 Rancher 的 `system-default-registry` 管理设置，并自动为所有 CAPI 提供者镜像库添加配置的注册表前缀。
+
+没有此功能，引用外部注册表（如`registry.k8s.io`）的提供者镜像在隔离的集群中无法访问。Rancher 的镜像复制流水线会将上游的镜像进行复制，但通常只有镜像引用中的注册表部分可以被覆盖，而镜像名称本身则不行。
+这可能导致镜像不匹配，当镜像使用不同的命名约定（例如，`rancher/mirrored-cluster-api-controller`而不是`cluster-api/cluster-api-controller`）时，或者某些镜像（例如，`registry.k8s.io/kubernetes/kubectl`）根本没有被镜像。
+
+启用 `use-rancher-default-registry` 后，{product_name} 通过读取 Rancher 的 `system-default-registry` 管理设置并使用其值重写所有提供者镜像库，从而解决此问题。嵌入的clusterctl-config `ConfigMap`作为支持的提供者和镜像的真实来源。
+如果设置为空，{product_name}将回退到默认的镜像引用。
+
+=== 工作原理
+
+. {product_name} 读取 Rancher 的 `system-default-registry` 管理设置。
+. 如果设置包含非空的注册表URL，{product_name}将遍历嵌入的clusterctl配置中定义的所有提供者镜像。
+. 对于每个镜像，原始注册表前缀被去除，并用 `system-default-registry` 中的值替换，同时保留名称空间和镜像名称。
++
+例如，`registry.k8s.io/cluster-api/cluster-api-controller`变为`my-registry.example.com/cluster-api/cluster-api-controller`。
+. 在 `ClusterctlConfig` 资源中指定的任何镜像覆盖会在注册表前缀_之后_应用，从而允许对每个镜像进行选择性覆盖。
+
+[NOTE]
+====
+在`ClusterctlConfig`资源中定义的镜像覆盖始终优先。如果通过`ClusterctlConfig`配置了特定的提供者镜像，它将替换注册表前缀值。这提供了一种机制，可以选择性地覆盖特定镜像，同时依赖于自动注册表前缀处理其他所有镜像。
+====
+
+=== 启用或禁用
+
+默认情况下会启用此选项。要禁用它并回退到原始图像引用，请在您的 Helm 值中设置以下内容：
+
+[source,yaml]
+----
+features:
+  use-rancher-default-registry:
+    enabled: false
+----
+
+== 使用 OCI 工件安装 CAPI 提供者
+
+作为在隔离环境中工作的管理员，您需要从集群内部获取 CAPI 提供者组件，因为外部互联网访问受到限制。本节演示如何使用 OCI 工件部署 CAPI 提供者。
+
+ifeval::["{build-type}" == "product"]
+=== Prime 用户
+
+作为 Rancher Prime 用户，您可以直接将经过预验证的提供程序 OCI 工件从 Rancher Prime 注册表镜像到您的私有注册表。
+
+设置您的私有注册表 URL：
+
+[source,bash]
+----
+export REGISTRY=<YOUR_PRIVATE_REGISTRY>
+----
+
+将提供者从 Rancher Prime 注册表镜像到您的私有注册表。请参阅 https://github.com/rancher/turtles/blob/main/internal/controllers/clusterctl/config-prime.yaml[config-prime.yaml] 以获取您 Turtles 版本可用的确切提供者版本。
+
+例如，要使用 Azure 提供者：
+
+[source,bash]
+----
+# Set the version from config-prime.yaml
+export PROVIDER_VERSION=<VERSION_FROM_CONFIG_PRIME>
+
+# Pull from Rancher Prime Registry
+oras pull registry.rancher.com/rancher/cluster-api-azure-controller-components:${PROVIDER_VERSION}
+
+# Push to your private registry
+oras push ${REGISTRY}/cluster-api-azure-controller-components:${PROVIDER_VERSION} infrastructure-components.yaml:application/vnd.test.file metadata.yaml:application/vnd.test.file
+----
+
+创建并应用指向您的私有注册表的 CAPIProvider 资源：
+
+.capz-provider-oci.yaml
+[source,yaml]
+----
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: azure
+  namespace: capz-system
+spec:
+  type: infrastructure
+  name: azure
+  version: ${PROVIDER_VERSION}
+  fetchConfig:
+    oci: ${REGISTRY}/cluster-api-azure-controller-components:${PROVIDER_VERSION}
+----
+endif::[]
+
+ifeval::["{build-type}" == "community"]
+=== 社区用户
+
+作为社区用户，您需要手动构建和打包提供者 OCI 工件到您的私有注册表。社区用户无法访问来自 registry.rancher.com 的预镜像工件。
+
+设置您的私有注册表 URL 和提供者版本：
+
+[source,bash]
+----
+export REGISTRY=<YOUR_PRIVATE_REGISTRY>
+export RELEASE_TAG=<CAPI_PROVIDER_VERSION>
+----
+
+您需要按照上游提供者的文档从源代码构建提供者清单。请参阅下面的 "CAPI 提供者 获取和推送 OCI 工件" 部分，以获取有关从源代码构建和打包为 OCI 工件的详细说明。
+
+一旦您构建并推送 OCI 工件到您的私有注册表，请创建并应用指向您的私有注册表的 CAPIProvider 资源：
+
+.capz-provider-oci.yaml
+[source,yaml]
+----
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: azure
+  namespace: capz-system
+spec:
+  type: infrastructure
+  name: azure
+  version: ${RELEASE_TAG}
+  fetchConfig:
+    oci: ${REGISTRY}:${RELEASE_TAG}
+----
+endif::[]
+
+== 如何镜像 CAPI 提供者 OCI 工件
+
+本节展示如何将 CAPI 提供者 OCI 工件镜像到您的私有注册表，以便在隔离环境中使用。
+
+ifeval::["{build-type}" == "product"]
+=== Prime 用户
+
+作为 Rancher Prime 用户，您可以将经过预验证的提供者 OCI 工件从 Rancher Prime 注册表镜像。检查 https://github.com/rancher/turtles/blob/main/internal/controllers/clusterctl/config-prime.yaml[config-prime.yaml] 以获取您 Turtles 版本的可用提供者及其版本。
+
+安装 ORAS (OCI Registry As Storage) CLI 工具以管理 OCI 工件。请按照以下安装说明进行操作：https://oras.land/docs/installation.
+
+设置您的私有注册表 URL 和提供者版本：
+
+[source,bash]
+----
+export REGISTRY=<YOUR_PRIVATE_REGISTRY>
+export PROVIDER_VERSION=<VERSION_FROM_CONFIG_PRIME>
+----
+
+创建目录：
+
+[source,bash]
+----
+mkdir capi-oci-artifacts
+cd capi-oci-artifacts
+----
+
+从 Rancher Prime Registry 拉取 OCI 工件。例如，对于 Azure 提供者：
+
+[source,bash]
+----
+oras pull registry.rancher.com/rancher/cluster-api-azure-controller-components:${PROVIDER_VERSION}
+----
+
+将 OCI 工件发布到您的私有注册表：
+
+[source,bash]
+----
+oras push ${REGISTRY}/cluster-api-azure-controller-components:${PROVIDER_VERSION} infrastructure-components.yaml:application/vnd.test.file metadata.yaml:application/vnd.test.file
+----
+
+创建并应用 CAPIProvider 资源：
+
+.capz-provider-oci.yaml
+[source,yaml]
+----
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: azure
+  namespace: capz-system
+spec:
+  type: infrastructure
+  name: azure
+  version: ${PROVIDER_VERSION}
+  fetchConfig:
+    oci: ${REGISTRY}/cluster-api-azure-controller-components:${PROVIDER_VERSION}
+----
+
+使用 `kubectl` 创建名称空间并应用配置：
+
+[source,bash]
+----
+kubectl create namespace capz-system
+kubectl apply -f capz-provider-oci.yaml
+----
+endif::[]
+
+ifeval::["{build-type}" == "community"]
+=== 社区用户
+
+作为社区用户，您需要从源代码构建 CAPI 提供者 OCI 工件，并必须遵循上游提供者文档以构建发布清单。
+
+要构建和打包提供者清单：
+
+. 请遵循上游提供者的文档以克隆储存库并构建发布工件（infrastructure-components.yaml 和 metadata.yaml）。例如，对于 Azure 提供者，请参考 https://github.com/kubernetes-sigs/cluster-api-provider-azure[Azure CAPI 提供者 储存库]。
+
+. 安装 ORAS (OCI Registry As Storage) CLI 工具以管理 OCI 工件。请按照以下安装说明进行操作：https://oras.land/docs/installation
+
+. 设置您的私有注册表 URL 和提供者版本：
++
+[source,bash]
+----
+export REGISTRY=<YOUR_PRIVATE_REGISTRY>
+export RELEASE_TAG=<CAPI_PROVIDER_VERSION>
+----
+
+. 一旦您构建了 infrastructure-components.yaml 和 metadata.yaml 文件，将 OCI 工件发布到您的私有注册表：
+
+[source,bash]
+----
+oras push ${REGISTRY}:${RELEASE_TAG} infrastructure-components.yaml:application/vnd.test.file metadata.yaml:application/vnd.test.file
+----
+
+创建并应用 CAPIProvider 资源：
+
+.capz-provider-oci.yaml
+[source,yaml]
+----
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: azure
+  namespace: capz-system
+spec:
+  type: infrastructure
+  name: azure
+  version: ${RELEASE_TAG}
+  fetchConfig:
+    oci: ${REGISTRY}:${RELEASE_TAG}
+----
+
+使用 `kubectl` 创建名称空间并应用配置：
+
+[source,bash]
+----
+kubectl create namespace capz-system
+kubectl apply -f capz-provider-oci.yaml
+----
+endif::[]
+
+== CAPI 提供者 获取并推送 OCI 工件
+
+本节演示如何从源代码构建和发布 OCI 工件。这主要对希望自行构建提供者或自定义提供者版本的社区用户有用。Prime 用户通常不需要此工作流程，因为他们可以使用来自 Rancher Prime Registry 的预镜像工件。
+
+[tabs]
+======
+使用 kubectl 操作符::
++
+--
+您可以为 {product_name} 配置中列出的任何 CAPI 提供者构建 OCI 工件：https://github.com/rancher/turtles/blob/main/internal/controllers/clusterctl/config-community.yaml
+
+为 安装 https://cluster-api-operator.sigs.k8s.io/03_topics/03_plugin/01_installation[cluster-api-operator] 插件`kubectl`。
+
+克隆官方的 https://github.com/kubernetes-sigs/cluster-api-provider-azure/[Azure CAPI 提供者 储存库] 并导航到项目目录。
+
+[source,bash]
+----
+git clone https://github.com/kubernetes-sigs/cluster-api-provider-azure/
+cd cluster-api-provider-azure
+----
+
+选择您想要部署的特定版本。您可以列出所有可用的标签，
+
+[CAUTION]
+在 OCI 场景中没有 `latest` 版本，因此版本需要始终设置。
+
+[source,bash]
+----
+git tag
+----
+
+或自动选择最新的发布版本：
+
+[source,console]
+----
+export RELEASE_TAG=`git describe --abbrev=0`
+----
+
+设置您的私有储存库 URL，并替换为您的实际储存库：
+
+[source,bash]
+----
+export PROD_REGISTRY=<YOUR_PRIVATE_REGISTRY>
+----
+
+构建发布工件 infrastructure-components.yaml 和 metadata.yaml：
+
+[source,bash]
+----
+make release
+----
+
+前往包含工件的输出目录：
+
+[source,bash]
+----
+cd out
+----
+
+创建并发布一个包含 Azure CAPI Provider 清单的 OCI 工件到您的私有储存库：
+
+[source,bash]
+----
+kubectl operator publish -u ${PROD_REGISTRY}:${RELEASE_TAG} infrastructure-components.yaml metadata.yaml
+----
+--
+
+使用 Oras::
++
+--
+您可以为 {product_name} 配置中列出的任何 CAPI Provider 构建 OCI 工件：https://github.com/rancher/turtles/blob/main/internal/controllers/clusterctl/config-community.yaml
+
+克隆官方的 https://github.com/kubernetes-sigs/cluster-api-provider-azure/[Azure CAPI Provider 储存库] 并导航到项目目录。
+
+[source,bash]
+----
+git clone https://github.com/kubernetes-sigs/cluster-api-provider-azure/
+cd cluster-api-provider-azure
+----
+
+选择您想要部署的特定版本。您可以列出所有可用的标签，
+
+[CAUTION]
+在 OCI 场景中没有 `latest` 版本，因此版本需要始终设置。
+
+[source,bash]
+----
+git tag
+----
+
+或自动选择最新的发布版本：
+
+[source,console]
+----
+export RELEASE_TAG=`git describe --abbrev=0`
+----
+
+设置您的私有储存库 URL，并替换为您的实际储存库：
+
+[source,bash]
+----
+export PROD_REGISTRY=<YOUR_PRIVATE_REGISTRY>
+----
+
+构建发布工件 infrastructure-components.yaml 和 metadata.yaml：
+
+[source,bash]
+----
+make release
+----
+
+前往包含工件的输出目录：
+
+[source,bash]
+----
+cd out
+----
+
+安装 ORAS (OCI Registry As Storage) CLI 工具以管理 OCI 工件。请按照以下安装说明进行操作：https://oras.land/docs/installation
+
+创建并发布一个包含 Azure CAPI Provider 清单的 OCI 工件到您的私有储存库：
+
+[source,bash]
+----
+oras push ${PROD_REGISTRY}:${RELEASE_TAG} infrastructure-components.yaml:application/vnd.test.file metadata.yaml:application/vnd.test.file
+----
+--
+
+======
+
+
+创建并应用 Azure CAPIProvider 资源，指示 {product_name} 从您的私有 OCI 储存库中获取 Azure 提供者：
+
+.capz-provider-oci.yaml
+[source,yaml]
+----
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: azure
+  namespace: capz-system
+spec:
+  type: infrastructure
+  name: azure
+  version: ${RELEASE_TAG}
+  fetchConfig:
+    oci: ${PROD_REGISTRY}:${RELEASE_TAG}
+----
+
+使用 `kubectl` 创建名称空间 `capz-system` 并将 `capz-provider-oci.yaml` 文件应用到集群：
+
+[source,bash]
+----
+kubectl apply -f capz-provider-oci.yaml
+----
+
+== 使用获取的清单安装 CAPI Provider
+
+本节演示了一种使用 ConfigMaps 而不是 OCI 工件的隔离的安装的替代方法。此方法适用于社区用户和高级用户，并且在 OCI 注册表访问受限或您希望直接管理提供者清单时非常有用。
+
+作为管理员，您需要从集群内部获取 vSphere 提供者 (CAPV) 组件，因为您在隔离环境中工作。
+
+在此示例中，`capv-system` 名称空间中有一个 ConfigMap，定义了提供者的组件和元数据。可以手动创建或通过运行以下命令创建：
+
+[source,bash]
+----
+# Get the file contents from the GitHub release
+curl -L https://github.com/rancher-sandbox/cluster-api-provider-vsphere/releases/download/v1.12.0/infrastructure-components.yaml -o components.yaml
+curl -L https://github.com/rancher-sandbox/cluster-api-provider-vsphere/releases/download/v1.12.0/metadata.yaml -o metadata.yaml
+
+# Create the configmap from the files
+kubectl create configmap v1.12.0 --namespace=capv-system --from-file=components=components.yaml --from-file=metadata=metadata.yaml --dry-run=client -o yaml > configmap.yaml
+----
+
+此命令示例需要根据您想要使用的提供者和版本进行调整。生成的配置映射将类似于下面的示例：
+
+[source,yaml]
+----
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    provider-components: vsphere
+  name: v1.12.0
+  namespace: capv-system
+data:
+  components: |
+    # Components for v1.12.0 YAML go here
+  metadata: |
+    # Metadata information goes here
+----
+
+需要创建一个 *CAPIProvider* 资源来表示 vSphere 基础设施提供者。它需要使用 `fetchConfig` 进行配置。标签选择器允许操作员确定可用的 vSphere 提供者版本和需要部署的 Kubernetes 资源（即包含在与标签选择器匹配的 ConfigMaps 中）。
+
+由于提供者的版本标记为 `v1.12.0`，操作员使用与标签匹配的 ConfigMap 中的组件信息来安装 vSphere 提供者。
+
+[source,yaml]
+----
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: vsphere
+  namespace: capv-system
+spec:
+  name: vsphere
+  type: infrastructure
+  version: v1.12.0
+  configSecret:
+    name: vsphere-variables
+  fetchConfig:
+    selector:
+      matchLabels:
+        provider-components: vsphere
+  deployment:
+    containers:
+    - name: manager
+      imageUrl: "registry.suse.com/rancher/cluster-api-vsphere-controller:v1.12.0"
+  variables:
+    CLUSTER_TOPOLOGY: "true"
+    EXP_CLUSTER_RESOURCE_SET: "true"
+    EXP_MACHINE_POOL: "true"
+----
+
+此外，*CAPIProvider* 使用 `deployment.containers[].imageUrl` 字段覆盖提供者使用的容器镜像。这允许操作员从隔离的环境中的注册表中拉取镜像。
+
+=== ConfigMap 大小限制
+
+ConfigMap 的 https://kubernetes.io/docs/concepts/configuration/configmap/#motivation[最大大小] 有一个限制 - 1MiB。如果清单不符合此大小，Kubernetes 将生成错误并导致提供者安装失败。为避免这种情况，您可以归档清单并以这种方式将其放入 ConfigMap 中。
+
+例如，您有两个文件： `components.yaml` 和 `metadata.yaml`。要创建一个有效的配置映射，您需要：
+
+. 使用 `gzip` CLI 工具归档 components.yaml
++
+[source,sh]
+----
+gzip -c components.yaml > components.gz
+----
++
+. 从归档数据创建 ConfigMap 清单
++
+[source,sh]
+----
+kubectl create configmap v1.12.0 --namespace=capv-system --from-file=components=components.gz --from-file=metadata=metadata.yaml --dry-run=client -o yaml > configmap.yaml
+----
++
+. 通过添加 "provider.cluster.x-k8s.io/compressed: true" 注释来编辑文件
++
+[source,sh]
+----
+yq eval -i '.metadata.annotations += {"provider.cluster.x-k8s.io/compressed": "true"}' configmap.yaml
+----
++
+NOTE: 没有此注释，操作员将无法确定数据是否被压缩。
+
+. 添加将在提供者的 `fetchConfig` 部分中用于匹配 ConfigMap 的标签
++
+[source,sh]
+----
+yq eval -i '.metadata.labels += {"my-label": "label-value"}' configmap.yaml
+----
++
+. 使用 kubectl 在您的 Kubernetes 集群中创建 ConfigMap
++
+[source,sh]
+----
+kubectl create -f configmap.yaml
+----

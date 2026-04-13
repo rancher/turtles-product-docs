@@ -1,0 +1,541 @@
+= Entorno aislado
+:page-languages: [en, de, es, fr, ja, pt, zh]
+:revdate: 2026-01-06
+:page-revdate: {revdate}
+
+{product_name} proporciona soporte para un entorno aislado de forma predeterminada aprovechando las características del Operador de la API de Clúster, la dependencia requerida para instalar {product_name}.
+
+Para aprovisionar y configurar los proveedores de la API de Clúster, Turtles utiliza el recurso *CAPIProvider* para permitir la gestión de los manifiestos del Operador de la API de Clúster de manera declarativa. Cada campo proporcionado por el recurso del Operador CAPI de sentido ascendente para el `spec.type` deseado también está disponible en el `spec` del recurso *CAPIProvider*.
+
+Una nueva instalación de {product_name} solo incluye el proveedor CAPI básico y sus CRDs. El mecanismo de instalación predeterminado para este proveedor no requiere obtener el manifiesto de una fuente remota, por lo que es completamente funcional en un entorno aislado ya que recupera la definición YAML de un `ConfigMap` local, incrustado en el gráfico de la aplicación.
+
+[TIP]
+====
+La versión del CAPI básico que se envía con {product_name} se prueba y valida activamente, y el gráfico está preconfigurado para seleccionar esta versión por defecto utilizando el Operador CAPI. Sin embargo, si tienes requisitos específicos sobre el versionado o qué repositorio utilizar, aún puedes personalizar el comportamiento del Operador CAPI con tu propio https://github.com/rancher/turtles/blob/5b6b33d894edf265e5d2b09d2718538892e83cd0/charts/rancher-turtles/values.yaml#L80[fetchConfig].
+====
+
+ifeval::["{build-type}" == "product"]
+== Usuarios Prime
+
+*Usuarios Prime*: Los usuarios de Rancher Prime se benefician de los artefactos OCI del proveedor CAPI pre-mirrored disponibles en el Registro de Rancher Prime (`registry.rancher.com`). Estos proveedores son validados, probados y mantenidos automáticamente para tu versión de Turtles. Para ver qué proveedores y versiones están disponibles para tu versión de Turtles, consulta el archivo de configuración https://github.com/rancher/turtles/blob/main/internal/controllers/clusterctl/config-prime.yaml[config-prime.yaml].
+endif::[]
+ifeval::["{build-type}" == "community"]
+== Usuarios de la comunidad
+*Usuarios de la comunidad*: Los usuarios de la comunidad tienen acceso al proveedor CAPI básico pero no tienen artefactos OCI del proveedor pre-mirrored. Son libres de reflejar manualmente cualquier proveedor CAPI o utilizar manifiestos obtenidos según sus requisitos. La configuración https://github.com/rancher/turtles/blob/main/internal/controllers/clusterctl/config-community.yaml[config-community.yaml] muestra la configuración mínima de la comunidad sin fijación de versiones del proveedor.
+endif::[]
+
+Esta sección proporciona orientación sobre cómo utilizar `CAPIProvider` y la funcionalidad del Operador CAPI en diferentes escenarios aislados.
+
+== Prefijado automático del registro con el Registro Predeterminado de Rancher
+
+=== Requisitos previos
+
+Asegúrate de que el registro privado configurado en la configuración de `system-default-registry` de Rancher contenga imágenes espejo para todos los proveedores de CAPI que pretendas utilizar. Las rutas de las imágenes dentro del registro espejo deben preservar la estructura original del espacio de nombres y del nombre de la imagen (por ejemplo, `cluster-api/cluster-api-controller`).
+Consulta los archivos de configuración de clusterctl incrustados (https://github.com/rancher/turtles/blob/main/internal/controllers/clusterctl/config-community.yaml[config-community.yaml] / https://github.com/rancher/turtles/blob/main/internal/controllers/clusterctl/config-prime.yaml[config-prime.yaml]) para la lista completa de imágenes de proveedor que deben ser espejadas.
+
+{product_name} incluye un gate de función alfa, `use-rancher-default-registry`, que simplifica la gestión de imágenes en entornos aislados. Cuando está habilitado (por defecto), {product_name} lee la configuración de gestión `system-default-registry` de Rancher y automáticamente antepone todos los repositorios de imágenes de proveedores de CAPI con el registro configurado.
+
+Sin esta función, las imágenes de proveedores que hacen referencia a registros externos como `registry.k8s.io` no son accesibles en un entorno aislado. El pipeline de espejado de imágenes de Rancher espeja imágenes de sentido ascendente, pero solo la parte del registro de una referencia de imagen es típicamente sobreescribible - no el nombre de la imagen en sí.
+Esto puede llevar a desajustes cuando las imágenes espejadas utilizan una convención de nombres diferente (por ejemplo, `rancher/mirrored-cluster-api-controller` en lugar de `cluster-api/cluster-api-controller`), o cuando ciertas imágenes (por ejemplo, `registry.k8s.io/kubernetes/kubectl`) no son espejadas en absoluto.
+
+Con `use-rancher-default-registry` habilitado, {product_name} resuelve esto leyendo la configuración de gestión `system-default-registry` de Rancher y utilizando su valor para reescribir todos los repositorios de imágenes de proveedores. La configuración de clusterctl incrustada `ConfigMap` sirve como la fuente de verdad para qué proveedores e imágenes son compatibles.
+Si la configuración está vacía, {product_name} vuelve a las referencias de imagen por defecto.
+
+=== Cómo funciona
+
+. {product_name} lee la configuración de gestión `system-default-registry` de Rancher.
+. Si la configuración contiene una URL de registro no vacía, {product_name} itera a través de todas las imágenes de proveedores definidas en la configuración de clusterctl incrustada.
+. Para cada imagen, se elimina el prefijo del registro original y se reemplaza con el valor de `system-default-registry`, preservando el espacio de nombres y el nombre de la imagen.
++
+Por ejemplo, `registry.k8s.io/cluster-api/cluster-api-controller` se convierte en `my-registry.example.com/cluster-api/cluster-api-controller`.
+. Cualquier sobreescritura de imagen especificada en el recurso `ClusterctlConfig` se aplica _después_ del prefijo del registro, permitiendo sobreescrituras selectivas por imagen.
+
+[NOTE]
+====
+Las sobreescrituras de imagen definidas en el recurso `ClusterctlConfig` siempre tienen prioridad. Si se configura una imagen de proveedor específica a través de `ClusterctlConfig`, reemplaza el valor con prefijo de registro. Esto proporciona un mecanismo para sobreescribir selectivamente imágenes específicas mientras se confía en el prefijo de registro automático para todo lo demás.
+====
+
+=== Habilitar o deshabilitar
+
+Esta función está habilitada por defecto. Para desactivarla y volver a las referencias de imagen originales, establece lo siguiente en tus valores de Helm:
+
+[source,yaml]
+----
+features:
+  use-rancher-default-registry:
+    enabled: false
+----
+
+== Instalación del proveedor CAPI con artefacto OCI
+
+Como administrador que trabaja en un entorno aislado, necesitas obtener los componentes del proveedor CAPI desde dentro de tu clúster, ya que el acceso a internet externo está restringido. Esta sección demuestra cómo desplegar proveedores CAPI utilizando artefactos OCI.
+
+ifeval::["{build-type}" == "product"]
+=== Usuarios Prime
+
+Como usuario de Rancher Prime, puedes reflejar directamente artefactos OCI de proveedores prevalidados desde el Registro de Rancher Prime a tu registro privado.
+
+Establece la URL de tu registro privado:
+
+[source,bash]
+----
+export REGISTRY=<YOUR_PRIVATE_REGISTRY>
+----
+
+Refleja el proveedor desde el Registro de Rancher Prime a tu registro privado. Consulta https://github.com/rancher/turtles/blob/main/internal/controllers/clusterctl/config-prime.yaml[config-prime.yaml] para las versiones exactas de proveedor disponibles para tu versión de Turtles.
+
+Por ejemplo, para usar el proveedor de Azure:
+
+[source,bash]
+----
+# Set the version from config-prime.yaml
+export PROVIDER_VERSION=<VERSION_FROM_CONFIG_PRIME>
+
+# Pull from Rancher Prime Registry
+oras pull registry.rancher.com/rancher/cluster-api-azure-controller-components:${PROVIDER_VERSION}
+
+# Push to your private registry
+oras push ${REGISTRY}/cluster-api-azure-controller-components:${PROVIDER_VERSION} infrastructure-components.yaml:application/vnd.test.file metadata.yaml:application/vnd.test.file
+----
+
+Crea y aplica el recurso CAPIProvider apuntando a tu registro privado:
+
+.capz-provider-oci.yaml
+[source,yaml]
+----
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: azure
+  namespace: capz-system
+spec:
+  type: infrastructure
+  name: azure
+  version: ${PROVIDER_VERSION}
+  fetchConfig:
+    oci: ${REGISTRY}/cluster-api-azure-controller-components:${PROVIDER_VERSION}
+----
+endif::[]
+
+ifeval::["{build-type}" == "community"]
+=== Usuarios de la comunidad
+
+Como usuario de la comunidad, necesitas construir y empaquetar manualmente los artefactos OCI del proveedor en tu registro privado. Los usuarios de la comunidad no tienen acceso a artefactos pre-mirrored desde registry.rancher.com.
+
+Establece la URL de tu registro privado y la versión del proveedor:
+
+[source,bash]
+----
+export REGISTRY=<YOUR_PRIVATE_REGISTRY>
+export RELEASE_TAG=<CAPI_PROVIDER_VERSION>
+----
+
+Necesitarás construir los manifiestos del proveedor siguiendo la documentación del proveedor de sentido ascendente. Consulta la sección "Obtención y envío de artefactos OCI del proveedor CAPI" a continuación para obtener instrucciones detalladas sobre cómo construir desde la fuente y empaquetar como artefactos OCI.
+
+Una vez que hayas construido y enviado el artefacto OCI a tu registro privado, crea y aplica el recurso CAPIProvider apuntando a tu registro privado:
+
+.capz-provider-oci.yaml
+[source,yaml]
+----
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: azure
+  namespace: capz-system
+spec:
+  type: infrastructure
+  name: azure
+  version: ${RELEASE_TAG}
+  fetchConfig:
+    oci: ${REGISTRY}:${RELEASE_TAG}
+----
+endif::[]
+
+== Cómo reflejar el artefacto OCI del proveedor CAPI
+
+Esta sección muestra cómo reflejar artefactos OCI del proveedor CAPI a tu registro privado para su uso en un entorno aislado.
+
+ifeval::["{build-type}" == "product"]
+=== Usuarios Prime
+
+Como usuario de Rancher Prime, puedes reflejar artefactos OCI de proveedores prevalidados desde el Registro de Rancher Prime. Consulta https://github.com/rancher/turtles/blob/main/internal/controllers/clusterctl/config-prime.yaml[config-prime.yaml] para ver los proveedores disponibles y sus versiones para tu versión de Turtles.
+
+Instala la herramienta CLI ORAS (OCI Registry As Storage) para gestionar artefactos OCI. Sigue las instrucciones de instalación en: https://oras.land/docs/installation.
+
+Establece la URL de tu registro privado y la versión del proveedor:
+
+[source,bash]
+----
+export REGISTRY=<YOUR_PRIVATE_REGISTRY>
+export PROVIDER_VERSION=<VERSION_FROM_CONFIG_PRIME>
+----
+
+Crea el directorio de trabajo:
+
+[source,bash]
+----
+mkdir capi-oci-artifacts
+cd capi-oci-artifacts
+----
+
+Extrae el artefacto OCI del Registro de Rancher Prime. Por ejemplo, para el proveedor de Azure:
+
+[source,bash]
+----
+oras pull registry.rancher.com/rancher/cluster-api-azure-controller-components:${PROVIDER_VERSION}
+----
+
+Publica el artefacto OCI en tu registro privado:
+
+[source,bash]
+----
+oras push ${REGISTRY}/cluster-api-azure-controller-components:${PROVIDER_VERSION} infrastructure-components.yaml:application/vnd.test.file metadata.yaml:application/vnd.test.file
+----
+
+Crea y aplica el recurso CAPIProvider:
+
+.capz-provider-oci.yaml
+[source,yaml]
+----
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: azure
+  namespace: capz-system
+spec:
+  type: infrastructure
+  name: azure
+  version: ${PROVIDER_VERSION}
+  fetchConfig:
+    oci: ${REGISTRY}/cluster-api-azure-controller-components:${PROVIDER_VERSION}
+----
+
+Utiliza `kubectl` para crear el espacio de nombres y aplicar la configuración:
+
+[source,bash]
+----
+kubectl create namespace capz-system
+kubectl apply -f capz-provider-oci.yaml
+----
+endif::[]
+
+ifeval::["{build-type}" == "community"]
+=== Usuarios de la comunidad
+
+Como usuario de la comunidad, necesitas construir artefactos OCI del proveedor CAPI desde el código fuente y debes seguir la documentación del proveedor de sentido ascendente para construir los manifiestos de lanzamiento.
+
+Para construir y empaquetar los manifiestos del proveedor:
+
+. Sigue la documentación del proveedor de sentido ascendente para clonar el repositorio y construir artefactos de lanzamiento (infrastructure-components.yaml y metadata.yaml). Por ejemplo, para el proveedor de Azure, consulta el https://github.com/kubernetes-sigs/cluster-api-provider-azure[repositorio del proveedor CAPI de Azure].
+
+. Instala la herramienta CLI ORAS (OCI Registry As Storage) para gestionar artefactos OCI. Sigue las instrucciones de instalación en: https://oras.land/docs/installation
+
+. Establece la URL de tu registro privado y la versión del proveedor:
++
+[source,bash]
+----
+export REGISTRY=<YOUR_PRIVATE_REGISTRY>
+export RELEASE_TAG=<CAPI_PROVIDER_VERSION>
+----
+
+. Una vez que hayas construido los archivos infrastructure-components.yaml y metadata.yaml, publica el artefacto OCI en tu registro privado:
+
+[source,bash]
+----
+oras push ${REGISTRY}:${RELEASE_TAG} infrastructure-components.yaml:application/vnd.test.file metadata.yaml:application/vnd.test.file
+----
+
+Crea y aplica el recurso CAPIProvider:
+
+.capz-provider-oci.yaml
+[source,yaml]
+----
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: azure
+  namespace: capz-system
+spec:
+  type: infrastructure
+  name: azure
+  version: ${RELEASE_TAG}
+  fetchConfig:
+    oci: ${REGISTRY}:${RELEASE_TAG}
+----
+
+Utiliza `kubectl` para crear el espacio de nombres y aplicar la configuración:
+
+[source,bash]
+----
+kubectl create namespace capz-system
+kubectl apply -f capz-provider-oci.yaml
+----
+endif::[]
+
+== CAPI Provider obtiene y publica el artefacto OCI
+
+Esta sección demuestra cómo construir y publicar artefactos OCI desde el código fuente. Esto es principalmente útil para los usuarios de la comunidad que desean construir proveedores por sí mismos o personalizar versiones de proveedores. Los usuarios de Prime generalmente no necesitan este flujo de trabajo, ya que pueden utilizar artefactos pre-mirrored del Registro de Rancher Prime.
+
+[tabs]
+======
+Usando el operador kubectl::
++
+--
+Puedes construir artefactos OCI para cualquier proveedor CAPI listado en la configuración {product_name}: https://github.com/rancher/turtles/blob/main/internal/controllers/clusterctl/config-community.yaml
+
+Instala el plugin https://cluster-api-operator.sigs.k8s.io/03_topics/03_plugin/01_installation[cluster-api-operator] para `kubectl`.
+
+Clona el repositorio oficial https://github.com/kubernetes-sigs/cluster-api-provider-azure/[Azure CAPI Provider repository] y navega al directorio del proyecto.
+
+[source,bash]
+----
+git clone https://github.com/kubernetes-sigs/cluster-api-provider-azure/
+cd cluster-api-provider-azure
+----
+
+Elige la versión específica que deseas desplegar. Puedes listar todas las etiquetas disponibles,
+
+[CAUTION]
+No hay una versión `latest` en el escenario OCI, por lo que la versión debe establecerse en todo momento.
+
+[source,bash]
+----
+git tag
+----
+
+o seleccionar automáticamente la última versión:
+
+[source,console]
+----
+export RELEASE_TAG=`git describe --abbrev=0`
+----
+
+Establece la URL de tu registro privado y reemplaza con tu registro real:
+
+[source,bash]
+----
+export PROD_REGISTRY=<YOUR_PRIVATE_REGISTRY>
+----
+
+Construye los artefactos de lanzamiento infrastructure-components.yaml y metadata.yaml:
+
+[source,bash]
+----
+make release
+----
+
+Ve al directorio de salida que contiene los artefactos:
+
+[source,bash]
+----
+cd out
+----
+
+Crea y publica un artefacto OCI que contenga los manifiestos del Azure CAPIProvider en tu registro privado:
+
+[source,bash]
+----
+kubectl operator publish -u ${PROD_REGISTRY}:${RELEASE_TAG} infrastructure-components.yaml metadata.yaml
+----
+--
+
+Usando Oras::
++
+--
+Puedes construir artefactos OCI para cualquier CAPIProvider listado en la configuración {product_name}: https://github.com/rancher/turtles/blob/main/internal/controllers/clusterctl/config-community.yaml
+
+Clona el repositorio oficial https://github.com/kubernetes-sigs/cluster-api-provider-azure/[Azure CAPIProvider repository] y navega al directorio del proyecto.
+
+[source,bash]
+----
+git clone https://github.com/kubernetes-sigs/cluster-api-provider-azure/
+cd cluster-api-provider-azure
+----
+
+Elige la versión específica que deseas desplegar. Puedes listar todas las etiquetas disponibles,
+
+[CAUTION]
+No hay una versión `latest` en el escenario OCI, por lo que la versión debe establecerse en todo momento.
+
+[source,bash]
+----
+git tag
+----
+
+o seleccionar automáticamente la última versión:
+
+[source,console]
+----
+export RELEASE_TAG=`git describe --abbrev=0`
+----
+
+Establece la URL de tu registro privado y reemplaza con tu registro real:
+
+[source,bash]
+----
+export PROD_REGISTRY=<YOUR_PRIVATE_REGISTRY>
+----
+
+Construye los artefactos de lanzamiento infrastructure-components.yaml y metadata.yaml:
+
+[source,bash]
+----
+make release
+----
+
+Ve al directorio de salida que contiene los artefactos:
+
+[source,bash]
+----
+cd out
+----
+
+Instala la herramienta CLI ORAS (OCI Registry As Storage) para gestionar artefactos OCI. Sigue las instrucciones de instalación en: https://oras.land/docs/installation
+
+Crea y publica un artefacto OCI que contenga los manifiestos del Azure CAPIProvider en tu registro privado:
+
+[source,bash]
+----
+oras push ${PROD_REGISTRY}:${RELEASE_TAG} infrastructure-components.yaml:application/vnd.test.file metadata.yaml:application/vnd.test.file
+----
+--
+
+======
+
+
+Crea y aplica el recurso Azure CAPIProvider que instruye a {product_name} a obtener el proveedor de Azure de tu registro OCI privado:
+
+.capz-provider-oci.yaml
+[source,yaml]
+----
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: azure
+  namespace: capz-system
+spec:
+  type: infrastructure
+  name: azure
+  version: ${RELEASE_TAG}
+  fetchConfig:
+    oci: ${PROD_REGISTRY}:${RELEASE_TAG}
+----
+
+Usa `kubectl` para crear el espacio de nombres `capz-system` y aplica el archivo `capz-provider-oci.yaml` al clúster:
+
+[source,bash]
+----
+kubectl apply -f capz-provider-oci.yaml
+----
+
+== Instalación del CAPIProvider con el manifiesto obtenido
+
+Esta sección demuestra un enfoque alternativo para instalaciones en entornos aislados utilizando ConfigMaps en lugar de artefactos OCI. Este método funciona tanto para usuarios de Community como de Prime y puede ser útil cuando el acceso al registro OCI es limitado o cuando prefieres gestionar los manifiestos del proveedor directamente.
+
+Como administrador, necesitas obtener los componentes del proveedor vSphere (CAPV) desde dentro del clúster porque estás trabajando en un entorno aislado.
+
+En este ejemplo, hay un ConfigMap en el espacio de nombres `capv-system` que define los componentes y metadatos del proveedor. Se puede crear manualmente o ejecutando los siguientes comandos:
+
+[source,bash]
+----
+# Get the file contents from the GitHub release
+curl -L https://github.com/rancher-sandbox/cluster-api-provider-vsphere/releases/download/v1.12.0/infrastructure-components.yaml -o components.yaml
+curl -L https://github.com/rancher-sandbox/cluster-api-provider-vsphere/releases/download/v1.12.0/metadata.yaml -o metadata.yaml
+
+# Create the configmap from the files
+kubectl create configmap v1.12.0 --namespace=capv-system --from-file=components=components.yaml --from-file=metadata=metadata.yaml --dry-run=client -o yaml > configmap.yaml
+----
+
+Este ejemplo de comando necesitaría ser adaptado al proveedor y la versión que deseas utilizar. El mapa de configuración resultante se verá similar al ejemplo a continuación:
+
+[source,yaml]
+----
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    provider-components: vsphere
+  name: v1.12.0
+  namespace: capv-system
+data:
+  components: |
+    # Components for v1.12.0 YAML go here
+  metadata: |
+    # Metadata information goes here
+----
+
+Se necesitará crear un recurso *CAPIProvider* para representar el proveedor de infraestructura de vSphere. Deberá ser configurado con un `fetchConfig`. El selector de etiquetas permite al operador determinar las versiones disponibles del proveedor de vSphere y los recursos de Kubernetes que necesitan ser desplegados (es decir, contenidos dentro de ConfigMaps que coinciden con el selector de etiquetas).
+
+Dado que la versión del proveedor está marcada como `v1.12.0`, el operador utiliza la información de los componentes del ConfigMap con la etiqueta coincidente para instalar el proveedor de vSphere.
+
+[source,yaml]
+----
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: vsphere
+  namespace: capv-system
+spec:
+  name: vsphere
+  type: infrastructure
+  version: v1.12.0
+  configSecret:
+    name: vsphere-variables
+  fetchConfig:
+    selector:
+      matchLabels:
+        provider-components: vsphere
+  deployment:
+    containers:
+    - name: manager
+      imageUrl: "registry.suse.com/rancher/cluster-api-vsphere-controller:v1.12.0"
+  variables:
+    CLUSTER_TOPOLOGY: "true"
+    EXP_CLUSTER_RESOURCE_SET: "true"
+    EXP_MACHINE_POOL: "true"
+----
+
+Además, el *CAPIProvider* anula la imagen del contenedor a utilizar para el proveedor usando el campo `deployment.containers[].imageUrl`. Esto permite al operador extraer la imagen de un registro dentro del entorno aislado.
+
+=== Limitaciones de tamaño del ConfigMap
+
+Hay un límite en el https://kubernetes.io/docs/concepts/configuration/configmap/#motivation[tamaño máximo] de un ConfigMap - 1MiB. Si los manifiestos no caben en este tamaño, Kubernetes generará un error y la instalación del proveedor fallará. Para evitar esto, puedes archivar los manifiestos y ponerlos en el ConfigMap de esa manera.
+
+Por ejemplo, tienes dos archivos: `components.yaml` y `metadata.yaml`. Para crear un mapa de configuración funcional necesitas:
+
+. Archivar components.yaml usando la herramienta CLI `gzip`
++
+[source,sh]
+----
+gzip -c components.yaml > components.gz
+----
++
+. Crear un manifiesto de ConfigMap a partir de los datos archivados
++
+[source,sh]
+----
+kubectl create configmap v1.12.0 --namespace=capv-system --from-file=components=components.gz --from-file=metadata=metadata.yaml --dry-run=client -o yaml > configmap.yaml
+----
++
+. Editar el archivo añadiendo la anotación "provider.cluster.x-k8s.io/compressed: true"
++
+[source,sh]
+----
+yq eval -i '.metadata.annotations += {"provider.cluster.x-k8s.io/compressed": "true"}' configmap.yaml
+----
++
+NOTE: Sin esta anotación, el operador no podrá determinar si los datos están comprimidos o no.
+
+. Añadir etiquetas que se utilizarán para coincidir con el ConfigMap en la sección `fetchConfig` del proveedor
++
+[source,sh]
+----
+yq eval -i '.metadata.labels += {"my-label": "label-value"}' configmap.yaml
+----
++
+. Crear un ConfigMap en tu clúster de Kubernetes usando kubectl
++
+[source,sh]
+----
+kubectl create -f configmap.yaml
+----
