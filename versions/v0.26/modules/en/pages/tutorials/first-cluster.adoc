@@ -19,12 +19,12 @@ GitOps using Fleet::
 --
 *Configure your Fleet repository*
 
-To simplify the process of cluster provisioning, we will be using a series of pre-configured examples that you can find in the repository https://github.com/rancher/turtles/tree/main/examples.
+To simplify the process of cluster provisioning, in this tutorial we will be using a pre-configured example that you can find in the repository https://github.com/rancher/turtles/tree/main/examples.
 By inspecting the contents of this repository, you will find:
 
-. An *applications* folder for additional apps that can be deployed using Fleet (CNI, CSI, CPI).
 . A *clusterclasses* folder with a bunch of ClusterClass examples.
-. A *clusters/docker/rke2* folder with an example of Docker cluster definition.
+. An *applications* folder with a set of resources used for installing cluster dependencies such as CNIs via Fleet.
+. A *clusters/docker/rke2* folder with an example of a Docker cluster definition.
 +
 [NOTE]
 If you prefer, you can create your own Fleet repository using the same base structure.
@@ -35,30 +35,36 @@ Now the cluster definitions are committed to a git repository they can be used t
 
 . Go to Rancher Manager
 . Select *Continuous Delivery* from the menu:
++
 image:sidebar.png[sidebar]
-. Select *fleet-local* as the namespace from the top right
-image:ns.png[namespace]
-. Select *Git Repos* from the sidebar
-. Click *Add Repository*
-. Enter *clusters* as the name
-. Get the *HTTPS* clone URL from your git repo
-image:gh_clone.png[git clone url]
-. Add the URL into the *Repository URL* field
++
+. Select *App Bundles* from the submenu:
++
+image:bundles.png[App Bundles,align="text-center"]
++
+. Select *fleet-local* as the namespace from the top right and then click on the *Create App Bundle* button:
++
+image:ns-create.png[Create App Bundle,align="text-center"]
++
+. Select *Git Repos* as the App Bundle type
+. In *Step 1* of the App Bundle creation flow, give the new bundle a name and description
+. In *Step 2* of the App Bundle creation flow, set the repository URL to the HTTPS URL of the Fleet repo. You can find and copy the URL using GitHub:
++
+image::gh_clone.png[git clone url]
++
 . Change the branch name to *main*
 . Add the following paths to specify which directories to deploy:
 +
-image:paths.png[Fleet paths configuration]
-+
 ----
 examples/clusterclasses/docker/rke2
-examples/applications/cni/calico
 examples/applications/lb/docker
 examples/clusters/docker/rke2
 ----
-. Click *Next*
-. Click *Create*
-. Click on the *clusters* name
-. Watch the resources become ready
+image:step-2.png[Fleet paths configuration]
++
+. Click *Next* to move to *Step 3* and ensure that the *App Bundle* will be deployed to the local cluster
+. Click *Next* again to move to *Step 4* and then click *Create* to complete creation of this *App Bundle*
+. Wait for the *App Bundle* state to become active, at which point the cluster has been provisioned successfully
 . Select *Cluster Management* from the menu
 . Check your cluster has been imported
 --
@@ -82,13 +88,6 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/ma
 [source,bash]
 ----
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/examples/applications/lb/docker/configmap.yaml
-----
-
-. Apply the CNI (Calico) configuration:
-+
-[source,bash]
-----
-kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/heads/main/examples/applications/cni/calico/helm-chart.yaml
 ----
 
 . Create the cluster:

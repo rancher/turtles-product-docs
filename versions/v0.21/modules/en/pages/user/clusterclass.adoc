@@ -1067,7 +1067,7 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/v0.
 ----
 =======
 
-* Create the Docker Kubeadm Cluster from the example ClusterClass.
+* Create the Docker RKE2 Cluster from the example ClusterClass.
 +
 [source,yaml]
 ----

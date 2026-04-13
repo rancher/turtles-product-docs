@@ -1,4 +1,0 @@
-# Settings used by releasepost Updatecli policy
-# to identify which GitHub repository to monitor for information releases and changelog information
-project: "Turtles"
-repository: "rancher/turtles"
