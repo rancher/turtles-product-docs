@@ -52,6 +52,7 @@ https://github.com/metal3-io/cluster-api-provider-metal3/releases/v1.10.1/infras
 * `images[].repository` - Sets the container registry override to pull images from
 * `images[].tag` - Allows to specify a tag for the images
 
+[#_override_a_certified_provider_version]
 == Override a Certified Provider version
 
 {product_name} embeds a validated configuration where all certified provider versions are pinned.  +

@@ -3,10 +3,6 @@
 :revdate: 2025-10-02
 :page-revdate: {revdate}
 
-// START doctoc generated TOC please keep comment here to allow auto update
-
-// DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE
-
 * <<_how_to_get_involved,¿Cómo participar?>>
 * <<_submitting_prs,Enviar PRs>>
  ** <<_choosing_something_to_work_on,Elegir algo en lo que trabajar>>
@@ -21,8 +17,6 @@
 * <<_adrs_architectural_decision_records,ADRs (Registros de Decisiones Arquitectónicas)>>
  ** <<_process,Proceso>>
 
-// END doctoc generated TOC please keep comment here to allow auto update
-
 Gracias por tomarte el tiempo para contribuir a la extensión de Rancher CAPI https://github.com/rancher?q=turtles&type=all&language=&sort=[los proyectos].
 
 Las mejoras en todas las áreas del proyecto, desde el código hasta la documentación, desde los informes de errores hasta el diseño de características y la mejora de la interfaz de usuario, son bienvenidas con gratitud.
@@ -32,6 +26,7 @@ Leer la documentación suele ser tedioso, así que pongamos la regla de contribu
 
 ¡Esperamos ver tus contribuciones en el repositorio!
 
+[#_how_to_get_involved]
 == ¿Cómo participar?
 
 ¡Nos encantaría aceptar tus parches en prácticamente todas las áreas del desarrollo de proyectos!
@@ -66,6 +61,7 @@ Tenemos 2 tipos de incidencias: informes de errores y solicitudes de funciones. 
 * ¿Interfaz de usuario de la extensión? Echa un vistazo a https://github.com/rancher/capi-ui-extension[`open`] o https://github.com/rancher/capi-ui-extension/labels/help-wanted[`help wanted` incidencias].
 * ¿Quizás, documentación de usuario? Entonces, salta directamente a https://github.com/rancher/turtles-product-docs/issues[`open` incidencias] en el repositorio de documentación.
 
+[#_opening_issues]
 == Apertura de incidencias
 
 Estas guías tienen como objetivo ayudarte a redactar problemas de una manera que asegure que se procesen lo más rápido posible.
@@ -82,8 +78,10 @@ _Consulta a continuación <<_prioritizing_issues,cómo se priorizan las incidenc
   Cuanto más rápido se pueda leer algo, más rápido se podrá tratar.
 . Mantén la civilidad. Sí, es molesto cuando las cosas no funcionan, pero es mucho más divertido ayudar a alguien que no es... lo peor. Recuerda que conversar por texto exacerba el sesgo de negatividad de todos, así que añade algunos emojis cuando tengas dudas.
 
+[#_submitting_prs]
 == Enviar PRs
 
+[#_choosing_something_to_work_on]
 === Elegir algo en lo que trabajar
 
 Si estás aquí para pedir ayuda o solicitar un nuevo comportamiento, esta es la sección para ti. Hemos recopilado un conjunto de problemas para cualquiera que simplemente quiera aumentar su reputación en el código abierto.
@@ -101,10 +99,12 @@ Si te has encontrado con una incidencia etiquetada con `good first issue` que cr
 * https://github.com/search?q=org%3Agithub%2Francher+repo%3Arancher%2Fturtles+repo%3Arancher%2Fcapi-ui-extension+repo%3Arancher%2Fturtles-docs+is%3Aopen+label%3A%22help+wanted%22+&type=issues&ref=advsearch[`help wanted` incidencias] son para aquellos un poco más familiarizados con la base de código, pero aún deberían ser lo suficientemente accesibles para los recién llegados.
 * Todos los demás incidencias etiquetados con `kind/<x>` o `area/<x>` también están disponibles, pero probablemente requerirán una buena cantidad de contexto.
 
+[#_developing_rancher_turtles]
 === Desarrollando Rancher Turtles
 
 Consulta las xref:../developer/development.adoc[notas] dedicadas sobre cómo empezar con el desarrollo.
 
+[#_asking_for_help]
 === Pidiendo ayuda
 
 Si necesitas ayuda en cualquier etapa de tu trabajo, ¡no dudes en preguntar!
@@ -112,6 +112,7 @@ Si necesitas ayuda en cualquier etapa de tu trabajo, ¡no dudes en preguntar!
 * Para obtener más detalles sobre la incidencia que has elegido, es una buena idea comenzar preguntando a quien la creó que proporcione más información.
 * Si estás teniendo dificultades con algo mientras trabajas en tu PR, o no estás del todo seguro de tu enfoque, puedes abrir un https://github.blog/2019-02-14-introducing-draft-pull-requests/[borrador] (prefija el título con `WIP:`) y explicar lo que estás pensando.
 
+[#_pr_submission_guidelines]
 === Directrices para la presentación de PR
 
 . Haz un fork del repositorio deseado, desarrolla y prueba tus cambios de código.
@@ -140,6 +141,7 @@ En general, fusionaremos un PR una vez que un mantenedor lo haya revisado y apro
 Los cambios triviales (por ejemplo, correcciones de ortografía) pueden ser aceptados sin más.
 Para cambios sustanciales, puede que más personas se involucren, y podrías ser solicitado a volver a enviar el PR o dividir los cambios en más de un PR.
 
+[#_commit_message_formatting]
 ==== Formateo del mensaje de commit
 
 _Para más información sobre cómo escribir grandes mensajes de commit, y por qué deberías hacerlo, consulta https://chris.beams.io/posts/git-commit/[este excelente artículo de blog]._
@@ -166,8 +168,10 @@ Esto permite que el mensaje sea más fácil de leer en GitHub, así como en vari
 
 Hay una plantilla recomendada para su uso https://gist.github.com/yitsushi/656e68c7db141743e81b7dcd23362f1a[aquí].
 
+[#_how_the_maintainers_process_contributions]
 == Cómo los mantenedores procesan las contribuciones
 
+[#_prioritizing_issues]
 === Priorizando problemas
 
 El equipo central procesa regularmente los problemas entrantes. Puede haber algún retraso durante los períodos festivos.
@@ -191,6 +195,7 @@ Otras etiquetas incluyen:
 Indica que el problema o PR contiene una decisión que necesita ser documentada en un <<_adrs_architectural_decision_records,ADR>> _antes_ de que se pueda trabajar en ello.
 * https://github.com/rancher/turtles/labels/needs-investigation[`needs-investigation`]:  Actualmente hay información insuficiente para categorizar correctamente, o para entender e implementar una solución. Esto podría ser porque el que abrió el problema no proporcionó suficiente información relevante, o porque se requiere una investigación más profunda antes de que se pueda comenzar a trabajar.
 
+[#_reviewing_prs]
 === Revisando PRs
 
 El equipo central tiene como objetivo despejar la cola de PR lo más rápido posible. Los miembros de la comunidad también deben sentirse libres de estar atentos a las cosas y proporcionar sus propios pensamientos y experiencia.
@@ -200,6 +205,7 @@ Las contribuciones de alto valor y/o alta prioridad se procesarán lo más rápi
 Para ayudar a facilitar una revisión más fluida y rápida, sigue las pautas <<_pr_submission_guidelines,arriba>>.
 Las presentaciones que no cumplan con los estándares serán despriorizadas para su revisión.
 
+[#_adrs_architectural_decision_records]
 == ADRs (Registros de Decisiones Arquitectónicas)
 
 [NOTE]
@@ -214,6 +220,7 @@ Se puede encontrar una plantilla en https://github.com/rancher/turtles/blob/main
 
 Los contribuyentes también son bienvenidos a completar ADRs si se encuentran que faltan.
 
+[#_process]
 === Proceso
 
 . Inicia una nueva https://github.com/rancher/turtles/discussions/new?category=adr[discusión] utilizando la categoría `ADR`.

@@ -71,6 +71,7 @@
 | 平台 | 代号 | 提供者类型 | 文档
 |===
 
+[#_clusterclass_support_for_certified_providers]
 == 对认证提供者的 ClusterClass 支持
 
 以下是每个认证提供者及其对集群拓扑功能支持的支持矩阵：

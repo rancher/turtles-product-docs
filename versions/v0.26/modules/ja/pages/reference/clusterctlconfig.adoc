@@ -52,6 +52,7 @@ https://github.com/metal3-io/cluster-api-provider-metal3/releases/v1.10.1/infras
 * `images[].repository` - コンテナレジストリのオーバーライドを設定して、イメージを取得します
 * `images[].tag` - イメージのタグを指定することができます
 
+[#_override_a_certified_provider_version]
 == 認定プロバイダーのバージョンをオーバーライドします
 
 {product_name} は、すべての認定プロバイダーのバージョンが固定された検証済みの構成を埋め込みます。 +

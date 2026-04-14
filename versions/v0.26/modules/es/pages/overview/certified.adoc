@@ -71,6 +71,7 @@ Esta es una lista de proveedores que están en un estado avanzado de desarrollo 
 | Plataforma | Nombre en código | Tipo de proveedor | Documentos
 |===
 
+[#_clusterclass_support_for_certified_providers]
 == Soporte de ClusterClass para Proveedores Certificados
 
 A continuación se presenta una matriz de soporte para cada proveedor certificado y su soporte de la función de topología de clústeres:

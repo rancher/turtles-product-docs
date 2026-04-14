@@ -383,10 +383,11 @@ spec:
     selector:
       matchLabels: {}
 ----
+
 --
 ======
 
-
+[#_create_a_cluster_from_a_clusterclass]
 == 从 ClusterClass 创建集群
 
 [tabs]

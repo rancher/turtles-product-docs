@@ -52,6 +52,7 @@ https://github.com/metal3-io/cluster-api-provider-metal3/releases/v1.10.1/infras
 * `images[].repository` - Define a substituição do registro de contêiner para puxar imagens de
 * `images[].tag` - Permite especificar uma tag para as imagens
 
+[#_override_a_certified_provider_version]
 == Substituir uma versão de Provedor Certificado
 
 {product_name} incorpora uma configuração validada onde todas as versões de provedores certificados estão fixadas. +

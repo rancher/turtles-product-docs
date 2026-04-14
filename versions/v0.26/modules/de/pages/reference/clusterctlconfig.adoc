@@ -52,6 +52,7 @@ https://github.com/metal3-io/cluster-api-provider-metal3/releases/v1.10.1/infras
 * `images[].repository` - Setzt die Container-Registry-Überschreibung, um Bilder abzurufen
 * `images[].tag` - Ermöglicht die Angabe eines Tags für die Bilder
 
+[#_override_a_certified_provider_version]
 == Überschreiben Sie eine zertifizierte Anbieter-Version
 
 {product_name} bettet eine validierte Konfiguration ein, in der alle zertifizierten Anbieter-Versionen festgelegt sind. +

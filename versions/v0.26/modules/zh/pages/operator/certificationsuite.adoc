@@ -66,6 +66,7 @@ NGROK_AUTHTOKEN: ""
 
 * 主要测试套件，以及作为示例使用的套件，基于 GitOps 流程，并使用 https://github.com/rancher/fleet[Fleet] 作为 GitOps 编排工具。根据提供的集群模板（您可以查看与示例集成一起提供的模板 https://github.com/rancher-sandbox/turtles-integration-suite-example/tree/main/suites/data/cluster-templates[这里]），它将创建 YAML 文件中定义的 CAPI 集群。一旦这些集群可用，它们将被配置为 xref:../tutorials/first-cluster.adoc[通过 Turtles 导入到 Rancher 中]，并将验证下游集群是否可以通过 Rancher 访问。它还将检查是否可以对下游集群执行删除操作，并且它们在 Rancher 中不再可用。
 
+[#_other_options]
 == 其他选项
 :kubernetes-version: v1.31.4
 

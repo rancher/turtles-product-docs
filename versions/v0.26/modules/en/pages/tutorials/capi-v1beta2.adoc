@@ -1,5 +1,7 @@
 = Upgrading to CAPI v1beta2
 :page-languages: [en, de, es, fr, ja, pt, zh]
+:revdate: 2026-04-14
+:page-revdate: {revdate}
 
 Release `v0.26.0` of Rancher Turtles adopts the CAPI `v1beta2` contract, which comes with CAPI core v1.12.2. If you are using CAPI-based provisioning, there are a few things to review before upgrading.
 
@@ -22,6 +24,7 @@ Additionally, the upstream community provides an official migration guide:
 * https://cluster-api.sigs.k8s.io/developer/providers/migrations/v1.10-to-v1.11[CAPI v1.10 to v1.11]: this covers all of the `v1beta1` to `v1beta2` changes in core CAPI.
 * https://cluster-api.sigs.k8s.io/developer/providers/migrations/v1.11-to-v1.12[CAPI v1.11 to v1.12]: most of the changes in CAPI v1.12 can be considered minor.
 
+[#_clusterclass]
 == ClusterClass
 
 === Template references
@@ -95,6 +98,7 @@ workers:
           name: my-worker-template
 ----
 
+[#_cluster]
 == Cluster
 
 The `Cluster` resource now references its `ClusterClass` through a structured object rather than an inline string. In `v1beta1`, the class name and namespace were specified as `spec.topology.class` and `spec.topology.classNamespace`. In `v1beta2` both fields are replaced by a single `spec.topology.classRef` object.
@@ -126,6 +130,7 @@ spec:
 
 The rest of the `Cluster` spec (network settings, `controlPlane.replicas`, `workers.machineDeployments`, `variables`, `version`, etc.) remains unchanged.
 
+[#_rke2_provider_caprke2]
 == RKE2 provider (CAPRKE2)
 
 This release ships CAPRKE2 v0.23.1, up from v0.22.1. The `v1beta2` API for the RKE2 bootstrap and control-plane resources was introduced in v0.22.0 alongside support for CAPI v1.11, and v0.23.0 completed that work by bumping to CAPI v1.12.2. Both v0.22.1 and v0.23.1 are patch releases on top of those respective minor versions.

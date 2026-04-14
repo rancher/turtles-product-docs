@@ -32,6 +32,7 @@ Turtles是一个旨在保持中立并与整个CAPI生态系统集成的项目，
 
 由于 CAPI 提供者是由 Kubernetes 社区维护的项目，我们无法保证对特定提供者的支持。这就是为什么我们选择专注于对 xref:../overview/certified.adoc[认证提供者] 的持续验证，并为用户提供与现有测试套件集成的可能性，以验证他们选择的提供者。
 
+[#_provider_certification_using_turtles_test_suite]
 == 使用 Turtles 测试套件进行提供者认证
 
 认证过程基于验证 {product_name} 与 CAPI 提供者的集成。为了简化此任务，我们准备了一个通用测试，以验证下游 CAPI 集群的配置和导入。
@@ -61,6 +62,7 @@ Turtles 作为一个项目包含 https://github.com/rancher/turtles/tree/main/te
 接下来，我们建议您阅读xref:../operator/certificationsuite.adoc[测试套件指南]。
 ====
 
+[#_certify_provider_with_custom_integration_suite]
 == 使用自定义集成套件认证提供者
 
 要使用自定义集成套件认证您的提供者，请确保其满足以下关键要求：

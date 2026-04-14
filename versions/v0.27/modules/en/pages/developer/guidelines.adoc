@@ -2,10 +2,6 @@
 :revdate: 2025-10-02
 :page-revdate: {revdate}
 
-// START doctoc generated TOC please keep comment here to allow auto update
-
-// DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE
-
 * <<_how_to_get_involved,How to get involved?>>
 * <<_submitting_prs,Submitting PRs>>
  ** <<_choosing_something_to_work_on,Choosing something to work on>>
@@ -20,8 +16,6 @@
 * <<_adrs_architectural_decision_records,ADRs (Architectural Decision Records)>>
  ** <<_process,Process>>
 
-// END doctoc generated TOC please keep comment here to allow auto update
-
 Thank you for taking the time to contribute to Rancher CAPI extension https://github.com/rancher?q=turtles&type=all&language=&sort=[projects].
 
 Improvements to all areas of the project; from code, to documentation;
@@ -34,6 +28,7 @@ right at the top: *Always be kind!*
 
 Looking forward to seeing your contributions in the repo!
 
+[#_how_to_get_involved]
 == How to get involved?
 
 We'd love to accept your patches in pretty much all areas of projects development!
@@ -71,6 +66,7 @@ We have 2 forms of issues: bug reports and feature requests. If you are not sure
   https://github.com/rancher/capi-ui-extension/labels/help-wanted[`help wanted` issues].
 * maybe, user-docs? Then, jump straight into https://github.com/rancher/turtles-product-docs/issues[`open` issues] in the docs repository.
 
+[#_opening_issues]
 == Opening Issues
 
 These guides aim to help you write issues in a way which will ensure that they are processed
@@ -96,8 +92,10 @@ _See below for <<_prioritizing_issues,how issues are prioritized>>_.
   someone who is not... the worst. Remember that conversing via text exacerbates
   everyone's negativity bias, so throw in some emoji when in doubt.
 
+[#_submitting_prs]
 == Submitting PRs
 
+[#_choosing_something_to_work_on]
 === Choosing something to work on
 
 If you are here to ask for help or request some new behaviour, this
@@ -126,10 +124,12 @@ to newcomers.
 * All other issues labelled `kind/<x>` or `area/<x>` are also up for grabs, but
 are likely to require a fair amount of context.
 
+[#_developing_rancher_turtles]
 === Developing rancher-turtles
 
 Check out the dedicated xref:../developer/development.adoc[notes] on getting started with development.
 
+[#_asking_for_help]
 === Asking for help
 
 If you need help at any stage of your work, please don't hesitate to ask!
@@ -140,6 +140,7 @@ whoever created it to provide more information.
 sure of your approach, you can open a https://github.blog/2019-02-14-introducing-draft-pull-requests/[draft]
 (prefix the title with `WIP:`) and explain what you are thinking.
 
+[#_pr_submission_guidelines]
 === PR submission guidelines
 
 . Fork the desired repo, develop and test your code changes.
@@ -172,6 +173,7 @@ In general, we will merge a PR once a maintainer has reviewed and approved it.
 Trivial changes (e.g., corrections to spelling) may get waved through.
 For substantial changes, more people may become involved, and you might get asked to resubmit the PR or divide the changes into more than one PR.
 
+[#_commit_message_formatting]
 ==== Commit message formatting
 
 _For more on how to write great commit messages, and why you should, check out
@@ -203,8 +205,10 @@ This allows the message to be easier to read on GitHub as well as in various git
 
 There is a template recommend for use https://gist.github.com/yitsushi/656e68c7db141743e81b7dcd23362f1a[here].
 
+[#_how_the_maintainers_process_contributions]
 == How the Maintainers process contributions
 
+[#_prioritizing_issues]
 === Prioritizing issues
 
 The core team regularly processes incoming issues. There may be some delay over holiday periods.
@@ -240,6 +244,7 @@ or to understand and implement a solution. This could be because the issue opene
 not provide enough relevant information, or because more in-depth research is required
 before work can begin.
 
+[#_reviewing_prs]
 === Reviewing PRs
 
 The core team aims to clear the PR queue as quickly as possible. Community members
@@ -251,6 +256,7 @@ while lower priority or nice-to-have things may take a little longer to get appr
 To help facilitate a smoother and faster review, follow the guidelines <<_pr_submission_guidelines,above>>.
 Submissions which do not meet standards will be de-prioritised for review.
 
+[#_adrs_architectural_decision_records]
 == ADRs (Architectural Decision Records)
 
 [NOTE]
@@ -267,6 +273,7 @@ with numerous examples of completed records in the same directory.
 
 Contributors are also welcome to backfill ADRs if they are found to be missing.
 
+[#_process]
 === Process
 
 . Start a new https://github.com/rancher/turtles/discussions/new?category=adr[discussion] using the `ADR` category.

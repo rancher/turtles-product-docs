@@ -66,6 +66,7 @@ Nas seções anteriores, apresentamos as principais ações realizadas na integr
 
 * A suíte de teste principal, e a que foi usada como exemplo, é baseada em um fluxo GitOps e usa https://github.com/rancher/fleet[Fleet] como uma ferramenta orquestradora GitOps. Com base nos modelos de cluster fornecidos (você pode verificar os que vêm com a integração de exemplo https://github.com/rancher-sandbox/turtles-integration-suite-example/tree/main/suites/data/cluster-templates[aqui]), ele criará os clusters CAPI definidos nos arquivos YAML. Uma vez que este(s) cluster(s) esteja(m) disponível(eis), eles serão configurados para serem xref:../tutorials/first-cluster.adoc[importados no Rancher usando Turtles] e será verificado se o(s) cluster(s) downstream é(são) acessível(eis) via Rancher. Ele também verificará se a exclusão pode ser realizada em clusters downstream e se eles não estão mais disponíveis no Rancher.
 
+[#_other_options]
 == Outras opções
 :kubernetes-version: v1.31.4
 
