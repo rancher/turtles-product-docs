@@ -22,6 +22,7 @@ Darüber hinaus bietet die Upstream-Community einen offiziellen Migrationsleitfa
 * https://cluster-api.sigs.k8s.io/developer/providers/migrations/v1.10-to-v1.11[CAPI v1.10 zu v1.11]: dies deckt alle Änderungen von `v1beta1` zu `v1beta2` im CAPI Kernel ab.
 * https://cluster-api.sigs.k8s.io/developer/providers/migrations/v1.11-to-v1.12[CAPI v1.11 zu v1.12]: die meisten Änderungen in CAPI v1.12 können als geringfügig betrachtet werden.
 
+[#_clusterclass]
 == ClusterClass
 
 === Vorlagenreferenzen
@@ -95,6 +96,7 @@ workers:
           name: my-worker-template
 ----
 
+[#_cluster]
 == Cluster
 
 Die `Cluster` Ressource verweist jetzt über ein strukturiertes Objekt auf ihr `ClusterClass` anstelle eines Inline-Strings. In `v1beta1` wurden der Klassenname und der Namespace als `spec.topology.class` und `spec.topology.classNamespace` angegeben. In `v1beta2` werden beide Felder durch ein einzelnes `spec.topology.classRef` Objekt ersetzt.
@@ -126,6 +128,7 @@ spec:
 
 Der Rest der `Cluster` Spezifikation (Netzwerkeinstellungen, `controlPlane.replicas`, `workers.machineDeployments`, `variables`, `version` usw.) bleibt unverändert.
 
+[#_rke2_provider_caprke2]
 == RKE2-Anbieter (CAPRKE2)
 
 Diese Version enthält CAPRKE2 v0.23.1, ein Upgrade von v0.22.1. Die `v1beta2` API für die RKE2 neu starten- und Control-Plane-Ressourcen wurde in v0.22.0 eingeführt, zusammen mit der Unterstützung für CAPI v1.11, und v0.23.0 hat diese Arbeit abgeschlossen, indem auf CAPI v1.12.2 aktualisiert wurde. Sowohl v0.22.1 als auch v0.23.1 sind Patch-Releases, die auf den jeweiligen Minor-Versionen basieren.

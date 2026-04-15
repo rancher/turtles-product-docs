@@ -366,10 +366,11 @@ spec:
     selector:
       matchLabels: {}
 ----
+
 --
 ======
 
-
+[#_create_a_cluster_from_a_clusterclass]
 == Create a Cluster from a ClusterClass
 
 [tabs]

@@ -25,6 +25,7 @@
 
 == A
 
+[#_add_ons]
 === Add-Ons
 
 Dienste über die grundlegenden Komponenten hinaus, die erforderlich sind, um einen Kubernetes-konformen Cluster bereitzustellen, und in zwei Typen kategorisiert:
@@ -32,75 +33,92 @@ Dienste über die grundlegenden Komponenten hinaus, die erforderlich sind, um ei
 * *Kern-Add-ons*: Add-ons, die erforderlich sind, um einen Kubernetes-konformen Cluster bereitzustellen: DNS, kube-proxy, CNI.
 * *Zusätzliche Add-ons*: Add-ons, die nicht für einen Kubernetes-konformen Cluster erforderlich sind (z. B. Metrics/Heapster, Dashboard).
 
+[#_air_gapped_environment]
 === Air-Gapped-Umgebung
 
 Einrichten und Ausführen von Kubernetes-Clustern ohne direkten Zugang zum Internet.
 
 == B
 
+[#_bootstrap]
 === Bootstrap
 
 Der Prozess, einen Server in einen Kubernetes-Knoten zu verwandeln. Dies kann das Zusammenstellen von Daten umfassen, die beim Erstellen des Servers, der die Maschine unterstützt, bereitgestellt werden müssen, sowie die Laufzeitkonfiguration der Software, die auf diesem Server läuft.
 
+[#_bootstrap_cluster]
 === Bootstrap-Cluster
 
 Ein temporärer Cluster, der verwendet wird, um einen Zielverwaltungs-Cluster bereitzustellen.
 
+[#_bootstrap_provider]
 === Bootstrap-Anbieter
 
 Bezieht sich auf einen <<_provider,Anbieter>>, der eine Lösung für den <<_bootstrap,Bootstrap>>-Prozess implementiert.
 
 == C
 
+[#_capi]
 === CAPI
 
 Core Cluster API
 
+[#_capa]
 === CAPA
 
 Cluster-API-Anbieter AWS
 
+[#_capd]
 === CAPD
 
 Cluster-API-Anbieter Docker
 
+[#_capg]
 === CAPG
 
 Cluster-API-Anbieter Google Cloud
 
+[#_capio]
 === CAPIO
 
 Cluster-API-Operator
 
+[#_caprke2]
 === CAPRKE2
 
 Cluster-API-Anbieter RKE2. Für detaillierte Informationen zu CAPRKE2, siehe die Dokumentation https://caprke2.docs.rancher.com[hier].
 
+[#_capv]
 === CAPV
 
 Cluster-API-Anbieter vSphere
 
+[#_capz]
 === CAPZ
 
 Cluster-API-Anbieter Azure
 
+[#_capi_provider]
 === CAPI-Anbieter
 
 Eine öffentliche API, die die Bereitstellung und den Betrieb über die <<_cluster_api_operator,CAPI-Betreiber>> und <<_cluster_api,Cluster-API>> Ressourcen erleichtert.
 
+[#_child_cluster]
 === Kind-Cluster
 
 Ein Begriff, der häufig synonym mit dem <<_workload_cluster,Workload-Cluster>> verwendet wird.
 
+[#_cluster]
 === Cluster
 
 Eine vollständige Kubernetes-Bereitstellung. Siehe Management-Cluster und Workload-Cluster.
 
+[#_clusterclass]
 === ClusterClass
 
 Eine Sammlung von Vorlagen, die eine Topologie (Steuerungsebene und Arbeiter) definieren, die verwendet wird, um kontinuierlich einen oder mehrere Cluster abzugleichen.
 Siehe xref:../user/clusterclass.adoc[ClusterClass]
 
+[#_cluster_api]
 === Cluster-API
 
 Oder *Cluster-API-Projekt*
@@ -109,16 +127,19 @@ Die Cluster-API ist ein Teilprojekt des SIG-Cluster-Lifecycle. Es wird auch verw
 
 Siehe <<_core_provider,Kernel-Anbieter>>
 
+[#_cluster_api_operator]
 === Cluster-API-Operator
 
 Oder *Cluster-API-Operator-Projekt*
 
 Der Cluster-API-Operator ist ein Teilprojekt des SIG-Cluster-Lifecycle. Es ist darauf ausgelegt, Clusteradministratoren zu befähigen, den Lebenszyklus von Cluster-API-Providern innerhalb eines Management-Clusters mit einem deklarativen Ansatz zu verwalten.
 
+[#_cluster_api_provider_rke2]
 === Cluster-API-Provider RKE2
 
 <<_caprke2,Cluster-API-Provider RKE2>> ist eine Kombination aus zwei Anbietertypen: einem Cluster-API-Control-Plane-Provider zur Bereitstellung von Kubernetes-Control-Plane-Knoten und einem Cluster-API-Bootstrap-Provider zum Bootstrapping von Kubernetes auf einer Maschine, auf der <<_rke2,RKE2>> als Kubernetes-Distro verwendet wird.
 
+[#_control_plane]
 === Control Plane
 
 Die Menge an Kubernetes-Diensten, die die Grundlage eines Clusters bilden. Siehe auch https://kubernetes.io/docs/concepts/#_kubernetes-control-plane Es gibt zwei Varianten:
@@ -126,12 +147,14 @@ Die Menge an Kubernetes-Diensten, die die Grundlage eines Clusters bilden. Siehe
 * *Selbstbereitgestellt*: Ein Kubernetes-Control-Plane, das aus Pods oder Maschinen besteht, die vollständig von einer einzelnen Cluster-API-Implementierung verwaltet wird.
 * *Extern* oder *Verwaltet*: Ein Control Plane, das von einem anderen System als der Cluster-API angeboten und kontrolliert wird (z. B. GKE, AKS, EKS, IKS).
 
+[#_control_plane_provider]
 === Control Plane Provider
 
 Bezieht sich auf einen <<_provider,Provider>>, der eine Lösung für das Management einer Kubernetes-<<_control_plane,Control Plane>> implementiert.
 
 Siehe <<_caprke2,CAPRRKE2>>, <<_kcp,KCP>>.
 
+[#_core_provider]
 === Kernel-Anbieter
 
 Bezieht sich auf einen <<_provider,Anbieter>>, der die Kerncontroller der Cluster-API implementiert; wenn man bedenkt, dass das erste Projekt, das in einem Management-Cluster bereitgestellt werden muss, die Cluster-API selbst ist, sollte klar sein, warum das Cluster-API-Projekt auch als Kernanbieter bezeichnet wird.
@@ -140,6 +163,7 @@ Siehe <<_cluster_api,CAPI>>.
 
 == F
 
+[#_fleet]
 === Fleet
 
 ifeval::["{build-type}" == "product"]
@@ -151,11 +175,13 @@ endif::[]
 
 == I
 
+[#_infrastructure_provider]
 === Infrastruktur-Anbieter
 
 Bezieht sich auf einen <<_provider,Anbieter>>, der die Bereitstellung von Infrastruktur-/Rechenressourcen implementiert, die vom Cluster oder von Maschinen (z. B. VMs, Netzwerke usw.) benötigt werden.
 Cloud-Infrastruktur-Anbieter sind AWS, Azure oder Google; während VMware, MAAS oder metal3.io als Bare-Metal-Anbieter definiert werden können.
 
+[#_ipam_provider]
 === IPAM-Anbieter
 
 Bezieht sich auf einen <<_provider,Anbieter>>, der es der Cluster-API ermöglicht, mit IPAM-Lösungen zu interagieren.
@@ -163,56 +189,67 @@ Die Interaktion des IPAM-Anbieters mit der Cluster-API basiert auf den `IPAddres
 
 == K
 
+[#_kubernetes_conformant]
 === Kubernetes-conformant
 
 Oder *Kubernetes-konform*
 
 Ein Cluster, das die Kubernetes-Konformitätstests besteht.
 
+[#_kubernetes_operator]
 === Kubernetes Operator
 
 Ein Kubernetes-Operator ist eine Methode zum Verpacken, Bereitstellen und Verwalten einer Kubernetes-Anwendung. Siehe auch https://kubernetes.io/docs/concepts/extend-kubernetes/operator/ für weitere Informationen.
 
+[#_kk]
 === k/k
 
 Bezieht sich auf das https://github.com/kubernetes/kubernetes[Haupt-Kubernetes-Git-Repository] oder das Haupt-Kubernetes-Projekt.
 
+[#_kcp]
 === KCP
 
 Kubeadm Control-Plane-Provider
 
 == M
 
+[#_machine]
 === Computer
 
 Oder *Maschinenressource*
 
 Die benutzerdefinierte Ressource für Kubernetes, die eine Infrastrukturkomponente darstellt, die einen Kubernetes-Knoten hostet.
 
+[#_manage_a_cluster]
 === Einen Cluster verwalten
 
 Führen Sie Erstellungs-, Skalierungs-, Upgrade- oder Löschvorgänge am Cluster durch.
 
+[#_managed_kubernetes]
 === Verwaltetes Kubernetes
 
 Verwaltetes Kubernetes bezieht sich auf jede Abstraktion zur Bereitstellung und Wartung von Kubernetes-Clustern, die normalerweise als API bereitgestellt wird und nativ in einem Cloud-Anbieter verfügbar ist. Zum Beispiel: https://aws.amazon.com/eks/[EKS], https://www.oracle.com/cloud/cloud-native/container-engine-kubernetes/[OKE], https://azure.microsoft.com/en-us/products/kubernetes-service[AKS], https://cloud.google.com/kubernetes-engine[GKE], https://www.ibm.com/cloud/kubernetes-service[IBM Cloud Kubernetes Service], https://www.digitalocean.com/products/kubernetes[DOKS] und viele mehr im Kubernetes-cloudnativen Ökosystem.
 
+[#_managed_topology]
 === Verwaltete Topologie
 
 Siehe <<_topology,Topologie>>
 
+[#_management_cluster]
 === Management-Cluster
 
 Der Cluster, in dem ein oder mehrere Infrastruktur-Anbieter betrieben werden und in dem Ressourcen (z. B. Maschinen) gespeichert sind. Typischerweise wird darauf verwiesen, wenn Sie mehrere Workload-Cluster bereitstellen.
 
 == N
 
+[#_node_pools]
 === Knotenpools
 
 Ein Knotenpool ist eine Gruppe von Knoten innerhalb eines Clusters, die alle dieselbe Konfiguration haben.
 
 == O
 
+[#_operating_system]
 === Betriebssystem
 
 Oder *OS*
@@ -221,12 +258,14 @@ Eine allgemein verstandene Kombination aus einem Kernel und einer systemnahen Be
 
 == P
 
+[#_pivot]
 === Pivot
 
 Pivot ist ein Prozess zum Verschieben der Anbieterkomponenten und der deklarierten Cluster-API-Ressourcen von einem Quell-Management-Cluster zu einem Ziel-Management-Cluster.
 
 Der Pivot-Prozess wird auch verwendet, um einen Management-Cluster zu löschen und könnte auch während eines Upgrades des Management-Clusters verwendet werden.
 
+[#_provider]
 === Anbieter
 
 Oder *Cluster-API-Anbieter*
@@ -235,6 +274,7 @@ Dieser Begriff wurde ursprünglich als Abkürzung für <<_infrastructure_provide
 
 Siehe <<_bootstrap_provider,Bootstrap-Anbieter>>, <<_control_plane_provider,Control-Plane-Anbieter>>, <<_core_provider,Core-Anbieter>>, <<_infrastructure_provider,Infrastruktur-Anbieter>>, <<_ipam_provider,IPAM-Anbieter>>, <<_runtime_extension_provider,Laufzeit-Erweiterungs-Anbieter>>.
 
+[#_provider_components]
 === Anbieterkomponenten
 
 Bezieht sich auf das YAML-Artefakt, das im Rahmen des Veröffentlichungsprozesses für <<_provider,Anbieter>> veröffentlicht wird; es umfasst normalerweise benutzerdefinierte Ressourcenbeschreibungen (CRDs), Implementierungen (zum Ausführen des Controller-Managers), RBAC usw.
@@ -243,24 +283,29 @@ In einigen Fällen wird derselbe Ausdruck verwendet, um auf die Instanzen der ob
 
 Siehe <<_provider_repository,Anbieter-Repository>>
 
+[#_provider_repository]
 === Anbieter-Repository
 
 Bezieht sich auf den Ort, an dem das YAML für <<_provider_components,Anbieterkomponenten>> gehostet wird; normalerweise hostet ein Anbieter-Repository viele Versionen von Anbieterkomponenten, eine für jede veröffentlichte Version.
 
 == R
 
+[#_rancher]
 === Rancher
 
 Eine Open-Source-https://www.rancher.com/[Plattform], die entwickelt wurde, um die Bereitstellung und Verwaltung von Kubernetes-Clustern zu vereinfachen.
 
+[#_rancher_cluster_agent]
 === Rancher-Cluster-Agent
 
 Eine Komponente, die von Rancher in jedem Kubernetes-Cluster bereitgestellt wird, den es verwaltet. Seine Hauptaufgabe besteht darin, einen sicheren Kommunikationskanal zwischen dem Rancher-Server und dem Kubernetes-Cluster herzustellen, damit Rancher das Cluster verwalten und mit ihm interagieren kann.
 
+[#_rancher_manager]
 === Rancher Manager
 
 Der Rancher Manager (oder Rancher Server) ist der Ort, an dem die Rancher-Benutzeroberfläche und die API gehostet werden, und er kommuniziert mit verwalteten Clustern über Komponenten wie den <<_rancher_cluster_agent,Rancher Cluster Agent>>. Er ermöglicht es Benutzern, ihre Kubernetes-Cluster, Anwendungen und Rancher-spezifische Ressourcen wie Kataloge, Benutzer, globale Rollen und mehr zu verwalten.
 
+[#_rke2]
 === RKE2
 
 ifeval::["{build-type}" == "product"]
@@ -270,34 +315,41 @@ ifeval::["{build-type}" == "community"]
 Die nächste Generation von Rancher, vollständig konforme Kubernetes-Distribution, die sich auf Sicherheit und Compliance innerhalb der USA konzentriert. US-Bundesbehörden liegt. Siehe https://docs.rke2.io/[Dokumentation] für weitere Details.
 endif::[]
 
+[#_runtime_extension]
 === Laufzeit-Erweiterung
 
 Eine externe Komponente, die Teil eines Systems ist, das auf Cluster API aufgebaut ist und Anfragen für einen spezifischen Laufzeit-Hook bearbeiten kann.
 
+[#_runtime_extension_provider]
 === Laufzeit-Erweiterung-Anbieter
 
 Bezieht sich auf einen <<_provider,Anbieter>>, der eine oder mehrere <<_runtime_extension,Laufzeit-Erweiterungen>> implementiert.
 
 == S
 
+[#_scaling]
 === Skalierung
 
 Sofern nicht anders angegeben, bezieht sich dies auf horizontale Skalierung.
 
+[#_stacked_control_plane]
 === Gestapelter Steuerungsknoten
 
 Ein Steuerungsknoten, bei dem etcd zusammen mit dem Kubernetes API-Server untergebracht ist und als statischer Pod läuft.
 
+[#_server]
 === Server
 
 Die Infrastruktur, die einen <<_machine,Machine Resource>> unterstützt, typischerweise entweder eine Cloud-Instanz, eine virtuelle Maschine oder einen physischen Host.
 
+[#_{product_name}]
 === {product_name}
 
 Ein <<_kubernetes_operator,Kubernetes-Operator>>, der die Integration zwischen Rancher Manager und Cluster API (CAPI) ermöglicht, mit dem Ziel, vollständige CAPI-Unterstützung für Rancher bereitzustellen.
 
 == T
 
+[#_topology]
 === Topologie
 
 Ein Feld in der Cluster-Objektspezifikation, das es ermöglicht, die Form der Steuerungsebene und der Arbeitsknoten des Clusters von einem einzigen Kontrollpunkt aus zu definieren und zu verwalten. Die Topologie des Clusters basiert auf einer <<_clusterclass,ClusterClass>>.
@@ -306,12 +358,14 @@ Manchmal wird es auch als verwaltete Topologie bezeichnet.
 Siehe <<_clusterclass,ClusterClass>>
 
 ifeval::["{build-type}" == "product"]
+[#_turtles]
 === Schildkröten
 
 Bezieht sich auf <<_suse_rancher_prime_cluster_api,{product_name}>>
 endif::[]
 
 ifeval::["{build-type}" == "community"]
+[#_turtles]
 === Schildkröten
 
 Bezieht sich auf <<_rancher_turtles,{product_name}>>
@@ -319,10 +373,12 @@ endif::[]
 
 == W
 
+[#_workload_cluster]
 === Workload-Cluster
 
 Ein Cluster, das von einem ClusterAPI-Controller erstellt wurde, der _kein_ Bootstrap-Cluster ist und für Endbenutzer gedacht ist, im Gegensatz zu CAPI-Tools.
 
+[#_worker_class]
 === WorkerClass
 
 Eine Sammlung von Vorlagen, die eine Reihe von Arbeitsknoten im Cluster definieren. Eine ClusterClass enthält null oder mehr WorkerClass-Definitionen.

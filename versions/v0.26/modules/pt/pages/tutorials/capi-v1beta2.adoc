@@ -22,6 +22,7 @@ Além disso, a comunidade upstream fornece um guia oficial de migração:
 * https://cluster-api.sigs.k8s.io/developer/providers/migrations/v1.10-to-v1.11[CAPI v1.10 para v1.11]: isso cobre todas as mudanças de `v1beta1` para `v1beta2` no kernel do CAPI.
 * https://cluster-api.sigs.k8s.io/developer/providers/migrations/v1.11-to-v1.12[CAPI v1.11 para v1.12]: a maioria das mudanças no CAPI v1.12 podem ser consideradas menores.
 
+[#_clusterclass]
 == ClasseCluster
 
 === Referências de template
@@ -95,6 +96,7 @@ workers:
           name: my-worker-template
 ----
 
+[#_cluster]
 == Cluster
 
 O recurso `Cluster` agora referencia seu `ClusterClass` através de um objeto estruturado em vez de uma string inline. Em `v1beta1`, o nome da classe e o namespace foram especificados como `spec.topology.class` e `spec.topology.classNamespace`. Em `v1beta2`, ambos os campos são substituídos por um único objeto `spec.topology.classRef`.
@@ -126,6 +128,7 @@ spec:
 
 O restante da especificação `Cluster` (configurações de rede, `controlPlane.replicas`, `workers.machineDeployments`, `variables`, `version`, etc.) permanece inalterado.
 
+[#_rke2_provider_caprke2]
 == Provedor RKE2 (CAPRKE2)
 
 Esta versão inclui o CAPRKE2 v0.23.1, subindo de v0.22.1. A API `v1beta2` para os recursos de bootstrap e controle do RKE2 foi introduzida na v0.22.0 junto com o suporte para CAPI v1.11, e a v0.23.0 completou esse trabalho ao atualizar para CAPI v1.12.2. Tanto a v0.22.1 quanto a v0.23.1 são versões de patch em cima dessas respectivas versões menores.

@@ -71,6 +71,7 @@ Ceci est une liste de fournisseurs qui sont dans un état avancé de développem
 | Plate-forme | Nom de code | Type de fournisseur | Docs
 |===
 
+[#_clusterclass_support_for_certified_providers]
 == Support ClusterClass pour les fournisseurs certifiés
 
 Ce qui suit est une matrice de support pour chaque fournisseur certifié et leur support de la fonctionnalité de topologie de cluster :

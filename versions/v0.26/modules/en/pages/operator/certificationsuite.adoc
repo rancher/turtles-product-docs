@@ -66,6 +66,7 @@ In previous sections we introduced the main actions performed in the sample test
 
 * The main test suite, and the one used as an example, is based on a GitOps flow and uses https://github.com/rancher/fleet[Fleet] as a GitOps orchestrator tool. Based on the cluster templates provided (you can check the ones that come with the example integration https://github.com/rancher-sandbox/turtles-integration-suite-example/tree/main/suites/data/cluster-templates[here]), it will create the CAPI clusters defined in the YAML files. Once this/these cluster/s are available, they will be configured to be xref:../tutorials/first-cluster.adoc[imported into Rancher using Turtles] and it will verify that the downstream cluster/s is/are accessible via Rancher. It will also check that deletion can be performed on downstream clusters and that they are no longer available in Rancher.
 
+[#_other_options]
 == Other options
 :kubernetes-version: v1.31.4
 

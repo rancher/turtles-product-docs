@@ -66,6 +66,7 @@ Dans les sections précédentes, nous avons présenté les principales actions e
 
 * La suite de tests principale, et celle utilisée comme exemple, est basée sur un flux GitOps et utilise https://github.com/rancher/fleet[Fleet] comme outil d'orchestration GitOps. Sur la base des modèles de cluster fournis (vous pouvez consulter ceux qui accompagnent l'intégration d'exemple https://github.com/rancher-sandbox/turtles-integration-suite-example/tree/main/suites/data/cluster-templates[ici]), il créera les clusters CAPI définis dans les fichiers YAML. Une fois ce(s) cluster(s) disponible(s), ils seront configurés pour être xref:../tutorials/first-cluster.adoc[importés dans Rancher en utilisant Turtles] et il vérifiera que le(s) cluster(s) en aval est/sont accessible(s) via Rancher. Il vérifiera également que la suppression peut être effectuée sur les clusters en aval et qu'ils ne sont plus disponibles dans Rancher.
 
+[#_other_options]
 == Autres options
 :kubernetes-version: v1.31.4
 

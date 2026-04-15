@@ -33,6 +33,7 @@ Turtles is a project that aims to be agnostic and integrate with the whole CAPI 
 
 As CAPI providers are projects maintained by the Kubernetes community, we cannot guarantee support for a given provider. This is why we opt for focusing on constant validation of xref:../overview/certified.adoc[Certified Providers] and offer users the possibility of integrating with the existing test suite to verify their providers of choice.
 
+[#_provider_certification_using_turtles_test_suite]
 == Provider Certification Using Turtles Test Suite
 
 The process of certification is based on verifying {product_name} integration with CAPI providers. To simplify this task, we prepared a generic test that validates the provisioning and importing of a downstream CAPI cluster.
@@ -62,6 +63,7 @@ To successfully run the test suite, you will have to provide a number of environ
 Next, we recommend you read the xref:../operator/certificationsuite.adoc[Test suite guide]
 ====
 
+[#_certify_provider_with_custom_integration_suite]
 == Certify Provider With Custom Integration Suite
 
 To certify your provider using a custom integration suite, ensure it meets the following key requirements:

@@ -71,6 +71,7 @@ This is a list of providers that are in an advanced state of development and wil
 | Platform | Code Name | Provider Type | Docs
 |===
 
+[#_clusterclass_support_for_certified_providers]
 == ClusterClass Support for Certified Providers
 
 The following is a support matrix for each certified provider and their support of the cluster topology feature:

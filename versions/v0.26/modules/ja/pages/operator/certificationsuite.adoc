@@ -66,6 +66,7 @@ NGROK_AUTHTOKEN: ""
 
 * 主要なテストスイート、そして例として使用されるものは、GitOpsフローに基づいており、https://github.com/rancher/fleet[Fleet]をGitOpsオーケストレーターツールとして使用します。提供されたクラスターのテンプレートに基づいて（例の統合に付属するものを確認できますhttps://github.com/rancher-sandbox/turtles-integration-suite-example/tree/main/suites/data/cluster-templates[こちら]）、YAMLファイルで定義されたCAPIクラスターを作成します。このクラスターが利用可能になると、xref:../tutorials/first-cluster.adoc[RancherにTurtlesを使用してインポートされるように構成され、ダウンストリームクラスターがRancherを介してアクセス可能であることを確認します。また、ダウンストリームクラスターで削除が実行できること、そしてそれらがRancherで利用できなくなることを確認します。
 
+[#_other_options]
 == その他のオプション
 :kubernetes-version: v1.31.4
 

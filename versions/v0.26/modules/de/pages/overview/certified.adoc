@@ -71,6 +71,7 @@ Dies ist eine Liste von Anbietern, die sich in einem fortgeschrittenen Entwicklu
 | Plattform | Code Name | Anbietertyp | Dokumente
 |===
 
+[#_clusterclass_support_for_certified_providers]
 == ClusterClass-Unterstützung für zertifizierte Anbieter
 
 Die folgende Unterstützungsmatrix zeigt jeden zertifizierten Anbieter und deren Unterstützung der Cluster-Topologie-Funktion:

@@ -32,6 +32,7 @@ Turtles ist ein Projekt, das darauf abzielt, agnostisch zu sein und sich mit dem
 
 Da CAPI-Anbieter Projekte sind, die von der Kubernetes-Community gepflegt werden, können wir keine Unterstützung für einen bestimmten Anbieter garantieren. Deshalb konzentrieren wir uns auf die ständige Validierung von xref:../overview/certified.adoc[zertifizierten Anbietern] und bieten den Nutzern die Möglichkeit, sich mit der bestehenden Test-Suite zu integrieren, um ihre bevorzugten Anbieter zu überprüfen.
 
+[#_provider_certification_using_turtles_test_suite]
 == Anbieterzertifizierung mit der Turtles-Test-Suite
 
 Der Zertifizierungsprozess basiert auf der Überprüfung der {product_name} Integration mit CAPI-Anbietern. Um diese Aufgabe zu vereinfachen, haben wir einen generischen Test vorbereitet, der die Bereitstellung und den Import eines Downstream-CAPI-Clusters validiert.
@@ -61,6 +62,7 @@ Um die Test-Suite erfolgreich auszuführen, müssen Sie eine Reihe von Umgebungs
 Als Nächstes empfehlen wir Ihnen, den xref:../operator/certificationsuite.adoc[Test Suite Leitfaden] zu lesen.
 ====
 
+[#_certify_provider_with_custom_integration_suite]
 == Zertifizieren Sie den Anbieter mit der benutzerdefinierten Integrationssuite.
 
 Um Ihren Anbieter mit einer benutzerdefinierten Integrationssuite zu zertifizieren, stellen Sie sicher, dass er die folgenden wichtigen Anforderungen erfüllt:

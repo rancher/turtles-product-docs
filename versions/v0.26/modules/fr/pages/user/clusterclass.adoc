@@ -383,10 +383,11 @@ spec:
     selector:
       matchLabels: {}
 ----
+
 --
 ======
 
-
+[#_create_a_cluster_from_a_clusterclass]
 == Créer un cluster à partir d'une ClusterClass
 
 [tabs]

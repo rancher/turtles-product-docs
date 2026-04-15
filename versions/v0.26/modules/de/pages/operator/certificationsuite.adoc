@@ -66,6 +66,7 @@ In den vorherigen Abschnitten haben wir die Hauptaktionen vorgestellt, die in de
 
 * Die Haupt-Test-Suite, die auch als Beispiel verwendet wird, basiert auf einem GitOps-Workflow und verwendet https://github.com/rancher/fleet[Fleet] als GitOps-Orchestrierungstool. Basierend auf den bereitgestellten Cluster-Vorlagen (Sie können die überprüfen, die mit der Beispielintegration https://github.com/rancher-sandbox/turtles-integration-suite-example/tree/main/suites/data/cluster-templates[hier] geliefert werden), werden die in den YAML-Dateien definierten CAPI-Cluster erstellt. Sobald diese Cluster verfügbar sind, werden sie so konfiguriert, dass sie xref:../tutorials/first-cluster.adoc[in Rancher mit Turtles importiert werden], und es wird überprüft, dass die Downstream-Cluster über Rancher zugänglich sind. Es wird auch überprüft, ob die Löschung an Downstream-Clustern durchgeführt werden kann und dass sie nicht mehr in Rancher verfügbar sind.
 
+[#_other_options]
 == Weitere Optionen
 :kubernetes-version: v1.31.4
 
