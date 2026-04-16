@@ -57,11 +57,10 @@ The core CAPI controller manifest is embedded in a ConfigMap, which simplifies o
 
 == Installing CAPI Providers
 
-With {product_name} embedded in Rancher, CAPI providers are no longer bundled by default. Providers are managed declaratively using the `CAPIProvider` custom resource, and a separate
-providers chart is available for installing certified providers. 
+With {product_name} embedded in Rancher, CAPI providers are no longer bundled by default. Providers are managed declaratively using the `CAPIProvider` custom resource. 
 
 ifeval::["{build-type}" == "product"]
-For more information on provider charts available for Prime users, refer to xref:user/providers.adoc[Install certified providers].
+A separate providers chart is available for installing certified providers. For more information on provider charts available for Prime users, refer to xref:user/providers.adoc[Install certified providers].
 endif::[]
 
 For example, to define a provider:
