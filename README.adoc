@@ -86,6 +86,19 @@ Below is an example using the `make` command to build the local version of the p
 make local-product
 ----
 
+This will use the `turtles-local-product-playbook.yml` to generate the site with product settings.
+
+=== Preview the build locally - Product
+
+To preview the above product example site locally, use the command below:
+
+[,console]
+----
+make preview-local-product
+----
+
+and then open `http://127.0.0.1:8080/` in your browser for a web server preview.
+
 === Clean up the build:
 
 To remove the build and temporary directories, use the following command:
