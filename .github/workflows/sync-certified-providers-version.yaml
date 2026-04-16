@@ -1,0 +1,43 @@
+name: "Sync Certified Providers Version"
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 1 * * *"
+
+permissions:
+  contents: "write"
+  pull-requests: "write"
+
+jobs:
+  updatecli:
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Run sync script
+        run: |
+          BRANCH="sync-certified-providers-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          echo "BRANCH=${BRANCH}" >> $GITHUB_ENV
+          git checkout -b "$BRANCH"
+          .github/scripts/sync-certified-providers-version.sh
+          git add versions/*
+          if git diff --cached --quiet; then
+            echo "No changes detected"
+            echo "SKIP_PUSH=true" >> $GITHUB_ENV
+          else
+            git commit -m "chore: update certified providers version"
+            echo "SKIP_PUSH=false" >> $GITHUB_ENV
+          fi
+      - name: Push and create pull request
+        if: env.SKIP_PUSH == 'false'
+        run: |
+          git push origin "$BRANCH"
+          body="This PR syncs the Certified Providers Version."
+
+          gh pr create \
+            --title "chore: update certified providers version" \
+            --body "$body" \
+            --head "${{ github.repository_owner }}:$BRANCH" \
+            --base "main" \
+

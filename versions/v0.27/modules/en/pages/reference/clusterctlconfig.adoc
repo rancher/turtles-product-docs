@@ -51,9 +51,10 @@ https://github.com/metal3-io/cluster-api-provider-metal3/releases/v1.10.1/infras
 * `images[].repository` - Sets the container registry override to pull images from
 * `images[].tag` - Allows to specify a tag for the images
 
-[#_override_a_certified_provider_version]
-== Override a Certified Provider version
+[#_override_a_capiprovider_version]
+== Override a CAPIProvider version
 
+ifeval::["{build-type}" == "product"]
 {product_name} embeds a validated configuration where all certified provider versions are pinned.  +
 Typically versions are updated with any relese of {product_name}.  
 
@@ -61,6 +62,7 @@ Typically versions are updated with any relese of {product_name}.
 ====
 - {product_name} only validates the embedded configuration for certified providers. Any customization to the embedded configuration can eventually lead to incompatibilities and unsupported scenarios. 
 ====
+endif::[]
 
 In order to override a provider version, or to use a different registry to pull images, a `ClusterctlConfig` can be defined.  +
 For more information on image override, please refer to the upstream link:https://cluster-api.sigs.k8s.io/clusterctl/configuration#image-overrides[documentation].  
