@@ -79,27 +79,12 @@ The Makefile can be used to set up your environment, build the local and remote 
 
 You can use the `make` command to build the documentation site locally or remotely for either the Community or Product versions. The Makefile defines various tasks for building the site using different playbooks.
 
-=== Example: Build the site using the development playbook - Product
-
-For development purposes, you can build the product site using the development playbook by running:
+Below is an example using the `make` command to build the local version of the product documentation site:
 
 [,console]
 ----
-make dev-product
+make local-product
 ----
-
-This will use the `turtles-dev-product-playbook.yml` to generate the site with development settings.
-
-=== Preview the development build locally - Product
-
-To preview the above example development site locally, use the command below:
-
-[,console]
-----
-make preview-dev-product
-----
-
-and then open `http://127.0.0.1:8084/` in your browser for a web server preview.
 
 === Clean up the build:
 
