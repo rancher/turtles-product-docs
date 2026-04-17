@@ -1,6 +1,6 @@
 = Rancher Setup
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2026-02-18
+:revdate: 2026-04-16
 :page-revdate: {revdate}
 
 == Installing Rancher
@@ -57,8 +57,11 @@ The core CAPI controller manifest is embedded in a ConfigMap, which simplifies o
 
 == Installing CAPI Providers
 
-With {product_name} embedded in Rancher, CAPI providers are no longer bundled by default. Providers are managed declaratively using the `CAPIProvider` custom resource, and a separate
-providers chart is available for installing certified providers. For more information on the providers chart, refer to xref:user/providers.adoc[Install certified providers].
+With {product_name} embedded in Rancher, CAPI providers are no longer bundled by default. Providers are managed declaratively using the `CAPIProvider` custom resource. 
+
+ifeval::["{build-type}" == "product"]
+A separate providers chart for Prime users is available for installing certified providers. For more information, refer to xref:user/providers.adoc[Install certified providers].
+endif::[]
 
 For example, to define a provider:
 
