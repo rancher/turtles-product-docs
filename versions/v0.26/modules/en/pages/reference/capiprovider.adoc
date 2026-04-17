@@ -9,7 +9,7 @@ The `CAPIProvider` resource allows managing Cluster API Operator manifests in a 
 
 Every field provided by the upstream CAPI Operator `CAPIProviderSpec` resource is also available in the spec of the `CAPIProvider` resource. Feel free to refer to upstream configuration link:https://cluster-api-operator.sigs.k8s.io/03_topics/02_configuration/05_provider-spec-configuration[guides] for advanced scenarios.
 
-All the xref:../overview/certified.adoc[certified] CAPI Providers are configured using an embedded configuration. In order to override it, a custom xref:./clusterctlconfig.adoc#_override_a_certified_provider_version[ClusterctlConfig] needs to be created.
+All the xref:../overview/certified.adoc[certified] CAPI Providers are configured using an embedded configuration. In order to override it, a custom xref:./clusterctlconfig.adoc#_override_a_capiprovider_version[ClusterctlConfig] needs to be created.
 
 == Usage
 
@@ -64,7 +64,18 @@ The key fields in the `CAPIProvider` spec are:
 
 == Version pinning and automatic updates
 
-The `CAPIProvider` `version` can be set at any time to pin the provider to a specific version. Additionally, `automaticUpdates` can be toggled to allow automatic updates to the latest version available. The latest version available is determined by the embedded clusterctl configuration for xref:../overview/certified.adoc[certified] providers, and it can be overridden or configured for custom providers using xref:../reference/clusterctlconfig.adoc[ClusterctlConfig].
+The `CAPIProvider.spec.version` can be set to pin the provider to a specific version. Additionally, `CAPIProvider.spec.enableAutomaticUpdates` can be toggled to allow automatic updates to the latest version available.
+
+ifeval::["{build-type}" == "community"]
+When using `EnableAutomaticUpdates`, the *latest* version available depends on the upstream provider release.  +
+For a list of known providers, please refer to the https://cluster-api.sigs.k8s.io/clusterctl/commands/init#which-providers-can-i-use[clusterctl documentation].
+endif::[]
+ifeval::["{build-type}" == "product"]
+For certified providers, when using `EnableAutomaticUpdates`, the *latest* version available is determined by the {product_name} embedded clusterctl configuration. Pinned versions are documented in the xref:../overview/certified.adoc#_list_of_certified_providers[certified providers table].  +
+For all other providers, please refer to the https://cluster-api.sigs.k8s.io/clusterctl/commands/init#which-providers-can-i-use[clusterctl documentation].
+endif::[]
+
+Users can also limit the *latest* available version of any provider using the xref:../reference/clusterctlconfig.adoc#_override_a_capiprovider_version[ClusterctlConfig].
 
 == Deletion
 
