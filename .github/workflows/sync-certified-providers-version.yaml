@@ -9,12 +9,22 @@ permissions:
   contents: "write"
   pull-requests: "write"
 
+env:
+  GH_TOKEN: "${{ github.token }}"
+
 jobs:
   updatecli:
     runs-on: "ubuntu-latest"
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Configure the committer
+        run: |
+          user_id=$(gh api "/users/$APP_USER" --jq .id)
+          git config --global user.name "$APP_USER"
+          git config --global user.email "${user_id}+${APP_USER}@users.noreply.github.com"
+        env:
+          APP_USER: "${{ github.actor }}"
       - name: Run sync script
         run: |
           BRANCH="sync-certified-providers-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
