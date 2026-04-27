@@ -1,0 +1,49 @@
+= v0.26.1
+:revdate: 2026-04-27
+:page-revdate: {revdate}
+
+== Release Date: 2026-04-24
+
+== Description
+
+[IMPORTANT]
+====
+Please read below information before updating.
+====
+
+**Cluster API Add-on Provider for Fleet (CAAPF)** is deprecated as of {product_name} v0.26.1 (Rancher v2.14.1) and is no longer installed by default. We encourage you to move away from CAAPF in preparation for its eventual removal (following Rancher deprecation policies). If you wish to continue using it, refer to the xref:user/caapf.adoc[CAAPF user guide] for more information.
+
+=== Notable Changes
+
+* The `rancher-turtles-providers` chart no longer installs CAAPF by default by @yiannistri in https://github.com/rancher/turtles/pull/2289[#2289]
+* Addon finalizer removal by @yiannistri in https://github.com/rancher/turtles/pull/2313[#2313]
+
+==== Additions
+
+* Update provider urls after migrating away from rancher-sandbox GitHub org by @yiannistri in https://github.com/rancher/turtles/pull/2314[#2314]
+
+==== Security
+
+* Bump Go to 1.25.9 by @salasberryfin in https://github.com/rancher/turtles/pull/2299[#2299]
+* Bump CAPRKE2 to v0.24.3 by @salasberryfin in https://github.com/rancher/turtles/pull/2311[#2311]
+
+==== Bug Fixes
+
+* Let Rancher manage Fleet on imported CAPI clusters by @yiannistri in https://github.com/rancher/turtles/pull/2289[#2289]
+* Bump kuberlr-kubectl version to support Kubernetes v1.35 by @salasberryfin in https://github.com/rancher/turtles/pull/2263[#2263]
+
+==== Full Changelog: 
+
+Review the full list of changes: https://github.com/rancher/turtles/compare/v0.26.0%E2%80%A6v0.26.1[v0.26.0...v0.26.1]
+
+== Download
+
+[cols="3,1,1" options="header" frame="all" grid="rows"]
+|===
+| Name | Created At | Updated At
+
+| link:https://github.com/rancher/turtles/releases/download/v0.26.1/rancher-turtles-0.26.1.tgz[rancher-turtles-0.26.1.tgz] | 2026-04-24 | 2026-04-24
+
+|===
+
+__Information retrieved from https://github.com/rancher/turtles/releases/tag/v0.26.1[v0.26.1 GitHub release].__
