@@ -9,6 +9,6 @@ asciidoc:
     product_name: Rancher Turtles
     #Prerequisite and Component version attributes
     rancher_version: v2.14.0
-    turtles_version: v0.26.0
+    turtles_version: v0.26.1
 nav:
   - modules/en/nav.adoc

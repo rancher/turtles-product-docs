@@ -9,7 +9,7 @@ asciidoc:
     product_name: SUSE® Rancher Prime Cluster API
     #Prerequisite and Component version attributes
     rancher_version: v2.14.0
-    turtles_version: v0.26.0
+    turtles_version: v0.26.1
     aws_version: "v2.10.1"
     azure_version: v1.22.0
     gcp_version: v1.11.1
