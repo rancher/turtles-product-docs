@@ -1,10 +1,10 @@
 = GitOps最佳实践：海龟与CAPI
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2025-10-02
+:revdate: 2026-05-12
 :page-revdate: {revdate}
 
 ifeval::["{build-type}" == "product"]
-本节提供了与海龟和集群API（CAPI）实施GitOps的最佳实践，重点是将https://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/index.html[持续交付]与*集群API附加提供者Fleet*(`CAAPF`)结合使用，以实现代理的自动化配置和集成到`CAPI`生态系统中。
+本节提供了与海龟和集群API（CAPI）实施GitOps的最佳实践，重点是将https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/index.html[持续交付]与*集群API附加提供者Fleet*(`CAAPF`)结合使用，以实现代理的自动化配置和集成到`CAPI`生态系统中。
 endif::[]
 ifeval::["{build-type}" == "community"]
 本节提供了与海龟和集群API（CAPI）实施GitOps的最佳实践，重点是将https://fleet.rancher.io/[Fleet]与*集群API附加提供者Fleet*(`CAAPF`)结合使用，以实现代理的自动化配置和集成到`CAPI`生态系统中。
@@ -18,15 +18,15 @@ ifeval::["{build-type}" == "product"]
 - **分离CAPI集群和ClusterClass配置:**
   保持CAPI集群配置（`clusters/`）与CAPI `ClusterClass`定义（`templates/`）的独立性。这种分离允许从共享模板中部署多个集群，同时降低意外基础设施更改的风险。
 - **隔离附加组件配置:**
-  将应用程序清单存储在`applications/`中，确保它们独立于`Clusters`和`ClusterClasses`。这使得可以根据用户需求或匹配选择器进行选择性或分组部署，防止干扰集群基础设施。请注意，Helm图表依赖项在进行附加组件部署之前需要https://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/gitrepo-content.html#_fleet_yaml[刷新]。
+  将应用程序清单存储在`applications/`中，确保它们独立于`Clusters`和`ClusterClasses`。这使得可以根据用户需求或匹配选择器进行选择性或分组部署，防止干扰集群基础设施。请注意，Helm图表依赖项在进行附加组件部署之前需要https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/explanations/gitrepo-content.html#_fleet_yaml[刷新]。
 - **利用嵌套GitRepo资源:**
-  利用https://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/gitrepo-content.html#_nested_gitrepo_crs[嵌套] `GitRepo`资源在Fleet中高效地组织储存库内容。这种方法允许模块化部署，结合`ClusterClass`定义、所需的附加组件/应用程序和集群配置，同时保持关注点的分离。
+  利用https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/explanations/gitrepo-content.html#_nested_gitrepo_crs[嵌套] `GitRepo`资源在Fleet中高效地组织储存库内容。这种方法允许模块化部署，结合`ClusterClass`定义、所需的附加组件/应用程序和集群配置，同时保持关注点的分离。
 - **在可用时使用GitOps集成工具:**
   在配置GitOps设置时，请考虑可用的工具和它提供的功能。一个例子是https://rancher.github.io/cluster-api-addon-provider-fleet/00_intro.html[`CAAPF`]，它自动化了在`CAPI`集群上安装Fleet GitOps并提供便捷的自动化。
 - **应用Kustomize覆盖以进行环境特定的自定义:**
   使用`overlays/`存储不同环境的Kustomize覆盖。这确保了配置更改，例如扩展调整、网络修改或组件升级，可以动态应用，而无需更改基础清单。
 - **利用比较补丁:**
-  如果包中包含适当的规则以检测https://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/troubleshooting.html#_suse_rancher_prime_continuous_delivery_deployment_stuck_in_modified_state[`diff`的差异]，Fleet允许选择性忽略资源差异。这将防止包处于修改状态。
+  如果包中包含适当的规则以检测https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/troubleshooting.html#_suse_rancher_prime_continuous_delivery_deployment_stuck_in_modified_state[`diff`的差异]，Fleet允许选择性忽略资源差异。这将防止包处于修改状态。
 endif::[]
 ifeval::["{build-type}" == "community"]
 - **分离CAPI集群和ClusterClass配置:**

@@ -1,5 +1,5 @@
 = Glossary
-:revdate: 2025-11-14
+:revdate: 2026-05-12
 :page-revdate: {revdate}
 
 == Table of Contents
@@ -168,7 +168,7 @@ See <<_cluster_api,CAPI>>.
 === Fleet
 
 ifeval::["{build-type}" == "product"]
-A container management and deployment engine designed to offer users more control on the local cluster and constant monitoring through GitOps. Take a look at https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/index.html/[Fleet documentation] to know more about Fleet.
+A container management and deployment engine designed to offer users more control on the local cluster and constant monitoring through GitOps. Take a look at https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/index.html[Fleet documentation] to know more about Fleet.
 endif::[]
 ifeval::["{build-type}" == "community"]
 A container management and deployment engine designed to offer users more control on the local cluster and constant monitoring through GitOps. Take a look at https://fleet.rancher.io/[Fleet documentation] to know more about Fleet.

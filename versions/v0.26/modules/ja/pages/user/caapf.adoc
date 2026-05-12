@@ -1,6 +1,6 @@
 = Cluster APIアドオンプロバイダー Fleet
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2025-11-20
+:revdate: 2026-05-12
 :page-revdate: {revdate}
 
 == 概要
@@ -54,7 +54,7 @@ endif::[]
 == CAPI `Cluster`および`ControlPlane`に基づくHelmチャートのテンプレート化
 
 ifeval::["{build-type}" == "product"]
-*クラスターAPIアドオンプロバイダーフリート*は、マッチングクラスター状態に基づいてインポートされたCAPIクラスターのアプリケーションhttps://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/ref-fleet-yaml.html#_templating[テンプレート化]を自動化します。この機能により、CAPIクラスターとリソースの状態が常にFleetクラスターリソースの`spec.templateValues.ClusterValues`フィールドで最新の状態に保たれます。これにより、ユーザーは次のことができます：
+*クラスターAPIアドオンプロバイダーフリート*は、マッチングクラスター状態に基づいてインポートされたCAPIクラスターのアプリケーションhttps://documentation.suse.com/cloudnative/continuous-delivery/latest/en/reference/ref-fleet-yaml.html#_values_templating[テンプレート化]を自動化します。この機能により、CAPIクラスターとリソースの状態が常にFleetクラスターリソースの`spec.templateValues.ClusterValues`フィールドで最新の状態に保たれます。これにより、ユーザーは次のことができます：
 endif::[]
 ifeval::["{build-type}" == "community"]
 *クラスターAPIアドオンプロバイダーフリート*は、マッチングクラスター状態に基づいてインポートされたCAPIクラスターのアプリケーションhttps://fleet.rancher.io/ref-fleet-yaml#templating[テンプレート化]を自動化します。この機能により、CAPIクラスターとリソースの状態が常にFleetクラスターリソースの`spec.templateValues.ClusterValues`フィールドで最新の状態に保たれます。これにより、ユーザーは次のことができます：
