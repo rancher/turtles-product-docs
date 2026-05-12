@@ -1,6 +1,6 @@
 = Cluster API Add-on Provider Fleet
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2025-11-20
+:revdate: 2026-05-12
 :page-revdate: {revdate}
 
 == Übersicht
@@ -54,7 +54,7 @@ Zusätzlich propagiert `CAAPF` automatisch `CAPI` Cluster-Labels an die `Fleet` 
 == Helm-Chart-Templating basierend auf CAPI `Cluster` und `ControlPlane`
 
 ifeval::["{build-type}" == "product"]
-Die *Cluster API Add-on Provider Fleet* automatisiert die Anwendungs-https://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/ref-fleet-yaml.html#_templating[Templating] für importierte CAPI-Cluster basierend auf übereinstimmendem Clusterzustand. Dieses Feature stellt sicher, dass der Zustand eines CAPI-Clusters und der Ressourcen immer aktuell im `spec.templateValues.ClusterValues` Feld der Fleet-Cluster-Ressource ist. Dies ermöglicht es den Benutzern:
+Die *Cluster API Add-on Provider Fleet* automatisiert die Anwendungs-https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/reference/ref-fleet-yaml.html#_values_templating[Templating] für importierte CAPI-Cluster basierend auf übereinstimmendem Clusterzustand. Dieses Feature stellt sicher, dass der Zustand eines CAPI-Clusters und der Ressourcen immer aktuell im `spec.templateValues.ClusterValues` Feld der Fleet-Cluster-Ressource ist. Dies ermöglicht es den Benutzern:
 endif::[]
 ifeval::["{build-type}" == "community"]
 Die *Cluster API Add-on Provider Fleet* automatisiert die Anwendungs-https://fleet.rancher.io/ref-fleet-yaml#templating[Templating] für importierte CAPI-Cluster basierend auf übereinstimmendem Clusterzustand. Dieses Feature stellt sicher, dass der Zustand eines CAPI-Clusters und der Ressourcen immer aktuell im `spec.templateValues.ClusterValues` Feld der Fleet-Cluster-Ressource ist. Dies ermöglicht es den Benutzern:
