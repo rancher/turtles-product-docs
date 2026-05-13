@@ -1,6 +1,6 @@
 = 概述
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2025-11-20
+:revdate: 2026-05-13
 :page-revdate: {revdate}
 
 [IMPORTANT]
@@ -42,7 +42,12 @@ image::intro.png[intro,640,480]
 
 === Operator 指南
 
+ifeval::["{build-type}" == "product"]
 您可能想深入了解更高级的维护任务，例如为 {product_name} 配置 xref:operator/airgapped.adoc[隔离的环境]，或 xref:operator/certification.adoc[认证您选择的提供者]。
+endif::[]
+ifeval::["{build-type}" == "community"]
+您可能想深入了解更高级的维护任务，例如为 {product_name} 配置 xref:operator/airgapped.adoc[隔离的环境]。
+endif::[]
 
 === 开发人员指南
 

@@ -1,6 +1,6 @@
 = 概要
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2025-11-20
+:revdate: 2026-05-13
 :page-revdate: {revdate}
 
 [IMPORTANT]
@@ -42,7 +42,12 @@ image::intro.png[イントロ,640,480]
 
 === オペレーターガイド
 
+ifeval::["{build-type}" == "product"]
 {product_name}をxref:operator/airgapped.adoc[エアギャップ(された)環境]のために構成するなど、より高度なメンテナンスタスクに取り組むことを検討するかもしれません、またはxref:operator/certification.adoc[選択したプロバイダーを認証する]こともあります。
+endif::[]
+ifeval::["{build-type}" == "community"]
+{product_name}をxref:operator/airgapped.adoc[エアギャップ(された)環境]のために構成するなど、より高度なメンテナンスタスクに取り組むことを検討するかもしれません。
+endif::[]
 
 === 開発者ガイド
 
