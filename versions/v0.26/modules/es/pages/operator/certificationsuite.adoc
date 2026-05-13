@@ -1,6 +1,6 @@
 = Suite de Pruebas del Proveedor
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2025-09-16
+:revdate: 2026-05-13
 :page-revdate: {revdate}
 
 Esta sección contiene información sobre cómo puedes aprovechar la suite E2E existente para integrar a los proveedores CAPI con Turtles y verificar que el aprovisionamiento y la importación de clústeres funcionan como se espera. La validación realiza las siguientes acciones:
@@ -10,7 +10,9 @@ Esta sección contiene información sobre cómo puedes aprovechar la suite E2E e
 * Instalar Gitea.
 * Ejecutar la suite que creará un repositorio git, aplicará la plantilla del clúster utilizando Fleet y verificará que el clúster se crea e importa correctamente en Rancher.
 
+ifeval::["{build-type}" == "product"]
 La suite de pruebas se puede utilizar para la certificación de proveedores no listados en la xref:../overview/certified.adoc[tabla de Certificación], como se detalla en xref:../operator/certification.adoc[Certificación de Proveedores].
+endif::[]
 
 == Cómo Usarlo
 

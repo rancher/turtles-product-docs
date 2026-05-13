@@ -1,6 +1,6 @@
 = Anbieter-Test-Suite
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2025-09-16
+:revdate: 2026-05-13
 :page-revdate: {revdate}
 
 Dieser Abschnitt enthält Informationen darüber, wie Sie die vorhandene E2E-Suite nutzen können, um CAPI-Anbieter mit Turtles zu integrieren und zu überprüfen, ob die Bereitstellung und der Import von Clustern wie erwartet funktionieren. Die Validierung führt die folgenden Aktionen aus:
@@ -10,7 +10,9 @@ Dieser Abschnitt enthält Informationen darüber, wie Sie die vorhandene E2E-Sui
 * Installieren Sie Gitea.
 * Führen Sie die Suite aus, die ein Git-Repo erstellt, die Cluster-Vorlage mit Fleet anwendet und überprüft, ob der Cluster erstellt und erfolgreich in Rancher importiert wurde.
 
+ifeval::["{build-type}" == "product"]
 Die Test-Suite kann zur Zertifizierung von Anbietern verwendet werden, die nicht in der xref:../overview/certified.adoc[Zertifizierungstabelle] aufgeführt sind, wie in xref:../operator/certification.adoc[Anbieterzertifizierung] im Detail beschrieben.
+endif::[]
 
 == Wie man es benutzt
 
