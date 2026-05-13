@@ -17,7 +17,9 @@
 ** xref:operator/manual.adoc[Manual Installation]
 ** xref:operator/capiprovider.adoc[Install CAPI Providers]
 ** xref:operator/clusterclass.adoc[Enabling ClusterClass]
+ifeval::["{build-type}" == "product"]
 ** xref:operator/certification.adoc[Provider Certification]
+endif::[]
 ** xref:operator/certificationsuite.adoc[Provider Test Suite]
 ** xref:operator/airgapped.adoc[Air-Gapped Environment]
 * Developer Guide

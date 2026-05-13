@@ -22,7 +22,9 @@ ifeval::["{build-type}" == "product"]
 endif::[]
 * 运维人员指南
 ** xref:operator/clusterclass.adoc[启用 ClusterClass]
+ifeval::["{build-type}" == "product"]
 ** xref:operator/certification.adoc[提供者认证]
+endif::[]
 ** xref:operator/certificationsuite.adoc[提供者测试套件]
 ** xref:operator/airgapped.adoc[隔离的环境]
 * 开发人员指南
