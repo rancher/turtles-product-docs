@@ -1,6 +1,6 @@
 = プロバイダーテストスイート
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2025-09-16
+:revdate: 2026-05-13
 :page-revdate: {revdate}
 
 このセクションでは、既存のE2Eスイートを活用して、任意のCAPIプロバイダーをTurtlesに統合し、クラスターのプロビジョニングとインポートが期待通りに機能するかを検証する方法についての情報を提供します。検証は以下のアクションを実行します：
@@ -10,7 +10,9 @@
 * Giteaをインストールします。
 * Gitリポジトリを作成し、Fleetを使用してクラスターのテンプレートを適用し、クラスターが作成され、Rancherに正常にインポートされたことを確認するスイートを実行します。
 
+ifeval::["{build-type}" == "product"]
 テストスイートは、xref:../overview/certified.adoc[認証テーブル]にリストされていないプロバイダーの認証に使用できます。詳細はxref:../operator/certification.adoc[プロバイダー認証]を参照してください。
+endif::[]
 
 == ハウツー
 

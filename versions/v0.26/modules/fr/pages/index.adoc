@@ -1,6 +1,6 @@
 = Présentation
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2025-11-20
+:revdate: 2026-05-13
 :page-revdate: {revdate}
 
 [IMPORTANT]
@@ -42,7 +42,12 @@ Apprenez à utiliser {product_name} pour xref:./user/clusterclass.adoc[gérer vo
 
 === Guide de l'opérateur
 
+ifeval::["{build-type}" == "product"]
 Vous voudrez peut-être vous plonger dans des tâches de maintenance plus avancées, telles que la configuration de {product_name} pour des xref:operator/airgapped.adoc[environnements isolés physiquement], ou xref:operator/certification.adoc[certifier le fournisseur de votre choix].
+endif::[]
+ifeval::["{build-type}" == "community"]
+Vous voudrez peut-être vous plonger dans des tâches de maintenance plus avancées, telles que la configuration de {product_name} pour des xref:operator/airgapped.adoc[environnements isolés physiquement].
+endif::[]
 
 === Guide du développeur
 

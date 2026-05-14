@@ -1,6 +1,6 @@
 = Suite de tests du fournisseur
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2025-09-16
+:revdate: 2026-05-13
 :page-revdate: {revdate}
 
 Cette section contient des informations sur la manière dont vous pouvez tirer parti de la suite E2E existante pour intégrer des fournisseurs CAPI avec Turtles et vérifier que le provisionnement et l'importation des clusters fonctionnent comme prévu. La validation effectue les actions suivantes :
@@ -10,7 +10,9 @@ Cette section contient des informations sur la manière dont vous pouvez tirer p
 * Installer Gitea.
 * Exécuter la suite qui créera un dépôt git, appliquera le modèle de cluster en utilisant Fleet et vérifiera que le cluster est créé et importé avec succès dans Rancher.
 
+ifeval::["{build-type}" == "product"]
 La suite de tests peut être utilisée pour la certification des fournisseurs non listés dans le xref:../overview/certified.adoc[tableau de certification], comme détaillé dans xref:../operator/certification.adoc[Certification des fournisseurs].
+endif::[]
 
 == Comment l'utiliser
 

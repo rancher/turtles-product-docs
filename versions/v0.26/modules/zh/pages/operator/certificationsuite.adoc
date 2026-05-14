@@ -1,6 +1,6 @@
 = 提供者测试套件
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2025-09-16
+:revdate: 2026-05-13
 :page-revdate: {revdate}
 
 本节包含有关如何利用现有的端到端套件来集成任何CAPI提供者与Turtles，并验证集群的配置和导入是否按预期工作的信息。验证执行以下操作：
@@ -10,7 +10,9 @@
 * 安装Gitea。
 * 运行将创建git仓库的套件，使用Fleet应用集群模板，并验证集群是否在Rancher中成功创建和导入。
 
+ifeval::["{build-type}" == "product"]
 测试套件可用于未在xref:../overview/certified.adoc[认证表]中列出的提供者的认证，如xref:../operator/certification.adoc[提供者认证]中详细说明。
+endif::[]
 
 == 如何使用它
 
