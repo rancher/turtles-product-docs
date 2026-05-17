@@ -10,13 +10,13 @@ asciidoc:
     #Prerequisite and Component version attributes
     rancher_version: v2.14.0
     turtles_version: v0.26.1
-    aws_version: "v2.10.1"
+    aws_version: "v2.11.1"
     azure_version: v1.22.0
     gcp_version: v1.11.1
     vsphere_version: v1.15.2
-    docker_version: v1.12.2
-    kubeadm_version: v1.12.2
-    rke2_version: v0.24.3
+    docker_version: v1.12.7
+    kubeadm_version: v1.12.7
+    rke2_version: v0.24.4
     fleet_addon_version: v0.14.1
 nav:
   - modules/en/nav.adoc
