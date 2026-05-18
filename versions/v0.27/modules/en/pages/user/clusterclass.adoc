@@ -435,7 +435,7 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{tu
 +
 Note that some variables are left to the user to substitute.
 +
-[source,yaml]
+[source,yaml,subs="attributes+"]
 ----
 apiVersion: cluster.x-k8s.io/v1beta2
 kind: Cluster
@@ -464,7 +464,7 @@ spec:
       value: <AZURE_RESOURCE_GROUP>
     - name: azureClusterIdentityName
       value: cluster-identity
-    version: v1.34.3+rke2r1
+    version: {k8s_azure_rke2}
     workers:
       machineDeployments:
       - class: rke2-default-worker
@@ -508,7 +508,7 @@ You can refer to the https://azure.github.io/azure-service-operator/guide/authen
 +
 Note that some variables are left to the user to substitute.
 +
-[source,yaml]
+[source,yaml,subs="attributes+"]
 ----
 apiVersion: v1
 kind: Secret
@@ -541,7 +541,7 @@ spec:
       value: <AZURE_RESOURCE_GROUP>
     - name: asoCredentialSecretName
       value: aks-credentials
-    version: v1.34.2
+    version: {k8s_azure_aks}
     workers:
       machinePools:
       - class: default-system
@@ -595,7 +595,7 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{tu
 +
 Note that some variables are left to the user to substitute.
 +
-[source,yaml]
+[source,yaml,subs="attributes+"]
 ----
 apiVersion: cluster.x-k8s.io/v1beta2
 kind: Cluster
@@ -624,7 +624,7 @@ spec:
       value: <AZURE_RESOURCE_GROUP>
     - name: azureClusterIdentityName
       value: cluster-identity
-    version: v1.34.3
+    version: {k8s_azure_kubeadm}
     workers:
       machineDeployments:
       - class: kubeadm-default-worker
@@ -664,7 +664,7 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{tu
 +
 Note that some variables are left to the user to substitute. +
 +
-[source,yaml]
+[source,yaml,subs="attributes+"]
 ----
 apiVersion: cluster.x-k8s.io/v1beta2
 kind: Cluster
@@ -687,7 +687,7 @@ spec:
       value: <AWS_NODE_MACHINE_TYPE>
     - name: awsClusterIdentityName
       value: cluster-identity
-    version: v1.32.0
+    version: {k8s_aws_eks}
     workers:
       machineDeployments:
       - class: default-worker
@@ -743,7 +743,7 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{tu
 +
 Note that some variables are left to the user to substitute.
 +
-[source,yaml]
+[source,yaml,subs="attributes+"]
 ----
 apiVersion: cluster.x-k8s.io/v1beta2
 kind: Cluster
@@ -775,7 +775,7 @@ spec:
       value: <AWS_NODE_MACHINE_TYPE>
     - name: awsClusterIdentityName
       value: cluster-identity
-    version: v1.32.0
+    version: {k8s_aws_kubeadm}
     workers:
       machineDeployments:
       - class: default-worker
@@ -836,7 +836,7 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{tu
 + 
 Note that some variables are left to the user to substitute.
 +
-[source,yaml]
+[source,yaml,subs="attributes+"]
 ----
 apiVersion: cluster.x-k8s.io/v1beta2
 kind: Cluster
@@ -872,7 +872,7 @@ spec:
       value: <AWS_AMI_ID>
     - name: awsClusterIdentityName
       value: cluster-identity
-    version: v1.35.0+rke2r1
+    version: {k8s_rke2_default}
     workers:
       machineDeployments:
       - class: default-worker
@@ -912,7 +912,7 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{tu
 +
 Note that some variables are left to the user to substitute. +
 +
-[source,yaml]
+[source,yaml,subs="attributes+"]
 ----
 apiVersion: cluster.x-k8s.io/v1beta2
 kind: Cluster
@@ -930,20 +930,20 @@ spec:
       name: gcp-gke-example
     variables:
       - name: project
-        value: ${GCP_PROJECT}
+        value: <GCP_PROJECT>
       - name: region
-        value: ${GCP_REGION}
+        value: <GCP_REGION>
       - name: networkName
-        value: ${GCP_NETWORK_NAME}
-    version: v1.35.0
+        value: <GCP_NETWORK_NAME>
+    version: {k8s_gcp_gke}
     workers:
       machinePools:
         - class: default-system
           name: system-pool
-          replicas: ${WORKER_MACHINE_COUNT}
+          replicas: 1
         - class: default-worker
           name: worker-pool
-          replicas: ${WORKER_MACHINE_COUNT}
+          replicas: 1
 ----
 --
 
@@ -1009,7 +1009,7 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{tu
 Note that some variables are left to the user to substitute.
 The default configuration of GCP Cloud Controller Manager is configured to use a single zone cluster, so the `clusterFailureDomains` variable is set to a single zone. If you need to provision a multi-zone cluster, we recommend you inspect the parameters provided by https://github.com/kubernetes/cloud-provider-gcp/blob/master/providers/gce/gce.go#L120[GCP Cloud Controller Manager] and how https://github.com/kubernetes-sigs/cluster-api-provider-gcp/blob/main/test/e2e/data/infrastructure-gcp/cluster-template-ci.yaml#L59[CAPG leverages these variables] to create cluster-specific configurations.
 +
-[source,yaml]
+[source,yaml,subs="attributes+"]
 ----
 apiVersion: cluster.x-k8s.io/v1beta2
 kind: Cluster
@@ -1048,7 +1048,7 @@ spec:
         value: <GCP_IMAGE_ID>
       - name: machineType
         value: <GCP_MACHINE_TYPE>
-    version: v1.34.1
+    version: {k8s_gcp}
 ----
 --
 
@@ -1094,7 +1094,7 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{tu
 +
 Note that some variables are left to the user to substitute.
 +
-[source,yaml]
+[source,yaml,subs="attributes+"]
 ----
 apiVersion: cluster.x-k8s.io/v1beta2
 kind: Cluster
@@ -1116,7 +1116,7 @@ spec:
       name: docker-kubeadm-example
     controlPlane:
       replicas: 1
-    version: v1.35.0
+    version: {k8s_kubeadm_default}
     workers:
       machineDeployments:
         - class: default-worker
@@ -1172,7 +1172,7 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{tu
 
 * Create the Docker Kubeadm Cluster from the example ClusterClass.
 +
-[source,yaml]
+[source,yaml,subs="attributes+"]
 ----
 apiVersion: cluster.x-k8s.io/v1beta2
 kind: Cluster 
@@ -1201,7 +1201,7 @@ spec:
       value: none
     - name: dockerImage
       value: kindest/node:v1.35.0
-    version: v1.35.0+rke2r1
+    version: {k8s_rke2_default}
     workers:
       machineDeployments:
       - class: default-worker
@@ -1327,7 +1327,7 @@ Note that for this example we are using https://kube-vip.io/[kube-vip] as a Cont
 The `KUBE_VIP_INTERFACE` will be used to bind the `CONTROL_PLANE_IP` in ARP mode. Depending on your operating system and network device configuration, you need to configure this value accordingly - for example, to `eth0`.
 The `kube-vip` static manifest is embedded in the ClusterClass definition. For more information on how to generate a static kube-vip manifest for your own ClusterClasses, please consult the official https://kube-vip.io/docs/installation/static/[documentation].  
 +
-[source,yaml]
+[source,yaml,subs="attributes+"]
 ----
 apiVersion: cluster.x-k8s.io/v1beta2
 kind: Cluster
@@ -1346,7 +1346,7 @@ spec:
   topology:
     classRef: 
       name: vsphere-kubeadm-example
-    version: v1.35.0
+    version: {k8s_kubeadm_default}
     controlPlane:
       replicas: 3
     workers:
@@ -1504,7 +1504,7 @@ The `KUBE_VIP_INTERFACE` will be used to bind the `CONTROL_PLANE_IP` in ARP mode
 The `kube-vip` static manifest is embedded in the ClusterClass definition. For more information on how to generate a static kube-vip manifest for your own ClusterClasses, please consult the official https://kube-vip.io/docs/installation/static/[documentation].
 In case you are using a VM template based on SUSE Linux Micro, you may optionally provide a `productKey` variable to enable automatic SL Micro registration against SUSE Customer Center.
 +
-[source,yaml]
+[source,yaml,subs="attributes+"]
 ----
 apiVersion: cluster.x-k8s.io/v1beta2
 kind: Cluster
@@ -1523,7 +1523,7 @@ spec:
   topology:
     classRef: 
       name: vsphere-rke2-example
-    version: v1.35.0+rke2r1
+    version: {k8s_rke2_default}
     controlPlane:
       replicas: 3
     workers:
