@@ -80,8 +80,13 @@ spec:
 ----
 ======
 endif::[]
-* Set `features.use-caapf.enabled: true` in the {product_name} chart values to enable the `use-caapf` alpha feature gate (disabled by default).  For instructions on how to set feature gates, refer to xref:overview/features.adoc#_how_to_set_feature_gates[this section].
+* Set `features.use-caapf.enabled: true` in the {product_name} chart values to enable the `use-caapf` alpha feature gate (disabled by default). For instructions on how to set feature gates, refer to xref:overview/features.adoc#_how_to_set_feature_gates[this section].
++
+[IMPORTANT]
+====
+This flag must be set *before* upgrading to Rancher v2.14.1. If the upgrade completes with the flag at its default (`false`), the {product_name} controller will reconcile imported clusters without the `provisioning.cattle.io/externally-managed` annotation, handing Fleet agent management to Rancher. Enabling the flag afterward causes {product_name} to re-add the annotation and hand management back to CAAPF, resulting in the Fleet agent being re-installed on workload clusters.
 
+====
 Once both are in place, Turtles will automatically add the `provisioning.cattle.io/externally-managed` annotation to imported Rancher clusters, delegating Fleet agent installation on CAPI workload clusters to CAAPF rather than Rancher managing it directly.
 
 == Functionality
@@ -144,5 +149,5 @@ For a tutorial and prerequisites, please refer to https://rancher.github.io/clus
 
 To disable CAAPF and return to Rancher's default Fleet management, you only need to disable the feature gate: Set `features.use-caapf.enabled: false` (the default value) in your {product_name} Helm chart configuration.
 
-Once the feature gate is disabled, Turtles will automatically remove the `provisioning.cattle.io/externally-managed` annotation from any previously managed clusters, and Rancher will resume responsibility for installing and managing the Fleet agent on the workload clusters.
+Once the feature gate is disabled, {product_name} will automatically remove the `provisioning.cattle.io/externally-managed` annotation from any previously managed clusters, and Rancher will resume responsibility for installing and managing the Fleet agent on the workload clusters.
 
