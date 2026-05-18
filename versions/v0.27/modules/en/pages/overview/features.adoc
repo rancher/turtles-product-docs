@@ -9,12 +9,6 @@ This section describes features and feature stages in {product_name}.
 |===
 | Feature | Helm Feature Name | Sub-Feature | Default | Stage 
 
-| *Add-on Provider for Fleet*
-| `addon-provider-fleet`
-| _None_
-| enabled
-| beta
-
 | *Agent TLS Mode*
 | `agent-tls-mode`
 | _None_
@@ -32,6 +26,12 @@ This section describes features and feature stages in {product_name}.
 | _None_
 | enabled
 | beta
+
+| *Use CAAPF*
+| `use-caapf`
+| _None_
+| disabled
+| alpha
 
 |===
 
@@ -80,3 +80,32 @@ Please provide feedback on Alpha and Beta features!
 - Always enabled, cannot be disabled.
 - No feature gate needed.
 - Stable, with long-term support in future releases.
+
+== How to set feature gates
+
+You can set configuration options for all charts that get installed as part of Rancher.
+
+To enable/disable feature gates for the {product_name} chart, patch the `rancher-config` ConfigMap in the `cattle-system` namespace to add or update the `rancher-turtles` key under `.data`. The value of this key is a YAML string containing a features map, where each entry corresponds to a feature gate name from the list above with an enabled boolean field. For example:
+[source,bash]
+----
+kubectl patch configmap rancher-config -n cattle-system --type=merge -p '
+  data:
+    rancher-turtles: |
+      features:
+        agent-tls-mode:
+          enabled: true
+        no-cert-manager:
+          enabled: true
+        use-rancher-default-registry:
+          enabled: true
+        use-caapf:
+          enabled: false
+  '
+----
+
+Rancher then reads this ConfigMap and passes these values to the {product_name} controller.
+
+[CAUTION]
+====
+Note that because `rancher-turtles` is a plain string value (containing embedded YAML), the patch replaces the entire string — so include all desired feature gate entries in the patch as well as any other settings, not just the ones you are changing, to avoid inadvertently dropping settings that were previously present under that key.
+====

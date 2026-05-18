@@ -149,5 +149,5 @@ For a tutorial and prerequisites, please refer to https://rancher.github.io/clus
 
 To disable CAAPF and return to Rancher's default Fleet management, you only need to disable the feature gate: Set `features.use-caapf.enabled: false` (the default value) in your {product_name} Helm chart configuration.
 
-Once the feature gate is disabled, Turtles will automatically remove the `provisioning.cattle.io/externally-managed` annotation from any previously managed clusters, and Rancher will resume responsibility for installing and managing the Fleet agent on the workload clusters.
+Once the feature gate is disabled, {product_name} will automatically remove the `provisioning.cattle.io/externally-managed` annotation from any previously managed clusters, and Rancher will resume responsibility for installing and managing the Fleet agent on the workload clusters.
 
