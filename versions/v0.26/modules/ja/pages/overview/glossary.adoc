@@ -1,6 +1,6 @@
 = 用語集
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2025-11-14
+:revdate: 2026-05-12
 :page-revdate: {revdate}
 
 == 目次
@@ -167,7 +167,7 @@ Cluster APIコアコントローラを実装する<<_provider,プロバイダー
 === Fleet
 
 ifeval::["{build-type}" == "product"]
-ユーザーにローカルクラスタの管理と、GitOpsを通じた継続的な監視を提供するために設計されたコンテナ管理およびデプロイメントエンジン。Fleetについて詳しく知るには、https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/index.html/[Fleetのドキュメント]をご覧ください。
+ユーザーにローカルクラスタの管理と、GitOpsを通じた継続的な監視を提供するために設計されたコンテナ管理およびデプロイメントエンジン。Fleetについて詳しく知るには、https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/index.html[Fleetのドキュメント]をご覧ください。
 endif::[]
 ifeval::["{build-type}" == "community"]
 ユーザーにローカルクラスタの管理と、GitOpsを通じた継続的な監視を提供するために設計されたコンテナ管理およびデプロイメントエンジン。Fleetについて詳しく知るには、https://fleet.rancher.io/[Fleetのドキュメント]をご覧ください。

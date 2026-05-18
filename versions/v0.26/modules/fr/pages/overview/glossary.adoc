@@ -1,6 +1,6 @@
 = Glossaire
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2025-11-14
+:revdate: 2026-05-12
 :page-revdate: {revdate}
 
 == Table des matiEres
@@ -169,7 +169,7 @@ Voir <<_cluster_api,CAPI>>.
 === Fleet
 
 ifeval::["{build-type}" == "product"]
-Un moteur de gestion et de déploiement de conteneurs conçu pour offrir aux utilisateurs un meilleur contrôle sur le cluster local et une surveillance constante via GitOps. Consultez https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/index.html/[la documentation de Fleet] pour en savoir plus sur Fleet.
+Un moteur de gestion et de déploiement de conteneurs conçu pour offrir aux utilisateurs un meilleur contrôle sur le cluster local et une surveillance constante via GitOps. Consultez https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/index.html[la documentation de Fleet] pour en savoir plus sur Fleet.
 endif::[]
 ifeval::["{build-type}" == "community"]
 Un moteur de gestion et de déploiement de conteneurs conçu pour offrir aux utilisateurs un meilleur contrôle sur le cluster local et une surveillance constante via GitOps. Consultez https://fleet.rancher.io/[la documentation de Fleet] pour en savoir plus sur Fleet.

@@ -1,10 +1,10 @@
 = Mejores Prácticas de GitOps para Tortugas y CAPI
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2025-10-02
+:revdate: 2026-05-12
 :page-revdate: {revdate}
 
 ifeval::["{build-type}" == "product"]
-Esta sección proporciona las mejores prácticas para implementar GitOps con Tortugas y la API de Clúster (CAPI), centrándose en el uso de https://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/index.html[entrega continua] en combinación con el *Proveedor de complementos de Cluster API Fleet*(`CAAPF`) para automatizar la provisión de agentes e integración en el ecosistema `CAPI`.
+Esta sección proporciona las mejores prácticas para implementar GitOps con Tortugas y la API de Clúster (CAPI), centrándose en el uso de https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/index.html[entrega continua] en combinación con el *Proveedor de complementos de Cluster API Fleet*(`CAAPF`) para automatizar la provisión de agentes e integración en el ecosistema `CAPI`.
 endif::[]
 ifeval::["{build-type}" == "community"]
 Esta sección proporciona las mejores prácticas para implementar GitOps con Tortugas y la API de Clúster (CAPI), centrándose en el uso de https://fleet.rancher.io/[Fleet] en combinación con el *Proveedor de complementos de Cluster API Fleet*(`CAAPF`) para automatizar la provisión de agentes e integración en el ecosistema `CAPI`.
@@ -18,15 +18,15 @@ ifeval::["{build-type}" == "product"]
 - **Separar Clústeres de CAPI y Configuraciones de ClusterClass:**
   Mantén las configuraciones de clúster de CAPI (`clusters/`) distintas de las definiciones de CAPI `ClusterClass` (`templates/`). Esta separación permite que múltiples clústeres sean provisionados a partir de plantillas compartidas mientras se reduce el riesgo de cambios no intencionados en la infraestructura.
 - **Aislar Configuraciones de Complementos:**
-  Almacena los manifiestos de aplicación en `applications/`, asegurando que sean independientes de `Clusters` y `ClusterClasses`. Esto permite la provisión selectiva o agrupada basada en la demanda del usuario o selectores coincidentes, evitando interferencias con la infraestructura del clúster. Ten en cuenta que las dependencias del gráfico de Helm necesitan ser https://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/gitrepo-content.html#_fleet_yaml[refrescadas] antes de la provisión de complementos.
+  Almacena los manifiestos de aplicación en `applications/`, asegurando que sean independientes de `Clusters` y `ClusterClasses`. Esto permite la provisión selectiva o agrupada basada en la demanda del usuario o selectores coincidentes, evitando interferencias con la infraestructura del clúster. Ten en cuenta que las dependencias del gráfico de Helm necesitan ser https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/explanations/gitrepo-content.html#_fleet_yaml[refrescadas] antes de la provisión de complementos.
 - **Utilizar Recursos de GitRepo Anidados:**
-  Aprovecha los recursos https://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/gitrepo-content.html#_nested_gitrepo_crs[anidados] `GitRepo` en Fleet para estructurar el contenido del repositorio de manera eficiente. Este enfoque permite una provisión modular, combinando definiciones de `ClusterClass`, complementos/aplicaciones requeridos y configuraciones de clúster mientras se mantiene la separación de preocupaciones.
+  Aprovecha los recursos https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/explanations/gitrepo-content.html#_nested_gitrepo_crs[anidados] `GitRepo` en Fleet para estructurar el contenido del repositorio de manera eficiente. Este enfoque permite una provisión modular, combinando definiciones de `ClusterClass`, complementos/aplicaciones requeridos y configuraciones de clúster mientras se mantiene la separación de preocupaciones.
 - **Usar Herramientas de Integración de GitOps Cuando Estén Disponibles:**
   Al configurar un entorno de GitOps, ten en cuenta las herramientas disponibles y las características que proporciona. Un ejemplo de esto es https://rancher.github.io/cluster-api-addon-provider-fleet/00_intro.html[`CAAPF`], que automatiza la instalación de GitOps de Fleet en clústeres `CAPI` y proporciona una automatización conveniente.
 - **Aplicar Superposiciones de Kustomize para Personalización Específica del Entorno:**
   Utiliza `overlays/` para almacenar superposiciones de Kustomize para diferentes entornos. Esto asegura que los cambios de configuración, como ajustes de escalado, modificaciones de red o actualizaciones de componentes, se puedan aplicar dinámicamente sin alterar los manifiestos base.
 - **Utiliza la comparación de parches:**
-  Fleet permite ignorar selectivamente las diferencias de recursos si el paquete contiene reglas adecuadas para la detección de https://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/troubleshooting.html#_suse_rancher_prime_continuous_delivery_deployment_stuck_in_modified_state[`diff`detección]. Esto evitaría que los paquetes se quedaran en un estado modificado.
+  Fleet permite ignorar selectivamente las diferencias de recursos si el paquete contiene reglas adecuadas para la detección de https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/troubleshooting.html#_suse_rancher_prime_continuous_delivery_deployment_stuck_in_modified_state[`diff`detección]. Esto evitaría que los paquetes se quedaran en un estado modificado.
 endif::[]
 ifeval::["{build-type}" == "community"]
 - **Separar Clústeres de CAPI y Configuraciones de ClusterClass:**

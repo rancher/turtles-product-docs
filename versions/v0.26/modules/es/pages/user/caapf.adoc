@@ -1,6 +1,6 @@
 = Proveedor de complemento Cluster API Fleet
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2025-11-20
+:revdate: 2026-05-12
 :page-revdate: {revdate}
 
 == Descripción general
@@ -54,7 +54,7 @@ Además, `CAAPF` propaga automáticamente las etiquetas de clúster `CAPI` al re
 == Plantillado de Helm Chart basado en CAPI `Cluster` y `ControlPlane`
 
 ifeval::["{build-type}" == "product"]
-El *Proveedor de Complemento de API de Clúster Fleet* automatiza el https://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/ref-fleet-yaml.html#_templating[plantillado] de aplicaciones para clústeres CAPI importados basados en el estado de clúster coincidente. Esta característica asegura que el estado de un clúster CAPI y los recursos estén siempre actualizados en el campo `spec.templateValues.ClusterValues` del recurso de clúster Fleet. Esto permite a los usuarios:
+El *Proveedor de Complemento de API de Clúster Fleet* automatiza el https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/reference/ref-fleet-yaml.html#_values_templating[plantillado] de aplicaciones para clústeres CAPI importados basados en el estado de clúster coincidente. Esta característica asegura que el estado de un clúster CAPI y los recursos estén siempre actualizados en el campo `spec.templateValues.ClusterValues` del recurso de clúster Fleet. Esto permite a los usuarios:
 endif::[]
 ifeval::["{build-type}" == "community"]
 El *Proveedor de Complemento de API de Clúster Fleet* automatiza el https://fleet.rancher.io/ref-fleet-yaml#templating[plantillado] de aplicaciones para clústeres CAPI importados basados en el estado de clúster coincidente. Esta característica asegura que el estado de un clúster CAPI y los recursos estén siempre actualizados en el campo `spec.templateValues.ClusterValues` del recurso de clúster Fleet. Esto permite a los usuarios:

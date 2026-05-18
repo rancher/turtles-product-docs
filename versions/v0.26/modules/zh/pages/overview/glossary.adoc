@@ -1,6 +1,6 @@
 = 词汇表
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2025-11-14
+:revdate: 2026-05-12
 :page-revdate: {revdate}
 
 == 目录
@@ -168,7 +168,7 @@ Cluster API Operator 是 SIG-cluster-lifecycle 的一个子项目。它旨在使
 === Fleet
 
 ifeval::["{build-type}" == "product"]
-一个容器管理和部署引擎，旨在为用户提供对本地群集的更多控制，并通过 GitOps 进行持续监控.查看 https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/index.html/[Fleet 文档] 以了解更多关于 Fleet 的信息。
+一个容器管理和部署引擎，旨在为用户提供对本地群集的更多控制，并通过 GitOps 进行持续监控.查看 https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/index.html[Fleet 文档] 以了解更多关于 Fleet 的信息。
 endif::[]
 ifeval::["{build-type}" == "community"]
 一个容器管理和部署引擎，旨在为用户提供对本地群集的更多控制，并通过 GitOps 进行持续监控.查看 https://fleet.rancher.io/[Fleet 文档] 以了解更多关于 Fleet 的信息。

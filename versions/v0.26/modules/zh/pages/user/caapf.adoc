@@ -1,6 +1,6 @@
 = 集群 API 附加产品提供程序 Fleet
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2025-11-20
+:revdate: 2026-05-12
 :page-revdate: {revdate}
 
 == 概述
@@ -54,7 +54,7 @@ endif::[]
 == 基于 CAPI `Cluster` 和 `ControlPlane` 的 Helm Chart 模板化
 
 ifeval::["{build-type}" == "product"]
-*集群 API 附加产品提供程序 Fleet* 自动化应用程序 https://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/ref-fleet-yaml.html#_templating[模板化]，以便为导入的 CAPI 集群提供匹配的集群状态。此功能确保 CAPI 集群和资源的状态始终在 Fleet 集群资源的 `spec.templateValues.ClusterValues` 字段中保持最新。这允许用户：
+*集群 API 附加产品提供程序 Fleet* 自动化应用程序 https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/reference/ref-fleet-yaml.html#_values_templating[模板化]，以便为导入的 CAPI 集群提供匹配的集群状态。此功能确保 CAPI 集群和资源的状态始终在 Fleet 集群资源的 `spec.templateValues.ClusterValues` 字段中保持最新。这允许用户：
 endif::[]
 ifeval::["{build-type}" == "community"]
 *集群 API 附加产品提供程序 Fleet* 自动化应用程序 https://fleet.rancher.io/ref-fleet-yaml#templating[模板化]，以便为导入的 CAPI 集群提供匹配的集群状态。此功能确保 CAPI 集群和资源的状态始终在 Fleet 集群资源的 `spec.templateValues.ClusterValues` 字段中保持最新。这允许用户：

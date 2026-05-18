@@ -1,6 +1,6 @@
 = Fournisseur de produit complémentaire Cluster API Fleet
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2025-11-20
+:revdate: 2026-05-12
 :page-revdate: {revdate}
 
 == Présentation
@@ -54,7 +54,7 @@ De plus, `CAAPF` propage automatiquement les étiquettes de cluster `CAPI` à la
 == Templating de Helm Chart basé sur CAPI `Cluster` et `ControlPlane`
 
 ifeval::["{build-type}" == "product"]
-Le *Fournisseur de produit complémentaire Cluster API Fleet* automatise le https://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/ref-fleet-yaml.html#_templating[templating] des applications pour les clusters CAPI importés en fonction de l'état du cluster correspondant. Cette fonctionnalité garantit que l'état d'un cluster CAPI et des ressources est toujours à jour dans le champ `spec.templateValues.ClusterValues` de la ressource de cluster Fleet. Cela permet aux utilisateurs de :
+Le *Fournisseur de produit complémentaire Cluster API Fleet* automatise le https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/reference/ref-fleet-yaml.html#_values_templating[templating] des applications pour les clusters CAPI importés en fonction de l'état du cluster correspondant. Cette fonctionnalité garantit que l'état d'un cluster CAPI et des ressources est toujours à jour dans le champ `spec.templateValues.ClusterValues` de la ressource de cluster Fleet. Cela permet aux utilisateurs de :
 endif::[]
 ifeval::["{build-type}" == "community"]
 Le *Fournisseur de produit complémentaire Cluster API Fleet* automatise le https://fleet.rancher.io/ref-fleet-yaml#templating[templating] des applications pour les clusters CAPI importés en fonction de l'état du cluster correspondant. Cette fonctionnalité garantit que l'état d'un cluster CAPI et des ressources est toujours à jour dans le champ `spec.templateValues.ClusterValues` de la ressource de cluster Fleet. Cela permet aux utilisateurs de :

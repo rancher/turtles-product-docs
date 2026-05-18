@@ -1,10 +1,10 @@
 = カメとCAPIのためのGitOpsベストプラクティス
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2025-10-02
+:revdate: 2026-05-12
 :page-revdate: {revdate}
 
 ifeval::["{build-type}" == "product"]
-このセクションでは、カメとCluster API (CAPI)を用いたGitOps実装のためのベストプラクティスを提供します。特に、https://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/index.html[継続的デリバリ]と*クラスターAPIアドオンプロバイダーFleet*(`CAAPF`)を組み合わせ、エージェントのプロビジョニングおよび`CAPI`エコシステムへの統合の自動化に焦点を当てています。
+このセクションでは、カメとCluster API (CAPI)を用いたGitOps実装のためのベストプラクティスを提供します。特に、https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/index.html[継続的デリバリ]と*クラスターAPIアドオンプロバイダーFleet*(`CAAPF`)を組み合わせ、エージェントのプロビジョニングおよび`CAPI`エコシステムへの統合の自動化に焦点を当てています。
 endif::[]
 ifeval::["{build-type}" == "community"]
 このセクションでは、カメとCluster API (CAPI)を用いたGitOps実装のためのベストプラクティスを提供します。特に、https://fleet.rancher.io/[Fleet]と*クラスターAPIアドオンプロバイダーFleet*(`CAAPF`)を組み合わせ、エージェントのプロビジョニングおよび`CAPI`エコシステムへの統合の自動化に焦点を当てています。
@@ -18,15 +18,15 @@ ifeval::["{build-type}" == "product"]
 - **CAPIクラスターとClusterClassの設定を分離する:**
   CAPIクラスター設定（`clusters/`）をCAPI `ClusterClass`定義（`templates/`）から明確に分けておいてください。この分離により、共有テンプレートから複数のクラスターをプロビジョニングできる一方で、意図しないインフラ変更のリスクを減らすことができます。
 - **アドオン設定を隔離する:**
-  アプリケーションマニフェストを`applications/`に保存し、`Clusters`および`ClusterClasses`から独立させてください。これにより、ユーザーの需要や一致するセレクターに基づいて選択的またはグループ化されたプロビジョニングが可能になり、クラスターインフラに干渉することを防ぎます。アドオンのプロビジョニングの前に、Helmチャートの依存関係をhttps://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/gitrepo-content.html#_fleet_yaml[更新する]必要があることに注意してください。
+  アプリケーションマニフェストを`applications/`に保存し、`Clusters`および`ClusterClasses`から独立させてください。これにより、ユーザーの需要や一致するセレクターに基づいて選択的またはグループ化されたプロビジョニングが可能になり、クラスターインフラに干渉することを防ぎます。アドオンのプロビジョニングの前に、Helmチャートの依存関係をhttps://documentation.suse.com/cloudnative/continuous-delivery/latest/en/explanations/gitrepo-content.html#_fleet_yaml[更新する]必要があることに注意してください。
 - **ネストされたGitRepoリソースを活用する:**
-  Fleet内のhttps://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/gitrepo-content.html#_nested_gitrepo_crs[ネストされた] `GitRepo`リソースを活用して、リポジトリの内容を効率的に構成してください。このアプローチにより、`ClusterClass`定義、必要なアドオン/アプリケーション、およびクラスター設定を組み合わせながら、モジュール式のプロビジョニングが可能になり、関心の分離を維持できます。
+  Fleet内のhttps://documentation.suse.com/cloudnative/continuous-delivery/latest/en/explanations/gitrepo-content.html#_nested_gitrepo_crs[ネストされた] `GitRepo`リソースを活用して、リポジトリの内容を効率的に構成してください。このアプローチにより、`ClusterClass`定義、必要なアドオン/アプリケーション、およびクラスター設定を組み合わせながら、モジュール式のプロビジョニングが可能になり、関心の分離を維持できます。
 - **利用可能な場合はGitOps統合ツールを使用する:**
   GitOpsセットアップを構成する際には、利用可能なツールとその提供する機能を考慮してください。その一例がhttps://rancher.github.io/cluster-api-addon-provider-fleet/00_intro.html[`CAAPF`]であり、これは`CAPI`クラスター上でFleet GitOpsのインストールを自動化し、便利な自動化を提供します。
 - **環境特有のカスタマイズのためにKustomizeオーバーレイを適用する:**
   `overlays/`を使用して、異なる環境のためのKustomizeオーバーレイを保存します。これにより、スケーリング調整、ネットワーク変更、またはコンポーネントのアップグレードなどの構成変更を、ベースマニフェストを変更することなく動的に適用できます。
 - **比較パッチを利用する:**
-  Fleetは、バンドルに適切なhttps://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/troubleshooting.html#_suse_rancher_prime_continuous_delivery_deployment_stuck_in_modified_state[`diff`検出]のルールが含まれている場合、リソースの違いを選択的に無視することを可能にします。これにより、バンドルが変更された状態で停止することを防ぎます。
+  Fleetは、バンドルに適切なhttps://documentation.suse.com/cloudnative/continuous-delivery/latest/en/troubleshooting.html#_suse_rancher_prime_continuous_delivery_deployment_stuck_in_modified_state[`diff`検出]のルールが含まれている場合、リソースの違いを選択的に無視することを可能にします。これにより、バンドルが変更された状態で停止することを防ぎます。
 endif::[]
 ifeval::["{build-type}" == "community"]
 - **CAPIクラスターとClusterClassの設定を分離する:**

@@ -1,5 +1,5 @@
 = Cluster API Addon Provider Fleet
-:revdate: 2025-11-14
+:revdate: 2026-05-12
 :page-revdate: {revdate}
 
 == Overview
@@ -48,7 +48,7 @@ Additionally, `CAAPF` automatically propagates `CAPI` cluster labels to the `Fle
 == Helm Chart templating based on CAPI `Cluster` and `ControlPlane`
 
 ifeval::["{build-type}" == "product"]
-The *Cluster API Addon Provider Fleet* automates application https://documentation.suse.com/cloudnative/continuous-delivery/v0.12/en/ref-fleet-yaml.html#_templating[templating] for imported CAPI clusters based on matching cluster state. This feature ensures that the state of a CAPI cluster and resources is always up-to-date in the `spec.templateValues.ClusterValues` field of the Fleet cluster resource. This allows users to:
+The *Cluster API Addon Provider Fleet* automates application https://documentation.suse.com/cloudnative/continuous-delivery/latest/en/reference/ref-fleet-yaml.html#_values_templating[templating] for imported CAPI clusters based on matching cluster state. This feature ensures that the state of a CAPI cluster and resources is always up-to-date in the `spec.templateValues.ClusterValues` field of the Fleet cluster resource. This allows users to:
 endif::[]
 ifeval::["{build-type}" == "community"]
 The *Cluster API Addon Provider Fleet* automates application https://fleet.rancher.io/ref-fleet-yaml#templating[templating] for imported CAPI clusters based on matching cluster state. This feature ensures that the state of a CAPI cluster and resources is always up-to-date in the `spec.templateValues.ClusterValues` field of the Fleet cluster resource. This allows users to:
