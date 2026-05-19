@@ -20,14 +20,14 @@ asciidoc:
     rke2_version: v0.24.2
     fleet_addon_version: v0.14.1
     # Kubernetes examples versions (keep it in sync with Turtles e2e tests)
-    k8s_kubeadm_default: v1.35.0
-    k8s_rke2_default: v1.35.0+rke2r1
-    k8s_azure_rke2: v1.34.3+rke2r1
-    k8s_azure_kubeadm: v1.34.3
-    k8s_azure_aks: v1.34.2
-    k8s_aws_kubeadm: v1.35.0
+    k8s_kubeadm_default: v1.36.1
+    k8s_rke2_default: v1.36.0+rke2r1
+    k8s_azure_rke2: v1.36.0+rke2r1
+    k8s_azure_kubeadm: v1.36.1
+    k8s_azure_aks: v1.36.0
+    k8s_aws_kubeadm: v1.36.1
     k8s_aws_eks: v1.35.0
-    k8s_gcp: v1.34.1
+    k8s_gcp: v1.36.1
     k8s_gcp_gke: v1.35.3
 nav:
   - modules/en/nav.adoc
