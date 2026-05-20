@@ -85,7 +85,7 @@ ifeval::["{build-type}" == "product"]
 |{azure_version}
 endif::[]
 
-| *GCP* (Only GKE managed clusters)
+| *GCP*
 | CAPG
 | Infrastructure
 | https://cluster-api-gcp.sigs.k8s.io/[CAPG book]
