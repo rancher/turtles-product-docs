@@ -11,14 +11,14 @@ asciidoc:
     rancher_version: v2.14.0
     turtles_version: v0.27.0
     # CAPI Providers versions
-    aws_version: "v2.10.1"
-    azure_version: v1.22.0
-    gcp_version: v1.11.1
-    vsphere_version: v1.15.2
-    docker_version: v1.12.2
-    kubeadm_version: v1.12.2
-    rke2_version: v0.24.2
-    fleet_addon_version: v0.14.1
+    aws_version: "v2.11.1"
+    azure_version: v1.24.0
+    gcp_version: v1.11.2
+    vsphere_version: v1.16.1
+    docker_version: v1.13.1
+    kubeadm_version: v1.13.1
+    rke2_version: v0.24.4
+    fleet_addon_version: v0.15.0
     # Kubernetes examples versions (keep it in sync with Turtles e2e tests)
     k8s_kubeadm_default: v1.36.1
     k8s_rke2_default: v1.36.0+rke2r1
