@@ -145,6 +145,71 @@ For more information on the feature, please refer to https://rancher.github.io/c
 
 For a tutorial and prerequisites, please refer to https://rancher.github.io/cluster-api-addon-provider-fleet/03_tutorials/04_installing_calico_via_gitrepo.html[gitrepo tutorial] section in the book.
 
+== Migrating existing CAAPF-managed clusters to Rancher
+
+When importing a CAPI workload cluster into Rancher, it is registered with Fleet through a `Fleet` `Cluster` resource. Before Rancher v2.14.1, CAAPF always created this resource, placing it in the same namespace as the CAPI workload cluster. Rancher v2.14.1 introduced the `use-caapf` feature gate, which lets Rancher handle the registration instead, creating its own `Fleet` `Cluster` in the `fleet-default` namespace. A cluster that CAAPF already registered therefore ends up with a second `Fleet` `Cluster` resource in a different namespace, and the `GitRepos`, `HelmOps` and `Bundles` resources that targeted the original CAAPF-created cluster no longer reach it. Switching these clusters from CAAPF to Rancher-managed registration therefore requires moving those resources onto the Rancher-managed `fleet-default` cluster and removing the duplicate CAAPF-created cluster, so that applications keep being deployed.
+
+The `migrate-caapf.sh` script automates this migration. It runs in two phases:
+
+* **`pre`** — run *before* disabling the `use-caapf` feature gate, while CAAPF still manages the clusters. It scales down the {product_name} and CAAPF controllers, copies the `Fleet` cluster labels onto the corresponding Rancher management clusters, checks for bundle collisions, then pauses and labels the affected `Fleet` resources and creates the `BundleNamespaceMappings` needed to make those resources eligible for deployment in `fleet-default`.
+* **`post`** — run *after* the `use-caapf` feature gate has been disabled and Rancher has created the new `fleet-default` clusters. It copies `templateValues` onto the new `Fleet` clusters, unpauses the migrated resources, and deletes the old per-namespace `Fleet` clusters once their bundles are confirmed present on the new clusters.
+
+[IMPORTANT]
+====
+The `use-caapf` feature gate was introduced in Rancher v2.14.1, so this migration is tied to that upgrade. Run the `pre` phase *before* upgrading to Rancher v2.14.1, perform the upgrade, then run the `post` phase *immediately after* the upgrade has completed.
+====
+
+=== Before you begin
+
+* `kubectl`, configured to point at the Rancher management cluster.
+* `jq` available on the `PATH`.
+
+=== Download the script
+
+[,bash]
+----
+curl -sSfLO https://raw.githubusercontent.com/rancher/turtles/refs/heads/release/v0.26/scripts/migrate-caapf.sh
+chmod +x migrate-caapf.sh
+----
+
+=== Run the migration
+
+The script defaults to a *dry run* (`DRY_RUN=true`), which prints the actions it would take without modifying any resources. Always start with a dry run and review the output before applying any changes.
+
+. Dry-run the `pre` phase and review the planned changes:
++
+[,bash]
+----
+./migrate-caapf.sh pre
+----
++
+[CAUTION]
+====
+If the script reports a *name collision* or *label collision*, it aborts before pausing any `Fleet` resources or creating the `BundleNamespaceMappings`. Applying the `BundleNamespaceMappings` makes every migration-labeled bundle eligible to deploy to any cluster in `fleet-default`, so two bundles with the same name from different namespaces, or a `clusterSelector` that now matches multiple clusters, would produce conflicting `BundleDeployments`. Resolve the reported collisions before continuing.
+====
+
+. Apply the `pre` phase:
++
+[,bash]
+----
+DRY_RUN=false ./migrate-caapf.sh pre
+----
+
+. Upgrade Rancher to v2.14.1 (which disables the `use-caapf` feature gate) and wait for Rancher to create the new `Fleet` clusters in `fleet-default`. Run the `post` phase *immediately after* the upgrade completes: the affected `Fleet` resources stay paused until then, so any delay leaves applications undeployed.
+
+. Dry-run and then apply the `post` phase:
++
+[,bash]
+----
+./migrate-caapf.sh post
+DRY_RUN=false ./migrate-caapf.sh post
+----
+
+[NOTE]
+====
+The `post` phase waits for each new `Fleet` cluster to reconcile and verifies that every bundle from the old cluster is present on the new one before deleting the old cluster. If any bundles are still missing, it logs a warning and skips deleting that cluster, so it is safe to re-run the `post` phase after resolving the issue.
+====
+
 == Disabling CAAPF
 
 To disable CAAPF and return to Rancher's default Fleet management, you only need to disable the feature gate: Set `features.use-caapf.enabled: false` (the default value) in your {product_name} Helm chart configuration.
