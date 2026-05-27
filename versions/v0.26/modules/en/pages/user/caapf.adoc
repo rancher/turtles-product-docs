@@ -204,7 +204,7 @@ DRY_RUN=false ./migrate-caapf.sh pre
 ./migrate-caapf.sh post
 DRY_RUN=false ./migrate-caapf.sh post
 ----
-
++
 [NOTE]
 ====
 The `post` phase waits for each new `Fleet` cluster to reconcile and verifies that every bundle from the old cluster is present on the new one before deleting the old cluster. If any bundles are still missing, it logs a warning and skips deleting that cluster, so it is safe to re-run the `post` phase after resolving the issue.
