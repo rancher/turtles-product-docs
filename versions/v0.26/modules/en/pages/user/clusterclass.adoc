@@ -1,6 +1,6 @@
 = ClusterClass
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2026-02-18
+:revdate: 2026-05-28
 :page-revdate: {revdate}
 
 In this section we cover using https://cluster-api.sigs.k8s.io/tasks/experimental-features/cluster-class/[ClusterClass] with the {product_name}.
@@ -384,6 +384,8 @@ Azure RKE2::
 This ClusterClass relies on the CAAPF provider being installed and enabled. For information on how to do this, see the xref:user/caapf.adoc[CAAPF] section.
 +
 Applications like the Azure Cloud Provider and Calico CNI will be installed on downstream Clusters. This is done automatically at Cluster creation by targeted Clusters with specific labels, such as `cloud-provider: azure` and `cni: calico`.
++
+include::shared:ROOT:partial$en/cni-caution.adoc[]
 +
 [tabs]
 =======
