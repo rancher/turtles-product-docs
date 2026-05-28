@@ -1,0 +1,42 @@
+= v0.26.2
+:revdate: 2026-05-28
+:page-revdate: {revdate}
+
+== Release Date: 2026-05-22
+
+== Description
+
+[IMPORTANT]
+====
+Please read below information before updating.
+====
+
+**Cluster API Add-on Provider for Fleet (CAAPF)** is deprecated as of {product_name} v0.26.1 (Rancher v2.14.1) and is no longer installed by default. We encourage you to move away from CAAPF in preparation for its eventual removal (following Rancher deprecation policies). If you wish to continue using it, refer to the xref:user/caapf.adoc[CAAPF user guide] for more information.
+
+=== Notable Changes
+
+* Bump core CAPI to v1.12.7 by @salasberryfin in https://github.com/rancher/turtles/pull/2389[#2389]
+* Bump CAPI operator to v0.27.0 by @salasberryfin in https://github.com/rancher/turtles/pull/2387[#2387]
+* Bump CAPRKE2 to v0.24.4 by @rancher-backport-assistant[bot] in https://github.com/rancher/turtles/pull/2393[#2393]
+* Bump CAPA to v2.10.1 by @rancher-backport-assistant[bot] in https://github.com/rancher/turtles/pull/2158[#2158]
+
+==== Security
+
+* Bump go to 1.25.10 by @rancher-backport-assistant[bot] in https://github.com/rancher/turtles/pull/2384[#2384]
+* Use publish image action in release workflow by @furkatgofurov7 in https://github.com/rancher/turtles/pull/2362[#2362]
+
+==== Full Changelog: 
+
+Review the full list of changes: https://github.com/rancher/turtles/compare/v0.26.1%E2%80%A6v0.26.2[v0.26.1...v0.26.2]
+
+== Download
+
+[cols="3,1,1" options="header" frame="all" grid="rows"]
+|===
+| Name | Created At | Updated At
+
+| link:https://github.com/rancher/turtles/releases/download/v0.26.2/rancher-turtles-0.26.2.tgz[rancher-turtles-0.26.2.tgz] | 2026-05-22 | 2026-05-22
+
+|===
+
+__Information retrieved from https://github.com/rancher/turtles/releases/tag/v0.26.2[v0.26.2 GitHub release].__
