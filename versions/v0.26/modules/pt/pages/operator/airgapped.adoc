@@ -1,6 +1,6 @@
 = Ambiente air-gapped
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2026-01-06
+:revdate: 2026-06-02
 :page-revdate: {revdate}
 
 {product_name} oferece suporte para um ambiente air-gapped de forma nativa, aproveitando os recursos do Cluster API Operator, a dependência necessária para instalar {product_name}.
@@ -521,7 +521,7 @@ kubectl create configmap v1.12.0 --namespace=capv-system --from-file=components=
 +
 [source,sh]
 ----
-yq eval -i '.metadata.annotations += {"provider.cluster.x-k8s.io/compressed": "true"}' configmap.yaml
+yq -y -i '.metadata.annotations["provider.cluster.x-k8s.io/compressed"] = "true"' configmap.yaml
 ----
 +
 NOTE: Sem essa anotação, o operador não conseguirá determinar se os dados estão comprimidos ou não.
@@ -530,7 +530,7 @@ NOTE: Sem essa anotação, o operador não conseguirá determinar se os dados es
 +
 [source,sh]
 ----
-yq eval -i '.metadata.labels += {"my-label": "label-value"}' configmap.yaml
+yq -y -i '.metadata.labels["my-label"] = "label-value"' configmap.yaml
 ----
 +
 . Criar um ConfigMap em seu cluster Kubernetes usando kubectl

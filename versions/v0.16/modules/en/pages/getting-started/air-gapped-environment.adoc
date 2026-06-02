@@ -1,5 +1,5 @@
 = Air-gapped environment
-:revdate: 2025-10-02
+:revdate: 2026-06-02
 :page-revdate: {revdate}
 :sidebar_position: 3
 
@@ -119,7 +119,7 @@ kubectl create configmap v1.11.2 --namespace=capv-system --from-file=components=
 +
 [source,sh]
 ----
-yq eval -i '.metadata.annotations += {"provider.cluster.x-k8s.io/compressed": "true"}' configmap.yaml
+yq -y -i '.metadata.annotations["provider.cluster.x-k8s.io/compressed"] = "true"' configmap.yaml
 ----
 +
 NOTE: without this annotation operator won't be able to determine if the data is compressed or not.
@@ -128,7 +128,7 @@ NOTE: without this annotation operator won't be able to determine if the data is
 +
 [source,sh]
 ----
-yq eval -i '.metadata.labels += {"my-label": "label-value"}' configmap.yaml
+yq -y -i '.metadata.labels["my-label"] = "label-value"' configmap.yaml
 ----
 +
 . Create a ConfigMap in your Kubernetes cluster using kubectl
