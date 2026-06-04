@@ -12,3 +12,8 @@ updates:
     labels:
       - "kind/cleanup"
       - "area/build-and-release"
+    cooldown:
+      default-days: 7
+      include:
+        - "actions/checkout"
+        - "actions/setup-node"
