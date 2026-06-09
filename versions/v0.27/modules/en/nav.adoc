@@ -4,8 +4,8 @@
 ** xref:overview/features.adoc[Features]
 ** xref:overview/certified.adoc[Certified Providers]
 * Tutorials
-** xref:tutorials/first-cluster.adoc[Your First Cluster]
 ** xref:tutorials/rancher.adoc[Rancher Setup]
+** xref:tutorials/first-cluster.adoc[Your First Cluster]
 ** xref:tutorials/capi-v1beta2.adoc[Upgrading to CAPI v1beta2]
 * Reference
 ** xref:reference/capiprovider.adoc[CAPIProvider]
