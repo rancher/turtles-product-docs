@@ -12,12 +12,12 @@ asciidoc:
     turtles_version: v0.27.0
     # CAPI Providers versions
     aws_version: "v2.11.1"
-    azure_version: v1.24.0
+    azure_version: v1.23.2
     gcp_version: v1.11.2
     vsphere_version: v1.16.1
-    docker_version: v1.13.1
-    kubeadm_version: v1.13.1
-    rke2_version: v0.24.4
+    docker_version: v1.13.2
+    kubeadm_version: v1.13.2
+    rke2_version: v0.25.0
     fleet_addon_version: v0.15.0
     # Kubernetes examples versions (keep it in sync with Turtles e2e tests)
     k8s_kubeadm_default: v1.36.1
