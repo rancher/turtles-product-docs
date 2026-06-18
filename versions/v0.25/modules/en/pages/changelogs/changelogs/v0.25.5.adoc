@@ -1,0 +1,32 @@
+= v0.25.5
+:revdate: 2026-06-18
+:page-revdate: {revdate}
+
+== Release Date: 2026-06-17
+
+== Description
+
+This is a maintenance release that delivers security and dependency updates.
+
+=== Notable Changes
+
+* Bump go.opentelemetry.io/otel dependencies to v1.40.0.
+* Bump rancher/kuberlr-kubectl to v6.1.0.
+* Bump github.com/go-git/go-git/v5 to v5.19.1 in test package.
+* Several release process improvements.
+
+==== Full Changelog: 
+
+Review the full list of changes: https://github.com/rancher/turtles/compare/v0.25.4%E2%80%A6v0.25.5[v0.25.4...v0.25.5]
+
+== Download
+
+[cols="3,1,1" options="header" frame="all" grid="rows"]
+|===
+| Name | Created At | Updated At
+
+| link:https://github.com/rancher/turtles/releases/download/v0.25.5/rancher-turtles-0.25.5.tgz[rancher-turtles-0.25.5.tgz] | 2026-06-18 | 2026-06-18
+
+|===
+
+__Information retrieved from https://github.com/rancher/turtles/releases/tag/v0.25.5[v0.25.5 GitHub release].__

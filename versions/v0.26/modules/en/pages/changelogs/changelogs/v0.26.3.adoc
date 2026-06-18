@@ -1,0 +1,31 @@
+= v0.26.3
+:revdate: 2026-06-18
+:page-revdate: {revdate}
+
+== Release Date: 2026-06-18
+
+== Description
+
+This maintenance release primarily focuses on resolving security vulnerabilities and updating dependencies, including key updates to Kubernetes libraries alongside development and testing toolchains.
+
+=== Notable Changes
+
+* Bump Go version to v1.25.11.
+* Bump rancher/kuberlr-kubectl to v7.1.0.
+* Bump k8s.io/* dependencies to v0.34.8.
+
+==== Full Changelog: 
+
+Review the full list of changes: https://github.com/rancher/turtles/compare/v0.26.2%E2%80%A6v0.26.3[v0.26.2...v0.26.3]
+
+== Download
+
+[cols="3,1,1" options="header" frame="all" grid="rows"]
+|===
+| Name | Created At | Updated At
+
+| link:https://github.com/rancher/turtles/releases/download/v0.26.3/rancher-turtles-0.26.3.tgz[rancher-turtles-0.26.3.tgz] | 2026-06-18 | 2026-06-18
+
+|===
+
+__Information retrieved from https://github.com/rancher/turtles/releases/tag/v0.26.3[v0.26.3 GitHub release].__
