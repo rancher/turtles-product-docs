@@ -10,9 +10,9 @@ This maintenance release primarily focuses on resolving security vulnerabilities
 
 === Notable Changes
 
-* Bump Go version to v1.25.11
-* Bump rancher/kuberlr-kubectl to v7.1.0
-* Bump k8s.io/* dependencies to v0.34.8
+* Bump Go version to v1.25.11.
+* Bump rancher/kuberlr-kubectl to v7.1.0.
+* Bump k8s.io/* dependencies to v0.34.8.
 
 ==== Full Changelog: 
 
