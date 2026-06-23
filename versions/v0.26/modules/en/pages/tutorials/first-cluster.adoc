@@ -1,6 +1,6 @@
 = Create & Import Your First Cluster
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2025-11-20
+:revdate: 2026-06-22
 :page-revdate: {revdate}
 
 This section will guide you through creating your first cluster and importing it into Rancher Manager. Two alternative methods for cluster provisioning are presented: **using a GitOps workflow with Fleet** and **manually applying the manifests via `kubectl`**.
@@ -33,7 +33,7 @@ If you prefer, you can create your own Fleet repository using the same base stru
 
 Now the cluster definitions are committed to a git repository they can be used to provision the clusters. To do this they will need to be imported into the Rancher Manager cluster (which is also acting as a Cluster API management cluster) using the *Continuous Delivery* feature (which uses Fleet).
 
-. Go to Rancher Manager
+. Go to Rancher Manager.
 . Select *Continuous Delivery* from the menu:
 +
 image:sidebar.png[sidebar]
@@ -46,13 +46,13 @@ image:bundles.png[App Bundles,align="text-center"]
 +
 image:ns-create.png[Create App Bundle,align="text-center"]
 +
-. Select *Git Repos* as the App Bundle type
-. In *Step 1* of the App Bundle creation flow, give the new bundle a name and description
+. Select *Git Repos* as the App Bundle type.
+. In *Step 1* of the App Bundle creation flow, give the new bundle a name and description.
 . In *Step 2* of the App Bundle creation flow, set the repository URL to the HTTPS URL of the Fleet repo. You can find and copy the URL using GitHub:
 +
 image::gh_clone.png[git clone url]
 +
-. Change the branch name to *main*
+. Change the branch name to *main*.
 . Add the following paths to specify which directories to deploy:
 +
 ----
@@ -62,11 +62,11 @@ examples/clusters/docker/rke2
 ----
 image:step-2.png[Fleet paths configuration]
 +
-. Click *Next* to move to *Step 3* and ensure that the *App Bundle* will be deployed to the local cluster
-. Click *Next* again to move to *Step 4* and then click *Create* to complete creation of this *App Bundle*
-. Wait for the *App Bundle* state to become active, at which point the cluster has been provisioned successfully
-. Select *Cluster Management* from the menu
-. Check your cluster has been imported
+. Click *Next* to move to *Step 3* and ensure that the *App Bundle* will be deployed to the local cluster.
+. Click *Next* again to move to *Step 4* and then click *Create* to complete creation of this *App Bundle*.
+. Wait for the *App Bundle* state to become active, at which point the cluster has been provisioned successfully.
+. Select *Cluster Management* from the menu.
+. Check your cluster has been imported.
 --
 
 Manually using kubectl::
