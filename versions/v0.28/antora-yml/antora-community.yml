@@ -1,0 +1,24 @@
+name: turtles
+title: Rancher Turtles
+version: 'v0.28'
+prerelease: -dev
+start_page: en:index.adoc
+asciidoc:
+  attributes:
+    build-type: community
+    product_name: Rancher Turtles
+    #Prerequisite and Component version attributes
+    rancher_version: v2.14.0
+    turtles_version: v0.28.0
+    # Kubernetes examples versions (keep it in sync with Turtles e2e tests)
+    k8s_kubeadm_default: v1.36.1
+    k8s_rke2_default: v1.36.0+rke2r1
+    k8s_azure_rke2: v1.36.0+rke2r1
+    k8s_azure_kubeadm: v1.36.1
+    k8s_azure_aks: v1.36.0
+    k8s_aws_kubeadm: v1.36.1
+    k8s_aws_eks: v1.35.0
+    k8s_gcp: v1.36.1
+    k8s_gcp_gke: v1.35.3
+nav:
+  - modules/en/nav.adoc

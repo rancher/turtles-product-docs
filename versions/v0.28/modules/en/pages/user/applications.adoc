@@ -1,0 +1,124 @@
+= Installing applications
+:revdate: 2026-06-16
+:page-revdate: {revdate}
+
+This section provides guidance on how to install bootstrap applications such as a Container Network Interface (CNI), Cloud Controller Manager (CCM), and other applications in a CAPI workload cluster. The installation of these applications is typically done using a GitOps approach, where the desired state of the applications is defined in a Git repository and automatically applied to the cluster.
+
+To accomplish this, you can leverage a set of RKE2 (CAPRKE2) and CAPI features.
+In combination with Fleet, you can configure a xref:user/gitops.adoc[full GitOps workflow].
+
+== CNI (Container Network Interface)
+
+This is a key piece of any Kubernetes cluster, as it provides the networking capabilities
+for the pods and services running in the cluster. No Kubernetes cluster can fully function
+without a CNI plugin installed.
+
+=== RKE2
+
+RKE2, through the CAPRKE2 provider, provides a built-in mechanism to install CNI applications
+in the workload cluster. You simply need to specify the CNI of choice in your
+https://github.com/rancher/cluster-api-provider-rke2/blob/8a17a8ce6045eb12f489e8668954cfb8c245a541/controlplane/api/v1beta2/rke2controlplane_types.go#L204[control plane manifest]. The following is the list of valid CNIs:
+
+* Cilium
+* Calico
+* Canal
+
+[NOTE]
+====
+These CNI solutions are embedded in RKE2 and are ready to be used in air-gapped environments.
+====
+
+A sample `Calico` `RKE2ControlPlane` would look like this (note that fields are omitted for brevity):
+
+[source,yaml]
+----
+apiVersion: controlplane.cluster.x-k8s.io/v1beta2
+kind: RKE2ControlPlane
+metadata:
+  name: control-plane
+spec:
+  [...]
+  version: <version>
+  machineTemplate:
+    spec:
+  replicas: 3
+  serverConfig:
+    cni: calico
+  [...]
+----
+
+=== Other bootstrap/control plane providers (Kubeadm)
+
+[CAUTION]
+====
+Kubeadm (CABPK) does not provide a built-in CNI solution.
+====
+
+If you choose not to use RKE2, you will need to install a CNI solution in your workload cluster:
+
+* https://cluster-api.sigs.k8s.io/user/quick-start#deploy-a-cni-solution[Apply the CNI's Helm chart]
+to your cluster once nodes are marked as `Ready`.
+* Use the xref:#_capi_clusterresourceset[`ClusterResourceSet` feature of CAPI].
+
+
+== CAPI `ClusterResourceSet`
+
+The https://cluster-api.sigs.k8s.io/tasks/cluster-resource-set[`ClusterResourceSet` feature of Cluster API] allows you to install arbitrary
+applications on your CAPI workload clusters.
+
+It is the CAPI solution for automatically applying a set of resources to new and
+existing clusters.
+
+[NOTE]
+====
+`ClusterResourceSet` is namespace-scoped: all resources and clusters referenced
+in the ClusterResourceSet spec need to be in the same namespace as the ClusterResourceSet. 
+====
+
+Leveraging this feature, you can technically install any application in your workload cluster, but is typically used to apply CNI, CSI, or CCM.
+
+The following is an example of a `ClusterResourceSet` that installs the Azure CCM
+in a workload cluster. The `ClusterResourceSet` references a `ConfigMap` that contains
+the Helm chart definition for the Azure CCM (this is extensible to other infrastructure
+providers).
+
+[source,yaml]
+----
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloud-provider-azure
+  namespace: <namespace>
+data:
+  cloud-provider-azure.yaml: |-
+    apiVersion: helm.cattle.io/v1
+    kind: HelmChart
+    metadata:
+      name: azure-ccm
+      namespace: kube-system
+    spec:
+      repo: https://raw.githubusercontent.com/kubernetes-sigs/cloud-provider-azure/master/helm/repo
+      chart: cloud-provider-azure
+      bootstrap: true
+      version: "1.36.0"
+      targetNamespace: kube-system
+      valuesContent: |-
+        infra:
+          clusterName: test-cluster
+        cloudControllerManager:
+          clusterCIDR: 192.168.0.0/16
+---
+apiVersion: addons.cluster.x-k8s.io/v1beta2
+kind: ClusterResourceSet
+metadata:
+  name: cloud-provider-azure
+  namespace: <namespace>
+spec:
+  strategy: Reconcile
+  clusterSelector:
+    matchLabels:
+      cloud-provider: azure
+  resources:
+    - name: cloud-provider-azure
+      kind: ConfigMap
+----
