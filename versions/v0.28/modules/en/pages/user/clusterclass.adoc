@@ -543,15 +543,11 @@ Azure Kubeadm::
 --
 * An Azure ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
 +
-This ClusterClass relies on the CAAPF provider being installed and enabled. For information on how to do this, see the xref:user/caapf.adoc[CAAPF] section.
-+
-Applications like the Azure Cloud Provider and Calico CNI will be installed on downstream Clusters. This is done automatically at Cluster creation by targeted Clusters with specific labels, such as `cloud-provider: azure` and `cni: calico`.
-+
 [tabs]
 =======
 CLI::
 +
-An Azure RKE2 ClusterClass and associated applications can be applied using the examples tool:
+An Azure Kubeadm ClusterClass can be applied using the examples tool:
 +
 [source,bash, subs="attributes"]
 ----
@@ -566,16 +562,6 @@ kubectl::
 ----
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/clusterclasses/azure/kubeadm/clusterclass-kubeadm-example.yaml
 ----
-
-* Additionally, the https://capz.sigs.k8s.io/self-managed/cloud-provider-config[Azure Cloud Provider] will need to be installed on each downstream Cluster, for the nodes to be initialized correctly. For this example we are also going to install https://docs.tigera.io/calico/latest/about/[Calico] as the default CNI.
-+
-We can do this automatically at Cluster creation using the https://rancher.github.io/cluster-api-addon-provider-fleet/[Cluster API Add-on Provider Fleet]. Two `HelmOps` need to be created first, to be applied on the new Cluster via label selectors.
-+
-[source,bash, subs="attributes"]
-----
-kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/ccm/azure/helm-chart.yaml
-kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/cni/calico/helm-chart.yaml
-----
 =======
 
 * Create the Azure Cluster from the example ClusterClass. 
@@ -589,8 +575,6 @@ kind: Cluster
 metadata:
   labels:
     cluster-api.cattle.io/rancher-auto-import: "true"
-    cloud-provider: azure
-    cni: calico
   name: azure-kubeadm-quickstart
 spec:
   clusterNetwork:
@@ -618,6 +602,9 @@ spec:
         name: md-0
         replicas: 1
 ----
++
+* Once the Cluster is initialized, you can install a CNI of your choice and the https://github.com/kubernetes-sigs/cloud-provider-azure[Azure Cloud Provider]. Refer to the upstream https://capz.sigs.k8s.io/[CAPZ documentation].
++
 --
 
 AWS EKS::
