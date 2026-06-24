@@ -1050,15 +1050,11 @@ Docker Kubeadm::
 --
 * A Docker Kubeadm ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
 +
-This ClusterClass relies on the CAAPF provider being installed and enabled. For information on how to do this, see the xref:user/caapf.adoc[CAAPF] section.
-+
-Applications like https://docs.tigera.io/calico/latest/about/[Calico CNI] will be installed on downstream Clusters. This is done automatically at Cluster creation by targeted Clusters with specific labels, such as `cni: calico`.
-+
 [tabs]
 =======
 CLI::
 +
-A Docker Kubeadm ClusterClass and associated applications can be applied using the examples tool:
+A Docker Kubeadm ClusterClass can be applied using the examples tool:
 +
 [source,bash, subs="attributes"]
 ----
@@ -1073,16 +1069,6 @@ kubectl::
 ----
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/clusterclasses/docker/kubeadm/clusterclass-docker-kubeadm.yaml
 ----
-
-* For this example we are also going to install Calico as the default CNI.
-+
-We can do this automatically at Cluster creation using the https://rancher.github.io/cluster-api-addon-provider-fleet/[Cluster API Add-on Provider Fleet].
-Two `HelmOps` need to be created first, to be applied on the new Cluster via label selectors.
-+
-[source,bash, subs="attributes"]
-----
-kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/cni/calico/helm-chart.yaml
-----
 =======
 
 * Create the Docker Kubeadm Cluster from the example ClusterClass.
@@ -1095,8 +1081,6 @@ apiVersion: cluster.x-k8s.io/v1beta2
 kind: Cluster
 metadata:
   name: docker-kubeadm-quickstart
-  labels:
-    cni: calico
 spec:
   clusterNetwork:
     pods:
@@ -1118,6 +1102,9 @@ spec:
           name: md-0
           replicas: 1
 ----
++
+* Once the Cluster is initialized, you can install a CNI of your choice. Refer to the upstream https://cluster-api.sigs.k8s.io/user/quick-start#deploy-a-cni-solution[CAPI documentation].
++
 --
 
 Docker RKE2::
