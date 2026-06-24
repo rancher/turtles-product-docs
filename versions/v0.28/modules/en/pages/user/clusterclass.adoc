@@ -1388,16 +1388,12 @@ vSphere RKE2::
 --
 * A vSphere ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
 +
-This ClusterClass relies on the CAAPF provider being installed and enabled. For information on how to do this, see the xref:user/caapf.adoc[CAAPF] section.
-+
-Applications like the vSphere Cloud Provider, vSphere CSI driver, and Calico CNI will be installed on downstream Clusters. This is done automatically at Cluster creation by targeted Clusters with specific labels, such as `cloud-provider: vsphere`, `csi: vsphere`, and `cni: calico`.
-+
 [tabs]
 =======
 
 CLI::
 +
-A vSphere RKE2 ClusterClass and associated applications can be applied using the examples tool:
+A vSphere RKE2 ClusterClass can be applied using the examples tool:
 +
 [source,bash, subs="attributes"]
 ----
@@ -1412,90 +1408,148 @@ kubectl::
 ----
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/clusterclasses/vsphere/rke2/clusterclass-rke2-example.yaml
 ----
-
-* Additionally, the https://github.com/kubernetes/cloud-provider-vsphere[vSphere Cloud Provider] will need to be installed on each downstream Cluster, for the nodes to be initialized correctly.
-The https://github.com/kubernetes-sigs/vsphere-csi-driver[Container Storage Interface (CSI) driver for vSphere] will be used as storage solution.
-Finally, for this example we are going to install https://docs.tigera.io/calico/latest/about/[Calico] as the default CNI.
-+
-We can install all applications automatically at Cluster creation using the https://rancher.github.io/cluster-api-addon-provider-fleet/[Cluster API Add-on Provider Fleet].
-Two `HelmOps` need to be created first, to be applied on the new Cluster via label selectors.
-+
-[source,bash, subs="attributes"]
-----
-kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/ccm/vsphere/helm-chart.yaml
-kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/cni/calico/helm-chart.yaml
-----
-+
-Since the vSphere CSI driver is not packaged in Helm, we are going to include its entire manifest in a Fleet Bundle, that will be applied to the downstream Cluster.
-+
-[source,bash, subs="attributes"]
-----
-kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/csi/vsphere/bundle.yaml
-----
 =======
 
 * Cluster configuration
 +
 The vSphere Cloud Provider and the vSphere CSI controller need additional configuration to be applied on the downstream Cluster.
-Similarly to the steps above, we can create two additional Fleet Bundles, that will be applied to the downstream Cluster.
-Please beware that these Bundles are configured to target the downstream Cluster by name: `vsphere-rke2-quickstart`.
-If you use a different name for your Cluster, change the Bundle targets accordingly.  
+We can do this automatically using a https://cluster-api.sigs.k8s.io/tasks/cluster-resource-set[ClusterResourceSet].
+The CPI and CSI charts can also be installed using the same workflow by applying the https://docs.rke2.io/add-ons/helm[HelmChart] downstream.
 +
-[source,yaml]
+** Configure the vSphere Cloud Provider controller:
++
+[source,yaml,subs="attributes+"]
 ----
-kind: Bundle
-apiVersion: fleet.cattle.io/v1alpha1
+apiVersion: v1
+kind: ConfigMap
 metadata:
-  name: vsphere-csi-config
-spec:
-  resources:
-  - content: |-
-      apiVersion: v1
-      kind: Secret
-      type: Opaque
-      metadata:
-        name: vsphere-config-secret
-        namespace: vmware-system-csi
-      stringData:
-        csi-vsphere.conf: |+
-          [Global]
-          thumbprint = "<VSPHERE_THUMBPRINT>"
-          [VirtualCenter "<VSPHERE_SERVER>"]
-          user = "<VSPHERE_USER>"
-          password = "<VSPHERE_PASSWORD>"
-          datacenters = "<VSPHERE_DATACENTED>"
-          [Network]
-          public-network = "<VSPHERE_NETWORK>"
-          [Labels]
-          zone = ""
-          region = ""
-  targets:
-  - clusterSelector:
-      matchLabels:
-        csi: vsphere
-        cluster.x-k8s.io/cluster-name: 'vsphere-rke2-quickstart'
+  name: cloud-provider-vsphere
+data:
+  cloud-provider-vsphere.yaml: |-
+    apiVersion: helm.cattle.io/v1
+    kind: HelmChart
+    metadata:
+      name: vsphere-ccm
+      namespace: kube-system
+    spec:
+      repo: https://rke2-charts.rancher.io
+      chart: rancher-vsphere-cpi
+      bootstrap: true
+      targetNamespace: kube-system
+      version: "{vsphere_rke2_cpi_chart_version}"
+      valuesContent: |-
+        vCenter:
+          host: "<VSPHERE_SERVER>"
+          datacenters: "<VSPHERE_DATACENTER>"
+          credentialsSecret:
+            generate: false
+            name: cloud-provider-vsphere-credentials
 ---
-kind: Bundle
-apiVersion: fleet.cattle.io/v1alpha1
+apiVersion: v1
+kind: Secret
 metadata:
-  name: vsphere-cloud-credentials
+  name: cloud-provider-vsphere-credentials
+type: addons.cluster.x-k8s.io/resource-set
+stringData:
+  cloud-provider-vsphere-credentials.yaml: |-
+    apiVersion: v1
+    kind: Secret
+    type: Opaque
+    metadata:
+      name: cloud-provider-vsphere-credentials
+      namespace: kube-system
+    stringData:
+      <VSPHERE_SERVER>.username: "<VSPHERE_USERNAME>"
+      <VSPHERE_SERVER>.password: "<VSPHERE_PASSWORD>"
+---
+apiVersion: addons.cluster.x-k8s.io/v1beta2
+kind: ClusterResourceSet
+metadata:
+  name: cloud-provider-vsphere
 spec:
+  strategy: Reconcile
+  clusterSelector:
+    matchLabels:
+      cluster.x-k8s.io/cluster-name: 'vsphere-rke2-quickstart'
   resources:
-  - content: |-
-      apiVersion: v1
+    - name: cloud-provider-vsphere
+      kind: ConfigMap
+    - name: cloud-provider-vsphere-credentials
       kind: Secret
-      type: Opaque
-      metadata:
-        name: vsphere-cloud-secret
-        namespace: kube-system
-      stringData:
-        <VSPHERE_SERVER>.password: "<VSPHERE_PASSWORD>"
-        <VSPHERE_SERVER>.username: "<VSPHERE_USER>"
-  targets:
-  - clusterSelector:
-      matchLabels:
-        cloud-provider: vsphere
-        cluster.x-k8s.io/cluster-name: 'vsphere-rke2-quickstart'
+----
++
+** Configure the vSphere CSI controller:
++
+[source,yaml,subs="attributes+"]
+----
+apiVersion: v1
+kind: Secret
+metadata:
+  name: csi-vsphere-config
+type: addons.cluster.x-k8s.io/resource-set
+stringData:
+  csi-vsphere-config.yaml: |-
+    apiVersion: v1
+    kind: Secret
+    type: Opaque
+    metadata:
+      name: vsphere-config-secret
+      namespace: vmware-system-csi
+    stringData:
+      csi-vsphere.conf: |+
+        [Global]
+        thumbprint = "<VSPHERE_TLS_THUMBPRINT>"
+
+        [VirtualCenter "<VSPHERE_SERVER>"]
+        user = "<VSPHERE_USERNAME>"
+        password = "<VSPHERE_PASSWORD>"
+        datacenters = "<VSPHERE_DATACENTER>"
+
+        [Network]
+        public-network = "<VSPHERE_NETWORK>"
+
+        [Labels]
+        region = ""
+        zone = ""
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: csi-vsphere
+data:
+  csi-vsphere.yaml: |-
+    apiVersion: helm.cattle.io/v1
+    kind: HelmChart
+    metadata:
+      name: vsphere-csi
+      namespace: kube-system
+    spec:
+      repo: https://rke2-charts.rancher.io
+      chart: rancher-vsphere-csi
+      bootstrap: true
+      targetNamespace: vmware-system-csi
+      createNamespace: true
+      version: "{vsphere_rke2_csi_chart_version}"
+      valuesContent: |-
+        vCenter:
+          configSecret:
+            generate: false
+            name: vsphere-config-secret
+---
+apiVersion: addons.cluster.x-k8s.io/v1beta2
+kind: ClusterResourceSet
+metadata:
+  name: csi-vsphere
+spec:
+  strategy: Reconcile
+  clusterSelector:
+    matchLabels:
+      cluster.x-k8s.io/cluster-name: 'vsphere-rke2-quickstart'
+  resources:
+    - name: csi-vsphere
+      kind: ConfigMap
+    - name: csi-vsphere-config
+      kind: Secret
 ----
 
 * Create the vSphere Cluster from the example ClusterClass
@@ -1511,9 +1565,6 @@ apiVersion: cluster.x-k8s.io/v1beta2
 kind: Cluster
 metadata:
   labels:
-    cni: calico
-    cloud-provider: vsphere
-    csi: vsphere
     cluster-api.cattle.io/rancher-auto-import: "true"
   name: 'vsphere-rke2-quickstart'
 spec:
