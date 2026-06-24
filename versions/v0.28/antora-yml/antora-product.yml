@@ -29,5 +29,7 @@ asciidoc:
     k8s_aws_eks: v1.35.0
     k8s_gcp: v1.36.1
     k8s_gcp_gke: v1.35.3
+    # Examples components versions
+    cloud_provider_azure_version: 1.36.0
 nav:
   - modules/en/nav.adoc
