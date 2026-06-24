@@ -380,10 +380,6 @@ Azure RKE2::
 --
 * An Azure ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
 +
-This ClusterClass relies on the CAAPF provider being installed and enabled. For information on how to do this, see the xref:user/caapf.adoc[CAAPF] section.
-+
-Applications like the Azure Cloud Provider and Calico CNI will be installed on downstream Clusters. This is done automatically at Cluster creation by targeted Clusters with specific labels, such as `cloud-provider: azure` and `cni: calico`.
-+
 [tabs]
 =======
 CLI::
@@ -402,19 +398,50 @@ kubectl::
 ----
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/clusterclasses/azure/rke2/clusterclass-rke2-example.yaml
 ----
+=======
 
 * Additionally, the https://capz.sigs.k8s.io/self-managed/cloud-provider-config[Azure Cloud Provider] will need to be installed on each downstream Cluster, for the nodes to be initialized correctly.
-For this example we are also going to install https://docs.tigera.io/calico/latest/about/[Calico] as the default CNI.
 +
-We can do this automatically at Cluster creation using the https://rancher.github.io/cluster-api-addon-provider-fleet/[Cluster API Add-on Provider Fleet].
-Two `HelmOps` need to be created first, to be applied on the new Cluster via label selectors.
+We can do this automatically using a https://cluster-api.sigs.k8s.io/tasks/cluster-resource-set[ClusterResourceSet] to apply the https://docs.rke2.io/add-ons/helm[HelmChart] downstream.
 +
-[source,bash, subs="attributes"]
+[source,yaml,subs="attributes+"]
 ----
-kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/ccm/azure/helm-chart.yaml
-kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/cni/calico/helm-chart.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloud-provider-azure
+data:
+  cloud-provider-azure.yaml: |-
+    apiVersion: helm.cattle.io/v1
+    kind: HelmChart
+    metadata:
+      name: azure-ccm
+      namespace: kube-system
+    spec:
+      repo: https://raw.githubusercontent.com/kubernetes-sigs/cloud-provider-azure/master/helm/repo
+      chart: cloud-provider-azure
+      bootstrap: true
+      version: "{cloud_provider_azure_version}"
+      targetNamespace: kube-system
+      valuesContent: |-
+        infra:
+          clusterName: azure-quickstart
+        cloudControllerManager:
+          clusterCIDR: 192.168.0.0/16
+---
+apiVersion: addons.cluster.x-k8s.io/v1beta2
+kind: ClusterResourceSet
+metadata:
+  name: cloud-provider-azure
+spec:
+  strategy: Reconcile
+  clusterSelector:
+    matchLabels:
+      cluster.x-k8s.io/cluster-name: 'azure-quickstart'
+  resources:
+    - name: cloud-provider-azure
+      kind: ConfigMap
 ----
-=======
 
 * Create the Azure Cluster from the example ClusterClass
 +
@@ -427,8 +454,6 @@ kind: Cluster
 metadata:
   labels:
     cluster-api.cattle.io/rancher-auto-import: "true"
-    cloud-provider: azure
-    cni: calico
   name: azure-quickstart
 spec:
   clusterNetwork:
@@ -1050,15 +1075,11 @@ Docker Kubeadm::
 --
 * A Docker Kubeadm ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
 +
-This ClusterClass relies on the CAAPF provider being installed and enabled. For information on how to do this, see the xref:user/caapf.adoc[CAAPF] section.
-+
-Applications like https://docs.tigera.io/calico/latest/about/[Calico CNI] will be installed on downstream Clusters. This is done automatically at Cluster creation by targeted Clusters with specific labels, such as `cni: calico`.
-+
 [tabs]
 =======
 CLI::
 +
-A Docker Kubeadm ClusterClass and associated applications can be applied using the examples tool:
+A Docker Kubeadm ClusterClass can be applied using the examples tool:
 +
 [source,bash, subs="attributes"]
 ----
@@ -1073,16 +1094,6 @@ kubectl::
 ----
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/clusterclasses/docker/kubeadm/clusterclass-docker-kubeadm.yaml
 ----
-
-* For this example we are also going to install Calico as the default CNI.
-+
-We can do this automatically at Cluster creation using the https://rancher.github.io/cluster-api-addon-provider-fleet/[Cluster API Add-on Provider Fleet].
-Two `HelmOps` need to be created first, to be applied on the new Cluster via label selectors.
-+
-[source,bash, subs="attributes"]
-----
-kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/cni/calico/helm-chart.yaml
-----
 =======
 
 * Create the Docker Kubeadm Cluster from the example ClusterClass.
@@ -1095,8 +1106,6 @@ apiVersion: cluster.x-k8s.io/v1beta2
 kind: Cluster
 metadata:
   name: docker-kubeadm-quickstart
-  labels:
-    cni: calico
 spec:
   clusterNetwork:
     pods:
@@ -1118,6 +1127,9 @@ spec:
           name: md-0
           replicas: 1
 ----
++
+* Once the Cluster is initialized, you can install a CNI of your choice. Refer to the upstream https://cluster-api.sigs.k8s.io/user/quick-start#deploy-a-cni-solution[CAPI documentation].
++
 --
 
 Docker RKE2::

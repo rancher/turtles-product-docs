@@ -23,5 +23,6 @@ asciidoc:
     # Examples components versions
     vsphere_rke2_cpi_chart_version: 1.14.000
     vsphere_rke2_csi_chart_version: 3.7.0-rancher100
+    cloud_provider_azure_version: 1.36.0
 nav:
   - modules/en/nav.adoc
