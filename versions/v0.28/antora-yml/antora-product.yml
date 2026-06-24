@@ -29,5 +29,8 @@ asciidoc:
     k8s_aws_eks: v1.35.0
     k8s_gcp: v1.36.1
     k8s_gcp_gke: v1.35.3
+    # Examples components versions
+    vsphere_rke2_cpi_chart_version: 1.14.000
+    vsphere_rke2_csi_chart_version: 3.7.0-rancher100
 nav:
   - modules/en/nav.adoc
