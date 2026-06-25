@@ -1173,10 +1173,6 @@ vSphere Kubeadm::
 --
 * A vSphere ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
 +
-This ClusterClass relies on the CAAPF provider being installed and enabled. For information on how to do this, see the xref:user/caapf.adoc[CAAPF] section.
-+
-Applications like the vSphere Cloud Provider, vSphere CSI driver, and Calico CNI will be installed on downstream Clusters. This is done automatically at Cluster creation by targeted Clusters with specific labels, such as `cloud-provider: vsphere`, `csi: vsphere`, and `cni: calico`.
-+
 [tabs]
 =======
 CLI::
@@ -1196,90 +1192,7 @@ kubectl::
 ----
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/clusterclasses/vsphere/kubeadm/clusterclass-kubeadm-example.yaml
 ----
-
-* Additionally, the https://github.com/kubernetes/cloud-provider-vsphere[vSphere Cloud Provider] will need to be installed on each downstream Cluster, for the nodes to be initialized correctly.
-The https://github.com/kubernetes-sigs/vsphere-csi-driver[Container Storage Interface (CSI) driver for vSphere] will be used as storage solution.
-Finally, for this example we are going to install https://docs.tigera.io/calico/latest/about/[Calico] as the default CNI.
-We can install all applications automatically at Cluster creation using the https://rancher.github.io/cluster-api-addon-provider-fleet/[Cluster API Add-on Provider Fleet].
-Two `HelmOps` need to be created first, to be applied on the new Cluster via label selectors.
-+
-[source,bash, subs="attributes"]
-----
-kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/ccm/vsphere/helm-chart.yaml
-kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/cni/calico/helm-chart.yaml
-----
-+
-Since the vSphere CSI driver is not packaged in Helm, we are going to include its entire manifest in a Fleet Bundle, that will be applied to the downstream Cluster.
-+
-[source,bash, subs="attributes"]
-----
-kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/csi/vsphere/bundle.yaml
-----
 =======
-
-* Cluster configuration
-+
-The vSphere Cloud Provider and the vSphere CSI controller need additional configuration to be applied on the downstream Cluster.
-Similarly to the steps above, we can create two additional Fleet Bundles, that will be applied to the downstream Cluster.
-Please beware that these Bundles are configured to target the downstream Cluster by name: `vsphere-kubeadm-quickstart`.
-If you use a different name for your Cluster, change the Bundle targets accordingly.  
-+
-[source,yaml]
-----
-kind: Bundle
-apiVersion: fleet.cattle.io/v1alpha1
-metadata:
-  name: vsphere-csi-config
-spec:
-  resources:
-  - content: |-
-      apiVersion: v1
-      kind: Secret
-      type: Opaque
-      metadata:
-        name: vsphere-config-secret
-        namespace: vmware-system-csi
-      stringData:
-        csi-vsphere.conf: |+
-          [Global]
-          thumbprint = "<VSPHERE_THUMBPRINT>"
-          [VirtualCenter "<VSPHERE_SERVER>"]
-          user = "<VSPHERE_USER>"
-          password = "<VSPHERE_PASSWORD>"
-          datacenters = "<VSPHERE_DATACENTED>"
-          [Network]
-          public-network = "<VSPHERE_NETWORK>"
-          [Labels]
-          zone = ""
-          region = ""
-  targets:
-  - clusterSelector:
-      matchLabels:
-        csi: vsphere
-        cluster.x-k8s.io/cluster-name: 'vsphere-kubeadm-quickstart'
----
-kind: Bundle
-apiVersion: fleet.cattle.io/v1alpha1
-metadata:
-  name: vsphere-cloud-credentials
-spec:
-  resources:
-  - content: |-
-      apiVersion: v1
-      kind: Secret
-      type: Opaque
-      metadata:
-        name: vsphere-cloud-secret
-        namespace: kube-system
-      stringData:
-        <VSPHERE_SERVER>.password: "<VSPHERE_PASSWORD>"
-        <VSPHERE_SERVER>.username: "<VSPHERE_USER>"
-  targets:
-  - clusterSelector:
-      matchLabels:
-        cloud-provider: vsphere
-        cluster.x-k8s.io/cluster-name: 'vsphere-kubeadm-quickstart'
-----
 
 * Create the vSphere Cluster from the example ClusterClass
 +
@@ -1342,6 +1255,7 @@ spec:
     - name: kubeVIPInterface
       value: <KUBE_VIP_INTERFACE>
 ----
+* Once the Cluster is initialized, you can install a CNI of your choice, the https://github.com/kubernetes/cloud-provider-vsphere[vSphere Cloud Provider], and the https://github.com/kubernetes-sigs/vsphere-csi-driver[Container Storage Interface (CSI) driver for vSphere].
 --
 
 vSphere RKE2::
