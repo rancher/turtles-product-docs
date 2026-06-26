@@ -1,5 +1,5 @@
 = Cluster API Addon Provider Fleet (*deprecated*)
-:revdate: 2026-06-09
+:revdate: 2026-06-26
 :page-revdate: {revdate}
 
 == Overview
@@ -136,11 +136,15 @@ For more information on the feature, please refer to https://rancher.github.io/c
 
 == Example - deploying kindnet CNI
 
-*Demo*: image:https://asciinema.org/a/seEFHKz5DVpUe5CQvWcddSJBp.svg[asciicast,link=https://asciinema.org/a/seEFHKz5DVpUe5CQvWcddSJBp]
+*Demo*:
+
+image:https://asciinema.org/a/seEFHKz5DVpUe5CQvWcddSJBp.svg[CAAPF - deploying kindnet CNI, link=https://asciinema.org/a/seEFHKz5DVpUe5CQvWcddSJBp, window="_blank"]
 
 == Example - deploying Calico CNI using GitRepo
 
-*Demo*: image:https://asciinema.org/a/706570.svg[asciicast,link=https://asciinema.org/a/706570]
+*Demo*: 
+
+image:https://asciinema.org/a/706570.svg[CAAPF - Installing Calico via GitRepo,link=https://asciinema.org/a/706570, window="_blank"]
 
 For a tutorial and prerequisites, please refer to https://rancher.github.io/cluster-api-addon-provider-fleet/03_tutorials/04_installing_calico_via_gitrepo.html[gitrepo tutorial] section in the book.
 

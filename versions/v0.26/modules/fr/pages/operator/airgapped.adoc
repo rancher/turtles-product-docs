@@ -1,6 +1,6 @@
 = Environnement isolé physiquement
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2026-06-02
+:revdate: 2026-06-26
 :page-revdate: {revdate}
 
 {product_name} offre un support pour un environnement isolé physiquement dès le départ en tirant parti des fonctionnalités de l'Opérateur de l'API Cluster, la dépendance requise pour installer {product_name}.
@@ -283,7 +283,7 @@ Utilisation de l'opérateur kubectl::
 --
 Vous pouvez construire des artefacts OCI pour tout fournisseur CAPI répertorié dans la configuration {product_name} : https://github.com/rancher/turtles/blob/main/internal/controllers/clusterctl/config-community.yaml
 
-Installez le plugin https://cluster-api-operator.sigs.k8s.io/03_topics/03_plugin/01_installation[cluster-api-operator] pour `kubectl`.
+Installez le plugin https://cluster-api-operator.sigs.k8s.io/topics/plugin/installation[cluster-api-operator] pour `kubectl`.
 
 Clonez le dépôt officiel https://github.com/kubernetes-sigs/cluster-api-provider-azure/[Azure CAPI Provider repository] et naviguez vers le répertoire du projet.
 

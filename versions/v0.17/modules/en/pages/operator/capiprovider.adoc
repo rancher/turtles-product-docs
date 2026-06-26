@@ -1,5 +1,5 @@
 = Install CAPI Providers
-:revdate: 2025-02-27
+:revdate: 2026-06-26
 :page-revdate: {revdate}
 :sidebar_position: 2
 
@@ -7,7 +7,7 @@ The `CAPIProvider` resource allows managing Cluster API Operator manifests in a 
 
 `CAPIProvider` follows a GitOps model - the spec fields are declarative user inputs. The controller only updates status.
 
-Every field provided by the upstream CAPI Operator resource for the desired `spec.type` is also available in the spec of the `CAPIProvider` resource. Feel free to refer to upstream configuration https://cluster-api-operator.sigs.k8s.io/03_topics/02_configuration/[guides] for advanced scenarios.
+Every field provided by the upstream CAPI Operator resource for the desired `spec.type` is also available in the spec of the `CAPIProvider` resource. Feel free to refer to upstream configuration https://cluster-api-operator.sigs.k8s.io/topics/configuration/[guides] for advanced scenarios.
 
 == Usage
 

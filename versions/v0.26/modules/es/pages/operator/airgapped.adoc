@@ -1,6 +1,6 @@
 = Entorno aislado
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2026-06-02
+:revdate: 2026-06-26
 :page-revdate: {revdate}
 
 {product_name} proporciona soporte para un entorno aislado de forma predeterminada aprovechando las características del Operador de la API de Clúster, la dependencia requerida para instalar {product_name}.
@@ -283,7 +283,7 @@ Usando el operador kubectl::
 --
 Puedes construir artefactos OCI para cualquier proveedor CAPI listado en la configuración {product_name}: https://github.com/rancher/turtles/blob/main/internal/controllers/clusterctl/config-community.yaml
 
-Instala el plugin https://cluster-api-operator.sigs.k8s.io/03_topics/03_plugin/01_installation[cluster-api-operator] para `kubectl`.
+Instala el plugin https://cluster-api-operator.sigs.k8s.io/topics/plugin/installation[cluster-api-operator] para `kubectl`.
 
 Clona el repositorio oficial https://github.com/kubernetes-sigs/cluster-api-provider-azure/[Azure CAPI Provider repository] y navega al directorio del proyecto.
 

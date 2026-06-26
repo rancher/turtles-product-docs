@@ -1,6 +1,6 @@
 = Air-Gapped-Umgebung
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2026-06-02
+:revdate: 2026-06-26
 :page-revdate: {revdate}
 
 {product_name} bietet sofortige Unterstützung für eine Air-Gapped-Umgebung, indem es Funktionen des Cluster-API-Operators nutzt, der die erforderliche Abhängigkeit für die Installation von {product_name} darstellt.
@@ -283,7 +283,7 @@ Verwendung des kubectl-Operators::
 --
 Sie können OCI-Artefakte für jeden CAPI Provider erstellen, der in der {product_name} Konfiguration aufgeführt ist: https://github.com/rancher/turtles/blob/main/internal/controllers/clusterctl/config-community.yaml
 
-Installieren Sie das https://cluster-api-operator.sigs.k8s.io/03_topics/03_plugin/01_installation[cluster-api-operator] Plugin für `kubectl`.
+Installieren Sie das https://cluster-api-operator.sigs.k8s.io/topics/plugin/installation[cluster-api-operator] Plugin für `kubectl`.
 
 Klonen Sie das offizielle https://github.com/kubernetes-sigs/cluster-api-provider-azure/[Azure CAPI Provider-Repository] und navigieren Sie zum Projektverzeichnis.
 

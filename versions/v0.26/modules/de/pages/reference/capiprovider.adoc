@@ -1,13 +1,13 @@
 = CAPI-Anbieter
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2025-08-25
+:revdate: 2026-06-26
 :page-revdate: {revdate}
 
 Die `CAPIProvider` Ressource ermöglicht die Verwaltung von Cluster-API-Operator-Manifesten auf deklarative Weise. Sie wird verwendet, um Cluster-API-Anbieter wie AWS, vSphere usw. bereitzustellen und zu konfigurieren.
 
 `CAPIProvider` folgt einem GitOps-Modell - die Spezifikationsfelder sind deklarative Benutzereingaben. Der Controller aktualisiert nur den Status.
 
-Jedes Feld, das von der Upstream CAPI-Operator `CAPIProviderSpec` Ressource bereitgestellt wird, ist auch in der Spezifikation der `CAPIProvider` Ressource verfügbar. Fühlen Sie sich frei, auf die Upstream-Konfiguration link:https://cluster-api-operator.sigs.k8s.io/03_topics/02_configuration/05_provider-spec-configuration[Leitfäden] für erweiterte Szenarien zu verweisen.
+Jedes Feld, das von der Upstream CAPI-Operator `CAPIProviderSpec` Ressource bereitgestellt wird, ist auch in der Spezifikation der `CAPIProvider` Ressource verfügbar. Fühlen Sie sich frei, auf die Upstream-Konfiguration link:https://cluster-api-operator.sigs.k8s.io/topics/configuration/provider-spec-configuration[Leitfäden] für erweiterte Szenarien zu verweisen.
 
 Alle xref:../overview/certified.adoc[zertifizierten] CAPI-Anbieter werden mit einer eingebetteten Konfiguration konfiguriert. Um dies zu überschreiben, muss eine benutzerdefinierte xref:./clusterctlconfig.adoc#_override_a_certified_provider_version[ClusterctlConfig] erstellt werden.
 

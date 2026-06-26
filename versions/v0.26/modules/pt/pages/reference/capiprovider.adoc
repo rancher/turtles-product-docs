@@ -1,13 +1,13 @@
 = Fornecedor de CAPI
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2025-08-25
+:revdate: 2026-06-26
 :page-revdate: {revdate}
 
 O recurso `CAPIProvider` permite gerenciar manifestos do Operador da API de Cluster de forma declarativa. É utilizado para provisionar e configurar provedores da API de Cluster como AWS, vSphere etc.
 
 `CAPIProvider` segue um modelo GitOps - os campos de especificação são entradas declarativas do usuário. O controlador apenas atualiza o status.
 
-Todos os campos fornecidos pelo recurso upstream do CAPI Operator `CAPIProviderSpec` também estão disponíveis na especificação do recurso `CAPIProvider`. Sinta-se à vontade para consultar os link:https://cluster-api-operator.sigs.k8s.io/03_topics/02_configuration/05_provider-spec-configuration[guias] de configuração upstream para cenários avançados.
+Todos os campos fornecidos pelo recurso upstream do CAPI Operator `CAPIProviderSpec` também estão disponíveis na especificação do recurso `CAPIProvider`. Sinta-se à vontade para consultar os link:https://cluster-api-operator.sigs.k8s.io/topics/configuration/provider-spec-configuration[guias] de configuração upstream para cenários avançados.
 
 Todos os Provedores CAPI xref:../overview/certified.adoc[certificados] são configurados usando uma configuração incorporada. Para substituí-la, uma xref:./clusterctlconfig.adoc#_override_a_certified_provider_version[ClusterctlConfig] personalizada precisa ser criada.
 

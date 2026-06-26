@@ -1,13 +1,13 @@
 = CAPIプロバイダ
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2025-08-25
+:revdate: 2026-06-26
 :page-revdate: {revdate}
 
 `CAPIProvider`リソースは、Cluster API Operatorマニフェストを宣言的に管理することを可能にします。これは、AWS、vSphereなどのCluster APIプロバイダをプロビジョニングおよび設定するために使用されます。
 
 `CAPIProvider`はGitOpsモデルに従い、specフィールドは宣言的なユーザー入力です。コントローラーはステータスのみを更新します。
 
-アップストリームのCAPI Operator `CAPIProviderSpec`リソースによって提供されるすべてのフィールドは、`CAPIProvider`リソースのspecにも利用可能です。高度なシナリオについては、アップストリームの設定link:https://cluster-api-operator.sigs.k8s.io/03_topics/02_configuration/05_provider-spec-configuration[ガイド]を参照してください。
+アップストリームのCAPI Operator `CAPIProviderSpec`リソースによって提供されるすべてのフィールドは、`CAPIProvider`リソースのspecにも利用可能です。高度なシナリオについては、アップストリームの設定link:https://cluster-api-operator.sigs.k8s.io/topics/configuration/provider-spec-configuration[ガイド]を参照してください。
 
 すべてのxref:../overview/certified.adoc[認定]CAPIプロバイダは、埋め込まれた設定を使用して設定されています。これを上書きするには、カスタムxref:./clusterctlconfig.adoc#_override_a_certified_provider_version[ClusterctlConfig]を作成する必要があります。
 

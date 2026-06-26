@@ -1,5 +1,5 @@
 = Air-gapped Environment
-:revdate: 2026-06-02
+:revdate: 2026-06-26
 :page-revdate: {revdate}
 
 {product_name} provides support for an air-gapped environment out-of-the-box by leveraging features of the Cluster API Operator, the required dependency for installing {product_name}.
@@ -133,7 +133,7 @@ Using kubectl operator::
 --
 You can build OCI artifacts for any CAPI Provider listed in the {product_name} configuration: https://github.com/rancher/turtles/blob/main/internal/controllers/clusterctl/config-community.yaml
 
-Install the https://cluster-api-operator.sigs.k8s.io/03_topics/03_plugin/01_installation[cluster-api-operator] plugin for `kubectl`.
+Install the https://cluster-api-operator.sigs.k8s.io/topics/plugin/installation[cluster-api-operator] plugin for `kubectl`.
 
 Clone the official https://github.com/kubernetes-sigs/cluster-api-provider-azure/[Azure CAPI Provider repository] and navigate to the project directory.
 
