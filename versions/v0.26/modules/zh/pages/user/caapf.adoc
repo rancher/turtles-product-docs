@@ -1,6 +1,6 @@
 = 集群 API 附加产品提供程序 Fleet
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2026-05-12
+:revdate: 2026-06-26
 :page-revdate: {revdate}
 
 == 概述
@@ -70,10 +70,14 @@ endif::[]
 
 == 示例 - 部署kindnet CNI
 
-*演示*：image:https://asciinema.org/a/seEFHKz5DVpUe5CQvWcddSJBp.svg[asciicast,link=https://asciinema.org/a/seEFHKz5DVpUe5CQvWcddSJBp]
+*演示*
+
+image:https://asciinema.org/a/seEFHKz5DVpUe5CQvWcddSJBp.svg[CAAPF - deploying kindnet CNI, link=https://asciinema.org/a/seEFHKz5DVpUe5CQvWcddSJBp, window="_blank"]
 
 == 示例 - 使用 GitRepo 部署 Calico CNI
 
-*演示*：image:https://asciinema.org/a/706570.svg[asciicast,link=https://asciinema.org/a/706570]
+*演示*
+
+image:https://asciinema.org/a/706570.svg[CAAPF - Installing Calico via GitRepo,link=https://asciinema.org/a/706570, window="_blank"]
 
 有关教程和先决条件，请参阅书中的https://rancher.github.io/cluster-api-addon-provider-fleet/03_tutorials/04_installing_calico_via_gitrepo.html[GitRepo教程]部分。

@@ -1,13 +1,13 @@
 = CAPI 提供程序
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2025-08-25
+:revdate: 2026-06-26
 :page-revdate: {revdate}
 
 `CAPIProvider` 资源允许以声明式方式管理集群 API 操作员清单。它用于部署和配置 CAPI 提供程序，如 AWS、vSphere 等。
 
 `CAPIProvider` 遵循 GitOps 模型 - 规格字段是声明式用户输入。控制器仅更新状态。
 
-上游 CAPI 操作员 `CAPIProviderSpec` 资源提供的每个字段在 `CAPIProvider` 资源的规格中也可用。请随时参考上游配置 link:https://cluster-api-operator.sigs.k8s.io/03_topics/02_configuration/05_provider-spec-configuration[指南] 以获取高级场景。
+上游 CAPI 操作员 `CAPIProviderSpec` 资源提供的每个字段在 `CAPIProvider` 资源的规格中也可用。请随时参考上游配置 link:https://cluster-api-operator.sigs.k8s.io/topics/configuration/provider-spec-configuration[指南] 以获取高级场景。
 
 所有 xref:../overview/certified.adoc[certified] CAPI 提供程序均使用嵌入式配置进行配置。为了覆盖它，需要创建一个自定义 xref:./clusterctlconfig.adoc#_override_a_certified_provider_version[ClusterctlConfig]。
 

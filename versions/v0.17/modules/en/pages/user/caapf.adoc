@@ -1,5 +1,5 @@
 = Cluster API Addon Provider Fleet
-:revdate: 2025-11-14
+:revdate: 2026-06-26
 :page-revdate: {revdate}
 
 == Overview
@@ -47,7 +47,9 @@ The following example requires `Fleet` version `>=v0.10.1-rc.1`, which is not a 
 ====
 
 
-*Demo*: image:https://asciinema.org/a/seEFHKz5DVpUe5CQvWcddSJBp.svg[asciicast,link=https://asciinema.org/a/seEFHKz5DVpUe5CQvWcddSJBp]
+*Demo*:
+
+image:https://asciinema.org/a/seEFHKz5DVpUe5CQvWcddSJBp.svg[CAAPF - deploying kindnet CNI, link=https://asciinema.org/a/seEFHKz5DVpUe5CQvWcddSJBp, window="_blank"]
 
 [TIP]
 ====

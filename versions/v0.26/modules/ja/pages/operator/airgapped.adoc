@@ -1,6 +1,6 @@
 = エアギャップ(された)環境
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2026-06-02
+:revdate: 2026-06-26
 :page-revdate: {revdate}
 
 {product_name}は、{product_name}をインストールするための必須依存関係であるCluster API Operatorの機能を活用することで、エアギャップ(された)環境を即座にサポートします。
@@ -283,7 +283,7 @@ kubectlオペレーターを使用する::
 --
 {product_name}構成にリストされている任意のCAPIプロバイダーのためにOCIアーティファクトをビルドできます: https://github.com/rancher/turtles/blob/main/internal/controllers/clusterctl/config-community.yaml
 
-https://cluster-api-operator.sigs.k8s.io/03_topics/03_plugin/01_installation[cluster-api-operator]プラグインを`kubectl`にインストールします。
+https://cluster-api-operator.sigs.k8s.io/topics/plugin/installation[cluster-api-operator]プラグインを`kubectl`にインストールします。
 
 公式のhttps://github.com/kubernetes-sigs/cluster-api-provider-azure/[Azure CAPI Providerリポジトリ]をクローンし、プロジェクトディレクトリに移動します。
 

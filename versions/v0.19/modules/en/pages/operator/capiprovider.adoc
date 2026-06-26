@@ -1,12 +1,12 @@
 = Install CAPI Providers
-:revdate: 2025-05-06
+:revdate: 2026-06-26
 :page-revdate: {revdate}
 
 The `CAPIProvider` resource allows managing Cluster API Operator manifests in a declarative way. It is used to provision and configure Cluster API providers like AWS, vSphere etc.
 
 `CAPIProvider` follows a GitOps model - the spec fields are declarative user inputs. The controller only updates status.
 
-Every field provided by the upstream CAPI Operator resource for the desired `spec.type` is also available in the spec of the `CAPIProvider` resource. Feel free to refer to upstream configuration https://cluster-api-operator.sigs.k8s.io/03_topics/02_configuration/[guides] for advanced scenarios.
+Every field provided by the upstream CAPI Operator resource for the desired `spec.type` is also available in the spec of the `CAPIProvider` resource. Feel free to refer to upstream configuration https://cluster-api-operator.sigs.k8s.io/topics/configuration/[guides] for advanced scenarios.
 
 == Usage
 

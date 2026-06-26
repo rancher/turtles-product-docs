@@ -1,6 +1,6 @@
 = Cluster APIアドオンプロバイダー Fleet
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2026-05-12
+:revdate: 2026-06-26
 :page-revdate: {revdate}
 
 == 概要
@@ -70,10 +70,14 @@ endif::[]
 
 == 例 - kindnet CNIのデプロイ
 
-*デモ*: image:https://asciinema.org/a/seEFHKz5DVpUe5CQvWcddSJBp.svg[asciicast,link=https://asciinema.org/a/seEFHKz5DVpUe5CQvWcddSJBp]
+*デモ*:
+
+image:https://asciinema.org/a/seEFHKz5DVpUe5CQvWcddSJBp.svg[CAAPF - deploying kindnet CNI, link=https://asciinema.org/a/seEFHKz5DVpUe5CQvWcddSJBp, window="_blank"]
 
 == 例 - GitRepoを使用したCalico CNIのデプロイ
 
-*デモ*: image:https://asciinema.org/a/706570.svg[asciicast,link=https://asciinema.org/a/706570]
+*デモ*:
+
+image:https://asciinema.org/a/706570.svg[CAAPF - Installing Calico via GitRepo,link=https://asciinema.org/a/706570, window="_blank"]
 
 チュートリアルと前提条件については、書籍のhttps://rancher.github.io/cluster-api-addon-provider-fleet/03_tutorials/04_installing_calico_via_gitrepo.html[gitrepoチュートリアル]セクションを参照してください。
