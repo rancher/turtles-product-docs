@@ -35,6 +35,7 @@ endif::[]
 * Security
 ** xref:security/slsa.adoc[SLSA]
 * xref:changelogs/index.adoc[Release Notes]
+** xref:changelogs/changelogs/v0.24.5.adoc[v0.24.5]
 ** xref:changelogs/changelogs/v0.24.4.adoc[v0.24.4]
 ** xref:changelogs/changelogs/v0.24.3.adoc[v0.24.3]
 ** xref:changelogs/changelogs/v0.24.2.adoc[v0.24.2]
