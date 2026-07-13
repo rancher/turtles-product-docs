@@ -7,7 +7,7 @@ content:
   sources:
     - url: ./
       branches: HEAD
-      start_paths: [versions/*]
+      start_paths: [versions/v*]
 
 # Description: SUSE UI bundle
 ui:
