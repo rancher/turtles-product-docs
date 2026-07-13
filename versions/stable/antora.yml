@@ -1,1 +1,14 @@
-antora-yml/antora-product.yml
+name: turtles
+title: Rancher Turtles
+version: stable
+display_version: 'Stable'
+start_page: en:index.adoc
+asciidoc:
+  attributes:
+    build-type: community
+    product_name: Rancher Turtles
+    #Prerequisite and Component version attributes
+    rancher_version: v2.14.0
+    turtles_version: v0.26.3
+nav:
+  - modules/en/nav.adoc
