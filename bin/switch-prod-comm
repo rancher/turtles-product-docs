@@ -45,9 +45,6 @@ for version in $(fetch_versions_list); do
 
   dprint "Processing $version"
   cd "$docs_root/$version" || px_error "failed to cd to $docs_root/$version"
-  
-  # Clean up any existing symlink/file before creating the new one
-  rm -f antora.yml
 
   if [ -f antora-yml/antora-"$target_version".yml ]; then
     if ln -sf antora-yml/antora-"$target_version".yml antora.yml; then
