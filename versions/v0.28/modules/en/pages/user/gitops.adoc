@@ -100,3 +100,37 @@ dependsOn:
   - name: core      # Ensure core bundle is installed first
   - name: infra-aws # Wait for AWS provider installation
 ----
+
+== Label Propagation from CAPI Clusters to Rancher Clusters
+
+[TIP]
+====
+You can leverage label propagation to effectively orchestrate your Fleet GitOps workflows.
+====
+
+When Turtles imports a CAPI cluster into Rancher, it automatically copies labels from the CAPI `Cluster` object onto the corresponding Rancher management cluster object.
+
+=== Why This Matters
+
+You can use labels on Fleet clusters to determine which clusters a `GitRepo` or `Bundle` targets.
+By mirroring labels from your CAPI clusters to their Rancher counterparts, you can write Fleet selectors against the same labels you already use to organize your CAPI infrastructure, without having to manually re-label clusters in Rancher.
+
+=== Behavior
+
+* Labels are *merged*, not replaced: any labels already present on the Rancher cluster that were not sourced from the CAPI cluster are preserved.
+* Labels are propagated on every reconcile, so adding a label to a CAPI cluster will eventually be reflected on the Rancher cluster.
+* Labels whose keys contain `cattle.io` or `x-k8s.io` are *excluded* from propagation to avoid overwriting Rancher-internal and Cluster API-internal labels.
+
+=== Example
+
+If a CAPI cluster carries the following labels:
+
+[source,yaml]
+----
+labels:
+  environment: production
+  team: platform
+----
+
+The corresponding Rancher cluster will also carry those labels.
+A Fleet `GitRepo` with a cluster selector targeting `environment: production` will then automatically include that cluster.
