@@ -1,0 +1,58 @@
+= v0.26.4
+:revdate: 2026-07-27
+:page-revdate: {revdate}
+
+== Release Date: 2026-07-21
+
+== Description
+
+This maintenance release includes a fix for cluster registration token handling, alongside routine dependency and toolchain updates.
+
+=== Notable Changes
+
+* Fix cluster registration token handling (https://github.com/rancher/turtles/pull/2639[#2639]).
+* Bump providers chart to v0.26.4.
+* Various dependency and GitHub Actions updates.
+
+=== Bug Fixes
+
+* Update cluster registration token handling by @rancher-backport-assistant[bot] in https://github.com/rancher/turtles/pull/2639[#2639].
+
+=== Other Changes
+
+* Update mcr.microsoft.com/devcontainers/go Docker tag to v1.26 (release/v0.26) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2537[#2537].
+* Update golang.org/x dependencies (release/v0.26) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2530[#2530].
+* Update rancher/ecm-distro-tools digest to b4bf517 (release/v0.26) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2529[#2529].
+* Update module github.com/caarlos0/env/v11 to v11.4.1 (release/v0.26) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2544[#2544].
+* Update module github.com/onsi/ginkgo/v2 to v2.30.0 (release/v0.26) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2546[#2546].
+* Update ghcr.io/devcontainers/features/docker-in-docker Docker tag to v3 (release/v0.26) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2547[#2547].
+* Update rancher/ecm-distro-tools digest to ba6da45 (release/v0.26) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2543[#2543].
+* Update rancher/kuberlr-kubectl Docker tag to v7.1.1 (release/v0.26) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2550[#2550].
+* Update ginkgo and gomega (release/v0.26) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2551[#2551].
+* Update module code.gitea.io/sdk/gitea to v0.23.2 (release/v0.26) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2538[#2538].
+* Update GitHub Actions (release/v0.26) (major) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2562[#2562].
+* [release/v0.26] chore: bump golang.org/x/net to v0.55.0 by @yiannistri in https://github.com/rancher/turtles/pull/2568[#2568].
+* Update actions/setup-go digest to 924ae3a (release/v0.26) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2570[#2570].
+* Update Azure/setup-helm digest to 9bc31f4 (release/v0.26) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2571[#2571].
+* [release/v0.26] chore: bump providers chart version to 0.26.4-rc.0 and golang/x/crypto to v0.53.0 by @yiannistri in https://github.com/rancher/turtles/pull/2585[#2585].
+* [release/v0.26] chore: bump oras.land/oras-go/v2 to v2.6.1 by @furkatgofurov7 in https://github.com/rancher/turtles/pull/2622[#2622].
+* Update GitHub Actions (release/v0.26) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2633[#2633].
+* Update docker/dockerfile Docker tag to v1.25 (release/v0.26) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2643[#2643].
+* Update GitHub Actions (release/v0.26) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2642[#2642].
+* Chore: prepare providers chart for 0.26.4-rc.2 release by @furkatgofurov7 in https://github.com/rancher/turtles/pull/2645[#2645].
+
+==== Full Changelog: 
+
+Review the full list of changes: https://github.com/rancher/turtles/compare/v0.26.3%E2%80%A6v0.26.4[v0.26.3...v0.26.4]
+
+== Download
+
+[cols="3,1,1" options="header" frame="all" grid="rows"]
+|===
+| Name | Created At | Updated At
+
+| link:https://github.com/rancher/turtles/releases/download/v0.26.4/rancher-turtles-0.26.4.tgz[rancher-turtles-0.26.4.tgz] | 2026-07-21 | 2026-07-21
+
+|===
+
+__Information retrieved from https://github.com/rancher/turtles/releases/tag/v0.26.4[v0.26.4 GitHub release].__
