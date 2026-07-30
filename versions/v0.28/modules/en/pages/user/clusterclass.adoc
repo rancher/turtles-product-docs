@@ -11,7 +11,7 @@ In this section we cover using https://cluster-api.sigs.k8s.io/tasks/experimenta
 
 [CAUTION]
 ====
-In previous versions of {product_name}, CAAPF was installed by default. From Rancher 2.14.1 onwards, it is no longer part of {product_name} and if required it needs to be installed separately. The majority of the examples shown in this page are relying on CAAPF being installed and enabled. For more information on how to do this, see the xref:user/caapf.adoc[CAAPF] section.
+In previous versions of {product_name}, CAAPF was installed by default. From Rancher 2.14.1 onwards, it is no longer part of {product_name} and if required it needs to be installed separately. For more information on how to do this, see the xref:user/caapf.adoc[CAAPF] section.
 ====
 
 [WARNING]
@@ -700,10 +700,6 @@ AWS Kubeadm::
 --
 * An AWS Kubeadm ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
 +
-This ClusterClass relies on the CAAPF provider being installed and enabled. For information on how to do this, see the xref:user/caapf.adoc[CAAPF] section.
-+
-Applications like https://docs.tigera.io/calico/latest/about/[Calico CNI], https://github.com/kubernetes/cloud-provider-aws[AWS Cloud Controller Manager], and the https://github.com/kubernetes-sigs/aws-ebs-csi-driver[AWS EBS CSI Driver] will be installed on downstream Clusters. This is done automatically at Cluster creation by targeted Clusters with specific labels, such as `cni: calico`, `cloud-provider: aws`, and `csi: aws-ebs-csi-driver`.
-+
 [tabs]
 =======
 
@@ -795,10 +791,6 @@ You can follow the steps in the https://github.com/rancher/cluster-api-provider-
 ====
 
 * An AWS RKE2 ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
-+
-This ClusterClass relies on the CAAPF provider being installed and enabled. For information on how to do this, see the xref:user/caapf.adoc[CAAPF] section.
-+
-Applications like https://docs.tigera.io/calico/latest/about/[Calico CNI], https://github.com/kubernetes/cloud-provider-aws[AWS Cloud Controller Manager], and the https://github.com/kubernetes-sigs/aws-ebs-csi-driver[AWS EBS CSI Driver] will be installed on downstream Clusters. This is done automatically at Cluster creation by targeted Clusters with specific labels, such as `cni: calico`, `cloud-provider: aws`, and `csi: aws-ebs-csi-driver`.
 +
 [tabs]
 =======
