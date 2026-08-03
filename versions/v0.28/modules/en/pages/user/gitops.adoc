@@ -118,7 +118,7 @@ By mirroring labels from your CAPI clusters to their Rancher counterparts, you c
 === Behavior
 
 * Labels are *merged*, not replaced: any labels already present on the Rancher cluster that were not sourced from the CAPI cluster are preserved.
-* Labels are propagated on every reconcile, so adding a label to a CAPI cluster will eventually be reflected on the Rancher cluster.
+* Labels are propagated on every reconciliation, so adding a label to a CAPI cluster will eventually be reflected on the Rancher cluster.
 * Labels whose keys contain `cattle.io` or `x-k8s.io` are *excluded* from propagation to avoid overwriting Rancher-internal and Cluster API-internal labels.
 
 === Example
