@@ -21,8 +21,8 @@ This section describes features and feature stages in {product_name}.
 | enabled
 | beta
 
-| *Use Rancher Default Registry*
-| `use-rancher-default-registry`
+| *Rancher Credential Translation*
+| `rancher-credential-translation`
 | _None_
 | enabled
 | beta
@@ -32,6 +32,12 @@ This section describes features and feature stages in {product_name}.
 | _None_
 | disabled
 | alpha
+
+| *Use Rancher Default Registry*
+| `use-rancher-default-registry`
+| _None_
+| enabled
+| beta
 
 |===
 
@@ -49,14 +55,18 @@ Beware that usage of the Rancher `CATTLE_SYNC_ONLY_CHANGED_OBJECTS` https://docu
 
 It is possible to disable this feature to restore all provider manifests to the original cert-manager usage.
 
-=== Use Rancher Default Registry
+=== Rancher Credential Translation
 
-This feature gate instructs {product_name} to leverage Rancher's `system-default-registry` management setting when constructing image references for CAPI provider components. When enabled, {product_name} reads this setting and, if a registry is configured, rewrites the repository for every provider image to use that registry.
-If the setting is empty, {product_name} falls back to the default image references. Image overrides defined in the `ClusterctlConfig` resource always take precedence. For detailed usage in air-gapped environments, see xref:operator/airgapped.adoc[Air-gapped Environment]. This feature is in beta stage and enabled by default.
+This feature gate instructs {product_name} to watch Rancher Cloud Credentials and automatically translate them into CAPI-specific static identity objects, allowing users to reuse existing Rancher Cloud Credentials when provisioning clusters with CAPI providers. When enabled, {product_name} reconciles cloud credentials stored in the `cattle-global-data` namespace and creates the corresponding provider identity resources. Currently, this feature supports AWS credentials and translates them into `AWSClusterStaticIdentity` objects for use with the Cluster API Provider for AWS (CAPA). This feature is in the beta stage and is enabled by default.
 
 === Use CAAPF
 
 This feature gate instructs {product_name} that the Cluster API Add-on Provider for Fleet (CAAPF) will be used to provide integration with https://github.com/rancher/fleet[Fleet] and enable the easy deployment of applications to CAPI-provisioned clusters. CAAPF automatically installs Fleet in the management cluster and registers newly provisioned CAPI clusters with Fleet so that applications can be deployed to these clusters via GitOps, `Bundle` or `HelmOp` resources. CAAPF also includes support for grouping CAPI clusters that reference the same ClusterClass through Fleet's `ClusterGroup`, simplifying application deployments to large groups of clusters. This feature is in the alpha stage and is disabled by default.
+
+=== Use Rancher Default Registry
+
+This feature gate instructs {product_name} to leverage Rancher's `system-default-registry` management setting when constructing image references for CAPI provider components. When enabled, {product_name} reads this setting and, if a registry is configured, rewrites the repository for every provider image to use that registry.
+If the setting is empty, {product_name} falls back to the default image references. Image overrides defined in the `ClusterctlConfig` resource always take precedence. For detailed usage in air-gapped environments, see xref:operator/airgapped.adoc[Air-gapped Environment]. This feature is in beta stage and enabled by default.
 
 == Feature Stages
 
@@ -99,10 +109,12 @@ kubectl patch configmap rancher-config -n cattle-system --type=merge -p '
           enabled: true
         no-cert-manager:
           enabled: true
-        use-rancher-default-registry:
+        rancher-credential-translation:
           enabled: true
         use-caapf:
           enabled: false
+        use-rancher-default-registry:
+          enabled: true
   '
 ----
 
