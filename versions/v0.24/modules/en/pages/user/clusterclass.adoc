@@ -1,5 +1,5 @@
 = ClusterClass
-:revdate: 2025-11-20
+:revdate: 2026-08-11
 :page-revdate: {revdate}
 
 In this section we cover using https://cluster-api.sigs.k8s.io/tasks/experimental-features/cluster-class/[ClusterClass] with the {product_name}.
@@ -416,6 +416,8 @@ spec:
 
 
 == Create a Cluster from a ClusterClass
+
+include::shared:ROOT:partial$en/cni-caution.adoc[]
 
 [IMPORTANT]
 ====
