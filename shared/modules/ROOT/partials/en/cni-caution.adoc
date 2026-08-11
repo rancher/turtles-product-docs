@@ -1,5 +1,8 @@
 [CAUTION]
+.CNI Troubleshooting
 ====
-* Caution users diverting from the defaults and trying to use custom CNI manifests, that it can affect provisioning of the cluster.
-* If there network issues and the cluster is showing as active in Rancher, then it would be good to look at the cattle-cluster-agent logs and check if there are complaints of DNS timeouts. Another place to look is in the kubelet logs, as in this case there were mentions of the CNI not being initialized. This brought us to chicken or the egg scenario.
+Diverting from default configurations and using custom CNI manifests can affect cluster provisioning. If experiencing network issues in your active Rancher cluster:
+
+* Check the `cattle-cluster-agent` logs and review if possible DNS timeouts are occurring. 
+* Check the kubelet logs and review if the configured CNI is initialized.
 ====
