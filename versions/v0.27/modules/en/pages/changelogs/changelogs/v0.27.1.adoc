@@ -1,5 +1,5 @@
 = v0.27.1
-:revdate: 2026-08-27
+:revdate: 2026-09-02
 :page-revdate: {revdate}
 
 == Description
@@ -24,7 +24,7 @@ This Turtles release includes several improvements including Go module and GitHu
 * Improve Image Pull Secret Support by @HarrisonWAffel in https://github.com/rancher/turtles/pull/2335[#2335].
 * Return error from DefaultSynchronizer.Get instead of silently dropping it by @immanuwell in https://github.com/rancher/turtles/pull/2462[#2462].
 
-==== Full Changelog: 
+=== Full Changelog: 
 
 Review the full list of changes: https://github.com/rancher/turtles/compare/v0.27.0%E2%80%A6v0.27.1[v0.27.0...v0.27.1]
 

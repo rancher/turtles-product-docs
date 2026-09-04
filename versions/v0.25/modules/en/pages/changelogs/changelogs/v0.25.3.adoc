@@ -1,10 +1,10 @@
 = v0.25.3
-:revdate: 2026-02-17
+:revdate: 2026-09-02
 :page-revdate: {revdate}
 
-== Release Date: 2026-02-16
-
 == Description
+
+Release Date: 2026-02-16
 
 [IMPORTANT]
 ====
@@ -19,9 +19,7 @@ When this is the case, conflicts with the Provider's CRDs may unexpectedly incre
 
 For a workaround or more information, please see: https://github.com/rancher/turtles/issues/2109[#2109].
 
-=== What's Changed
-
-==== Bugs
+=== Bug Fixes
 
 * [release/v0.25] Add images to values.yaml by @yiannistri in https://github.com/rancher/turtles/pull/2021[#2021].
 * [backport-release/v0.25] Make delete hooks do a full cleanup by @rancher-backport-assistant[bot] in https://github.com/rancher/turtles/pull/2032[#2032].
@@ -29,13 +27,13 @@ For a workaround or more information, please see: https://github.com/rancher/tur
 * [backport-release/v0.25] fix: Make turtles a Rancher managed chart (i.e. not user upgradeable) by @rancher-backport-assistant[bot] in https://github.com/rancher/turtles/pull/2111[#2111].
 * [backport-release/v0.25] fix: reconcile wrangler cleanup earlier by @rancher-backport-assistant[bot] in https://github.com/rancher/turtles/pull/2119[#2119].
 
-==== Other Changes
+=== Other Changes
 
 * chore: Bump providers chart to 0.25.2 by @yiannistri in https://github.com/rancher/turtles/pull/2014[#2014].
 * [release/v0.25] chore: bump golang to 1.24.13 by @anmazzotti in https://github.com/rancher/turtles/pull/2075[#2075].
 * chore: bump providers release number by @anmazzotti in https://github.com/rancher/turtles/pull/2121[#2121].
 
-==== Full Changelog: 
+=== Full Changelog: 
 
 Review the full list of changes: https://github.com/rancher/turtles/compare/v0.25.2%E2%80%A6v0.25.3[v0.25.2...v0.25.3]
 
@@ -45,7 +43,7 @@ Review the full list of changes: https://github.com/rancher/turtles/compare/v0.2
 |===
 | Name | Created At | Updated At
 
-| link:https://github.com/rancher/turtles/releases/download/v0.25.3/rancher-turtles-0.25.3.tgz[rancher-turtles-0.25.3.tgz] | 2026-02-16 | 2026-02-16
+| https://github.com/rancher/turtles/releases/download/v0.25.3/rancher-turtles-0.25.3.tgz[rancher-turtles-0.25.3.tgz] | 2026-02-16 | 2026-02-16
 
 |===
 

@@ -1,5 +1,5 @@
 = Air-gapped environment
-:revdate: 2026-06-02
+:revdate: 2026-09-02
 :page-revdate: {revdate}
 :sidebar_position: 3
 
@@ -121,7 +121,7 @@ kubectl create configmap v1.11.2 --namespace=capv-system --from-file=components=
 yq -y -i '.metadata.annotations["provider.cluster.x-k8s.io/compressed"] = "true"' configmap.yaml
 ----
 +
-NOTE: without this annotation operator won't be able to determine if the data is compressed or not.
+NOTE: Without this annotation, the operator won't be able to determine if the data is compressed or not.
 
 . Add labels that will be used to match the ConfigMap in `fetchConfig` section of the provider
 +

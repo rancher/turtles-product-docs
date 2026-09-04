@@ -1,5 +1,5 @@
 = Cluster API Addon Provider Fleet
-:revdate: 2026-06-26
+:revdate: 2026-09-02
 :page-revdate: {revdate}
 
 == Overview
@@ -30,7 +30,7 @@ endif::[]
   - clusterName: <a specific CAPI cluster name>
 ----
 
-Additionally, `CAAPF` automatically propagates `CAPI` cluster labels to the `Fleet` cluster resource, so user can specify a target matching common cluster label with:
+Additionally, `CAAPF` automatically propagates `CAPI` cluster labels to the `Fleet` cluster resource, so users can specify a target matching a common cluster label with:
 
 [source,yaml]
 ----

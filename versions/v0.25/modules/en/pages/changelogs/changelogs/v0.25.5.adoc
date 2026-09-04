@@ -1,10 +1,10 @@
 = v0.25.5
-:revdate: 2026-06-18
+:revdate: 2026-09-02
 :page-revdate: {revdate}
 
-== Release Date: 2026-06-17
-
 == Description
+
+Release Date: 2026-06-17
 
 This is a maintenance release that delivers security and dependency updates.
 
@@ -15,7 +15,7 @@ This is a maintenance release that delivers security and dependency updates.
 * Bump github.com/go-git/go-git/v5 to v5.19.1 in test package.
 * Several release process improvements.
 
-==== Full Changelog: 
+=== Full Changelog: 
 
 Review the full list of changes: https://github.com/rancher/turtles/compare/v0.25.4%E2%80%A6v0.25.5[v0.25.4...v0.25.5]
 
@@ -25,7 +25,7 @@ Review the full list of changes: https://github.com/rancher/turtles/compare/v0.2
 |===
 | Name | Created At | Updated At
 
-| link:https://github.com/rancher/turtles/releases/download/v0.25.5/rancher-turtles-0.25.5.tgz[rancher-turtles-0.25.5.tgz] | 2026-06-18 | 2026-06-18
+| https://github.com/rancher/turtles/releases/download/v0.25.5/rancher-turtles-0.25.5.tgz[rancher-turtles-0.25.5.tgz] | 2026-06-18 | 2026-06-18
 
 |===
 

@@ -1,10 +1,10 @@
 = v0.25.2
-:revdate: 2026-01-26
+:revdate: 2026-09-02
 :page-revdate: {revdate}
 
-== Release Date: 2026-01-26
-
 == Description
+
+Release Date: 2026-01-26
 
 {product_name} - Cluster API integration in Rancher.
 
@@ -12,13 +12,11 @@ This release brings a number of bug fixes, dependency bumps and a new feature:
 
 * Users can now add an annotation `cluster-api.cattle.io/cluster-description` to a CAPI cluster. Once imported, the annotation value will be shown in the Rancher UI as the description for that cluster.
 
-=== What's Changed
-
-==== Enhancements and other changes
+=== Enhancements and other changes
 
 * [release/v0.25] Backport multiple commits to prepare for 2.13.2 by @yiannistri in https://github.com/rancher/turtles/pull/1992[#1992].
 
-==== Full Changelog: 
+=== Full Changelog: 
 
 Review the full list of changes: https://github.com/rancher/turtles/compare/v0.25.1%E2%80%A6v0.25.2[v0.25.1...v0.25.2]
 
@@ -28,7 +26,7 @@ Review the full list of changes: https://github.com/rancher/turtles/compare/v0.2
 |===
 | Name | Created At | Updated At
 
-| link:https://github.com/rancher/turtles/releases/download/v0.25.2/rancher-turtles-0.25.2.tgz[rancher-turtles-0.25.2.tgz] | 2026-01-26 | 2026-01-26
+| https://github.com/rancher/turtles/releases/download/v0.25.2/rancher-turtles-0.25.2.tgz[rancher-turtles-0.25.2.tgz] | 2026-01-26 | 2026-01-26
 
 |===
 

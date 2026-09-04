@@ -1,20 +1,18 @@
 = v0.24.5
-:revdate: 2026-06-29
+:revdate: 2026-09-02
 :page-revdate: {revdate}
-
-== Release Date: 2026-06-24
 
 == Description
 
-{product_name} - Cluster API integration in Rancher.
+Release Date: 2026-06-24
 
-=== What's Changed
+{product_name} - Cluster API integration in Rancher.
 
 This is a patch release that bumps dependencies to patch security issues.
 
 * Bump dependencies to fix security issues by @furkatgofurov7 in https://github.com/rancher/turtles/pull/2482[#2482].
 
-==== Full Changelog: 
+=== Full Changelog: 
 
 Review the full list of changes: https://github.com/rancher/turtles/compare/v0.24.4%E2%80%A6v0.24.5[v0.24.4...v0.24.5]
 
@@ -24,7 +22,7 @@ Review the full list of changes: https://github.com/rancher/turtles/compare/v0.2
 |===
 | Name | Created At | Updated At
 
-| link:https://github.com/rancher/turtles/releases/download/v0.24.5/rancher-turtles-0.24.5.tgz[rancher-turtles-0.24.5.tgz] | 2026-06-24 | 2026-06-24
+| https://github.com/rancher/turtles/releases/download/v0.24.5/rancher-turtles-0.24.5.tgz[rancher-turtles-0.24.5.tgz] | 2026-06-24 | 2026-06-24
 
 |===
 

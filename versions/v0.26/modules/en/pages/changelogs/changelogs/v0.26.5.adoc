@@ -1,5 +1,5 @@
 = v0.26.5
-:revdate: 2026-08-24
+:revdate: 2026-09-02
 :page-revdate: {revdate}
 
 == Description
@@ -31,7 +31,7 @@ This maintenance release includes routine security, dependency and toolchain upd
 * [release/v0.26] Update providers chart version by @salasberryfin in https://github.com/rancher/turtles/pull/2749[#2749].
 * Chore: Un-rc 0.26.5 providers chart by @furkatgofurov7 in https://github.com/rancher/turtles/pull/2759[#2759].
 
-==== Full Changelog: 
+=== Full Changelog: 
 
 Review the full list of changes: https://github.com/rancher/turtles/compare/v0.26.4%E2%80%A6v0.26.5[v0.26.4...v0.26.5]
 

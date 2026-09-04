@@ -1,5 +1,5 @@
 = v0.25.7
-:revdate: 2026-08-24
+:revdate: 2026-09-02
 :page-revdate: {revdate}
 
 == Description
@@ -13,7 +13,7 @@ This release focuses primarily on security hardening.
 * Addressed known vulnerabilities by upgrading the Go runtime to 1.25.13 and patching key dependencies, including security updates for golang.org/x/text.
 * Updated various GitHub Actions and development container configurations to modern versions.
 
-==== Full Changelog: 
+=== Full Changelog: 
 
 Review the full list of changes: https://github.com/rancher/turtles/compare/v0.25.6%E2%80%A6v0.25.7[v0.25.6...v0.25.7]
 
