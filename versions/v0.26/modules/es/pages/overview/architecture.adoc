@@ -1,6 +1,6 @@
 = Arquitectura
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 30/06/2025
+:revdate: 2025-06-30
 :page-revdate: {revdate}
 
 Esta guía ofrece una descripción general completa de los componentes kernel y la estructura que alimentan {product_name} y su integración dentro del ecosistema de Rancher.
