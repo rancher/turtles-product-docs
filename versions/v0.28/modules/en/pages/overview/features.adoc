@@ -39,6 +39,12 @@ This section describes features and feature stages in {product_name}.
 | enabled
 | beta
 
+| *Fleet Integration*
+| `fleet-integration`
+| _None_
+| disabled
+| alpha
+
 |===
 
 === Agent TLS Mode
@@ -67,6 +73,10 @@ This feature gate instructs {product_name} that the Cluster API Add-on Provider 
 
 This feature gate instructs {product_name} to leverage Rancher's `system-default-registry` management setting when constructing image references for CAPI provider components. When enabled, {product_name} reads this setting and, if a registry is configured, rewrites the repository for every provider image to use that registry.
 If the setting is empty, {product_name} falls back to the default image references. Image overrides defined in the `ClusterctlConfig` resource always take precedence. For detailed usage in air-gapped environments, see xref:operator/airgapped.adoc[Air-gapped Environment]. This feature is in beta stage and enabled by default.
+
+=== Fleet Integration
+
+This feature gate instructs {product_name} to propagate CAPI metadata and reconcile Fleet resources for all CAPI imported Clusters. For more information please read the dedicated xref:../user/fleet-integration.adoc[page].
 
 == Feature Stages
 
@@ -114,6 +124,8 @@ kubectl patch configmap rancher-config -n cattle-system --type=merge -p '
         use-caapf:
           enabled: false
         use-rancher-default-registry:
+          enabled: true
+        fleet-integration:
           enabled: true
   '
 ----
