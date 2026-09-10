@@ -1,6 +1,6 @@
 = Habilitando ClusterClass
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 30-06-2025
+:revdate: 2025-06-30
 :page-revdate: {revdate}
 
 En esta sección cubrimos la habilitación de la característica https://cluster-api.sigs.k8s.io/tasks/experimental-features/cluster-class/[*ClusterClass*] para un CAPIProvider.
