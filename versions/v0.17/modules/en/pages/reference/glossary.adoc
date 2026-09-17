@@ -1,4 +1,5 @@
 = Glossary
+:description: Explain key terms and concepts related to Kubernetes cluster management, including Cluster API components, providers, and infrastructure configurations
 :revdate: 2026-05-12
 :page-revdate: {revdate}
 :sidebar_position: 2

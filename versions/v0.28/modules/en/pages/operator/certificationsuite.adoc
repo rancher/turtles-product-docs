@@ -1,4 +1,5 @@
 = Provider Test Suite
+:description: Use the Provider Test Suite to integrate a CAPI provider with Turtles and verify cluster provisioning and importing
 :revdate: 2026-07-30
 :page-revdate: {revdate}
 

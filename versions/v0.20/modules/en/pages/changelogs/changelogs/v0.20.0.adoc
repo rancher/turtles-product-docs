@@ -1,4 +1,5 @@
 = "v0.20.0"
+:description: Review the v0.20.0 release of Rancher Turtles to find bug fixes and stability improvements for Cluster API integration
 :revdate: 2026-09-02
 :page-revdate: {revdate}
 

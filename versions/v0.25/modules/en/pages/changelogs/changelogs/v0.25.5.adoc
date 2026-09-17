@@ -1,4 +1,5 @@
 = v0.25.5
+:description: Update v0.25.5 includes security updates, new dependency versions, release process improvements, and a full changelog for review and download
 :revdate: 2026-09-02
 :page-revdate: {revdate}
 

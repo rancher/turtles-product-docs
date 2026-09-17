@@ -1,4 +1,5 @@
 = Cluster API Addon Provider Fleet (*deprecated*)
+:description: Enables integration with Fleet to deploy applications to CAPI clusters by configuring provider settings and feature gates, automatically annotating clusters
 :revdate: 2026-06-26
 :page-revdate: {revdate}
 

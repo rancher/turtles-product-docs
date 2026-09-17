@@ -1,4 +1,5 @@
 = Chart Configuration
+:description: Configure feature flags and values for SUSE Rancher Prime Cluster API using the Helm chart to customize the installation
 :revdate: 2025-05-30
 :page-revdate: {revdate}
 

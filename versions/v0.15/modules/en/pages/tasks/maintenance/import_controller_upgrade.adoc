@@ -1,4 +1,5 @@
 = Upgrade Turtles import controller
+:description: Prepare clusters for migration when upgrading the Turtles import controller to avoid duplicate resources
 :revdate: 2024-12-23
 :page-revdate: {revdate}
 :sidebar_position: 2

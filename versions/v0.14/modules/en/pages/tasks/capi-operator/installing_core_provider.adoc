@@ -1,4 +1,5 @@
 = Installing the CoreProvider using CAPIProvider resource
+:description: Install the CoreProvider using the CAPIProvider resource to manage Cluster API CRDs and Cluster API controller
 :revdate: 2026-06-26
 :page-revdate: {revdate}
 :sidebar_position: 4

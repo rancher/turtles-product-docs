@@ -1,4 +1,5 @@
 = Air-gapped environment
+:description: Configure Cluster API providers and the Cluster API Operator for an air-gapped environment by setting image overrides and fetching configuration from internal
 :revdate: 2026-09-02
 :page-revdate: {revdate}
 :sidebar_position: 3

@@ -1,4 +1,5 @@
 = Upgrading to CAPI v1beta2
+:description: Review changes in ClusterClass structure, Cluster topology references, and RKE2 provider updates when upgrading to CAPI v1beta2
 :revdate: 2026-04-14
 :page-revdate: {revdate}
 

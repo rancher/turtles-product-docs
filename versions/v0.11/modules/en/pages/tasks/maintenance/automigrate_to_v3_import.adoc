@@ -1,4 +1,5 @@
 = Auto-migration to v3 cluster import
+:description: Enable the managementv3-cluster-migration feature flag to prevent duplicate cluster imports during upgrades or downgrades
 :revdate: 2024-09-20
 :page-revdate: {revdate}
 :sidebar_position: 3

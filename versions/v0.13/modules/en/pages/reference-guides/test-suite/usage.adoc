@@ -1,4 +1,5 @@
 = Test suite guide
+:description: Use the test suite guide to set up and run tests to integrate CAPI providers with SUSE Rancher Prime using GitOps workflows and environment configurations
 :revdate: 2025-09-15
 :page-revdate: {revdate}
 

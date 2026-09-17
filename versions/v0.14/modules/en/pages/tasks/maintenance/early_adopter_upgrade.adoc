@@ -1,4 +1,5 @@
 = Upgrade Instructions for Early Adopters
+:description: Upgrade from SUSE® Rancher Prime Cluster API v0.5.x or older to the GA version as an early adopter by following these steps
 :revdate: 2024-12-23
 :page-revdate: {revdate}
 

@@ -1,4 +1,5 @@
 = Provider Certification Guide
+:description: Run the Turtles test suite to validate CAPI provider compatibility with SUSE Rancher Prime by provisioning and importing clusters
 :revdate: 2024-10-09
 :page-revdate: {revdate}
 :sidebar_position: 1

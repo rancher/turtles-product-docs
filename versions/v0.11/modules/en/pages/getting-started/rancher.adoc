@@ -1,4 +1,5 @@
 = Rancher Setup
+:description: Install Rancher using Helm in a Kubernetes cluster by running a command that replaces <rancher-hostname> with your servers' actual hostname and specifies
 :revdate: 2025-10-02
 :page-revdate: {revdate}
 :sidebar_position: 2

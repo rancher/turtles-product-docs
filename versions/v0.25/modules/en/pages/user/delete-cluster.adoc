@@ -1,4 +1,5 @@
 = Rancher Cluster Deletion
+:description: Delete the Rancher cluster by labeling it for deletion, which triggers the Turtle controller to add an imported true annotation preventing
 :revdate: 2026-03-05
 :page-revdate: {revdate}
 

@@ -1,4 +1,5 @@
 = "v0.21.0"
+:description: Release v0.21.0 includes bug fixes and stability improvements for Rancher Turtles, and adds Azure and GCP kubeadm clusterclass examples and CLI support with Go
 :revdate: 2026-09-02
 :page-revdate: {revdate}
 

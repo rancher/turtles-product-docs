@@ -1,6 +1,7 @@
 :doctype: book
 
 = Create & Import a Cluster Using CAPI Providers
+:description: Create a cluster using CAPI providers by installing the required infrastructure provider, generating a YAML definition, and applying it with kubectl
 :revdate: 2025-10-02
 :page-revdate: {revdate}
 

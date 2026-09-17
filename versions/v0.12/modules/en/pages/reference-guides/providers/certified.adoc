@@ -1,4 +1,5 @@
 = Certified CAPI Providers
+:description: Find a list of officially certified CAPI providers from Turtles, tested by their test suite and compatible with Rancher's CAPI extension for development
 :revdate: 2024-10-09
 :page-revdate: {revdate}
 

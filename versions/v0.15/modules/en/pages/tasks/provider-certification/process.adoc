@@ -1,4 +1,5 @@
 = Provider Certification Guide
+:description: Certify your provider by running the test suite with Turtles, using GitOps and environment variables to verify CAPI cluster integration
 :revdate: 2024-12-23
 :page-revdate: {revdate}
 :sidebar_position: 1

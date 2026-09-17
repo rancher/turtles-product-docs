@@ -1,4 +1,5 @@
 = Deployment Scenarios
+:description: Learn about combining Rancher Manager and CAPI Management on a single Kubernetes cluster for centralized management and simplified deployment
 :revdate: 2024-12-23
 :page-revdate: {revdate}
 :sidebar_position: 0

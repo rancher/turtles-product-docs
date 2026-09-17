@@ -1,4 +1,5 @@
 = ClusterctlConfig Resource
+:description: Create a ClusterctlConfig resource to manage clusterctl provider configurations and URL overrides declaratively
 :revdate: 2024-12-23
 :page-revdate: {revdate}
 

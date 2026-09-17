@@ -1,4 +1,5 @@
 = Certified CAPI Providers
+:description: List certified CAPI providers supported by Turtles and test suite coverage, ClusterClass capabilities for Rancher integration, and details on experimental
 :revdate: 2025-05-02
 :page-revdate: {revdate}
 

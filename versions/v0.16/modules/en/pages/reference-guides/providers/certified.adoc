@@ -1,4 +1,5 @@
 = Certified CAPI Providers
+:description: List certified CAPI Providers to find officially verified projects maintained by the Kubernetes community and check their support for ClusterClass features
 :revdate: 2025-05-02
 :page-revdate: {revdate}
 

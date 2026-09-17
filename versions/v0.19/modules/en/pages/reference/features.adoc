@@ -1,4 +1,5 @@
 = Features
+:description: Describe the stages of features in SUSE® Rancher Prime Cluster API including Alpha (disabled by default, no long-term support), Beta (always enabled)
 :revdate: 2025-05-06
 :page-revdate: {revdate}
 

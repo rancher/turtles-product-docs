@@ -1,4 +1,5 @@
 = Glossary
+:description: Find definitions for Kubernetes and Cluster API terms such as add-ons, providers, and infrastructure concepts
 :revdate: 2026-05-12
 :page-revdate: {revdate}
 

@@ -1,4 +1,5 @@
 = Via Helm install
+:description: Install SUSE® Rancher Prime Cluster API via Helm by applying the chart, which automatically installs the required Cluster API Operator and configures essential components
 :revdate: 2025-10-02
 :page-revdate: {revdate}
 

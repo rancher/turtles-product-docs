@@ -1,4 +1,5 @@
 = CAPI Provider
+:description: Manage Cluster API providers declaratively using the CAPIProvider resource to provision and configure infrastructure with GitOps
 :revdate: 2026-06-26
 :page-revdate: {revdate}
 

@@ -1,4 +1,5 @@
 = ClusterctlConfig
+:description: Manage clusterctl provider configurations and URLs with ClusterctlConfig in a declarative GitOps model
 :revdate: 2025-06-30
 :page-revdate: {revdate}
 

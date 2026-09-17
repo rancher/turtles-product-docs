@@ -1,4 +1,5 @@
 = Overview
+:description: Understand the architectural features and core concepts of SUSE Rancher Prime Cluster API, including integration with Rancher Manager and Cluster API
 :revdate: 2026-05-13
 :page-revdate: {revdate}
 

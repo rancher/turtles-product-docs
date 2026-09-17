@@ -1,4 +1,5 @@
 = Introduction
+:description: Learn how to create and import your first CAPI cluster using SUSE Rancher Prime Cluster API by choosing between Fleet or kubectl to manage your cluster
 :revdate: 2025-02-10
 :page-revdate: {revdate}
 :sidebar_position: 1

@@ -1,4 +1,5 @@
 = v0.25.3
+:description: Review the changes and bug fixes in version v0.25.3, including updates to provider configurations and images in values.yaml
 :revdate: 2026-09-02
 :page-revdate: {revdate}
 

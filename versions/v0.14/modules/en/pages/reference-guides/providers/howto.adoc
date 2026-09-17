@@ -1,6 +1,7 @@
 :doctype: book
 
 = Create & import a cluster using CAPI providers
+:description: Create and import a cluster using CAPI providers by following steps to generate YAML files, configure infrastructure and control plane providers, and apply the YAML files
 :revdate: 2025-05-02
 :page-revdate: {revdate}
 

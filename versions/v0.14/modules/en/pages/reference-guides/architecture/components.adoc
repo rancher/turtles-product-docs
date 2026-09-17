@@ -1,4 +1,5 @@
 = Components
+:description: Learn about the components of Rancher Turtles and their roles in the SUSE® Rancher Prime Cluster API
 :revdate: 2024-12-23
 :page-revdate: {revdate}
 :sidebar_position: 0

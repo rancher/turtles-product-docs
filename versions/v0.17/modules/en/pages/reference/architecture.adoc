@@ -1,4 +1,5 @@
 = Architecture
+:description: Understand the components and structure of SUSE® Rancher Prime Cluster API and how it integrates with Rancher to manage clusters
 :revdate: 2025-02-27
 :page-revdate: {revdate}
 :sidebar_position: 0

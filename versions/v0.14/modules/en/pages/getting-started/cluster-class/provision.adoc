@@ -1,4 +1,5 @@
 = Create a workload cluster
+:description: Create a workload cluster by defining a ClusterClass using CAPZ, configuring Azure credentials in Rancher, installing the CAPI provider, and applying a YAML
 :revdate: 2024-12-23
 :page-revdate: {revdate}
 

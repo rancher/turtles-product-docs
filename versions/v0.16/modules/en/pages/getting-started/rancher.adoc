@@ -1,4 +1,5 @@
 = Rancher Setup
+:description: Install Rancher using Helm by replacing the hostname in the command with your server's actual address and specifying the recommended version
 :revdate: 2025-10-02
 :page-revdate: {revdate}
 :sidebar_position: 2

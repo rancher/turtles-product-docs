@@ -1,4 +1,5 @@
 = Glossary
+:description: Define terms related to Kubernetes clusters, including add-ons, bootstrap processes, cluster management, control plane variants, infrastructure providers
 :revdate: 2026-05-12
 :page-revdate: {revdate}
 :sidebar_position: 2

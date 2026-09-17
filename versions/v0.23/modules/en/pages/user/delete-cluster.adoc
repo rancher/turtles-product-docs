@@ -1,4 +1,5 @@
 = Rancher Cluster Deletion
+:description: Delete a Rancher cluster using the cluster-api.cattle.io/capi-cluster-owner and cluster-api.cattle.io/capi-cluster-owner-ns labels
 :revdate: 2026-03-05
 :page-revdate: {revdate}
 

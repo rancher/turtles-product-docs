@@ -1,4 +1,5 @@
 = What is a Certified Provider?
+:description: Learn the definition of a certified provider and how it is validated through E2E tests and certification prerequisites
 :revdate: 2026-09-02
 :page-revdate: {revdate}
 :sidebar_position: 1

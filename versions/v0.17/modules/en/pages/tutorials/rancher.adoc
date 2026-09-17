@@ -1,4 +1,5 @@
 = Rancher Setup
+:description: Install Rancher using Helm to set up the first cluster, which deploys the CAPI controller, CRDs, and allows managing providers through the CAPIProvider
 :revdate: 2025-10-02
 :page-revdate: {revdate}
 :sidebar_position: 2

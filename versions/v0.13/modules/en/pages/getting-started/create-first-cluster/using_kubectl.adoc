@@ -1,4 +1,5 @@
 = Create & Import Your First Cluster Using kubectl
+:description: Create and import your first cluster using kubectl commands to define and manage it in Rancher Manager by generating YAML files and applying labels
 :revdate: 2024-10-29
 :page-revdate: {revdate}
 :sidebar_position: 3

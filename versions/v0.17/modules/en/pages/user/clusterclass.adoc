@@ -1,4 +1,5 @@
 = ClusterClass
+:description: Learn how to use ClusterClass with the SUSE Rancher Prime Cluster API to set up clusters on Azure, AWS, GCP, or Docker
 :revdate: 2025-02-27
 :page-revdate: {revdate}
 

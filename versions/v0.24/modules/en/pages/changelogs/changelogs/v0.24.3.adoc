@@ -1,4 +1,5 @@
 = "v0.24.3"
+:description: Find changes, version updates, Cluster API integration, release date, download links, and full changelog in the v0.24.3 release
 :revdate: 2026-09-02
 :page-revdate: {revdate}
 

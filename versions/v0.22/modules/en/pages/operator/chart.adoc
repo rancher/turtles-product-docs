@@ -1,4 +1,5 @@
 = Chart Configuration
+:description: Configure the Chart Configuration page to customize feature flags and cluster-api-operator settings for SUSE® Rancher Prime Cluster API using Helm charts
 :revdate: 2025-08-01
 :page-revdate: {revdate}
 

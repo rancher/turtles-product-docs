@@ -1,4 +1,5 @@
 = What is a Certified Provider?
+:description: Learn about the certification process for CAPI providers and how they are validated using the Turtles E2E suite tests
 :revdate: 2026-09-02
 :page-revdate: {revdate}
 :sidebar_position: 1

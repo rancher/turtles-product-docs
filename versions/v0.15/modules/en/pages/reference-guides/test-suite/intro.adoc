@@ -1,4 +1,5 @@
 = Introduction
+:description: Learn how to use the E2E suite to integrate CAPI providers with Turtles and verify cluster provisioning and importing
 :revdate: 2024-12-23
 :page-revdate: {revdate}
 :sidebar_position: 1

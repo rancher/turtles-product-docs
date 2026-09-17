@@ -1,4 +1,5 @@
 = Upgrade Instructions for Early Adopters
+:description: Upgrade to the GA version of SUSE® Rancher Prime Cluster API by deleting CAPI child cluster definitions, uninstalling the Helm chart, and cleaning up orphaned resources
 :revdate: 2025-02-10
 :page-revdate: {revdate}
 

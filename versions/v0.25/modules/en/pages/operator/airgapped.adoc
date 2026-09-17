@@ -1,4 +1,5 @@
 = Air-gapped Environment
+:description: Learn how SUSE Rancher Prime Cluster API supports air-gapped environments using CAPIProvider and CAPI Operator to manage Cluster API manifests
 :revdate: 2026-06-26
 :page-revdate: {revdate}
 

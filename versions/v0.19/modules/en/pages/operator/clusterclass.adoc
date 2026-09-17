@@ -1,4 +1,5 @@
 = Enabling ClusterClass
+:description: Enabling ClusterClass requires setting CLUSTER_TOPOLOGY to true in the CAPI Provider configuration, which the Helm chart automatically sets
 :revdate: 2025-05-06
 :page-revdate: {revdate}
 

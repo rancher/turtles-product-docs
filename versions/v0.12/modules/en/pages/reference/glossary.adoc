@@ -1,4 +1,5 @@
 = Glossary
+:description: Define terms related to Kubernetes cluster management, deployment, and configuration, including add-ons, environments, providers, control planes
 :revdate: 2026-05-12
 :page-revdate: {revdate}
 :sidebar_position: 2

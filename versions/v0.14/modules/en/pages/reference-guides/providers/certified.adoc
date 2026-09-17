@@ -1,4 +1,5 @@
 = Certified CAPI Providers
+:description: List certified CAPI providers supported by Turtles, including their ClusterClass capabilities, and note that some are experimental and recommended only
 :revdate: 2025-05-02
 :page-revdate: {revdate}
 

@@ -1,4 +1,5 @@
 = Upgrade Instructions for Early Adopters
+:description: Upgrade SUSE® Rancher Prime Cluster API from v0.5.x to the GA version by following steps to delete clusters, uninstall Helm, clean resources, and install the GA version
 :revdate: 2024-09-20
 :page-revdate: {revdate}
 

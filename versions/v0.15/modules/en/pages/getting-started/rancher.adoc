@@ -1,4 +1,5 @@
 = Rancher Setup
+:description: Install Rancher using Helm in a Kubernetes cluster and prepare to use SUSE® Rancher Prime Cluster API
 :revdate: 2025-10-02
 :page-revdate: {revdate}
 :sidebar_position: 2

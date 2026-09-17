@@ -1,4 +1,5 @@
 = Features
+:description: Learn about SUSE Rancher Prime Cluster API feature stages Alpha, Beta, and General Availability (GA), including their support and stability levels
 :revdate: 2025-04-04
 :page-revdate: {revdate}
 

@@ -1,4 +1,5 @@
 = What is a Certified Provider?
+:description: Learn what a certified provider is and how it is tested and validated in Rancher's certification process
 :revdate: 2026-09-02
 :page-revdate: {revdate}
 :sidebar_position: 1

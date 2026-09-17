@@ -1,4 +1,5 @@
 = Glossary
+:description: Define terms like Add-ons, Air-gapped environment, and Bootstrap to explain Kubernetes cluster components, setup processes, and infrastructure providers
 :revdate: 2026-05-12
 :page-revdate: {revdate}
 

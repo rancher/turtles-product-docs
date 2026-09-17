@@ -1,4 +1,5 @@
 = Introduction
+:description: Learn about the core components and structure of SUSE® Rancher Prime Cluster API and its integration with Rancher to manage Kubernetes clusters
 :revdate: 2024-12-23
 :page-revdate: {revdate}
 :sidebar_position: 0

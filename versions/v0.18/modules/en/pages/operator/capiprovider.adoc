@@ -1,4 +1,5 @@
 = Install CAPI Providers
+:description: Install CAPI providers by creating a CAPIProvider resource with provider name, type, credentials, configuration, and features
 :revdate: 2026-06-26
 :page-revdate: {revdate}
 

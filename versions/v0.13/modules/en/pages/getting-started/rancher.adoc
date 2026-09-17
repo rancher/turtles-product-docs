@@ -1,4 +1,5 @@
 = Rancher Setup
+:description: Install Rancher using Helm with a minimal configuration, replace the hostname, specify the version, and use SUSE® Rancher Prime Cluster API
 :revdate: 2025-10-02
 :page-revdate: {revdate}
 :sidebar_position: 2

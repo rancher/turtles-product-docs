@@ -1,4 +1,5 @@
 = SLSA
+:description: Defines incrementally adoptable supply chain security guidelines that help software producers and consumers ensure trust through secure, verified practices
 :revdate: 2025-02-27
 :page-revdate: {revdate}
 :sidebar_position: 1
