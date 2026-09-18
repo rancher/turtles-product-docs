@@ -1,0 +1,121 @@
+= Rancher Fleet integration support
+:revdate: 2026-09-10
+:page-revdate: {revdate}
+
+== Overview
+
+CAPI Clusters imported in Rancher via {product_name} will be automatically associated with a https://fleet.rancher.io/reference/ref-crds#_cluster[Fleet Cluster].
+This will lead to the deployment of the `fleet-agent` on the downstream CAPI Cluster.
+
+{product_name} supports Fleet integration for CAPI Clusters. This can be enabled using the `fleet-integration` xref:overview/features.adoc[feature].
+This feature will propagate CAPI metadata and reconcile Fleet resources for all imported CAPI Clusters.
+
+== Features
+
+=== ClusterClass labels propagation
+
+When a CAPI Cluster is using a topology, the associated Fleet Cluster will be labeled to identify the ClusterClass in use.
+For example given a CAPI Cluster with `topology` defined:
+
+[source,yaml]
+----
+apiVersion: cluster.x-k8s.io/v1beta2
+kind: Cluster
+metadata:
+  name: example-cluster
+  namespace: example-namespace
+spec:
+  topology:
+    classRef:
+      name: example-clusterclass
+      namespace: example-clusterclass-namespace
+----
+
+The `cluster-api.cattle.io/clusterclass-name` and `cluster-api.cattle.io/clusterclass-namespace` labels will be propagated to the associated Fleet Cluster.
+
+[source,yaml]
+----
+apiVersion: fleet.cattle.io/v1alpha1
+kind: Cluster
+metadata:
+  name: c-example
+  namespace: fleet-default
+  labels:
+    cluster-api.cattle.io/clusterclass-name: example-clusterclass
+    cluster-api.cattle.io/clusterclass-namespace: example-clusterclass-namespace
+----
+
+This feature can be used to automatically deploy a https://fleet.rancher.io/how-tos-for-users/bundle-add[Fleet Bundle] on all CAPI Clusters that use the same topology.
+For example:
+
+[source,yaml]
+----
+apiVersion: fleet.cattle.io/v1alpha1
+kind: HelmOp
+metadata:
+  name: example-helmop
+  namespace: example-clusterclass-namespace
+spec:
+  helm:
+    releaseName: example-chart
+    repo: https://chart.example
+    chart: example-chart
+    version: v1.2.3
+  targets:
+  - clusterSelector:
+      matchExpressions:
+      - key: cluster-api.cattle.io/clusterclass-name
+        operator: In
+        values:
+        - example-clusterclass
+----
+
+=== Cross-namespace ClusterClass support
+
+When a CAPI Cluster is using a topology across different namespaces, {product_name} will create a https://fleet.rancher.io/explanations/namespaces#_cross_namespace_deployments[BundleNamespaceMapping] to support deployments between the ClusterClass namespace and the Fleet Cluster namespace.
+For example given a CAPI Cluster with cross-namespace `topology` defined:
+
+[source,yaml]
+----
+apiVersion: cluster.x-k8s.io/v1beta2
+kind: Cluster
+metadata:
+  name: example-cluster
+  namespace: example-namespace
+spec:
+  topology:
+    classRef:
+      name: example-clusterclass
+      namespace: example-clusterclass-namespace
+----
+
+and a matching Fleet Cluster in a different namespace:
+
+[source,yaml]
+----
+apiVersion: fleet.cattle.io/v1alpha1
+kind: Cluster
+metadata:
+  name: c-example
+  namespace: fleet-default
+  labels:
+    cluster-api.cattle.io/clusterclass-name: example-clusterclass
+    cluster-api.cattle.io/clusterclass-namespace: example-clusterclass-namespace
+----
+
+A BundleNamespaceMapping will be created to connect the ClusterClass namespace to the Fleet Cluster namespace.
+
+[source,yaml]
+----
+apiVersion: fleet.cattle.io/v1alpha1
+kind: BundleNamespaceMapping
+metadata:
+  name: fleet-default
+  namespace: example-clusterclass-namespace
+namespaceSelector:
+  matchLabels:
+    kubernetes.io/metadata.name: fleet-default
+bundleSelector: {}
+----
+
+This feature can be used to manage all Fleet Bundles needed by a ClusterClass in a centralized namespace and allow seamless deployments across Clusters in isolated namespaces.

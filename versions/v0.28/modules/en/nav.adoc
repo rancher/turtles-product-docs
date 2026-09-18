@@ -13,6 +13,7 @@
 * User Guide
 ** xref:user/clusterclass.adoc[Provision a CAPI cluster with ClusterClass]
 ** xref:user/fleet.adoc[Create a cluster using Fleet]
+** xref:user/fleet-integration.adoc[Fleet Integration]
 ** xref:user/rancher-cluster-registration.adoc[Rancher Cluster Registration]
 ** xref:user/applications.adoc[Installing applications]
 ** xref:user/caapf.adoc[CAPI Addon Provider Fleet (deprecated)]
