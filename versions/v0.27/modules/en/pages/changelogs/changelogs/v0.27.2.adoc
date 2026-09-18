@@ -1,0 +1,39 @@
+= v0.27.2
+:description: Bumps CAPI Operator, switches Helm hooks, and includes routine dependency, security and toolchain updates
+:revdate: 2026-09-19
+:page-revdate: {revdate}
+
+== Description
+
+Release Date: 2026-09-19
+
+This maintenance release bumps CAPI Operator to v0.29.0 and CAPRKE2 to v0.25.2, switches Helm hooks to the `rancher/turtles` image, and includes routine dependency, security and toolchain updates.
+
+
+
+=== Other Changes
+
+* [backport-release/v0.27] Add clustername and releaseChannel variable name by @valaparthvi in https://github.com/rancher/turtles/pull/2780[#2780].
+* [backport-release/v0.27] chore: Bump CAPI Operator to v0.29.0 and CAPRKE2 to v0.25.2 by @furkatgofurov7 in https://github.com/rancher/turtles/pull/2775[#2775].
+* chore(deps): update module go.opentelemetry.io/otel to v1.44.0 [security] (release/v0.27) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2788[#2788].
+* chore(deps): update module golang.org/x/mod to v0.40.0 [security] (release/v0.27) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2789[#2789].
+* [release/v0.27] chore: bump Go and providers chart versions by @yiannistri in https://github.com/rancher/turtles/pull/2797[#2797].
+* [backport-release/v0.27] refactor: replace usage of rancher/kuberlr-kubectl image with rancher/turtles image in Helm hooks by @rancher-backport-assistant[bot] in https://github.com/rancher/turtles/pull/2798[#2798].
+* chore(deps): update module golang.org/x/crypto to v0.56.0 [security] (release/v0.27) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2805[#2805].
+* chore: prepare providers chart for v0.27.2 patch release by @furkatgofurov7 in https://github.com/rancher/turtles/pull/2828[#2828].
+
+=== Full Changelog: 
+
+Review the full list of changes: https://github.com/rancher/turtles/compare/v0.27.1%E2%80%A6v0.27.2[v0.27.1...v0.27.2]
+
+== Download
+
+[cols="3,1,1" options="header" frame="all" grid="rows"]
+|===
+| Name | Created At | Updated At
+
+| https://github.com/rancher/turtles/releases/download/v0.27.2/rancher-turtles-0.27.2.tgz[rancher-turtles-0.27.2.tgz] | 2026-09-19 | 2026-09-19
+
+|===
+
+__Information retrieved from https://github.com/rancher/turtles/releases/tag/v0.27.2[v0.27.2 GitHub release].__

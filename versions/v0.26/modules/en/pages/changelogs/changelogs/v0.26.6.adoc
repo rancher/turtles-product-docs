@@ -1,0 +1,37 @@
+= v0.26.6
+:description: Review version v0.26.6 for Go module updates to enhance security and replacing Turtles image in Helm hooks
+:revdate: 2026-09-19
+:page-revdate: {revdate}
+
+== Description
+
+Release Date: 2026-09-19
+
+This release adds a releaseChannel variable to the GKE ClusterClass, replaces the `rancher/kuberlr-kubectl` image with the `rancher/turtles` image in Helm hooks, and picks up security updates for `golang.org/x/mod`, `golang.org/x/crypto`, and `go.opentelemetry.io/otel`.
+
+
+=== Other Changes
+
+* chore(deps): update module golang.org/x/mod to v0.40.0 [security] (release/v0.26) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2791[#2791].
+* chore(deps): update module go.opentelemetry.io/otel to v1.44.0 [security] (release/v0.26) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2790[#2790].
+* Add releaseChannel variable to GKE clusterclass, bump GKE to 1.35.7 and Rancher to 2.14.4-alpha1 by @valaparthvi in https://github.com/rancher/turtles/pull/2783[#2783].
+* [backport-release/v0.26] refactor: replace usage of rancher/kuberlr-kubectl image with rancher/turtles image in Helm hooks by @yiannistri in https://github.com/rancher/turtles/pull/2808[#2808].
+* chore(deps): update module golang.org/x/crypto to v0.56.0 [security] (release/v0.26) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2806[#2806].
+* [release/v0.26] chore: bump providers chart to 0.26.6-rc.0 by @yiannistri in https://github.com/rancher/turtles/pull/2816[#2816].
+* chore: prepare providers chart for v0.26.6 patch release by @furkatgofurov7 in https://github.com/rancher/turtles/pull/2829[#2829].
+
+=== Full Changelog: 
+
+Review the full list of changes: https://github.com/rancher/turtles/compare/v0.26.5...v0.26.6[v0.26.5...v0.26.6]
+
+== Download
+
+[cols="3,1,1" options="header" frame="all" grid="rows"]
+|===
+| Name | Created At | Updated At
+
+| https://github.com/rancher/turtles/releases/download/v0.26.6/rancher-turtles-0.26.6.tgz[rancher-turtles-0.26.6.tgz] | 2026-09-19 | 2026-09-19
+
+|===
+
+__Information retrieved from https://github.com/rancher/turtles/releases/tag/v0.26.6[v0.26.6 GitHub release].__
