@@ -1,4 +1,5 @@
 = Test suite guide
+:description: Reuse the test suite to integrate a CAPI provider with SUSE Rancher Prime and apply GitOps checks using environment variables
 :revdate: 2025-09-15
 :page-revdate: {revdate}
 

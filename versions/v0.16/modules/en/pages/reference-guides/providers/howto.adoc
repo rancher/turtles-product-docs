@@ -1,6 +1,7 @@
 :doctype: book
 
 = Create & import a cluster using CAPI providers
+:description: Create and import a cluster using CAPI providers with Rancher Manager, clusterctl, kubectl, and YAML cluster definitions
 :revdate: 2025-05-02
 :page-revdate: {revdate}
 

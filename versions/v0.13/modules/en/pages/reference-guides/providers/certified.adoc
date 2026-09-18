@@ -1,4 +1,5 @@
 = Certified CAPI Providers
+:description: Find certified CAPI providers and their ClusterClass support details to use with Rancher's CAPI extension on this page
 :revdate: 2025-05-02
 :page-revdate: {revdate}
 

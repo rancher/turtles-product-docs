@@ -1,4 +1,5 @@
 = Create a workload cluster
+:description: Create a workload cluster by defining a ClusterClass that defines control plane and infrastructure configurations, then use it to provision a managed Azure
 :revdate: 2025-02-10
 :page-revdate: {revdate}
 

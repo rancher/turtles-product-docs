@@ -1,4 +1,5 @@
 = Features
+:description: Features in SUSE Rancher Prime Cluster API, such as Day 2 Operations for managing clusters, Add-on Provider for Fleet integration, and Agent TLS Mode
 :revdate: 2025-05-30
 :page-revdate: {revdate}
 

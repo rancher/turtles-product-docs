@@ -1,4 +1,5 @@
 = Create a workload cluster
+:description: Create a workload cluster by defining a ClusterClass that specifies its control plane and infrastructure
 :revdate: 2024-12-23
 :page-revdate: {revdate}
 

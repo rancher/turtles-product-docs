@@ -1,4 +1,5 @@
 = v0.25.4
+:description: Review bug fixes, changes, and the full changelog from v0.25.3 to v0.25.4 on 2026-02-23 and download the release
 :revdate: 2026-09-02
 :page-revdate: {revdate}
 

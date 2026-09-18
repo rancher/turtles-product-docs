@@ -1,4 +1,5 @@
 = "v0.25.1"
+:description: Learn about changes in Rancher Turtles version v0.25.1 that fix fetching CAPI images in air-gapped environments using the system-default-registry setting
 :revdate: 2026-09-02
 :page-revdate: {revdate}
 

@@ -1,4 +1,5 @@
 = Manual Installation
+:description: Install SUSE Rancher Prime Cluster API using the Helm CLI and the Cluster API Operator to manage dependencies and controllers
 :revdate: 2025-09-16
 :page-revdate: {revdate}
 

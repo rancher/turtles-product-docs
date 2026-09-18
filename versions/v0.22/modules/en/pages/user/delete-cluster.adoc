@@ -1,4 +1,5 @@
 = Rancher Cluster Deletion
+:description: Delete a Rancher-managed CAPI cluster using specific labels to mark it for removal, which removes the associated Rancher resource and prevents automatic
 :revdate: 2026-03-05
 :page-revdate: {revdate}
 

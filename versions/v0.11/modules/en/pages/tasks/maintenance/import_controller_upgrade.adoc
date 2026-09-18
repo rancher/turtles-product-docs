@@ -1,4 +1,5 @@
 = Upgrade Turtles import controller
+:description: Upgrade Turtles import controller to v3 and prepare clusters for migration using the provided script or manual steps
 :revdate: 2024-09-12
 :page-revdate: {revdate}
 :sidebar_position: 2

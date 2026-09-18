@@ -1,6 +1,7 @@
 :doctype: book
 
 = Create & import a cluster using CAPI providers
+:description: Create and import CAPI clusters using certified providers by generating YAML files and labeling clusters for automatic import into Rancher Manager
 :revdate: 2025-05-02
 :page-revdate: {revdate}
 

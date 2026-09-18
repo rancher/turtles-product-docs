@@ -1,4 +1,5 @@
 = Migration guide
+:description: Migrate your cluster by uninstalling SUSE® Rancher Prime Cluster API v0.24.3 and preparing it for a Rancher v2.13 upgrade
 :revdate: 2025-11-20
 :page-revdate: {revdate}
 

@@ -1,4 +1,5 @@
 = "v0.24.0"
+:description: Find details about the v0.24.0 release, including updates, bug fixes, and documentation changes for Rancher Turtles
 :revdate: 2026-09-02
 :page-revdate: {revdate}
 

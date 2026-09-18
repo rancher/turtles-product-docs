@@ -1,4 +1,5 @@
 = Create a workload cluster
+:description: Create a workload cluster by defining a ClusterClass that specifies the control plane and infrastructure templates using environment variables and CAPZ
 :revdate: 2024-10-29
 :page-revdate: {revdate}
 

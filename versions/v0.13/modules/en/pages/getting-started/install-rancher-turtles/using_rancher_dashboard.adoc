@@ -1,4 +1,5 @@
 = Via Rancher Dashboard
+:description: Install the SUSE Rancher Prime Cluster API Extension using the Rancher Dashboard by adding the Turtles repository and following the provided steps
 :revdate: 2025-10-02
 :page-revdate: {revdate}
 

@@ -1,4 +1,5 @@
 = CAPIProvider Resource
+:description: Manage Cluster API providers using the CAPIProvider resource to declaratively provision and configure infrastructure and controlplane resources
 :revdate: 2026-06-26
 :page-revdate: {revdate}
 :sidebar_position: 2

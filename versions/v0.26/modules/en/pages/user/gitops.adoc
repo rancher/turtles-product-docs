@@ -1,4 +1,5 @@
 = GitOps Best Practices for Turtles and CAPI
+:description: Learn best practices for implementing GitOps with Turtles and CAPI using Fleet to automate cluster provisioning and application deployment
 :revdate: 2026-06-16
 :page-revdate: {revdate}
 

@@ -1,4 +1,5 @@
 = Development setup
+:description: Set up a local development environment for SUSE® Rancher Prime Cluster API by cloning the repository and creating tilt-settings
 :revdate: 2024-12-23
 :page-revdate: {revdate}
 :sidebar_position: 3

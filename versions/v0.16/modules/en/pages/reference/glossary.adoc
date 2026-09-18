@@ -1,4 +1,5 @@
 = Glossary
+:description: Define key terms like Add-ons, Bootstrap, and ClusterClass, and explain concepts like Core Add-ons, Air-gapped environments, and infrastructure providers
 :revdate: 2026-05-12
 :page-revdate: {revdate}
 :sidebar_position: 2

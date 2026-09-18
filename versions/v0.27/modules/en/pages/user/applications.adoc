@@ -1,4 +1,5 @@
 = Installing applications
+:description: Install bootstrap applications like CNI, CCM, and others in a CAPI workload cluster using GitOps with RKE2 and CAPI ClusterResourceSet
 :revdate: 2026-06-16
 :page-revdate: {revdate}
 

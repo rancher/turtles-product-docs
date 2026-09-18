@@ -1,4 +1,5 @@
 = v0.25.6
+:description: Review the bug fixes and changes in the maintenance release v0.25.6 to understand the updates related to downstream cluster import
 :revdate: 2026-09-02
 :page-revdate: {revdate}
 

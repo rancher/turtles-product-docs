@@ -1,4 +1,5 @@
 = Air-gapped environment
+:description: Learn how to configure Cluster API providers in an air-gapped environment using CAPIProvider resources, ConfigMaps, and image overrides
 :revdate: 2026-09-02
 :page-revdate: {revdate}
 :sidebar_position: 3

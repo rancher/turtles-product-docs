@@ -1,4 +1,5 @@
 = Provider Certification Guide
+:description: Certify a CAPI provider by running the Turtles test suite using GitOps to validate integration with Rancher
 :revdate: 2025-02-10
 :page-revdate: {revdate}
 :sidebar_position: 1

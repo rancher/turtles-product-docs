@@ -1,4 +1,5 @@
 = Create & import your first cluster using Fleet
+:description: Create and import your first cluster using Fleet by generating cluster definitions with clusterctl and configuring Rancher Manager to automatically import
 :revdate: 2025-11-14
 :page-revdate: {revdate}
 

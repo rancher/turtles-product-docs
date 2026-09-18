@@ -1,4 +1,5 @@
 = Create a cluster using Fleet
+:description: Create a cluster using Fleet and ClusterClass with a GitOps workflow by importing cluster definitions and applying manifests through Rancher Manager
 :revdate: 2024-12-23
 :page-revdate: {revdate}
 :sidebar_position: 2

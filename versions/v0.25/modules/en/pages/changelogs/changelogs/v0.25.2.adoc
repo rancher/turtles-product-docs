@@ -1,4 +1,5 @@
 = v0.25.2
+:description: Find the new feature that lets users add an annotation to a CAPI cluster and displays in the Rancher UI as the cluster's description
 :revdate: 2026-09-02
 :page-revdate: {revdate}
 

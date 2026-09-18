@@ -1,4 +1,5 @@
 = Features
+:description: Learn about the stages of features in SUSE® Rancher Prime Cluster API and what each stage means for stability and support
 :revdate: 2025-02-10
 :page-revdate: {revdate}
 :sidebar_position: 0

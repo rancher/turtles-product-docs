@@ -1,4 +1,5 @@
 = v0.25.7
+:description: Upgrade the Go runtime and patch dependencies to improve security for version v0.25.7 and update GitHub Actions and development container configurations
 :revdate: 2026-09-02
 :page-revdate: {revdate}
 

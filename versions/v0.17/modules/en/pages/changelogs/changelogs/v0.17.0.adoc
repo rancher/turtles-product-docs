@@ -1,4 +1,5 @@
 = "v0.17.0"
+:description: Find information about version v0.17.0 of Rancher Turtles, including updates, bug fixes, and new features
 :revdate: 2026-09-02
 :page-revdate: {revdate}
 

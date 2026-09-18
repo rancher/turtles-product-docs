@@ -1,4 +1,5 @@
 = Glossary
+:description: Find definitions of terms from Kubernetes and Cluster API, such as Add-ons, Air-gapped environment, Bootstrap, Bootstrap cluster, CAPI, ClusterClass, Control plane
 :revdate: 2026-05-12
 :page-revdate: {revdate}
 :sidebar_position: 2

@@ -1,4 +1,5 @@
 = Components
+:description: Learn about Rancher Turtles components, including Rancher Manager, Rancher Cluster Agent, and the CAPI extension, and how they work together in the SUSE®
 :revdate: 2024-10-29
 :page-revdate: {revdate}
 :sidebar_position: 0

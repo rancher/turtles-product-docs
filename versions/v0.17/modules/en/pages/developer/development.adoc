@@ -1,4 +1,5 @@
 = Development Setup
+:description: Create a local development environment by cloning the SUSE® Rancher Prime Cluster API repository, installing prerequisites with Helm, and deploying
 :revdate: 2025-07-01
 :page-revdate: {revdate}
 :sidebar_position: 3

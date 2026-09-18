@@ -1,4 +1,5 @@
 = Install
+:description: Install SUSE® Rancher Prime Cluster API via the Rancher Dashboard to transform the Rancher Manager cluster into a CAPI Management cluster
 :revdate: 2025-10-02
 :page-revdate: {revdate}
 

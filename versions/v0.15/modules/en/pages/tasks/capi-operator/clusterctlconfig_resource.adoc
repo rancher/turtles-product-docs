@@ -1,4 +1,5 @@
 = ClusterctlConfig Resource
+:description: Manage clusterctl configurations declaratively using the ClusterctlConfig resource to set provider URLs and version restrictions
 :revdate: 2024-12-23
 :page-revdate: {revdate}
 

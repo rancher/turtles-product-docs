@@ -1,4 +1,5 @@
 = Create & Import Your First Cluster
+:description: Create and import your first cluster using GitOps with Fleet or kubectl to apply resources and then check the Rancher Manager dashboard to confirm it's ready
 :revdate: 2025-07-01
 :page-revdate: {revdate}
 

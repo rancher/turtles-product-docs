@@ -1,4 +1,5 @@
 = Installing Cluster API Operator
+:description: Install Cluster API Operator using Helm to manage Kubernetes cluster providers specifying Docker or AWS infrastructure versions
 :revdate: 2025-10-02
 :page-revdate: {revdate}
 :sidebar_position: 2

@@ -1,4 +1,5 @@
 = Upgrade Turtles import controller
+:description: Prepare imported CAPI clusters for migration to the v3 import controller using the provided script or kubectl
 :revdate: 2024-10-09
 :page-revdate: {revdate}
 :sidebar_position: 2

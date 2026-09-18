@@ -1,4 +1,5 @@
 = v0.24.4
+:description: Find information about the v0.24.4 release including security fixes for CVEs, Go version updates, and full changelog details
 :revdate: 2026-09-02
 :page-revdate: {revdate}
 

@@ -1,4 +1,5 @@
 = Cluster API Addon Provider Fleet
+:description: Use Cluster API Add-on Provider for Fleet to deploy applications to CAPI clusters with Fleet and GitOps
 :revdate: 2026-09-02
 :page-revdate: {revdate}
 

@@ -1,4 +1,5 @@
 = Cluster API Addon Provider Fleet
+:description: Deploy applications to CAPI clusters and manage cluster groups with the Cluster API Add-on Provider for Fleet
 :revdate: 2026-09-02
 :page-revdate: {revdate}
 

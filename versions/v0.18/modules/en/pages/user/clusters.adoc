@@ -1,6 +1,7 @@
 :doctype: book
 
 = Create & import a cluster using CAPI providers
+:description: Create and import a CAPI cluster by installing certified providers, configuring infrastructure and control plane components, and using cluster definitions
 :revdate: 2025-10-02
 :page-revdate: {revdate}
 

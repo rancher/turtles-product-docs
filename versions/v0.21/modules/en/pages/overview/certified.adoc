@@ -1,4 +1,5 @@
 = Certified CAPI Providers
+:description: Find certified CAPI providers and their ClusterClass support, including those that can provision managed and unmanaged clusters via topology
 :revdate: 2025-07-01
 :page-revdate: {revdate}
 

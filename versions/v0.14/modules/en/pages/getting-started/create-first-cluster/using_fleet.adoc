@@ -1,4 +1,5 @@
 = Create & import your first cluster using Fleet
+:description: Create your first cluster using Fleet and GitOps by generating YAML with envsubst, importing it into Rancher Manager, setting up a Git repo, and labeling it,
 :revdate: 2025-11-14
 :page-revdate: {revdate}
 

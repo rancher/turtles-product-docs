@@ -1,4 +1,5 @@
 = Rancher Cluster Registration
+:description: Register a CAPI cluster in Rancher using Turtles auto-import by applying the cluster-api.cattle.io/rancher-auto-import label to a namespace or cluster
 :revdate: 2026-03-06
 :page-revdate: {revdate}
 

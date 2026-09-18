@@ -1,4 +1,5 @@
 = Create & import your first cluster using Fleet
+:description: Create and import your first cluster using Fleet by defining cluster configurations in a Git repository and applying them via Rancher Manager Continuous
 :revdate: 2025-11-14
 :page-revdate: {revdate}
 

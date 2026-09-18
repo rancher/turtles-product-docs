@@ -1,4 +1,5 @@
 = Glossary
+:description: Find definitions for Kubernetes and Cluster API terms like Add-ons, Air-gapped environment, and Bootstrap cluster
 :page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 2026-05-12
 :page-revdate: {revdate}

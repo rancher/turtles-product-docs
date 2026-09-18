@@ -1,4 +1,5 @@
 = Installing Cluster API Operator
+:description: Install Cluster API Operator manually using Helm by adding the repository, installing Cert-Manager, and specifying desired providers for infrastructure
 :revdate: 2025-10-02
 :page-revdate: {revdate}
 :sidebar_position: 2

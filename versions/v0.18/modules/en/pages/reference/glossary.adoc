@@ -1,4 +1,5 @@
 = Glossary
+:description: Find definitions of Kubernetes and Cluster API terms including Add-ons, Bootstrap, Cluster, Control plane, Infrastructure provider, and provisioning
 :revdate: 2026-05-12
 :page-revdate: {revdate}
 

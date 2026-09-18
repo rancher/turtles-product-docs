@@ -1,4 +1,5 @@
 = Certified CAPI Providers
+:description: Find certified CAPI providers tested by the Turtles teams' CI workflows and their support matrix for ClusterClass features
 :revdate: 2025-05-30
 :page-revdate: {revdate}
 

@@ -1,4 +1,5 @@
 = Installing AWS Infrastructure Provider using CAPIProvider resource
+:description: Install the AWS Infrastructure Provider using the CAPIProvider resource to manage Cluster API AWS CRDs and the controller
 :revdate: 2026-06-26
 :page-revdate: {revdate}
 

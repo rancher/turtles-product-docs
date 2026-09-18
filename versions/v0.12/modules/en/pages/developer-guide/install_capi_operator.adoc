@@ -1,4 +1,5 @@
 = Installing Cluster API Operator
+:description: Install Cluster API Operator in a Kubernetes cluster using Helm, add repositories, install Cert-Manager, and choose providers with version flags
 :revdate: 2025-10-02
 :page-revdate: {revdate}
 :sidebar_position: 2

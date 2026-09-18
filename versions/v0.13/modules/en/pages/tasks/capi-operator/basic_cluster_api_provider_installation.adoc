@@ -1,4 +1,5 @@
 = Basic Cluster API Provider Installation
+:description: Install CAPI providers using the operator and configure the AWS Infrastructure provider with basic settings to set up a cluster following official
 :revdate: 2026-06-26
 :page-revdate: {revdate}
 :sidebar_position: 1

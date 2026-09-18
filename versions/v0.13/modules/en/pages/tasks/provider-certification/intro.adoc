@@ -1,4 +1,5 @@
 = What is a Certified Provider?
+:description: Certify your provider by meeting prerequisites and passing end-to-end tests to ensure compatibility with Rancher and Turtles then use the test suite
 :revdate: 2026-09-02
 :page-revdate: {revdate}
 :sidebar_position: 1

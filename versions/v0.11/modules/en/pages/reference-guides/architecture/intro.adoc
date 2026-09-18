@@ -1,4 +1,5 @@
 = Introduction
+:description: Learn the core components and structure of SUSE® Rancher Prime Cluster API and its integration within the Rancher ecosystem
 :revdate: 2024-09-20
 :page-revdate: {revdate}
 :sidebar_position: 0

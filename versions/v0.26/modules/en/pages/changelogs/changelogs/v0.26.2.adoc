@@ -1,4 +1,5 @@
 = v0.26.2
+:description: This release updates core CAPI to v1.12.7, CAPI operator to v0.27.0, CAPRKE2 to v0.24.4, CAPA to v2.10.1, and go to 1.25
 :revdate: 2026-09-02
 :page-revdate: {revdate}
 

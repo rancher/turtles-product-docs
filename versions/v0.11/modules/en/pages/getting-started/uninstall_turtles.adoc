@@ -1,4 +1,5 @@
 = Uninstall {product_name}
+:description: Uninstall SUSE® Rancher Prime Cluster API using the helm command and re-enable the embedded-cluster-api feature with a feature.yaml file
 :revdate: 2024-09-20
 :page-revdate: {revdate}
 :sidebar_position: 5

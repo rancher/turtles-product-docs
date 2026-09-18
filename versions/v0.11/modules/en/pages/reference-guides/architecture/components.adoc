@@ -1,4 +1,5 @@
 = Components
+:description: Understand the key components of Rancher Turtles and their roles in managing clusters with Rancher and Cluster API
 :revdate: 2024-09-20
 :page-revdate: {revdate}
 :sidebar_position: 0

@@ -1,4 +1,5 @@
 = Rancher Cluster Deletion
+:description: Delete a Rancher cluster using cluster-api.cattle.io labels to remove the clusters.management.cattle.io resource and disable auto-import
 :revdate: 2026-03-05
 :page-revdate: {revdate}
 

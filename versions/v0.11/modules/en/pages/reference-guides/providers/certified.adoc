@@ -1,4 +1,5 @@
 = Certified CAPI Providers
+:description: Find certified CAPI Providers maintained by the Kubernetes community, tested by Turtles to ensure compatibility with Ranchers CAPI extension and identify
 :revdate: 2024-09-12
 :page-revdate: {revdate}
 

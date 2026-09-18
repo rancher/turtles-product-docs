@@ -1,4 +1,5 @@
 = CAPIProvider Resource
+:description: Manage Cluster API Operator manifests declaratively using the CAPIProvider resource to provision and configure providers like AWS and vSphere
 :revdate: 2026-06-26
 :page-revdate: {revdate}
 :sidebar_position: 2
