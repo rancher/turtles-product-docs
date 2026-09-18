@@ -5,7 +5,7 @@
 
 == Description
 
-Release Date: 2026-09-19
+Release Date: 2026-09-18
 
 This release contains security updates for several Go dependencies (`golang.org/x/mod`, `golang.org/x/crypto`, `google.golang.org/grpc`, and `github.com/cloudflare/circl`).
 
@@ -31,7 +31,7 @@ Review the full list of changes: https://github.com/rancher/turtles/compare/v0.2
 |===
 | Name | Created At | Updated At
 
-| https://github.com/rancher/turtles/archive/refs/tags/v0.25.8-rc.0.tar.gz[rancher-turtles-0.25.8.tar.gz] | 2026-09-19 | 2026-09-19
+| https://github.com/rancher/turtles/archive/refs/tags/v0.25.8-rc.0.tar.gz[rancher-turtles-0.25.8.tar.gz] | 2026-09-18 | 2026-09-18
 
 |===
 

@@ -5,7 +5,7 @@
 
 == Description
 
-Release Date: 2026-09-19
+Release Date: 2026-09-18
 
 This release adds a releaseChannel variable to the GKE ClusterClass, replaces the `rancher/kuberlr-kubectl` image with the `rancher/turtles` image in Helm hooks, and picks up security updates for `golang.org/x/mod`, `golang.org/x/crypto`, and `go.opentelemetry.io/otel`.
 
@@ -30,7 +30,7 @@ Review the full list of changes: https://github.com/rancher/turtles/compare/v0.2
 |===
 | Name | Created At | Updated At
 
-| https://github.com/rancher/turtles/releases/download/v0.26.6/rancher-turtles-0.26.6.tgz[rancher-turtles-0.26.6.tgz] | 2026-09-19 | 2026-09-19
+| https://github.com/rancher/turtles/releases/download/v0.26.6/rancher-turtles-0.26.6.tgz[rancher-turtles-0.26.6.tgz] | 2026-09-18 | 2026-09-18
 
 |===
 

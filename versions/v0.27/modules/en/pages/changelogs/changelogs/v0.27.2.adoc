@@ -5,7 +5,7 @@
 
 == Description
 
-Release Date: 2026-09-19
+Release Date: 2026-09-18
 
 This maintenance release bumps CAPI Operator to v0.29.0 and CAPRKE2 to v0.25.2, switches Helm hooks to the `rancher/turtles` image, and includes routine dependency, security and toolchain updates.
 
@@ -32,7 +32,7 @@ Review the full list of changes: https://github.com/rancher/turtles/compare/v0.2
 |===
 | Name | Created At | Updated At
 
-| https://github.com/rancher/turtles/releases/download/v0.27.2/rancher-turtles-0.27.2.tgz[rancher-turtles-0.27.2.tgz] | 2026-09-19 | 2026-09-19
+| https://github.com/rancher/turtles/releases/download/v0.27.2/rancher-turtles-0.27.2.tgz[rancher-turtles-0.27.2.tgz] | 2026-09-18 | 2026-09-18
 
 |===
 
