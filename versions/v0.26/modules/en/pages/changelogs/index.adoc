@@ -1,8 +1,9 @@
 = Release Notes
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2026-08-24
+:revdate: 2026-09-19
 :page-revdate: {revdate}
 
+* xref:changelogs/changelogs/v0.26.6.adoc[v0.26.6]
 * xref:changelogs/changelogs/v0.26.5.adoc[v0.26.5]
 * xref:changelogs/changelogs/v0.26.4.adoc[v0.26.4]
 * xref:changelogs/changelogs/v0.26.3.adoc[v0.26.3]

@@ -2,5 +2,6 @@
 :revdate: 2026-08-24
 :page-revdate: {revdate}
 
-* xref:changelogs/changelogs/v0.27.1.adoc[v0.27.1 (latest)]
+* xref:changelogs/changelogs/v0.27.2.adoc[v0.27.2 (latest)]
+* xref:changelogs/changelogs/v0.27.1.adoc[v0.27.1]
 * xref:changelogs/changelogs/v0.27.0.adoc[v0.27.0]

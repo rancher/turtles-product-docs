@@ -1,0 +1,39 @@
+= v0.25.8
+:description: Go module updates to improve security for version v0.25.8 and and replace Turtles image in Helm hooks
+:revdate: 2026-09-19
+:page-revdate: {revdate}
+
+== Description
+
+Release Date: 2026-09-18
+
+This release contains security updates for several Go dependencies (`golang.org/x/mod`, `golang.org/x/crypto`, `google.golang.org/grpc`, and `github.com/cloudflare/circl`).
+
+
+=== Other Changes
+
+* chore(deps): update module golang.org/x/mod to v0.40.0 [security] (release/v0.25) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2795[#2795].
+* chore(deps): update module google.golang.org/grpc to v1.83.1 [security] (release/v0.25) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2793[#2793].
+* chore(deps): update module github.com/cloudflare/circl to v1.6.3 [security] (release/v0.25) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2792[#2792].
+* chore(deps): update module golang.org/x/crypto to v0.56.0 [security] (release/v0.25) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2807[#2807].
+* chore(deps): update module google.golang.org/grpc to v1.83.2 [security] (release/v0.25) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2811[#2811].
+* [release/v0.25] chore: bump providers chart to 0.25.8-rc.0 by @yiannistri in https://github.com/rancher/turtles/pull/2817[#2817].
+* [backport-release/v0.25] refactor: replace usage of rancher/kuberlr-kubectl image with rancher/turtles image in Helm hooks by @yiannistri in https://github.com/rancher/turtles/pull/2824[#2824].
+* chore: prepare providers chart for v0.25.8 patch release by @furkatgofurov7 in https://github.com/rancher/turtles/pull/2830[#2830].
+
+=== Full Changelog: 
+
+Review the full list of changes: https://github.com/rancher/turtles/compare/v0.25.7...v0.25.8[v0.25.7...v0.25.8]
+
+== Download
+
+[cols="3,1,1" options="header" frame="all" grid="rows"]
+|===
+| Name | Created At | Updated At
+
+| https://github.com/rancher/turtles/archive/refs/tags/v0.25.8-rc.0.tar.gz[rancher-turtles-0.25.8.tar.gz] | 2026-09-18 | 2026-09-18
+
+|===
+
+__Information retrieved from https://github.com/rancher/turtles/releases/tag/v0.25.8[v0.25.8 GitHub release].__
+
