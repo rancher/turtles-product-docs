@@ -1,7 +1,7 @@
 = Upgrading to CAPI v1beta2
 :description: Review changes in ClusterClass structure, Cluster topology references, and RKE2 provider updates when upgrading to CAPI v1beta2
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2026-04-14
+:revdate: 2026-09-24
 :page-revdate: {revdate}
 
 Release `v0.26.0` of Rancher Turtles adopts the CAPI `v1beta2` contract, which comes with CAPI core v1.12.2. If you are using CAPI-based provisioning, there are a few things to review before upgrading.
@@ -19,11 +19,6 @@ Read through the sections that apply to your setup before making any changes.
 CAPI v1.12 continues to serve `v1beta1` resources alongside `v1beta2`. Existing resources on your cluster will keep working without an immediate migration, as the API server converts between the two versions transparently. That said, any new manifests you write should target `v1beta2`, and you should plan to migrate your existing ones over time. The `v1beta1` API is set to be removed in a future CAPI release (August 2026) once the ecosystem has had time to settle on `v1beta2`.
 
 *Recommendation*: first evaluate whether you are ready to adopt `v1beta2` and act accordingly. If you choose not to migrate right away, create a plan for switching to using the new API to avoid disruptions in the future.
-
-Additionally, the upstream community provides an official migration guide:
-
-* https://cluster-api.sigs.k8s.io/developer/providers/migrations/v1.10-to-v1.11[CAPI v1.10 to v1.11]: this covers all of the `v1beta1` to `v1beta2` changes in core CAPI.
-* https://cluster-api.sigs.k8s.io/developer/providers/migrations/v1.11-to-v1.12[CAPI v1.11 to v1.12]: most of the changes in CAPI v1.12 can be considered minor.
 
 [#_clusterclass]
 == ClusterClass

@@ -1,6 +1,6 @@
 = v0.26.0
 :description: Introduce v0.26.0 with CAPI v1.12 support, core contract v1beta2, migration guides, and updates to cluster templates, pod memory limits, and bug fixes
-:revdate: 2026-09-02
+:revdate: 2026-09-24
 :page-revdate: {revdate}
 
 == Description
@@ -13,8 +13,6 @@ Please read below information before updating.
 ====
 
 This release is a major step for Turtles and CAPI in Rancher as it ships with https://github.com/kubernetes-sigs/cluster-api/releases/[CAPI v1.12] and adopts the new core CAPI contract v1beta2. The Rancher team has put together a simplified xref:tutorials/capi-v1beta2.adoc[migration guide] to make the transition as easy as possible.
-
-Additionally, you can refer to the https://cluster-api.sigs.k8s.io/developer/providers/migrations/v1.10-to-v1.11[official CAPI migration guide] to understand the full extent of the implications of moving to a CAPI version `>=v1.11`.
 
 **Before updating we recommend that you familiarize with the changes introduced by your provider/s of choice and, if needed, adapt your cluster templates accordingly.**
 
