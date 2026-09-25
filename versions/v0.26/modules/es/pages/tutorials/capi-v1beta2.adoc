@@ -17,11 +17,6 @@ CAPI v1.12 sigue sirviendo `v1beta1` recursos junto a `v1beta2`. Los recursos ex
 
 *Recomendación*: primero evalúe si está listo para adoptar `v1beta2` y actúe en consecuencia. Si elige no migrar de inmediato, cree un plan para cambiar al uso de la nueva API para evitar interrupciones en el futuro.
 
-Además, la comunidad upstream proporciona una guía oficial de migración:
-
-* https://cluster-api.sigs.k8s.io/developer/providers/migrations/v1.10-to-v1.11[CAPI v1.10 a v1.11]: esto cubre todos los cambios de `v1beta1` a `v1beta2` en el kernel de CAPI.
-* https://cluster-api.sigs.k8s.io/developer/providers/migrations/v1.11-to-v1.12[CAPI v1.11 a v1.12]: la mayoría de los cambios en CAPI v1.12 pueden considerarse menores.
-
 [#_clusterclass]
 == ClusterClass
 
