@@ -1,0 +1,106 @@
+= In-Place Updates for RKE2 Clusters
+:description: Enable in-place Kubernetes/RKE2 version updates so control-plane Machines are upgraded without being replaced
+:revdate: 2026-10-09
+:page-revdate: {revdate}
+
+[WARNING]
+====
+In-place updates are a tech preview feature: disabled by default, and subject to change. Test thoroughly before relying on it in production.
+====
+
+By default, Cluster API upgrades a cluster by replacing every Machine (immutable infrastructure). For RKE2 control planes managed by {product_name}, you can instead upgrade the Kubernetes version of existing Machines in place: the node keeps its identity, only the RKE2 binary is swapped and the service restarted.
+
+== How it works
+
+{product_name} installs a CAPI runtime extension alongside the RKE2 control-plane provider. When a Cluster's Kubernetes version changes, CAPI asks the extension whether it can apply the change in place. The extension claims Kubernetes version changes; anything it doesn't claim (for example infrastructure changes, or `serverConfig` changes, which require re-rendering the node's configuration) is left for CAPI to handle with a normal rollout. If the extension can't be reached, or the target cluster has no `system-agent` (e.g. it isn't Rancher-managed), CAPI automatically falls back to a normal rolling update - there's no scenario where an update silently gets stuck because the feature is misconfigured.
+
+When the extension does claim the change, it delivers it through the same `system-agent` Plan mechanism Rancher already uses for Day 2 Operations: it writes an install-and-restart plan to the Machine's `machine-plan` Secret, and reports progress back to CAPI until `system-agent` confirms the plan succeeded or failed.
+
+== Prerequisites
+
+* A cluster provisioned or imported through Rancher, so that `system-agent` is running on its nodes (Rancher >= v2.15.0 enables this for imported clusters by default).
+* At least **3 control-plane replicas**. In-place updates require `maxSurge: 0` (update one Machine at a time, no surge); CAPRKE2's admission webhook rejects `maxSurge: 0` outright when there are fewer than 3 control-plane replicas, so this isn't optional.
+* RKE2 control plane provider (`controlplaneRKE2`) enabled.
+
+== Enable the feature
+
+Set `features.inPlaceUpdates: true` on the `controlplaneRKE2` provider in the `rancher-turtles-providers` chart values:
+
+[source,yaml]
+----
+providers:
+  controlplaneRKE2:
+    enabled: true
+    features:
+      inPlaceUpdates: true
+----
+
+This does two things:
+
+* Enables the `InPlaceUpdates`/`RuntimeSDK` feature gates on the core CAPI and RKE2 control-plane managers.
+* Installs the RKE2 runtime extension (as a `CAPIProvider` of type `runtimeextension`) into the fixed `rke2-extension-system` namespace, using the same version and `enableAutomaticUpdate` as `controlplaneRKE2`.
+
+[NOTE]
+====
+Setting any `features.*` key disables every feature not explicitly listed, so include the other `controlplaneRKE2` features you rely on alongside `inPlaceUpdates`.
+====
+
+To customize the extension's deployment (environment variables, log verbosity, or artifact source), use the optional `runtimeExtension` block under `controlplaneRKE2`:
+
+[source,yaml]
+----
+providers:
+  controlplaneRKE2:
+    features:
+      inPlaceUpdates: true
+    runtimeExtension:
+      manager:
+        verbosity: 1
+      variables:
+        SOME_ENV_VAR: "value"
+----
+
+== Enable it on a cluster
+
+If you're using a xref:../user/clusterclass.adoc[ClusterClass]-based cluster built from the CAPRKE2 Docker example, set the `inPlaceUpdates` cluster variable to `true`:
+
+[source,yaml]
+----
+spec:
+  topology:
+    variables:
+      - name: inPlaceUpdates
+        value: true
+----
+
+This patches the generated `RKE2ControlPlaneTemplate` to use `maxSurge: 0`. Without a ClusterClass, set the same field directly on the `RKE2ControlPlane`:
+
+[source,yaml]
+----
+spec:
+  rolloutStrategy:
+    rollingUpdate:
+      maxSurge: 0
+----
+
+== Trigger an update
+
+Bump the cluster's Kubernetes version as you normally would - `Cluster.spec.topology.version` for ClusterClass clusters, or `RKE2ControlPlane.spec.version` otherwise. No other change is needed: CAPI detects the version diff and drives the in-place flow automatically.
+
+== Monitoring progress
+
+* A Machine being updated in place carries the `cluster.x-k8s.io/update-in-progress` annotation until the update completes.
+* No new Machine is created and no existing Machine is deleted - compare `Machine` names before and after to confirm.
+* Once finished, every `Machine.spec.version` (and the corresponding Node's kubelet version) matches the new version.
+* If an update seems stuck, inspect the Machine's `machine-plan` Secret (type `rke.cattle.io/machine-plan`, in the Machine's namespace): its `plan-state` key shows whether `system-agent` is still applying the plan, succeeded, or failed.
+
+== Limitations
+
+* **Air-gapped clusters are not supported yet.** The extension installs RKE2 by pulling a versioned container image; if the target machine can't reach a registry, the update fails fast with a clear error instead of hanging.
+* **No automatic rollback.** If `system-agent` reports the plan failed, the Machine stays on its previous version; investigate and remediate the Machine manually (or let your `MachineHealthCheck` replace it), same as any other failed update.
+* Only one in-place update extension can be registered per cluster (a Cluster API constraint).
+
+== Related pages
+
+* xref:../overview/features.adoc[Features] — other {product_name} feature gates.
+* xref:../user/clusterclass.adoc[Provision a CAPI cluster with ClusterClass].

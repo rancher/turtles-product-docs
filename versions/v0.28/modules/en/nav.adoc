@@ -24,6 +24,7 @@ ifeval::["{build-type}" == "product"]
 endif::[]
 * Operator Guide
 ** xref:operator/clusterclass.adoc[Enabling ClusterClass]
+** xref:operator/in-place-updates.adoc[In-Place Updates for RKE2 Clusters]
 ifeval::["{build-type}" == "product"]
 ** xref:operator/certification.adoc[Provider Certification]
 endif::[]
