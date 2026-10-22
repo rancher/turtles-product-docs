@@ -1,0 +1,40 @@
+= v0.26.7
+:description: Pins the AWS CCM Helm chart, bumps CAAPF and Go, updates the CAPV+RKE2 ClusterClass SCC registration, and picks up security updates to the Kubernetes, OpenTelemetry and golang.org/x/net dependencies
+:revdate: 2026-10-22
+:page-revdate: {revdate}
+
+== Description
+
+Release Date: 2026-10-21
+
+This v0.26 patch release pins the AWS cloud controller manager Helm chart to 0.0.11, updates the CAPV+RKE2 ClusterClass to the new SUSE Customer Center (SCC) registration for SL Micro 6.2, and bumps CAPRKE2 to v0.24.5, CAAPF to v0.14.2 and Go to 1.26.10. It also updates the Kubernetes dependencies to v0.34.12 and golang.org/x/net to v0.60.0 for a security fix.
+
+
+=== Notable Changes
+
+* Pin AWS-CCM Helm chart version to 0.0.11 by @cpinjani in https://github.com/rancher/turtles/pull/2844[#2844].
+
+=== Bug Fixes
+
+* Update Kubernetes dependencies (release/v0.26) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2837[#2837]
+* Update Kubernetes dependencies to v0.34.12 (release/v0.26) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2854[#2854]
+* Update CAPRKE2 to v0.24.5 and CAAPF to v0.14.2 by @yiannistri in https://github.com/rancher/turtles/pull/2872[#2872]
+* CAPV+RKE2 clusterclass - update SCC registration by @thehejik in https://github.com/rancher/turtles/pull/2878[#2878]
+* Update module golang.org/x/net to v0.60.0 [security] (release/v0.26) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2896[#2896]
+
+
+=== Full Changelog: 
+
+Review the full list of changes: https://github.com/rancher/turtles/compare/v0.26.6...v0.26.7[v0.26.6...v0.26.7]
+
+== Download
+
+[cols="3,1,1" options="header" frame="all" grid="rows"]
+|===
+| Name | Created At | Updated At
+
+| https://github.com/rancher/turtles/releases/download/v0.26.7/rancher-turtles-0.26.7.tgz[rancher-turtles-0.26.7.tgz] | 2026-10-21 | 2026-10-21
+
+|===
+
+__Information retrieved from https://github.com/rancher/turtles/releases/tag/v0.26.7[v0.26.7 GitHub release].__
