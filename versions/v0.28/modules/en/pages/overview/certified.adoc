@@ -96,17 +96,6 @@ endif::[]
 ifeval::["{build-type}" == "product"]
 |{gcp_version}
 endif::[]
-
-| *Addon Provider Fleet*
-| CAAPF
-| Addon
-| https://rancher.github.io/cluster-api-addon-provider-fleet/[CAAPF book]
-ifeval::["{build-type}" == "community"]
-|https://github.com/rancher/cluster-api-addon-provider-fleet/releases/latest[latest]
-endif::[]
-ifeval::["{build-type}" == "product"]
-|{fleet_addon_version}
-endif::[]
 |===
 
 *Recommended only for development purposes.
