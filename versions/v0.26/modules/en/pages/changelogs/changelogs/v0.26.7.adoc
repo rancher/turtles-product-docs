@@ -16,11 +16,11 @@ This v0.26 patch release pins the AWS cloud controller manager Helm chart to 0.0
 
 === Bug Fixes
 
-* Update Kubernetes dependencies (release/v0.26) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2837[#2837]
-* Update Kubernetes dependencies to v0.34.12 (release/v0.26) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2854[#2854]
-* Update CAPRKE2 to v0.24.5 and CAAPF to v0.14.2 by @yiannistri in https://github.com/rancher/turtles/pull/2872[#2872]
-* CAPV+RKE2 clusterclass - update SCC registration by @thehejik in https://github.com/rancher/turtles/pull/2878[#2878]
-* Update module golang.org/x/net to v0.60.0 [security] (release/v0.26) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2896[#2896]
+* Update Kubernetes dependencies (release/v0.26) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2837[#2837].
+* Update Kubernetes dependencies to v0.34.12 (release/v0.26) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2854[#2854].
+* Update CAPRKE2 to v0.24.5 and CAAPF to v0.14.2 by @yiannistri in https://github.com/rancher/turtles/pull/2872[#2872].
+* CAPV+RKE2 clusterclass - update SCC registration by @thehejik in https://github.com/rancher/turtles/pull/2878[#2878].
+* Update module golang.org/x/net to v0.60.0 [security] (release/v0.26) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2896[#2896].
 
 
 === Full Changelog: 
