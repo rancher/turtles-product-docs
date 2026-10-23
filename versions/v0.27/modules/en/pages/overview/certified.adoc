@@ -81,14 +81,18 @@ This is a list of the CAPI Providers officially certified by SUSE. These provide
 
 This is a list of CAPI Providers certified by SUSE partners. The partner maintains each provider. Refer to the provider documentation for installation and configuration.
 
+Each certification applies only to the listed provider, Rancher and Turtles versions.
+
 |===
-| Platform | Code Name | Provider Type | Docs | Version
+| Platform | Code Name | Provider Type | Docs | Version | Rancher Version | Turtles Version
 
 | *evroc*
 | CAPEVROC
 | Infrastructure
 | https://github.com/evroc-oss/cluster-api-provider-evroc#readme[CAPEVROC docs]
 |{evroc_version}
+|{evroc_rancher_version}
+|{evroc_turtles_version}
 |===
 
 == List of providers in experimental mode
