@@ -30,7 +30,12 @@ image::intro.png[intro,640,480]
 
 === 概述
 
+ifeval::["{build-type}" == "product"]
 了解 xref:./overview/architecture.adoc[架构] {product_name}、xref:./overview/features.adoc[功能]、xref:./overview/certified.adoc[`Certified Providers`] 的概念，以及 Operator 功能的 xref:./overview/glossary.adoc[核心概念]。
+endif::[]
+ifeval::["{build-type}" == "community"]
+了解 xref:./overview/architecture.adoc[架构] {product_name}、xref:./overview/features.adoc[功能]，以及 Operator 功能的 xref:./overview/glossary.adoc[核心概念]。
+endif::[]
 
 === 参考手册
 

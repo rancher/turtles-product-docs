@@ -9,7 +9,12 @@ La ressource `CAPIProvider` permet de gérer les manifestes de l'opérateur Clus
 
 Chaque champ fourni par la ressource CAPI Operator `CAPIProviderSpec` en amont est également disponible dans la spécification de la ressource `CAPIProvider`. N'hésitez pas à vous référer à la configuration en amont link:https://cluster-api-operator.sigs.k8s.io/topics/configuration/provider-spec-configuration[guides] pour des scénarios avancés.
 
+ifeval::["{build-type}" == "product"]
 Tous les fournisseurs CAPI xref:../overview/certified.adoc[certifiés] sont configurés à l'aide d'une configuration intégrée. Pour le remplacer, une configuration personnalisée xref:./clusterctlconfig.adoc#_override_a_certified_provider_version[ClusterctlConfig] doit être créée.
+endif::[]
+ifeval::["{build-type}" == "community"]
+Tous les fournisseurs CAPI certifiés sont configurés à l'aide d'une configuration intégrée. Pour le remplacer, une configuration personnalisée xref:./clusterctlconfig.adoc#_override_a_certified_provider_version[ClusterctlConfig] doit être créée.
+endif::[]
 
 == Syntaxe
 
@@ -64,7 +69,12 @@ Les champs clés dans la spécification `CAPIProvider` sont :
 
 == Fixation de version et mises à jour automatiques
 
+ifeval::["{build-type}" == "product"]
 Le `CAPIProvider` `version` peut être défini à tout moment pour fixer le fournisseur à une version spécifique. De plus, `automaticUpdates` peut être activé pour permettre des mises à jour automatiques vers la dernière version disponible. La dernière version disponible est déterminée par la configuration clusterctl intégrée pour les fournisseurs xref:../overview/certified.adoc[certifiés], et elle peut être remplacée ou configurée pour des fournisseurs personnalisés en utilisant xref:../reference/clusterctlconfig.adoc[ClusterctlConfig].
+endif::[]
+ifeval::["{build-type}" == "community"]
+Le `CAPIProvider` `version` peut être défini à tout moment pour fixer le fournisseur à une version spécifique. De plus, `automaticUpdates` peut être activé pour permettre des mises à jour automatiques vers la dernière version disponible. La dernière version disponible est déterminée par la configuration clusterctl intégrée pour les fournisseurs certifiés, et elle peut être remplacée ou configurée pour des fournisseurs personnalisés en utilisant xref:../reference/clusterctlconfig.adoc[ClusterctlConfig].
+endif::[]
 
 == Suppression
 

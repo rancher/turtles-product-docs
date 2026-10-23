@@ -19,6 +19,10 @@ asciidoc:
     kubeadm_version: v1.13.2
     rke2_version: v0.25.0
     fleet_addon_version: v0.15.0
+    # Partner certified providers
+    evroc_version: v0.7.0
+    evroc_rancher_version: v2.15.1
+    evroc_turtles_version: v0.27
     # Kubernetes examples versions (keep it in sync with Turtles e2e tests)
     k8s_kubeadm_default: v1.36.1
     k8s_rke2_default: v1.36.0+rke2r1
