@@ -7,7 +7,12 @@
 
 [TIP]
 ====
+ifeval::["{build-type}" == "product"]
 在使用 ClusterClass 功能之前，请研究提供者文档并确认该功能是否受支持。本文件包括在 xref:../overview/certified.adoc[认证提供者] 部分的矩阵，其中包含 xref:../overview/certified.adoc#_clusterclass_support_for_certified_providers[集群拓扑支持状态]。
+endif::[]
+ifeval::["{build-type}" == "community"]
+在使用 ClusterClass 功能之前，请研究提供者文档并确认该功能是否受支持。
+endif::[]
 ====
 
 == 启用 ClusterClass

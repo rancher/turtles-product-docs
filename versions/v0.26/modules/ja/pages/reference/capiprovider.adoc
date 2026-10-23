@@ -9,7 +9,12 @@
 
 アップストリームのCAPI Operator `CAPIProviderSpec`リソースによって提供されるすべてのフィールドは、`CAPIProvider`リソースのspecにも利用可能です。高度なシナリオについては、アップストリームの設定link:https://cluster-api-operator.sigs.k8s.io/topics/configuration/provider-spec-configuration[ガイド]を参照してください。
 
+ifeval::["{build-type}" == "product"]
 すべてのxref:../overview/certified.adoc[認定]CAPIプロバイダは、埋め込まれた設定を使用して設定されています。これを上書きするには、カスタムxref:./clusterctlconfig.adoc#_override_a_certified_provider_version[ClusterctlConfig]を作成する必要があります。
+endif::[]
+ifeval::["{build-type}" == "community"]
+すべての認定CAPIプロバイダは、埋め込まれた設定を使用して設定されています。これを上書きするには、カスタムxref:./clusterctlconfig.adoc#_override_a_certified_provider_version[ClusterctlConfig]を作成する必要があります。
+endif::[]
 
 == 使用方法
 
@@ -64,7 +69,12 @@ spec:
 
 == バージョンの固定と自動更新
 
+ifeval::["{build-type}" == "product"]
 `CAPIProvider` `version`は、プロバイダーを特定のバージョンに固定するためにいつでも設定できます。さらに、`automaticUpdates`を切り替えることで、最新の利用可能なバージョンへの自動更新を許可できます。最新の利用可能なバージョンは、xref:../overview/certified.adoc[certified]プロバイダーの埋め込まれたclusterctl設定によって決定され、xref:../reference/clusterctlconfig.adoc[ClusterctlConfig]を使用してカスタムプロバイダーのために上書きまたは設定できます。
+endif::[]
+ifeval::["{build-type}" == "community"]
+`CAPIProvider` `version`は、プロバイダーを特定のバージョンに固定するためにいつでも設定できます。さらに、`automaticUpdates`を切り替えることで、最新の利用可能なバージョンへの自動更新を許可できます。最新の利用可能なバージョンは、certifiedプロバイダーの埋め込まれたclusterctl設定によって決定され、xref:../reference/clusterctlconfig.adoc[ClusterctlConfig]を使用してカスタムプロバイダーのために上書きまたは設定できます。
+endif::[]
 
 == 削除
 

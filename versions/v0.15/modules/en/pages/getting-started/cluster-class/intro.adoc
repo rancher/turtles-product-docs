@@ -13,7 +13,12 @@ ClusterClass is an experimental feature of Cluster API. As with any experimental
 
 [TIP]
 ====
+ifeval::["{build-type}" == "product"]
 Before using ClusterClass, study the provider docs and confirm that the feature is supported. This documentation includes a matrix in the xref:../../reference-guides/providers/certified.adoc[Certified providers] section with xref:../../reference-guides/providers/certified.adoc#_clusterclass_support_for_certified_providers[cluster topology support status].
+endif::[]
+ifeval::["{build-type}" == "community"]
+Before using ClusterClass, study the provider docs and confirm that the feature is supported.
+endif::[]
 ====
 
 == Pre-requisities

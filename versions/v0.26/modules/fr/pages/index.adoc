@@ -30,7 +30,12 @@ Si c'est votre première fois en utilisant {product_name} et que vous souhaitez 
 
 === Présentation
 
+ifeval::["{build-type}" == "product"]
 Comprendre l'xref:./overview/architecture.adoc[architecture] de {product_name}, les xref:./overview/features.adoc[fonctionnalités], le concept de xref:./overview/certified.adoc[`Certified Providers`] et les xref:./overview/glossary.adoc[concepts noyaux] des fonctionnalités de l'opérateur.
+endif::[]
+ifeval::["{build-type}" == "community"]
+Comprendre l'xref:./overview/architecture.adoc[architecture] de {product_name}, les xref:./overview/features.adoc[fonctionnalités] et les xref:./overview/glossary.adoc[concepts noyaux] des fonctionnalités de l'opérateur.
+endif::[]
 
 === Référence
 
