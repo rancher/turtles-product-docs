@@ -1,0 +1,60 @@
+= v0.27.3
+:description: Pins the AWS CCM Helm chart, bumps CAAPF and Go, updates the CAPV+RKE2 ClusterClass SCC registration, and picks up security updates to the Kubernetes, OpenTelemetry and golang.org/x/net dependencies
+:revdate: 2026-10-22
+:page-revdate: {revdate}
+
+== Description
+
+Release Date: 2026-10-21
+
+Turtles `v0.27.3` is a patch version of the `v0.27` series, which is shipped as part of Rancher v2.15.3.
+
+
+=== Notable Changes
+
+This new release includes relevant changes that require your attention:
+
+*Cluster API Add-on Provider Fleet (CAAPF) bumped to v0.15.1*
+
+* The `rancher-turtles-providers` Helm chart now installs CAAPF `v0.15.1`.
+** [release/v0.27] chore: bump CAAPF to `v0.15.1` by @yiannistri in https://github.com/rancher/turtles/pull/2874[#2874].
+
+*AWS cloud controller manager Helm chart pinned to `0.0.11`*
+
+* The AWS-CCM Helm chart version used by the AWS ClusterClass is now pinned to `0.0.11`.
+** [release/v0.27] AWS-CCM: Pin helm-chart version to `0.0.11` by @cpinjani in https://github.com/rancher/turtles/pull/2842[#2842].
+
+*CAPV+RKE2 ClusterClass: SCC registration updated*
+
+* The SCC registration in the vSphere + RKE2 ClusterClass has been updated.
+** [release/v0.27] CAPV+RKE2 clusterclass - update SCC registration by @thehejik in https://github.com/rancher/turtles/pull/2879[#2879].
+
+*Security*
+
+* Updated `golang.org/x/net` to `v0.60.0` to address a security advisory.
+** chore(deps): update module `golang.org/x/net` to `v0.60.0` [security](release/v0.27) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2895[#2895].
+
+=== Bug Fixes
+
+* [release/v0.27] AWS-CCM: Pin helm-chart version to 0.0.11 by @cpinjani in https://github.com/rancher/turtles/pull/2842[#2842].
+
+=== Other Changes
+
+* chore(deps): update kubernetes dependencies to v0.35.9 (release/v0.27) by @renovate-rancher[bot] in https://github.com/rancher/turtles/pull/2853[#2853].
+
+
+=== Full Changelog: 
+
+Review the full list of changes: https://github.com/rancher/turtles/compare/v0.27.2%E2%80%A6v0.27.3[v0.27.2...v0.27.3]
+
+== Download
+
+[cols="3,1,1" options="header" frame="all" grid="rows"]
+|===
+| Name | Created At | Updated At
+
+| https://github.com/rancher/turtles/releases/download/v0.27.3/rancher-turtles-0.27.3.tgz[rancher-turtles-0.27.3.tgz] | 2026-10-21 | 2026-10-21
+
+|===
+
+__Information retrieved from https://github.com/rancher/turtles/releases/tag/v0.27.3[v0.27.3 GitHub release].__
