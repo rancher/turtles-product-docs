@@ -9,7 +9,12 @@ The `CAPIProvider` resource allows managing Cluster API Operator manifests in a 
 
 Every field provided by the upstream CAPI Operator `CAPIProviderSpec` resource is also available in the spec of the `CAPIProvider` resource. Feel free to refer to upstream configuration link:https://cluster-api-operator.sigs.k8s.io/topics/configuration/provider-spec-configuration[guides] for advanced scenarios.
 
+ifeval::["{build-type}" == "product"]
 All the xref:../overview/certified.adoc[certified] CAPI Providers are configured using an embedded configuration. In order to override it, a custom xref:./clusterctlconfig.adoc#_override_a_certified_provider_version[ClusterctlConfig] needs to be created.
+endif::[]
+ifeval::["{build-type}" == "community"]
+All the certified CAPI Providers are configured using an embedded configuration. In order to override it, a custom xref:./clusterctlconfig.adoc#_override_a_certified_provider_version[ClusterctlConfig] needs to be created.
+endif::[]
 
 == Usage
 
@@ -64,7 +69,12 @@ The key fields in the `CAPIProvider` spec are:
 
 == Version pinning and automatic updates
 
+ifeval::["{build-type}" == "product"]
 The `CAPIProvider` `version` can be set at any time to pin the provider to a specific version. Additionally, `automaticUpdates` can be toggled to allow automatic updates to the latest version available. The latest version available is determined by the embedded clusterctl configuration for xref:../overview/certified.adoc[certified] providers, and it can be overridden or configured for custom providers using xref:../reference/clusterctlconfig.adoc[ClusterctlConfig].
+endif::[]
+ifeval::["{build-type}" == "community"]
+The `CAPIProvider` `version` can be set at any time to pin the provider to a specific version. Additionally, `automaticUpdates` can be toggled to allow automatic updates to the latest version available. The latest version available is determined by the embedded clusterctl configuration for certified providers, and it can be overridden or configured for custom providers using xref:../reference/clusterctlconfig.adoc[ClusterctlConfig].
+endif::[]
 
 == Deletion
 

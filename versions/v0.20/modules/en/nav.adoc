@@ -7,7 +7,9 @@
 ** xref:reference/architecture.adoc[Architecture]
 ** xref:reference/glossary.adoc[Glossary]
 ** xref:reference/features.adoc[Features]
+ifeval::["{build-type}" == "product"]
 ** xref:reference/certified.adoc[Certified Providers]
+endif::[]
 * User Guide
 ** xref:user/clusters.adoc[Provision a CAPI cluster]
 ** xref:user/clusterclass.adoc[Provision a CAPI cluster with ClusterClass]

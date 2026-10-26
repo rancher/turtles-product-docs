@@ -30,7 +30,12 @@ Si es tu primera vez utilizando {product_name} y quieres empezar rápidamente, t
 
 === Descripción general
 
+ifeval::["{build-type}" == "product"]
 Entiende la xref:./overview/architecture.adoc[arquitectura] de {product_name}, las xref:./overview/features.adoc[características], el concepto de xref:./overview/certified.adoc[`Certified Providers`] y los xref:./overview/glossary.adoc[conceptos del kernel] de las características del operador.
+endif::[]
+ifeval::["{build-type}" == "community"]
+Entiende la xref:./overview/architecture.adoc[arquitectura] de {product_name}, las xref:./overview/features.adoc[características] y los xref:./overview/glossary.adoc[conceptos del kernel] de las características del operador.
+endif::[]
 
 === Referencia
 
