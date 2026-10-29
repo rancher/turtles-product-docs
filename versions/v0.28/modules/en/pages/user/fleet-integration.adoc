@@ -7,7 +7,7 @@
 CAPI Clusters imported in Rancher via {product_name} will be automatically associated with a https://fleet.rancher.io/reference/ref-crds#_cluster[Fleet Cluster].
 This will lead to the deployment of the `fleet-agent` on the downstream CAPI Cluster.
 
-{product_name} supports Fleet integration for CAPI Clusters. This can be enabled using the `fleet-integration` xref:overview/features.adoc[feature].
+{product_name} supports Fleet integration for CAPI Clusters. This is controlled by the `fleet-integration` xref:overview/features.adoc[feature], which is in beta stage and enabled by default.
 This feature will propagate CAPI metadata and reconcile Fleet resources for all imported CAPI Clusters.
 
 == Features

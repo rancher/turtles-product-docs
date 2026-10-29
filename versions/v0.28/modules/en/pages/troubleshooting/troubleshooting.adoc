@@ -2,7 +2,7 @@
 
 = Rancher Turtles Troubleshooting
 :description: Troubleshoot issues with Rancher Turtles and Cluster API clusters by checking logs, managing resources, enabling debug mode, and collecting diagnostic
-:revdate: 2025-12-17
+:revdate: 2026-10-29
 :page-revdate: {revdate}
 
 This guide provides troubleshooting steps for Rancher Turtles and Cluster API (CAPI) clusters. It covers common issues and their resolutions to help you maintain a stable and functional environment.
@@ -32,10 +32,6 @@ You can view the following pods and check their logs in the following namespaces
 | cattle-turtles-system
 | rancher-turtles-controller-manager
 | Handles Rancher integration and manages the custom resources for Turtles
-
-| fleet-addon-system
-| caapf-controller-manager
-| Controls the Cluster API Provider Framework for custom infrastructure providers
 
 | cattle-capi-system
 | capi-controller-manager

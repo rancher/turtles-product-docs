@@ -1,6 +1,6 @@
 = Features
-:description: Describe the features of SUSE® Rancher Prime Cluster API, including Agent TLS Mode, No Cert Manager, Rancher Credential Translation, and Use CAAPF
-:revdate: 2026-06-22
+:description: Describe the features of SUSE® Rancher Prime Cluster API, including Agent TLS Mode, No Cert Manager, Rancher Credential Translation, and Fleet Integration
+:revdate: 2026-10-29
 :page-revdate: {revdate}
 
 This section describes features and feature stages in {product_name}.
@@ -28,12 +28,6 @@ This section describes features and feature stages in {product_name}.
 | enabled
 | beta
 
-| *Use CAAPF*
-| `use-caapf`
-| _None_
-| disabled
-| alpha
-
 | *Use Rancher Default Registry*
 | `use-rancher-default-registry`
 | _None_
@@ -43,8 +37,8 @@ This section describes features and feature stages in {product_name}.
 | *Fleet Integration*
 | `fleet-integration`
 | _None_
-| disabled
-| alpha
+| enabled
+| beta
 
 |===
 
@@ -66,10 +60,6 @@ It is possible to disable this feature to restore all provider manifests to the 
 
 This feature gate instructs {product_name} to watch Rancher Cloud Credentials and automatically translate them into CAPI-specific static identity objects, allowing users to reuse existing Rancher Cloud Credentials when provisioning clusters with CAPI providers. When enabled, {product_name} reconciles cloud credentials stored in the `cattle-global-data` namespace and creates the corresponding provider identity resources. Currently, this feature supports AWS credentials and translates them into `AWSClusterStaticIdentity` objects for use with the Cluster API Provider for AWS (CAPA). This feature is in the beta stage and is enabled by default.
 
-=== Use CAAPF
-
-This feature gate instructs {product_name} that the Cluster API Add-on Provider for Fleet (CAAPF) will be used to provide integration with https://github.com/rancher/fleet[Fleet] and enable the easy deployment of applications to CAPI-provisioned clusters. CAAPF automatically installs Fleet in the management cluster and registers newly provisioned CAPI clusters with Fleet so that applications can be deployed to these clusters via GitOps, `Bundle` or `HelmOp` resources. CAAPF also includes support for grouping CAPI clusters that reference the same ClusterClass through Fleet's `ClusterGroup`, simplifying application deployments to large groups of clusters. This feature is in the alpha stage and is disabled by default.
-
 === Use Rancher Default Registry
 
 This feature gate instructs {product_name} to leverage Rancher's `system-default-registry` management setting when constructing image references for CAPI provider components. When enabled, {product_name} reads this setting and, if a registry is configured, rewrites the repository for every provider image to use that registry.
@@ -77,7 +67,7 @@ If the setting is empty, {product_name} falls back to the default image referenc
 
 === Fleet Integration
 
-This feature gate instructs {product_name} to propagate CAPI metadata and reconcile Fleet resources for all CAPI imported Clusters. For more information please read the dedicated xref:../user/fleet-integration.adoc[page].
+This feature gate instructs {product_name} to propagate CAPI metadata and reconcile Fleet resources for all CAPI imported Clusters. It replaces the Cluster API Add-on Provider for Fleet (CAAPF), which is no longer supported. For more information please read the dedicated xref:../user/fleet-integration.adoc[page]. This feature is in beta stage and enabled by default.
 
 == Feature Stages
 
@@ -122,8 +112,6 @@ kubectl patch configmap rancher-config -n cattle-system --type=merge -p '
           enabled: true
         rancher-credential-translation:
           enabled: true
-        use-caapf:
-          enabled: false
         use-rancher-default-registry:
           enabled: true
         fleet-integration:

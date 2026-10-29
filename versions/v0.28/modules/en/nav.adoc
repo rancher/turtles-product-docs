@@ -16,7 +16,7 @@
 ** xref:user/fleet-integration.adoc[Fleet Integration]
 ** xref:user/rancher-cluster-registration.adoc[Rancher Cluster Registration]
 ** xref:user/applications.adoc[Installing applications]
-** xref:user/caapf.adoc[CAPI Addon Provider Fleet (deprecated)]
+** xref:user/caapf-migration.adoc[Migrating from CAAPF to Fleet integration]
 ** xref:user/gitops.adoc[GitOps best practices for Turtles and CAPI]
 ** xref:user/cluster-resource-mapping.adoc[Cluster Resource Relationships in {product_name}]
 ifeval::["{build-type}" == "product"]
