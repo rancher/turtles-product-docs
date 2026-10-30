@@ -1,0 +1,233 @@
+= Migrating from CAAPF to Fleet integration
+:description: Migrate CAPI clusters managed by the Cluster API Add-on Provider for Fleet (CAAPF) to Fleet integration before upgrading, using the migrate-caapf.sh script
+:revdate: 2026-10-29
+:page-revdate: {revdate}
+
+== Overview
+
+{product_name} {turtles_version} removes support for the Cluster API Add-on Provider for Fleet (CAAPF). In this release:
+
+* The `use-caapf` feature gate no longer exists. {product_name} removes the `provisioning.cattle.io/externally-managed` annotation from every imported Rancher cluster, so Rancher always registers CAPI workload clusters with Fleet and manages the `fleet-agent` on them.
+* The {product_name} Providers chart no longer contains CAAPF, and the associated chart values that controlled its installation have been removed.
+* The new `fleet-integration` feature gate is enabled by default. With it, {product_name} provides the CAPI-specific Fleet functionality that previously required CAAPF, on top of the `Fleet` clusters that Rancher manages in the `fleet-default` namespace.
+
+If you never enabled the `use-caapf` feature gate, your clusters are already registered with Fleet by Rancher and no migration is necessary. Upgrading to {turtles_version} enables `fleet-integration` automatically.
+
+If you enabled `use-caapf` and installed CAAPF by following the xref:v0.27@en:user/caapf.adoc[CAAPF user guide], follow this page *before* you upgrade.
+
+[IMPORTANT]
+====
+Upgrading a management cluster that still has CAAPF-managed clusters without running the migration leaves applications that target the CAAPF-created `Fleet` clusters undeployed on the new, Rancher-managed `Fleet` clusters.
+====
+
+=== Check whether you need to migrate
+
+Check whether `use-caapf` is enabled in the `rancher-config` ConfigMap:
+
+[,bash]
+----
+kubectl get configmap rancher-config -n cattle-system -o jsonpath='{.data.rancher-turtles}'
+----
+
+The gate is enabled if the output contains a `use-caapf` entry with `enabled: true` under `features`. If the entry is missing, or set to `enabled: false`, the gate is disabled.
+
+Whatever the result, run the next check as well: it shows whether any clusters are still managed by CAAPF, and is what determines whether there is anything to migrate.
+
+Then list the CAPI clusters that CAAPF still manages, identified by the `fleet.addons.cluster.x-k8s.io` finalizer:
+
+[,bash]
+----
+kubectl get clusters.cluster.x-k8s.io -A -o json \
+  | jq -r '.items[] | select(.metadata.finalizers // [] | index("fleet.addons.cluster.x-k8s.io")) | "\(.metadata.namespace)/\(.metadata.name)"'
+----
+
+If the command returns no clusters, there is nothing to migrate.
+
+== How Fleet integration replaces CAAPF
+
+The main difference between the two is *where* each CAPI workload cluster is registered with Fleet. CAAPF created a `Fleet` `Cluster` with the same name and namespace as the CAPI cluster. Rancher creates the `Fleet` `Cluster` in the `fleet-default` namespace, named after the Rancher management cluster (for example `c-m-abcd1234`). Fleet resources such as `GitRepos`, `HelmOps` and `Bundles` only target clusters in their own namespace, so the resources that targeted the CAAPF-created clusters must be made to reach the new clusters in `fleet-default`.
+
+The table below lists each CAAPF feature and its replacement:
+
+[cols="1,2,2"]
+|===
+| Feature | CAAPF | {product_name} with `fleet-integration`
+
+| Fleet registration and `fleet-agent`
+| CAAPF creates the `Fleet` `Cluster` in the CAPI cluster namespace and installs the `fleet-agent`.
+| Rancher creates the `Fleet` `Cluster` in `fleet-default` and installs the `fleet-agent` as part of the standard import.
+
+| Label propagation
+| CAPI cluster labels are copied to the `Fleet` `Cluster`.
+| CAPI cluster labels are copied to the Rancher management cluster, and Rancher copies them to the `Fleet` `Cluster`. Labels containing `cattle.io` or `x-k8s.io` are not propagated.
+
+| ClusterClass grouping
+| A `ClusterGroup` is created automatically for every `ClusterClass`, and clusters are labeled with `clusterclass-name.fleet.addons.cluster.x-k8s.io` and `clusterclass-namespace.fleet.addons.cluster.x-k8s.io`.
+| Each `Fleet` `Cluster` is labeled with `cluster-api.cattle.io/clusterclass-name` and `cluster-api.cattle.io/clusterclass-namespace`. No `ClusterGroups` are created automatically: target these labels with a `clusterSelector`, or create your own `ClusterGroup` that selects them.
+
+| Cross-namespace ClusterClass
+| A `BundleNamespaceMapping` lets resources in the `ClusterClass` namespace reach clusters in the CAPI cluster namespace.
+| A `BundleNamespaceMapping` lets resources in the `ClusterClass` namespace reach clusters in `fleet-default`.
+
+| Helm templating
+| `spec.templateValues` of the `Fleet` `Cluster` contains `Cluster`, `ControlPlane` and `InfrastructureCluster`.
+| Unchanged. The same keys are kept up to date in `spec.templateValues`, so `.ClusterValues.Cluster`, `.ClusterValues.ControlPlane` and `.ClusterValues.InfrastructureCluster` keep working.
+|===
+
+== What the migration script does
+
+The `migrate-caapf.sh` script automates the migration of existing CAAPF-managed clusters. It runs in two phases:
+
+* **`pre`**, run *before* the upgrade while CAAPF still manages the clusters. It:
+** scales down the {product_name} and CAAPF controllers.
+** copies the `Fleet` cluster labels onto the corresponding Rancher management clusters, so that Rancher applies them to the new `Fleet` clusters.
+** checks for collisions and aborts, without pausing anything, if it finds one (see <<_resolving_collisions>>).
+** copies the `ClusterGroups` created by CAAPF into `fleet-default`, labeled with `migration.fleet.cattle.io/from-caapf=true`.
+** sets `keepResources: true` on the affected `GitRepos`, `HelmOps` and `Bundles` so that workloads on the downstream clusters are not removed when the old `Fleet` clusters are deleted.
+** pauses and labels the affected `Fleet` resources, and creates a `BundleNamespaceMapping` named `migration-mapping-2-14` in each namespace so that those resources can be deployed to clusters in `fleet-default`.
+* **`post`**, run *after* the upgrade, once Rancher has created the new `Fleet` clusters in `fleet-default`. It:
+** copies `templateValues` onto the new `Fleet` clusters.
+** unpauses the migrated resources.
+** deletes each old `Fleet` cluster once every bundle it had is also present on the new cluster, along with the `BundleNamespaceMapping` CAAPF created for it.
+** removes the `keepResources` setting it added, and deletes the CAAPF-created `ClusterGroups` from the CAPI cluster and `ClusterClass` namespaces.
+
+After the `post` phase removes the old `Fleet` cluster, {product_name} removes the `fleet.addons.cluster.x-k8s.io` finalizer from the CAPI cluster.
+
+== Before you begin
+
+* You are running a {product_name} version earlier than {turtles_version}, with the `use-caapf` feature gate enabled and CAAPF installed.
+* `kubectl` is configured to point at the Rancher management cluster.
+* `jq` is available on the `PATH`.
+* You have a backup of the management cluster.
+* No CAPI workload clusters are created or deleted during the migration.
+
+== Migrate
+
+=== Download the script
+
+[,bash]
+----
+curl -sSfLO https://raw.githubusercontent.com/rancher/turtles/refs/heads/release/v0.28/scripts/migrate-caapf.sh
+chmod +x migrate-caapf.sh
+----
+
+The script defaults to a *dry run* (`DRY_RUN=true`), which prints the actions it would take without modifying any resources. Always start with a dry run and review the output before applying any changes.
+
+=== Run the `pre` phase
+
+. Dry-run the `pre` phase and review the planned changes:
++
+[,bash]
+----
+./migrate-caapf.sh pre
+----
++
+If the output reports a collision, resolve it as described in <<_resolving_collisions>> and run the dry run again.
+
+. Apply the `pre` phase:
++
+[,bash]
+----
+DRY_RUN=false ./migrate-caapf.sh pre
+----
++
+The `pre` phase waits up to 10 minutes for `keepResources` to reach every `BundleDeployment`, and aborts if it does not.
+
+=== Remove CAAPF
+
+Remove the CAAPF provider so that it does not start again and re-create the old `Fleet` clusters after the upgrade.
+
+ifeval::["{build-type}" == "product"]
+[,bash]
+----
+helm upgrade rancher-turtles-providers oci://<REGISTRY_URL>/rancher/charts/rancher-turtles-providers \
+    --namespace cattle-turtles-system \
+    --reuse-values \
+    --set providers.addonFleet.enabled=false
+----
+endif::[]
+ifeval::["{build-type}" == "community"]
+[,bash]
+----
+kubectl delete capiprovider fleet -n fleet-addon-system --wait=false
+----
+endif::[]
+
+The {product_name} controller is scaled down at this point, so the `CAPIProvider` stays in the `Terminating` state until the controller is running again after the upgrade. Removing CAAPF does not delete the existing `Fleet` clusters or the workloads deployed to them.
+
+=== Upgrade
+
+Upgrade Rancher to the release that ships {product_name} {turtles_version}. The upgrade restores the {product_name} controller, which then removes the `provisioning.cattle.io/externally-managed` annotation from the imported clusters and lets Rancher register them in `fleet-default`.
+
+Wait for Rancher to create a `Fleet` cluster in `fleet-default` for each migrated cluster:
+
+[,bash]
+----
+kubectl get clusters.fleet.cattle.io -n fleet-default
+----
+
+Run the `post` phase *immediately after* the upgrade completes. The migrated `Fleet` resources stay paused until then, so any delay leaves application changes undeployed.
+
+=== Run the `post` phase
+
+. Dry-run and then apply the `post` phase:
++
+[,bash]
+----
+./migrate-caapf.sh post
+DRY_RUN=false ./migrate-caapf.sh post
+----
++
+[NOTE]
+====
+The `post` phase waits for each new `Fleet` cluster to reconcile and verifies that every bundle from the old cluster is present on the new one before deleting the old cluster. If any bundles are still missing, it logs a warning and skips deleting that cluster, so it is safe to re-run the `post` phase after resolving the issue.
+====
+
+=== Verify the migration
+
+. Check that no CAPI cluster still has the CAAPF finalizer, using the command from <<_check_whether_you_need_to_migrate>>. The command should return no clusters.
++
+While a CAPI cluster still has a `Fleet` cluster created by CAAPF, {product_name} keeps the finalizer and logs `Keeping CAAPF finalizer on CAPI cluster, run scripts/migrate-caapf.sh to migrate its Fleet resources`. Re-run the `post` phase for that cluster.
+
+. Check that the `Fleet` clusters in `fleet-default` are ready and carry the `ClusterClass` labels:
++
+[,bash]
+----
+kubectl get clusters.fleet.cattle.io -n fleet-default -L cluster-api.cattle.io/clusterclass-name
+----
+
+. Check that no CAAPF components remain:
++
+[,bash]
+----
+kubectl get capiproviders -A
+----
+
+. Remove the `use-caapf` entry from the `rancher-turtles` key of the `rancher-config` ConfigMap. The feature gate no longer exists and is ignored. Because the patch replaces the whole value, keep all the other entries, and do not set `fleet-integration` to `false`. Refer to xref:overview/features.adoc#_how_to_set_feature_gates[How to set feature gates].
+
+== After the migration
+
+The script migrates the resources that exist at the time it runs. Update your Fleet resources, and the Git repositories they come from, so that new resources keep working:
+
+* *Create new Fleet resources in `fleet-default`.* The `migration-mapping-2-14` `BundleNamespaceMapping` only applies to resources labeled with `migration.fleet.cattle.io/upgrade-2.14=true`. Resources you add later to a CAPI cluster namespace do not reach the clusters in `fleet-default`. Resources in a `ClusterClass` namespace keep working for clusters using that class, through the `BundleNamespaceMapping` that {product_name} manages.
+* *Replace CAAPF labels in selectors.* New clusters no longer receive the `clusterclass-name.fleet.addons.cluster.x-k8s.io` and `clusterclass-namespace.fleet.addons.cluster.x-k8s.io` labels. Use `cluster-api.cattle.io/clusterclass-name` and `cluster-api.cattle.io/clusterclass-namespace` instead, for example:
++
+[,yaml]
+----
+  targets:
+  - clusterSelector:
+      matchLabels:
+        cluster-api.cattle.io/clusterclass-name: <cluster-class-name>
+----
+* *Replace the copied `ClusterGroups`.* The `ClusterGroups` labeled `migration.fleet.cattle.io/from-caapf=true` in `fleet-default` keep the CAAPF selectors, so they only match the migrated clusters. Update their selectors to the labels above, and create a `ClusterGroup` for any new `ClusterClass` you want to target as a group.
+* *Replace `clusterName` targets.* A target such as `clusterName: <CAPI cluster name>` matched the CAAPF-created cluster by name. In `fleet-default`, clusters are named after the Rancher management cluster, so use a `clusterSelector` on the propagated labels instead.
+
+[#_resolving_collisions]
+== Resolving collisions
+
+The `BundleNamespaceMappings` make every migrated resource eligible for deployment to any cluster in `fleet-default`, instead of only the clusters in its own namespace. The `pre` phase aborts before changing any `Fleet` resource if this would deploy to the wrong clusters:
+
+* *Name collision*: `GitRepos`, `HelmOps` or `Bundles` with the same name exist in different namespaces, and would produce conflicting `BundleDeployments`. Rename one of them.
+* *Label collision*: a `clusterSelector` that only matched one cluster inside its namespace matches more clusters in `fleet-default`. Make the selector more specific.
+* *Missing or empty targets*: a resource with no `targets`, or with an empty `clusterSelector`, would be deployed to every cluster in `fleet-default`. Add explicit targets.
+* *`ClusterGroup` collisions*: a CAAPF `ClusterGroup` has an empty selector, the same `ClusterGroup` name exists in several namespaces with different selectors, or a `ClusterGroup` with that name already exists in `fleet-default`. Rename or remove the conflicting `ClusterGroup`.
