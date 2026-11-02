@@ -1,0 +1,40 @@
+= v0.25.9
+
+:description: Pins the AWS CCM Helm chart, bumps CAAPF and Go, updates the CAPV+RKE2 ClusterClass SCC registration, and picks up security updates to the Kubernetes, OpenTelemetry and golang.org/x/net dependencies
+:revdate: 2026-10-22
+:page-revdate: {revdate}
+
+== Description
+
+Release Date: 2026-10-21
+
+This patch release for v0.25 pins the AWS CCM Helm chart to 0.0.11, bumps CAAPF to v0.12.1 and Go to 1.26.10, updates the CAPV+RKE2 ClusterClass SCC registration, and picks up security updates to the Kubernetes, OpenTelemetry and golang.org/x/net dependencies.
+
+
+=== Notable Changes
+
+* Pin AWS-CCM Helm chart version to 0.0.11 by @cpinjani in https://github.com/rancher/turtles/pull/2843[#2843].
+
+=== Bug Fixes
+* Update kubernetes dependencies to v0.32.13 (release/v0.25) by @renovate-rancher[bot] in (https://github.com/rancher/turtles/pull/2838)[#2838].
+* Update opentelemetry dependencies to v1.45.0 [security] (release/v0.25) by @renovate-rancher[bot] in (https://github.com/rancher/turtles/pull/2836)[#2836].
+* Update CAAPF to v0.12.1 by @yiannistri in (https://github.com/rancher/turtles/pull/2873)[#2873].
+* CAPV+RKE2 clusterclass - update SCC registration by @thehejik in (https://github.com/rancher/turtles/pull/2877)[#2877].
+* Update module golang.org/x/net to v0.60.0 [security] (release/v0.25) by @renovate-rancher[bot] in (https://github.com/rancher/turtles/pull/2897)[#2897].
+
+=== Full Changelog: 
+
+Review the full list of changes: https://github.com/rancher/turtles/compare/v0.25.8...v0.25.9[v0.25.8...v0.25.9]
+
+== Download
+
+[cols="3,1,1" options="header" frame="all" grid="rows"]
+|===
+| Name | Created At | Updated At
+
+| https://github.com/rancher/turtles/archive/refs/tags/v0.25.9.tar.gz[rancher-turtles-0.25.9.tar.gz] | 2026-10-21 | 2026-10-21
+
+|===
+
+__Information retrieved from https://github.com/rancher/turtles/releases/tag/v0.25.9[v0.25.9 GitHub release].__
+

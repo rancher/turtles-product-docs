@@ -67,12 +67,6 @@ This is a list of the CAPI Providers officially certified by SUSE. These provide
 | Infrastructure
 | https://cluster-api-gcp.sigs.k8s.io/[CAPG book]
 |{gcp_version}
-
-| *Addon Provider Fleet*
-| CAAPF
-| Addon
-| https://rancher.github.io/cluster-api-addon-provider-fleet/[CAAPF book]
-|{fleet_addon_version}
 |===
 
 *Recommended only for development purposes.
