@@ -5,22 +5,16 @@
 
 [WARNING]
 ====
-In-place updates are a tech preview feature: disabled by default, and subject to change. Test thoroughly before relying on it in production.
+In-place updates is a tech preview feature: disabled by default, and subject to breaking changes. Test thoroughly before relying on it in production.
 ====
 
 By default, Cluster API upgrades a cluster by replacing every Machine (immutable infrastructure). For RKE2 control planes managed by {product_name}, you can instead upgrade the Kubernetes version of existing Machines in place: the node keeps its identity, only the RKE2 binary is swapped and the service restarted.
 
-== How it works
-
-{product_name} installs a CAPI runtime extension alongside the RKE2 control-plane provider. When a Cluster's Kubernetes version changes, CAPI asks the extension whether it can apply the change in place. The extension claims Kubernetes version changes; anything it doesn't claim (for example infrastructure changes, or `serverConfig` changes, which require re-rendering the node's configuration) is left for CAPI to handle with a normal rollout. If the extension can't be reached, or the target cluster has no `system-agent` (e.g. it isn't Rancher-managed), CAPI automatically falls back to a normal rolling update - there's no scenario where an update silently gets stuck because the feature is misconfigured.
-
-When the extension does claim the change, it delivers it through the same `system-agent` Plan mechanism Rancher already uses for Day 2 Operations: it writes an install-and-restart plan to the Machine's `machine-plan` Secret, and reports progress back to CAPI until `system-agent` confirms the plan succeeded or failed.
-
 == Prerequisites
 
+* CAPRKE2 installed by the `rancher-turtles-providers` Helm chart.
 * A cluster provisioned or imported through Rancher, so that `system-agent` is running on its nodes (Rancher >= v2.15.0 enables this for imported clusters by default).
 * At least **3 control-plane replicas**. In-place updates require `maxSurge: 0` (update one Machine at a time, no surge); CAPRKE2's admission webhook rejects `maxSurge: 0` outright when there are fewer than 3 control-plane replicas, so this isn't optional.
-* RKE2 control plane provider (`controlplaneRKE2`) enabled.
 
 == Enable the feature
 
@@ -37,13 +31,8 @@ providers:
 
 This does two things:
 
-* Enables the `InPlaceUpdates`/`RuntimeSDK` feature gates on the core CAPI and RKE2 control-plane managers.
-* Installs the RKE2 runtime extension (as a `CAPIProvider` of type `runtimeextension`) into the fixed `rke2-extension-system` namespace, using the same version and `enableAutomaticUpdate` as `controlplaneRKE2`.
-
-[NOTE]
-====
-Setting any `features.*` key disables every feature not explicitly listed, so include the other `controlplaneRKE2` features you rely on alongside `inPlaceUpdates`.
-====
+* Enables the `InPlaceUpdates`/`RuntimeSDK` feature gates on the RKE2 provider.
+* Installs the RKE2 runtime extension (as a `CAPIProvider` of type `runtimeextension`).
 
 To customize the extension's deployment (environment variables, log verbosity, or artifact source), use the optional `runtimeExtension` block under `controlplaneRKE2`:
 
@@ -60,39 +49,33 @@ providers:
         SOME_ENV_VAR: "value"
 ----
 
-== Enable it on a cluster
+== How it works
 
-If you're using a xref:../user/clusterclass.adoc[ClusterClass]-based cluster built from the CAPRKE2 Docker example, set the `inPlaceUpdates` cluster variable to `true`:
+{product_name} `rancher-turtles-providers` Helm chart installs a CAPI runtime extension alongside the RKE2 control-plane provider. When a Cluster's Kubernetes version changes, CAPI asks the extension whether it can apply the change in place. The extension claims Kubernetes version changes; anything it doesn't claim (for example infrastructure changes, or `serverConfig` changes, which require re-rendering the node's configuration) is left for CAPI to handle with a normal rollout. If the extension can't be reached, CAPI automatically falls back to a normal rolling update.
 
-[source,yaml]
-----
-spec:
-  topology:
-    variables:
-      - name: inPlaceUpdates
-        value: true
-----
+When the extension does claim the change, it delivers it through the same `system-agent` Plan mechanism Rancher already uses for Day 2 Operations: it writes an install-and-restart plan to the Machine's `machine-plan` Secret, and reports progress back to CAPI until `system-agent` confirms the plan succeeded or failed.
 
-This patches the generated `RKE2ControlPlaneTemplate` to use `maxSurge: 0`. Without a ClusterClass, set the same field directly on the `RKE2ControlPlane`:
+To guarantee a predictable behavior, when the extension is enabled, any update that can be applied in-place will not roll-back to a normal rollout. If the extension fails to apply the update to any of `Cluster`'s `Machines`, it will raise a warning event in the affected `Machine` and wait for manual intervention to remediate the issue.
 
-[source,yaml]
-----
-spec:
-  rolloutStrategy:
-    rollingUpdate:
-      maxSurge: 0
-----
+[NOTE]
+====
+When multiple fields are patched simultaneously, CAPI will apply a rollout unless **all** of the affected fields support in-place.
+====
 
 == Trigger an update
 
 Bump the cluster's Kubernetes version as you normally would - `Cluster.spec.topology.version` for ClusterClass clusters, or `RKE2ControlPlane.spec.version` otherwise. No other change is needed: CAPI detects the version diff and drives the in-place flow automatically.
 
-== Monitoring progress
+
+== Troubleshooting
+
+=== Monitoring progress
 
 * A Machine being updated in place carries the `cluster.x-k8s.io/update-in-progress` annotation until the update completes.
 * No new Machine is created and no existing Machine is deleted - compare `Machine` names before and after to confirm.
 * Once finished, every `Machine.spec.version` (and the corresponding Node's kubelet version) matches the new version.
 * If an update seems stuck, inspect the Machine's `machine-plan` Secret (type `rke.cattle.io/machine-plan`, in the Machine's namespace): its `plan-state` key shows whether `system-agent` is still applying the plan, succeeded, or failed.
+* An update will be blocked when the extension reaches a Machine missing their `machine-plan` Secret. Other Machines may have been updated successfully before the operation is blocked. Inspect the events registered on the Machine.
 
 == Limitations
 
