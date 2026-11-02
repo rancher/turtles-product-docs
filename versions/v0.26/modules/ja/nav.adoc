@@ -2,7 +2,9 @@
 ** xref:overview/architecture.adoc[アーキテクチャ]
 ** xref:overview/glossary.adoc[用語集]
 ** xref:overview/features.adoc[機能]
+ifeval::["{build-type}" == "product"]
 ** xref:overview/certified.adoc[認定プロバイダー]
+endif::[]
 * チュートリアル
 ** xref:tutorials/first-cluster.adoc[最初のクラスター]
 ** xref:tutorials/rancher.adoc[Rancher のセットアップ]

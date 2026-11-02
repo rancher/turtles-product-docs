@@ -30,7 +30,12 @@ image::intro.png[イントロ,640,480]
 
 === 概要
 
+ifeval::["{build-type}" == "product"]
 {product_name}のxref:./overview/architecture.adoc[アーキテクチャ]、xref:./overview/features.adoc[機能]、xref:./overview/certified.adoc[`Certified Providers`]の概念、オペレーターの機能のxref:./overview/glossary.adoc[コア概念]を理解します。
+endif::[]
+ifeval::["{build-type}" == "community"]
+{product_name}のxref:./overview/architecture.adoc[アーキテクチャ]、xref:./overview/features.adoc[機能]、オペレーターの機能のxref:./overview/glossary.adoc[コア概念]を理解します。
+endif::[]
 
 === リファレンス
 

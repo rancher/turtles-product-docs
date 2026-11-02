@@ -55,7 +55,10 @@ The following is a more detailed description of what each validation step perfor
 . Install additional CAPIProviders.
 +
 
-* Before tests can start, the CAPI Providers (infrastructure, bootstrap, control plane, etc.) need to be installed first. All providers must be installed using the Turtles xref:../reference/capiprovider.adoc[CAPIProvider API]. This ensures the provider can be installed correctly and the provider lifecycle can be managed by Turtles. When deploying any of the already certified providers, make sure to pin the correct version according to the xref:../overview/certified#_list_of_certified_providers[table].
+* Before tests can start, the CAPI Providers (infrastructure, bootstrap, control plane, etc.) need to be installed first. All providers must be installed using the Turtles xref:../reference/capiprovider.adoc[CAPIProvider API]. This ensures the provider can be installed correctly and the provider lifecycle can be managed by Turtles.
+ifeval::["{build-type}" == "product"]
+When deploying any of the already certified providers, make sure to pin the correct version according to the xref:../overview/certified#_list_of_certified_providers[table].
+endif::[]
 
 . Apply a CAPI Cluster template to provision a new Cluster.
 +

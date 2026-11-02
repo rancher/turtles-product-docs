@@ -7,7 +7,12 @@
 
 [TIP]
 ====
+ifeval::["{build-type}" == "product"]
 ClusterClass機能を使用する前に、プロバイダーのドキュメントを確認し、その機能がサポートされていることを確認してください。このドキュメントには、xref:../overview/certified.adoc[認定プロバイダー]セクションにxref:../overview/certified.adoc#_clusterclass_support_for_certified_providers[クラスタートポロジーのサポート状況]を示すマトリックスが含まれています。
+endif::[]
+ifeval::["{build-type}" == "community"]
+ClusterClass機能を使用する前に、プロバイダーのドキュメントを確認し、その機能がサポートされていることを確認してください。
+endif::[]
 ====
 
 == ClusterClassを有効にする

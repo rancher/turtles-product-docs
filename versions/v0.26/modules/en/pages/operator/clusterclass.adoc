@@ -8,7 +8,12 @@ In this section we cover enabling the https://cluster-api.sigs.k8s.io/tasks/expe
 
 [TIP]
 ====
+ifeval::["{build-type}" == "product"]
 Before using the ClusterClass feature, study the provider docs and confirm that the feature is supported. This documentation includes a matrix in the xref:../overview/certified.adoc[Certified providers] section with xref:../overview/certified.adoc#_clusterclass_support_for_certified_providers[cluster topology support status].
+endif::[]
+ifeval::["{build-type}" == "community"]
+Before using the ClusterClass feature, study the provider docs and confirm that the feature is supported.
+endif::[]
 ====
 
 == Enable ClusterClass

@@ -25,7 +25,12 @@ If this is your first time using {product_name} and you want to get started quic
 
 === Reference
 
+ifeval::["{build-type}" == "product"]
 Understand the xref:./reference/architecture.adoc[architecture] of {product_name}, the xref:./reference/features.adoc[features], the concept of xref:./reference/certified.adoc[`Certified Providers`] and the xref:./reference/glossary.adoc[core concepts] of the operator's features.
+endif::[]
+ifeval::["{build-type}" == "community"]
+Understand the xref:./reference/architecture.adoc[architecture] of {product_name}, the xref:./reference/features.adoc[features] and the xref:./reference/glossary.adoc[core concepts] of the operator's features.
+endif::[]
 
 === User Guide
 

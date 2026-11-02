@@ -7,7 +7,12 @@ Dans cette section, nous couvrons l'activation de la fonctionnalité https://clu
 
 [TIP]
 ====
+ifeval::["{build-type}" == "product"]
 Avant d'utiliser la fonctionnalité ClusterClass, étudiez la documentation du fournisseur et confirmez que la fonctionnalité est prise en charge. Cette documentation comprend une matrice dans la section xref:../overview/certified.adoc[Fournisseurs certifiés] avec le xref:../overview/certified.adoc#_clusterclass_support_for_certified_providers[statut de prise en charge de la topologie de cluster].
+endif::[]
+ifeval::["{build-type}" == "community"]
+Avant d'utiliser la fonctionnalité ClusterClass, étudiez la documentation du fournisseur et confirmez que la fonctionnalité est prise en charge.
+endif::[]
 ====
 
 == Activer ClusterClass

@@ -7,7 +7,12 @@ Nesta seção, abordamos a habilitação do recurso https://cluster-api.sigs.k8s
 
 [TIP]
 ====
+ifeval::["{build-type}" == "product"]
 Antes de usar o recurso ClusterClass, estude a documentação do provedor e confirme se o recurso é suportado. Esta documentação inclui uma matriz na seção xref:../overview/certified.adoc[Provedores certificados] com o xref:../overview/certified.adoc#_clusterclass_support_for_certified_providers[status de suporte à topologia de cluster].
+endif::[]
+ifeval::["{build-type}" == "community"]
+Antes de usar o recurso ClusterClass, estude a documentação do provedor e confirme se o recurso é suportado.
+endif::[]
 ====
 
 == Habilitar ClusterClass

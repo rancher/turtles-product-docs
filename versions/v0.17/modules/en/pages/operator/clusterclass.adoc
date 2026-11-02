@@ -7,7 +7,12 @@ In this section we cover enabling *ClusterClass* for a CAPI Provider.
 
 [TIP]
 ====
+ifeval::["{build-type}" == "product"]
 Before using the ClusterClass feature, study the provider docs and confirm that the feature is supported. This documentation includes a matrix in the xref:../reference/certified.adoc[Certified providers] section with xref:../reference/certified.adoc#_clusterclass_support_for_certified_providers[cluster topology support status].
+endif::[]
+ifeval::["{build-type}" == "community"]
+Before using the ClusterClass feature, study the provider docs and confirm that the feature is supported.
+endif::[]
 ====
 
 == Enable ClusterClass

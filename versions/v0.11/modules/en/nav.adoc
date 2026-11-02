@@ -20,7 +20,9 @@
 *** xref:reference-guides/architecture/deployment.adoc[Deployment Scenarios]
 ** xref:reference-guides/rancher-turtles-chart/values.adoc[Chart configuration]
 ** CAPI Providers
+ifeval::["{build-type}" == "product"]
 *** xref:reference-guides/providers/certified.adoc[Certified CAPI Providers]
+endif::[]
 *** xref:reference-guides/providers/howto.adoc[Create & import a cluster using CAPI providers]
 *** xref:reference-guides/providers/addon-provider-fleet.adoc[Cluster API Addon Provider Fleet]
 ** Test suite

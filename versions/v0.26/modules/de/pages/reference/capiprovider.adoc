@@ -9,7 +9,12 @@ Die `CAPIProvider` Ressource ermöglicht die Verwaltung von Cluster-API-Operator
 
 Jedes Feld, das von der Upstream CAPI-Operator `CAPIProviderSpec` Ressource bereitgestellt wird, ist auch in der Spezifikation der `CAPIProvider` Ressource verfügbar. Fühlen Sie sich frei, auf die Upstream-Konfiguration link:https://cluster-api-operator.sigs.k8s.io/topics/configuration/provider-spec-configuration[Leitfäden] für erweiterte Szenarien zu verweisen.
 
+ifeval::["{build-type}" == "product"]
 Alle xref:../overview/certified.adoc[zertifizierten] CAPI-Anbieter werden mit einer eingebetteten Konfiguration konfiguriert. Um dies zu überschreiben, muss eine benutzerdefinierte xref:./clusterctlconfig.adoc#_override_a_certified_provider_version[ClusterctlConfig] erstellt werden.
+endif::[]
+ifeval::["{build-type}" == "community"]
+Alle zertifizierten CAPI-Anbieter werden mit einer eingebetteten Konfiguration konfiguriert. Um dies zu überschreiben, muss eine benutzerdefinierte xref:./clusterctlconfig.adoc#_override_a_certified_provider_version[ClusterctlConfig] erstellt werden.
+endif::[]
 
 == Verwendung
 
@@ -64,7 +69,12 @@ Die wichtigsten Felder in der `CAPIProvider` Spezifikation sind:
 
 == Versionsfixierung und automatische Aktualisierungen
 
+ifeval::["{build-type}" == "product"]
 Der `CAPIProvider` `version` kann jederzeit festgelegt werden, um den Anbieter auf eine bestimmte Version zu fixieren. Zusätzlich kann `automaticUpdates` umgeschaltet werden, um automatische Aktualisierungen auf die neueste verfügbare Version zu ermöglichen. Die neueste verfügbare Version wird durch die eingebettete clusterctl-Konfiguration für xref:../overview/certified.adoc[zertifizierte] Anbieter bestimmt und kann für benutzerdefinierte Anbieter mit xref:../reference/clusterctlconfig.adoc[ClusterctlConfig] überschrieben oder konfiguriert werden.
+endif::[]
+ifeval::["{build-type}" == "community"]
+Der `CAPIProvider` `version` kann jederzeit festgelegt werden, um den Anbieter auf eine bestimmte Version zu fixieren. Zusätzlich kann `automaticUpdates` umgeschaltet werden, um automatische Aktualisierungen auf die neueste verfügbare Version zu ermöglichen. Die neueste verfügbare Version wird durch die eingebettete clusterctl-Konfiguration für zertifizierte Anbieter bestimmt und kann für benutzerdefinierte Anbieter mit xref:../reference/clusterctlconfig.adoc[ClusterctlConfig] überschrieben oder konfiguriert werden.
+endif::[]
 
 == Löschung
 

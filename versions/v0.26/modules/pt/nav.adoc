@@ -2,7 +2,9 @@
 ** xref:overview/architecture.adoc[Arquitetura]
 ** xref:overview/glossary.adoc[Glossário]
 ** xref:overview/features.adoc[Recursos]
+ifeval::["{build-type}" == "product"]
 ** xref:overview/certified.adoc[Provedores Certificados]
+endif::[]
 * Tutoriais
 ** xref:tutorials/first-cluster.adoc[Seu Primeiro Cluster]
 ** xref:tutorials/rancher.adoc[Configuração do Rancher]

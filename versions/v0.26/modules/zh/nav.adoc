@@ -2,7 +2,9 @@
 ** xref:overview/architecture.adoc[体系结构]
 ** xref:overview/glossary.adoc[词汇表]
 ** xref:overview/features.adoc[功能]
+ifeval::["{build-type}" == "product"]
 ** xref:overview/certified.adoc[认证提供者]
+endif::[]
 * 教程
 ** xref:tutorials/first-cluster.adoc[您的第一个集群]
 ** xref:tutorials/rancher.adoc[Rancher 设置]

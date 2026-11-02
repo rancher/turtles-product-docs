@@ -7,7 +7,12 @@ En esta sección cubrimos la habilitación de la característica https://cluster
 
 [TIP]
 ====
+ifeval::["{build-type}" == "product"]
 Antes de utilizar la característica ClusterClass, estudia la documentación del proveedor y confirma que la característica es compatible. Esta documentación incluye una matriz en la sección xref:../overview/certified.adoc[Proveedores certificados] con el xref:../overview/certified.adoc#_clusterclass_support_for_certified_providers[estado de soporte de topología de clúster].
+endif::[]
+ifeval::["{build-type}" == "community"]
+Antes de utilizar la característica ClusterClass, estudia la documentación del proveedor y confirma que la característica es compatible.
+endif::[]
 ====
 
 == Habilitar ClusterClass

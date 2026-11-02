@@ -7,7 +7,12 @@ In diesem Abschnitt behandeln wir die Aktivierung der https://cluster-api.sigs.k
 
 [TIP]
 ====
+ifeval::["{build-type}" == "product"]
 Bevor Sie die ClusterClass-Funktion verwenden, lesen Sie die Anbieterdokumentation und bestätigen Sie, dass die Funktion unterstützt wird. Diese Dokumentation enthält eine Matrix im Abschnitt xref:../overview/certified.adoc[Zertifizierte Anbieter] mit dem xref:../overview/certified.adoc#_clusterclass_support_for_certified_providers[Status der Unterstützung der Cluster-Topologie].
+endif::[]
+ifeval::["{build-type}" == "community"]
+Bevor Sie die ClusterClass-Funktion verwenden, lesen Sie die Anbieterdokumentation und bestätigen Sie, dass die Funktion unterstützt wird.
+endif::[]
 ====
 
 == ClusterClass aktivieren

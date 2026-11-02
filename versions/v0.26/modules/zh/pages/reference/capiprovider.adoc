@@ -9,7 +9,12 @@
 
 上游 CAPI 操作员 `CAPIProviderSpec` 资源提供的每个字段在 `CAPIProvider` 资源的规格中也可用。请随时参考上游配置 link:https://cluster-api-operator.sigs.k8s.io/topics/configuration/provider-spec-configuration[指南] 以获取高级场景。
 
+ifeval::["{build-type}" == "product"]
 所有 xref:../overview/certified.adoc[certified] CAPI 提供程序均使用嵌入式配置进行配置。为了覆盖它，需要创建一个自定义 xref:./clusterctlconfig.adoc#_override_a_certified_provider_version[ClusterctlConfig]。
+endif::[]
+ifeval::["{build-type}" == "community"]
+所有 certified CAPI 提供程序均使用嵌入式配置进行配置。为了覆盖它，需要创建一个自定义 xref:./clusterctlconfig.adoc#_override_a_certified_provider_version[ClusterctlConfig]。
+endif::[]
 
 == 用法
 
@@ -64,7 +69,12 @@ spec:
 
 == 版本固定和自动更新
 
+ifeval::["{build-type}" == "product"]
 `CAPIProvider` `version` 可以随时设置，以将提供程序固定到特定版本。此外，可以切换 `automaticUpdates` 以允许自动更新到最新可用版本。最新可用版本由嵌入的 clusterctl 配置确定，适用于 xref:../overview/certified.adoc[certified] 提供程序；对于自定义提供程序，可以通过 xref:../reference/clusterctlconfig.adoc[ClusterctlConfig] 覆盖或配置。
+endif::[]
+ifeval::["{build-type}" == "community"]
+`CAPIProvider` `version` 可以随时设置，以将提供程序固定到特定版本。此外，可以切换 `automaticUpdates` 以允许自动更新到最新可用版本。最新可用版本由嵌入的 clusterctl 配置确定，适用于 certified 提供程序；对于自定义提供程序，可以通过 xref:../reference/clusterctlconfig.adoc[ClusterctlConfig] 覆盖或配置。
+endif::[]
 
 == 删除
 
