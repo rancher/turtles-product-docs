@@ -63,7 +63,7 @@ image:imported-cluster-custom-description.png[带有自定义描述的导入 Ran
 
 [source,bash]
 ----
-kubectl delete clusters.management.cattle.io -l cluster-api.cattle.io/capi-cluster-owner=cluster1 -l cluster-api.cattle.io/capi-cluster-owner-ns=capi-clusters
+kubectl delete clusters.management.cattle.io -l cluster-api.cattle.io/capi-cluster-owner=cluster1,cluster-api.cattle.io/capi-cluster-owner-ns=capi-clusters
 ----
 
 一旦导入的集群被标记为删除：

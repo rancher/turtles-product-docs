@@ -63,7 +63,7 @@ CAPIクラスタがすでにインポートされている場合、アノテー�
 
 [source,bash]
 ----
-kubectl delete clusters.management.cattle.io -l cluster-api.cattle.io/capi-cluster-owner=cluster1 -l cluster-api.cattle.io/capi-cluster-owner-ns=capi-clusters
+kubectl delete clusters.management.cattle.io -l cluster-api.cattle.io/capi-cluster-owner=cluster1,cluster-api.cattle.io/capi-cluster-owner-ns=capi-clusters
 ----
 
 インポートされたクラスタが削除のためにマークされると:
