@@ -64,7 +64,7 @@ Las etiquetas `cluster-api.cattle.io/capi-cluster-owner` y `cluster-api.cattle.i
 
 [source,bash]
 ----
-kubectl delete clusters.management.cattle.io -l cluster-api.cattle.io/capi-cluster-owner=cluster1 -l cluster-api.cattle.io/capi-cluster-owner-ns=capi-clusters
+kubectl delete clusters.management.cattle.io -l cluster-api.cattle.io/capi-cluster-owner=cluster1,cluster-api.cattle.io/capi-cluster-owner-ns=capi-clusters
 ----
 
 Una vez que el clúster importado esté marcado para eliminación:

@@ -63,7 +63,7 @@ Os rótulos `cluster-api.cattle.io/capi-cluster-owner` e `cluster-api.cattle.io/
 
 [source,bash]
 ----
-kubectl delete clusters.management.cattle.io -l cluster-api.cattle.io/capi-cluster-owner=cluster1 -l cluster-api.cattle.io/capi-cluster-owner-ns=capi-clusters
+kubectl delete clusters.management.cattle.io -l cluster-api.cattle.io/capi-cluster-owner=cluster1,cluster-api.cattle.io/capi-cluster-owner-ns=capi-clusters
 ----
 
 Uma vez que o cluster importado esteja marcado para exclusão:
