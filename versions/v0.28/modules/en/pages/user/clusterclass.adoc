@@ -8,16 +8,10 @@ In this section we cover using https://cluster-api.sigs.k8s.io/tasks/experimenta
 == Prerequisites
 
 * Rancher Manager cluster with {product_name} installed.
-* The https://github.com/rancher/cluster-api-addon-provider-fleet[CAAPF] provider, if required by the ClusterClass.
 
-[CAUTION]
+[NOTE]
 ====
-In previous versions of {product_name}, CAAPF was installed by default. From Rancher 2.14.1 onwards, it is no longer part of {product_name} and if required it needs to be installed separately. For more information on how to do this, see the xref:user/caapf.adoc[CAAPF] section.
-====
-
-[WARNING]
-====
-CAAPF depends on the `WatchList` Kubernetes feature gate. This feature needs to be explicitly enabled on Kubernetes `1.33` versions. See the https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/[Kubernetes upstream documentation] for further information.
+{product_name} {turtles_version} no longer supports CAAPF. The Fleet functionality that ClusterClasses previously relied on CAAPF for is now provided by xref:user/fleet-integration.adoc[Fleet integration]. If you use CAAPF, see xref:user/caapf-migration.adoc[Migrating from CAAPF to Fleet integration].
 ====
 
 * Depending on your engine, either the https://github.com/rancher/cluster-api-provider-rke2[CAPRKE2] or https://github.com/kubernetes-sigs/cluster-api[Kubeadm] Bootstrap/Control Plane installation is necessary before further CAPIProvider setup:
