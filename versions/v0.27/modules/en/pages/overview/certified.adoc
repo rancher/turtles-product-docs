@@ -93,6 +93,14 @@ Each certification applies only to the listed provider, Rancher and Turtles vers
 |{evroc_version}
 |{evroc_rancher_version}
 |{evroc_turtles_version}
+
+| *Oracle Cloud Infrastructure*
+| CAPOCI
+| Infrastructure
+| https://github.com/oracle/cluster-api-provider-oci[CAPOCI docs]
+|{capoci_version}
+|{capoci_rancher_version}
+|{capoci_turtles_version}
 |===
 
 == List of providers in experimental mode
