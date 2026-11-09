@@ -8,7 +8,9 @@
 {product_name} {turtles_version} removes support for the Cluster API Add-on Provider for Fleet (CAAPF). In this release:
 
 * The `use-caapf` feature gate no longer exists. {product_name} removes the `provisioning.cattle.io/externally-managed` annotation from every imported Rancher cluster, so Rancher always registers CAPI workload clusters with Fleet and manages the `fleet-agent` on them.
+ifeval::["{build-type}" == "product"]
 * The {product_name} Providers chart no longer contains CAAPF, and the associated chart values that controlled its installation have been removed.
+endif::[]
 * The new `fleet-integration` feature gate is enabled by default. With it, {product_name} provides the CAPI-specific Fleet functionality that previously required CAAPF, on top of the `Fleet` clusters that Rancher manages in the `fleet-default` namespace.
 
 If you never enabled the `use-caapf` feature gate, your clusters are already registered with Fleet by Rancher and no migration is necessary. Upgrading to {turtles_version} enables `fleet-integration` automatically.
