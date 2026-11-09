@@ -28,7 +28,6 @@ helm install rancher-turtles-providers oci://<prime-registry-url>/rancher/charts
     --set providers.infrastructureVSphere.enabled=true \
     --set providers.bootstrapRKE2.enabled=true \
     --set providers.controlplaneRKE2.enabled=true \
-    --set providers.addonFleet.enabled=true \
     --wait
 ----
 
