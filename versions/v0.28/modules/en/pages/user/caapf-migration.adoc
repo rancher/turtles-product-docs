@@ -5,7 +5,7 @@
 
 == Overview
 
-{product_name} {turtles_version} removes support for the Cluster API Add-on Provider for Fleet (CAAPF). In this release:
+{product_name} v0.28 (Rancher v2.16) removes support for the Cluster API Add-on Provider for Fleet (CAAPF). In this release:
 
 * The `use-caapf` feature gate no longer exists. {product_name} removes the `provisioning.cattle.io/externally-managed` annotation from every imported Rancher cluster, so Rancher always registers CAPI workload clusters with Fleet and manages the `fleet-agent` on them.
 ifeval::["{build-type}" == "product"]
@@ -13,7 +13,7 @@ ifeval::["{build-type}" == "product"]
 endif::[]
 * The new `fleet-integration` feature gate is enabled by default. With it, {product_name} provides the CAPI-specific Fleet functionality that previously required CAAPF, on top of the `Fleet` clusters that Rancher manages in the `fleet-default` namespace.
 
-If you never enabled the `use-caapf` feature gate, your clusters are already registered with Fleet by Rancher and no migration is necessary. Upgrading to {turtles_version} enables `fleet-integration` automatically.
+If you never enabled the `use-caapf` feature gate, your clusters are already registered with Fleet by Rancher and no migration is necessary. Upgrading to v0.28 (Rancher v2.16) enables `fleet-integration` automatically.
 
 If you enabled `use-caapf` and installed CAAPF by following the xref:v0.27@en:user/caapf.adoc[CAAPF user guide], follow this page *before* you upgrade.
 
@@ -97,7 +97,7 @@ After the `post` phase removes the old `Fleet` cluster, {product_name} removes t
 
 == Before you begin
 
-* You are running a {product_name} version earlier than {turtles_version}, with the `use-caapf` feature gate enabled and CAAPF installed.
+* You are running a {product_name} version earlier than v0.28 (Rancher v2.16), with the `use-caapf` feature gate enabled and CAAPF installed.
 * `kubectl` is configured to point at the Rancher management cluster.
 * `jq` is available on the `PATH`.
 * You have a backup of the management cluster.
@@ -159,7 +159,7 @@ The {product_name} controller is scaled down at this point, so the `CAPIProvider
 
 === Upgrade
 
-Upgrade Rancher to the release that ships {product_name} {turtles_version}. The upgrade restores the {product_name} controller, which then removes the `provisioning.cattle.io/externally-managed` annotation from the imported clusters and lets Rancher register them in `fleet-default`.
+Upgrade Rancher to the release that ships {product_name} v0.28 (Rancher v2.16). The upgrade restores the {product_name} controller, which then removes the `provisioning.cattle.io/externally-managed` annotation from the imported clusters and lets Rancher register them in `fleet-default`.
 
 Wait for Rancher to create a `Fleet` cluster in `fleet-default` for each migrated cluster:
 
