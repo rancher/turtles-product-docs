@@ -722,7 +722,7 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{tu
 * The https://github.com/kubernetes/cloud-provider-aws[AWS Cloud Controller Manager] will need to be installed on each downstream Cluster for the nodes to be functional.
 * Additionally, we will also enable https://github.com/kubernetes-sigs/aws-ebs-csi-driver[AWS EBS CSI Driver].
 +
-We can do this automatically at Cluster creation using the https://rancher.github.io/cluster-api-addon-provider-fleet/[Cluster API Add-on Provider Fleet].
+We can do this automatically at Cluster creation using the xref:./fleet-integration.adoc[integration with Fleet].
 The `HelmOps` need to be created first, to be applied on the new Cluster via label selectors. This will take care of deploying Calico, the EBS CSI Driver, and the AWS Cloud Controller Manager in the workload cluster.
 +
 [source,bash, subs="attributes"]
@@ -814,7 +814,7 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{tu
 * The https://github.com/kubernetes/cloud-provider-aws[AWS Cloud Controller Manager] will need to be installed on each downstream Cluster for the nodes to be functional.
 * Additionally, we will also enable https://github.com/kubernetes-sigs/aws-ebs-csi-driver[AWS EBS CSI Driver].
 +
-We can do this automatically at Cluster creation using the https://rancher.github.io/cluster-api-addon-provider-fleet/[Cluster API Add-on Provider Fleet].
+We can do this automatically at Cluster creation using the Turtles xref:./fleet-integration.adoc[integration with Fleet].
 The `HelmOps` need to be created first, to be applied on the new Cluster via label selectors. This will take care of deploying Calico, the EBS CSI Driver, and the AWS Cloud Controller Manager in the workload cluster.
 +
 [source,bash, subs="attributes"]
@@ -1087,7 +1087,7 @@ Docker RKE2::
 --
 * A Docker RKE2 ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
 +
-In this example, no CNI is being defined so RKE2 installs Canal by default. This ClusterClass does not rely on CAAPF being installed and enabled.
+In this example, no CNI is being defined so RKE2 installs Canal by default.
 +
 [tabs]
 =======
