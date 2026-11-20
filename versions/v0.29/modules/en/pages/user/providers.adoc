@@ -1,0 +1,136 @@
+= Install certified providers
+:description: Install the SUSE® Rancher Prime Cluster API Providers chart to add and customize certified providers
+:revdate: 2026-11-16
+:page-revdate: {revdate}
+
+This section describes how to install the {product_name} Providers chart, which installs the xref:overview/certified.adoc[certified providers].
+
+== Prerequisites
+
+* Ensure {product_name} has been installed. Starting with Rancher v2.13, it is installed automatically with Rancher. For more information, refer to xref:tutorials/rancher.adoc[Rancher Setup].
+* Install https://helm.sh/docs/intro/install/[Helm] and configure `kubectl` to access the Rancher management cluster.
+
+== Before you begin
+
+The `helm install` commands on this page use the following placeholders:
+
+`<prime-registry-url>`::
+The hostname of the SUSE Rancher Prime registry that you use to install Rancher Prime.
+
+`<version>`::
+The version of the {product_name} Providers chart. Use the same chart version as the `rancher-turtles` chart that Rancher installed. To find it, run:
++
+[source,shell]
+----
+helm list --namespace cattle-turtles-system --filter rancher-turtles
+----
++
+The `CHART` column shows the name and version of the chart, for example `rancher-turtles-110.0.4+up0.27.4`. In this example, use `--version 110.0.4+up0.27.4`.
+
+== Install the {product_name} Providers chart
+
+To install all certified providers, run the following command:
+
+[source,shell]
+----
+helm install rancher-turtles-providers oci://<prime-registry-url>/rancher/charts/rancher-turtles-providers \
+    --version <version> \
+    --namespace cattle-turtles-system \
+    --set providers.bootstrapKubeadm.enabled=true \
+    --set providers.controlplaneKubeadm.enabled=true \
+    --set providers.infrastructureDocker.enabled=true \
+    --set providers.infrastructureAWS.enabled=true \
+    --set providers.infrastructureAWS.variables.AWS_B64ENCODED_CREDENTIALS="" \
+    --set providers.infrastructureAzure.enabled=true \
+    --set providers.infrastructureGCP.enabled=true \
+    --set providers.infrastructureGCP.variables.GCP_B64ENCODED_CREDENTIALS="" \
+    --set providers.infrastructureVSphere.enabled=true \
+    --set providers.bootstrapRKE2.enabled=true \
+    --set providers.controlplaneRKE2.enabled=true \
+    --wait
+----
+
+The command above is used to install all certified providers. You may customize which providers are installed by setting the relevant flags to true. Note that only the CAPRKE2 provider is enabled by default and will be installed unless explicitly disabled.
+
+The commands above leave the provider credentials empty. You configure the credentials for each cluster as described in <<_provider_credentials>>.
+
+For example, to be able to provision RKE2 clusters on AWS you just need to install the AWS provider as following:
+
+[source,shell]
+----
+helm install rancher-turtles-providers oci://<prime-registry-url>/rancher/charts/rancher-turtles-providers \
+    --version <version> \
+    --namespace cattle-turtles-system \
+    --set providers.infrastructureAWS.enabled=true \
+    --set providers.infrastructureAWS.variables.AWS_B64ENCODED_CREDENTIALS="" \
+    --wait
+----
+
+To be able to provision RKE2 clusters on Azure, just install the Azure provider as following:
+
+[source,shell]
+----
+helm install rancher-turtles-providers oci://<prime-registry-url>/rancher/charts/rancher-turtles-providers \
+    --version <version> \
+    --namespace cattle-turtles-system \
+    --set providers.infrastructureAzure.enabled=true \
+    --wait
+----
+
+[#_provider_credentials]
+== Provider credentials
+
+Infrastructure providers need credentials to create resources in your cloud or virtualization platform. The recommended approach is to install the providers with empty global credentials and to define a cluster identity resource for each cluster. For examples, refer to xref:user/clusterclass.adoc[Provision a CAPI cluster with ClusterClass].
+
+AWS (CAPA)::
++
+--
+Leave `AWS_B64ENCODED_CREDENTIALS` empty and create an `AWSClusterStaticIdentity` that references a Secret with your AWS access key. For more information, refer to xref:user/clusterclass.adoc[Provision a CAPI cluster with ClusterClass] and the https://cluster-api-aws.sigs.k8s.io/topics/multitenancy[CAPA multi-tenancy documentation].
+
+If you want the provider to use a single set of global credentials instead, generate the value of `AWS_B64ENCODED_CREDENTIALS` with https://cluster-api-aws.sigs.k8s.io/clusterawsadm/clusterawsadm[clusterawsadm]:
+
+[source,shell]
+----
+export AWS_REGION=<aws-region>
+export AWS_ACCESS_KEY_ID=<aws-access-key-id>
+export AWS_SECRET_ACCESS_KEY=<aws-secret-access-key>
+export AWS_B64ENCODED_CREDENTIALS=$(clusterawsadm bootstrap credentials encode-as-profile)
+----
+
+Then pass it to the chart:
+
+[source,shell]
+----
+--set providers.infrastructureAWS.variables.AWS_B64ENCODED_CREDENTIALS=${AWS_B64ENCODED_CREDENTIALS}
+----
+--
+
+Azure (CAPZ)::
++
+--
+The Azure provider does not use global credentials. Create an `AzureClusterIdentity` that references a Secret with the Service Principal credentials. For managed AKS clusters, create a Secret with the Service Principal credentials instead. For more information, refer to xref:user/clusterclass.adoc[Provision a CAPI cluster with ClusterClass].
+--
+
+GCP (CAPG)::
++
+--
+Set `GCP_B64ENCODED_CREDENTIALS` to the base64-encoded key of a GCP Service Account. To create the Service Account, refer to the https://cluster-api-gcp.sigs.k8s.io/quick-start#create-a-service-account[CAPG book]. To encode the key, run:
+
+[source,shell]
+----
+export GCP_B64ENCODED_CREDENTIALS=$(base64 < /path/to/service-account-key.json | tr -d '\n')
+----
+
+Then pass it to the chart:
+
+[source,shell]
+----
+--set providers.infrastructureGCP.variables.GCP_B64ENCODED_CREDENTIALS=${GCP_B64ENCODED_CREDENTIALS}
+----
+--
+
+vSphere (CAPV)::
++
+--
+The chart sets `VSPHERE_USERNAME` and `VSPHERE_PASSWORD` to empty values. Create a `VSphereClusterIdentity` that references a Secret with your vSphere credentials. For more information, refer to xref:user/clusterclass.adoc[Provision a CAPI cluster with ClusterClass] and the https://github.com/kubernetes-sigs/cluster-api-provider-vsphere/blob/main/docs/identity_management.md[CAPV identity management documentation].
+--

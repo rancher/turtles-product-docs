@@ -1,0 +1,38 @@
+name: cluster-api
+title: Cluster API
+version: 'v0.29'
+prerelease: -dev
+display_version: '0.29-dev'
+start_page: en:index.adoc
+asciidoc:
+  attributes:
+    build-type: product
+    product_name: SUSE® Rancher Prime Cluster API
+    #Prerequisite and Component version attributes
+    rancher_version: v2.16.0
+    turtles_version: v0.29.0
+    # CAPI Providers versions
+    aws_version: "v2.11.1"
+    azure_version: v1.23.2
+    gcp_version: v1.11.2
+    vsphere_version: v1.16.1
+    docker_version: v1.13.2
+    kubeadm_version: v1.13.2
+    rke2_version: v0.25.0
+    fleet_addon_version: v0.15.0
+    # Kubernetes examples versions (keep it in sync with Turtles e2e tests)
+    k8s_kubeadm_default: v1.36.1
+    k8s_rke2_default: v1.36.0+rke2r1
+    k8s_azure_rke2: v1.36.0+rke2r1
+    k8s_azure_kubeadm: v1.36.1
+    k8s_azure_aks: v1.36.0
+    k8s_aws_kubeadm: v1.36.1
+    k8s_aws_eks: v1.35.0
+    k8s_gcp: v1.36.1
+    k8s_gcp_gke: v1.35.3
+    # Examples components versions
+    vsphere_rke2_cpi_chart_version: 1.14.000
+    vsphere_rke2_csi_chart_version: 3.7.0-rancher100
+    cloud_provider_azure_version: 1.36.0
+nav:
+  - modules/en/nav.adoc

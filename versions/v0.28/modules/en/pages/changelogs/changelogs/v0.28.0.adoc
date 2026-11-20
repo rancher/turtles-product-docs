@@ -1,0 +1,69 @@
+= v0.28.0
+:description: Review the v0.28.0 release to find updates to dependencies, security patches, notable changes,and bug fixes
+:revdate: 2026-11-20
+:page-revdate: {revdate}
+
+== Description
+
+Release Date: 2026-11-20
+
+{product_name} v0.28.0 is the first version of the v0.28 series, which is shipped as part of Rancher v2.16.
+
+[NOTE]
+====
+A https://github.com/kubernetes-sigs/cluster-api/issues/14086[version check] introduced in Cluster API v1.14, causes an issue in CAPA EKS and CAPG GKE clusters that leads to the CAPI object being marked as updating, even when it reaches a healthy, available state. We're collaborating upstream to have this issue resolved as soon as possible. No clusters outside of EKS and GKE are affected.
+====
+
+=== Notable Changes
+
+For the first time, {product_name} installs a core CAPI controller created downstream that addresses security vulnerabilities that affect the upstream version.
+
+This new release includes relevant changes that require your attention:
+
+=== Cluster API Add-on Provider Fleet is now unsupported
+
+See the migration guide in the xref:user/caapf-migration.adoc[official docs].
+
+After announcing the deprecation of this add-on provider in Rancher v2.14, support is entirely dropped with v2.16.
+
+* Provider installation has been removed from `rancher-turtles-providers` Helm chart.
+* It is no longer tested/validated to work with {product_name} >=v0.28.0.
+* Relevant features of the add-on provider are now integrated in {product_name}:
+** synchronization of labels from CAPI to Fleet clusters.
+** propagation of class variables as template values.
+** cross-namespace class references.
+** If you're interested on implementation details:
+*** feat: add Fleet Controller by @anmazzotti in https://github.com/rancher/turtles/pull/2803[#2803]
+*** feat: populate Fleet cluster's .spec.templateValues by @yiannistri in https://github.com/rancher/turtles/pull/2796[#2796]
+
+ifeval::["{build-type}" == "product"]
+=== Cluster API Provider RKE2 now supports in-place updates via system-agent (experimental/tech-preview)
+
+[NOTE]
+====
+This feature is experimental/tech-preview and prime-only. It is **disabled** by default and not recommended to run this in production environments before it is eventually promoted to stable.
+====
+
+* Update the Kubernetes version of the cluster's control plane in-place: no `Machine` is replaced during the operation.
+* `system-agent` performs the operation on the RKE2 workload cluster.
+
+If you're planning on testing this feature, you need to explicitly enable it via the `rancher-turtles-providers` Helm chart. **You must use this chart** to have the in-place updates runtime extension installed. Refer to the documentation for more information on how this feature works and follow the user guide to enable it.
+
+Refer to the documentation xref:operator/in-place-updates.adoc[here] for more information.
+endif::[]
+
+=== Full Changelog: 
+
+Review the full list of changes: https://github.com/rancher/turtles/compare/v0.27.4%E2%80%A6v0.28.0[v0.27.4...v0.28.0]
+
+== Download
+
+[cols="3,1,1" options="header" frame="all" grid="rows"]
+|===
+| Name | Created At | Updated At
+
+| https://github.com/rancher/turtles/releases/download/v0.28.0/rancher-turtles-0.28.0.tgz[rancher-turtles-0.28.0.tgz] | 2026-11-20 | 2026-11-20
+
+|===
+
+__Information retrieved from https://github.com/rancher/turtles/releases/tag/v0.28.0[v0.28.0 GitHub release].__
