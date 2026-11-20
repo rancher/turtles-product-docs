@@ -1,8 +1,8 @@
 = Release Notes
-:revdate: 2026-11-12
+:revdate: 2026-11-20
 :page-revdate: {revdate}
 
-* xref:changelogs/changelogs/v0.27.4.adoc[v0.27.4 (latest)]
+* xref:changelogs/changelogs/v0.27.4.adoc[v0.27.4]
 * xref:changelogs/changelogs/v0.27.3.adoc[v0.27.3]
 * xref:changelogs/changelogs/v0.27.2.adoc[v0.27.2]
 * xref:changelogs/changelogs/v0.27.1.adoc[v0.27.1]

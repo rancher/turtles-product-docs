@@ -1,14 +1,14 @@
 name: cluster-api
 title: Cluster API
 version: 'v0.28'
-prerelease: -dev
+display_version: '0.28'
 start_page: en:index.adoc
 asciidoc:
   attributes:
     build-type: product
     product_name: SUSE® Rancher Prime Cluster API
     #Prerequisite and Component version attributes
-    rancher_version: v2.14.0
+    rancher_version: v2.16.0
     turtles_version: v0.28.0
     # CAPI Providers versions
     aws_version: "v2.11.1"
