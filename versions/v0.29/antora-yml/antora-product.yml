@@ -2,6 +2,7 @@ name: cluster-api
 title: Cluster API
 version: 'v0.29'
 prerelease: -dev
+display_version: '0.29-dev'
 start_page: en:index.adoc
 asciidoc:
   attributes:
