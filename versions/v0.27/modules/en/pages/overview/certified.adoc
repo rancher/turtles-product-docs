@@ -1,6 +1,6 @@
 = Certified CAPI Providers
 :description: Find certified CAPI providers and their ClusterClass support, including those that can provision managed and unmanaged clusters via topology
-:revdate: 2026-10-23
+:revdate: 2026-11-16
 :page-revdate: {revdate}
 
 // This page is published only in the product (Prime) docs.
@@ -76,6 +76,8 @@ This is a list of the CAPI Providers officially certified by SUSE. These provide
 |===
 
 *Recommended only for development purposes.
+
+To install these providers, refer to xref:user/providers.adoc[Install certified providers].
 
 == Providers certified by partners
 

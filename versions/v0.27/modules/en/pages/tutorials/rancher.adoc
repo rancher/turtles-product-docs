@@ -1,6 +1,6 @@
 = Rancher Setup
 :description: Install Rancher using Helm to set up the first cluster, which deploys the CAPI controller, CRDs, and allows managing providers through the CAPIProvider
-:revdate: 2026-04-16
+:revdate: 2026-11-16
 :page-revdate: {revdate}
 
 == Installing Rancher
@@ -60,7 +60,10 @@ The core CAPI controller manifest is embedded in a ConfigMap, which simplifies o
 With {product_name} embedded in Rancher, CAPI providers are no longer bundled by default. Providers are managed declaratively using the `CAPIProvider` custom resource. 
 
 ifeval::["{build-type}" == "product"]
-A separate providers chart for Prime users is available for installing certified providers. For more information, refer to xref:user/providers.adoc[Install certified providers].
+[IMPORTANT]
+====
+Prime users can install the xref:overview/certified.adoc[certified providers], such as AWS (CAPA), Azure (CAPZ), GCP (CAPG) and vSphere (CAPV), with the {product_name} Providers chart. For instructions, refer to xref:user/providers.adoc[Install certified providers].
+====
 endif::[]
 
 For example, to define a provider:
