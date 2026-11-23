@@ -1,6 +1,6 @@
 = Migrating from CAAPF to Fleet integration
 :description: Migrate CAPI clusters managed by the Cluster API Add-on Provider for Fleet (CAAPF) to Fleet integration before upgrading, using the migrate-caapf.sh script
-:revdate: 2026-10-29
+:revdate: 2026-11-23
 :page-revdate: {revdate}
 
 == Overview
@@ -182,7 +182,7 @@ DRY_RUN=false ./migrate-caapf.sh post
 +
 [NOTE]
 ====
-The `post` phase waits for each new `Fleet` cluster to reconcile and verifies that every bundle from the old cluster is present on the new one before deleting the old cluster. If any bundles are still missing, it logs a warning and skips deleting that cluster, so it is safe to re-run the `post` phase after resolving the issue.
+The `post` phase waits for each new `Fleet` cluster to reconcile and verifies that every bundle from the old cluster is present on the new one before deleting the old cluster. If any bundles are still missing, it logs a warning and skips deleting that cluster, so it is safe to re-run the `post` phase after resolving the issue. If a cluster is reported as not reconciled, see <<_post_phase_not_reconciled>>.
 ====
 
 === Verify the migration
@@ -233,3 +233,122 @@ The `BundleNamespaceMappings` make every migrated resource eligible for deployme
 * *Label collision*: a `clusterSelector` that only matched one cluster inside its namespace matches more clusters in `fleet-default`. Make the selector more specific.
 * *Missing or empty targets*: a resource with no `targets`, or with an empty `clusterSelector`, would be deployed to every cluster in `fleet-default`. Add explicit targets.
 * *`ClusterGroup` collisions*: a CAAPF `ClusterGroup` has an empty selector, the same `ClusterGroup` name exists in several namespaces with different selectors, or a `ClusterGroup` with that name already exists in `fleet-default`. Rename or remove the conflicting `ClusterGroup`.
+
+== Troubleshooting
+
+[#_post_phase_not_reconciled]
+=== Post-migration phase reports a cluster as "not reconciled" and skips deletion
+
+==== Symptoms
+
+When you run the `post` phase of `migrate-caapf.sh`, the script waits 10 minutes for the new Fleet cluster to become ready, then skips the cleanup for that cluster:
+
+[,console]
+----
+[INFO] Waiting for c-xxxxx to reconcile before comparing bundles...
+[INFO] Warning: c-xxxxx not reconciled (status.namespace='cluster-fleet-default-c-xxxxx-...' ready=1 desired=2) after 10 minutes. Skipping deletion.
+...
+[INFO] Skipping keepResources revert for helmops.fleet.cattle.io <namespace>/<name> — namespace still has CAAPF-managed Fleet clusters.
+...
+[INFO] Skipping CAAPF ClusterGroup <namespace>/<name> — namespace still has CAAPF-managed Fleet clusters.
+[INFO] Post-upgrade phase complete.
+----
+
+The new Fleet cluster in `fleet-default` shows a bundle that never becomes ready:
+
+[,console]
+----
+$ kubectl get clusters.fleet.cattle.io -n fleet-default
+NAME      BUNDLES-READY   LAST-SEEN              STATUS
+c-xxxxx   1/2             2026-11-17T14:41:41Z   NotReady(1) [Bundle calico-cni]
+----
+
+==== Cause
+
+The migration creates a new `BundleDeployment` for each bundle that targets the new Fleet cluster in `fleet-default`. The Helm release from the CAAPF-managed deployment already exists on the downstream cluster, so the Fleet agent upgrades it instead of installing it.
+
+Fleet upgrades Helm releases with server-side apply when the release was installed that way. The upgrade fails if a controller on the downstream cluster has taken ownership of fields that the chart also sets, with different values. The API server rejects the apply with a field manager conflict, and the Fleet agent retries indefinitely.
+
+A common example is the Calico `tigera-operator` chart. After installation, the tigera-operator writes defaults and auto-detected values back into the `Installation` resource, such as `spec.kubernetesProvider` and `spec.calicoNetwork.ipPools`, and becomes the owner of those fields. Any later Fleet upgrade of the release conflicts with the `operator` field manager.
+
+This is not specific to the migration. Any upgrade of an affected release fails the same way. The migration is often the first event that triggers an upgrade.
+
+==== Confirm the problem
+
+. Get the kubeconfig of the downstream cluster:
++
+[,bash]
+----
+kubectl get secret <cluster-name>-kubeconfig -n <cluster-namespace> \
+  -o jsonpath='{.data.value}' | base64 -d > downstream.kubeconfig
+----
+
+. Look for apply conflicts in the Fleet agent logs on the downstream cluster:
++
+[,bash]
+----
+kubectl --kubeconfig downstream.kubeconfig logs -n cattle-fleet-system deploy/fleet-agent \
+  | grep "conflict occurred while applying"
+----
++
+The error names the resource, the conflicting field manager, and the fields:
++
+[,console]
+----
+failed deploying bundle: conflict occurred while applying object /default operator.tigera.io/v1, Kind=Installation:
+Apply failed with 2 conflicts: conflicts with "operator" using operator.tigera.io/v1:
+- .spec.kubernetesProvider
+- .spec.calicoNetwork.ipPools
+----
+
+. Optional: check which field managers own the resource:
++
+[,bash]
+----
+kubectl --kubeconfig downstream.kubeconfig get installations.operator.tigera.io default \
+  -o yaml --show-managed-fields \
+  | yq '.metadata.managedFields[] | [.manager, .operation, .time] | @tsv'
+----
++
+A manager other than `fleetagent` with an `Update` operation on the conflicting fields confirms the cause.
+
+==== Resolution
+
+Configure Fleet to upgrade the affected release with `force`. With this option the Fleet agent disables server-side apply for the upgrade and replaces the resources instead, so the field ownership check does not apply.
+
+* For a `HelmOp`, set `spec.helm.force`:
++
+[,bash]
+----
+kubectl patch helmops.fleet.cattle.io <name> -n <namespace> --type merge \
+  -p '{"spec":{"helm":{"force":true}}}'
+----
+
+* For a standalone `Bundle`, set `spec.helm.force: true` on the `Bundle`.
+
+* For a `GitRepo`, set the option in the `fleet.yaml` of the affected bundle and push the change:
++
+[,yaml]
+----
+helm:
+  force: true
+----
+
+Wait until the bundle is ready on the new Fleet cluster:
+
+[,bash]
+----
+kubectl get clusters.fleet.cattle.io -n fleet-default -w
+----
+
+Then run the `post` phase again. It is safe to re-run.
+
+[,bash]
+----
+DRY_RUN=false ./migrate-caapf.sh post
+----
+
+[NOTE]
+====
+With `force` enabled, every upgrade of the resource replaces the rendered objects instead of patching them. Fields that other controllers manage are overwritten until those controllers reconcile again. If you remove `force` after the migration, the next upgrade of the release can fail with the same conflict.
+====
