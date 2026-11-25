@@ -1,6 +1,6 @@
 = Installing applications
 :description: Install bootstrap applications like CNI, CCM, and others in a CAPI workload cluster using GitOps with RKE2 and CAPI ClusterResourceSet
-:revdate: 2026-06-16
+:revdate: 2026-11-25
 :page-revdate: {revdate}
 
 This section provides guidance on how to install bootstrap applications such as a Container Network Interface (CNI), Cloud Controller Manager (CCM), and other applications in a CAPI workload cluster. The installation of these applications is typically done using a GitOps approach, where the desired state of the applications is defined in a Git repository and automatically applied to the cluster.
@@ -48,6 +48,11 @@ spec:
   [...]
 ----
 
+=== K3s
+
+K3s, through the CABP3/CACP3 providers, installs https://github.com/flannel-io/flannel[Flannel] as its default CNI,
+so the workload cluster has a CNI without additional configuration. For more information, refer to the https://docs.k3s.io/[K3s documentation].
+
 === Other bootstrap/control plane providers (Kubeadm)
 
 [CAUTION]
@@ -55,7 +60,7 @@ spec:
 Kubeadm (CABPK) does not provide a built-in CNI solution.
 ====
 
-If you choose not to use RKE2, you will need to install a CNI solution in your workload cluster:
+If you choose not to use RKE2 or K3s, you will need to install a CNI solution in your workload cluster:
 
 * https://cluster-api.sigs.k8s.io/user/quick-start#deploy-a-cni-solution[Apply the CNI's Helm chart]
 to your cluster once nodes are marked as `Ready`.

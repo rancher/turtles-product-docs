@@ -14,6 +14,7 @@ asciidoc:
     # Kubernetes examples versions (keep it in sync with Turtles e2e tests)
     k8s_kubeadm_default: v1.36.1
     k8s_rke2_default: v1.36.0+rke2r1
+    k8s_k3s_default: v1.37.1+k3s1
     k8s_azure_rke2: v1.36.0+rke2r1
     k8s_azure_kubeadm: v1.36.1
     k8s_azure_aks: v1.36.0

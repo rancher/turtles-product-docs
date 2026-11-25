@@ -1,6 +1,6 @@
 = Install certified providers
 :description: Install the SUSE® Rancher Prime Cluster API Providers chart to add and customize certified providers
-:revdate: 2026-11-16
+:revdate: 2026-11-25
 :page-revdate: {revdate}
 
 This section describes how to install the {product_name} Providers chart, which installs the xref:overview/certified.adoc[certified providers].
@@ -47,6 +47,8 @@ helm install rancher-turtles-providers oci://<prime-registry-url>/rancher/charts
     --set providers.infrastructureVSphere.enabled=true \
     --set providers.bootstrapRKE2.enabled=true \
     --set providers.controlplaneRKE2.enabled=true \
+    --set providers.bootstrapK3s.enabled=true \
+    --set providers.controlplaneK3s.enabled=true \
     --wait
 ----
 
@@ -76,6 +78,23 @@ helm install rancher-turtles-providers oci://<prime-registry-url>/rancher/charts
     --set providers.infrastructureAzure.enabled=true \
     --wait
 ----
+
+To be able to provision K3s clusters, install the K3s bootstrap and control plane providers as following:
+
+[source,shell]
+----
+helm install rancher-turtles-providers oci://<prime-registry-url>/rancher/charts/rancher-turtles-providers \
+    --version <version> \
+    --namespace cattle-turtles-system \
+    --set providers.bootstrapK3s.enabled=true \
+    --set providers.controlplaneK3s.enabled=true \
+    --wait
+----
+
+[NOTE]
+====
+Of the `manager` settings that are passed to the controller manager as command-line flags, the K3s controller managers support only `syncPeriod`. Other settings, such as `verbosity`, add flags that the K3s controller managers do not define, and the controller managers fail to start. Do not set them in `providers.bootstrapK3s.manager` or `providers.controlplaneK3s.manager`.
+====
 
 [#_provider_credentials]
 == Provider credentials

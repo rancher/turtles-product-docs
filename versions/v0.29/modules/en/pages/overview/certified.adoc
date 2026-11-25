@@ -1,6 +1,6 @@
 = Certified CAPI Providers
 :description: Find certified CAPI providers and their ClusterClass support, including those that can provision managed and unmanaged clusters via topology
-:revdate: 2026-11-16
+:revdate: 2026-11-25
 :page-revdate: {revdate}
 
 // This page is published only in the product (Prime) docs.
@@ -37,6 +37,12 @@ This is a list of the CAPI Providers officially certified by SUSE. These provide
 | Bootstrap/Control Plane
 | https://cluster-api.sigs.k8s.io/tasks/bootstrap/kubeadm-bootstrap[CABPK docs]
 |{kubeadm_version}
+
+| *K3s*
+| CABP3/CACP3
+| Bootstrap/Control Plane
+| https://github.com/k3s-io/cluster-api-k3s[Cluster API k3s docs]
+|{k3s_version}
 
 | *AWS*
 | CAPA
@@ -123,6 +129,12 @@ CAPRKE2::
 --
 
 CABPK::
++
+--
+- **Full support** of `ClusterClass`.
+--
+
+CABP3/CACP3::
 +
 --
 - **Full support** of `ClusterClass`.

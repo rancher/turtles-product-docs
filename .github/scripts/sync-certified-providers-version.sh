@@ -63,6 +63,13 @@ do
   echo "Found CAPRKE2 version: $rke2_version"
   rke2_version=$rke2_version yq -i '.asciidoc.attributes.rke2_version=strenv(rke2_version)' $antora_file_path
 
+  # Older releases do not ship the K3s provider, so only set the version when it is found.
+  k3s_version=`echo "$clusterctl_config" | yq '.providers[] | select(.name == "k3s" and .type == "ControlPlaneProvider").url' | cut -d'/' -f7`
+  if [ -n "$k3s_version" ]; then
+    echo "Found K3s version: $k3s_version"
+    k3s_version=$k3s_version yq -i '.asciidoc.attributes.k3s_version=strenv(k3s_version)' $antora_file_path
+  fi
+
   fleet_addon_version=`echo "$clusterctl_config" | yq '.providers[] | select(.name == "rancher-fleet" and .type == "AddonProvider").url' | cut -d'/' -f7`
   echo "Found CAAPF version: $fleet_addon_version"
   fleet_addon_version=$fleet_addon_version yq -i '.asciidoc.attributes.fleet_addon_version=strenv(fleet_addon_version)' $antora_file_path
