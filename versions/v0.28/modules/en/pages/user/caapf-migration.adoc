@@ -314,7 +314,7 @@ A manager other than `fleetagent` with an `Update` operation on the conflicting 
 
 ==== Resolution
 
-Configure Fleet to upgrade the affected release with `force`. With this option the Fleet agent disables server-side apply for the upgrade and replaces the resources instead, so the field ownership check does not apply.
+. Configure Fleet to upgrade the affected release with `force`. With this option the Fleet agent disables server-side apply for the upgrade and replaces the resources instead, so the field ownership check does not apply.
 
 * For a `HelmOp`, set `spec.helm.force`:
 +
@@ -334,15 +334,15 @@ helm:
   force: true
 ----
 
-Wait until the bundle is ready on the new Fleet cluster:
-
+. Wait until the bundle is ready on the new Fleet cluster:
++
 [,bash]
 ----
 kubectl get clusters.fleet.cattle.io -n fleet-default -w
 ----
 
-Then run the `post` phase again. It is safe to re-run.
-
+. Then run the `post` phase again. It is safe to re-run.
++
 [,bash]
 ----
 DRY_RUN=false ./migrate-caapf.sh post
@@ -350,5 +350,5 @@ DRY_RUN=false ./migrate-caapf.sh post
 
 [NOTE]
 ====
-With `force` enabled, every upgrade of the resource replaces the rendered objects instead of patching them. Fields that other controllers manage are overwritten until those controllers reconcile again. If you remove `force` after the migration, the next upgrade of the release can fail with the same conflict.
+With `force` enabled, every upgrade of the resource replaces the rendered objects instead of patching them. After the forced upgrade, Helm records the release as using client-side apply, so later upgrades do not run into the field manager conflict, even if you remove `force`. However, each upgrade still resets fields that the chart sets, including fields that other controllers manage, until those controllers reconcile again.
 ====
