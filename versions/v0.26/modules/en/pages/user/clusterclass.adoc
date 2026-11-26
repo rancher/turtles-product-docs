@@ -1167,8 +1167,6 @@ apiVersion: cluster.x-k8s.io/v1beta2
 kind: Cluster 
 metadata:
   name: docker-rke2-example
-  labels:
-    cni: calico
   annotations:
     cluster-api.cattle.io/upstream-system-agent: "true"
 spec:
@@ -1186,8 +1184,6 @@ spec:
     controlPlane:
       replicas: 1
     variables:
-    - name: rke2CNI
-      value: none
     - name: dockerImage
       value: kindest/node:v1.35.0
     version: v1.35.0+rke2r1
