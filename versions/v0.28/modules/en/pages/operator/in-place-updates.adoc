@@ -83,6 +83,17 @@ Bump the cluster's Kubernetes version as you normally would - `Cluster.spec.topo
 * **No automatic rollback.** If `system-agent` reports the plan failed, the Machine stays on its previous version; investigate and remediate the Machine manually (or let your `MachineHealthCheck` replace it), same as any other failed update.
 * Only one in-place update extension can be registered per cluster (a Cluster API constraint).
 
+== Known issues
+
+=== Disabling the feature
+
+Disabling the in-place updates feature in the `rancher-turtles-providers` chart values after it was enabled removes the RKE2 runtime extension, but doesn't remove the corresponding `ExtensionConfig` object. This remaining object causes errors in the core Cluster API provider and prevents the extension from being enabled again. To fix this issue, manually delete the `ExtensionConfig` object after disabling the in-place updates feature:
+
+[source,bash]
+----
+kubectl delete extensionconfigs.runtime.cluster.x-k8s.io rke2-extension-provider
+----
+
 == Related pages
 
 * xref:../overview/features.adoc[Features] — other {product_name} feature gates.
