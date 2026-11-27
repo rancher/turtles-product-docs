@@ -1,6 +1,6 @@
 = ClusterClass
 :description: Learn how to use ClusterClass with the SUSE Rancher Prime Cluster API to set up clusters on Azure, AWS, GCP, or Docker
-:revdate: 2026-08-11
+:revdate: 2026-11-25
 :page-revdate: {revdate}
 
 In this section we cover using https://cluster-api.sigs.k8s.io/tasks/experimental-features/cluster-class/[ClusterClass] with the {product_name}.
@@ -14,7 +14,7 @@ In this section we cover using https://cluster-api.sigs.k8s.io/tasks/experimenta
 {product_name} {turtles_version} no longer supports CAAPF. The Fleet functionality that ClusterClasses previously relied on CAAPF for is now provided by xref:user/fleet-integration.adoc[Fleet integration]. If you use CAAPF, see xref:user/caapf-migration.adoc[Migrating from CAAPF to Fleet integration].
 ====
 
-* Depending on your engine, either the https://github.com/rancher/cluster-api-provider-rke2[CAPRKE2] or https://github.com/kubernetes-sigs/cluster-api[Kubeadm] Bootstrap/Control Plane installation is necessary before further CAPIProvider setup:
+* Depending on your engine, the https://github.com/rancher/cluster-api-provider-rke2[CAPRKE2], https://github.com/kubernetes-sigs/cluster-api[Kubeadm] or https://github.com/k3s-io/cluster-api-k3s[K3s] Bootstrap/Control Plane installation is necessary before further CAPIProvider setup:
 +
 [tabs]
 ======
@@ -98,6 +98,49 @@ metadata:
   namespace: capi-kubeadm-control-plane-system
 spec:
   name: kubeadm
+  type: controlPlane
+----
+=======
+
+--
+
+K3s::
++
+--
+
+Bootstrap and Control Plane provider installation:
+
+.Click to Expand
+[%collapsible]
+=======
+[source,yaml]
+----
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: capi-k3s-bootstrap-system
+---
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: k3s-bootstrap
+  namespace: capi-k3s-bootstrap-system
+spec:
+  name: k3s
+  type: bootstrap
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: capi-k3s-control-plane-system
+---
+apiVersion: turtles-capi.cattle.io/v1alpha1
+kind: CAPIProvider
+metadata:
+  name: k3s-control-plane
+  namespace: capi-k3s-control-plane-system
+spec:
+  name: k3s
   type: controlPlane
 ----
 =======
@@ -999,6 +1042,71 @@ spec:
       - class: default-worker
         name: md-0
         replicas: 1
+----
+--
+
+Docker K3s::
++
+--
+* A Docker K3s ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
++
+K3s installs Flannel as its default CNI, so no CNI installation is needed.
++
+[tabs]
+=======
+CLI::
++
+A Docker K3s ClusterClass can be applied using the examples tool:
++
+[source,bash, subs="attributes"]
+----
+go run github.com/rancher/turtles/examples@{turtles_version} -r docker-k3s | kubectl apply -f -
+----
+
+kubectl::
++
+* Alternatively, you can apply the Docker K3s ClusterClass directly using kubectl:
++
+[source,bash, subs="attributes"]
+----
+kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/clusterclasses/docker/k3s/clusterclass-docker-k3s.yaml
+----
+=======
+
+* Create the Docker K3s Cluster from the example ClusterClass.
++
+The `dockerImage` variable sets the image of the machines, and K3s is installed on top of it at bootstrap in the version set by `version`.
+K3s does not read the `clusterNetwork` of the Cluster: it uses its default pod (`10.42.0.0/16`) and service (`10.43.0.0/16`) CIDRs, which the example sets to match.
++
+[source,yaml,subs="attributes+"]
+----
+apiVersion: cluster.x-k8s.io/v1beta2
+kind: Cluster
+metadata:
+  name: docker-k3s-quickstart
+spec:
+  clusterNetwork:
+    pods:
+      cidrBlocks:
+        - 10.42.0.0/16
+    services:
+      cidrBlocks:
+        - 10.43.0.0/16
+    serviceDomain: cluster.local
+  topology:
+    classRef:
+      name: docker-k3s-example
+    controlPlane:
+      replicas: 1
+    variables:
+      - name: dockerImage
+        value: kindest/node:v1.37.1
+    version: {k8s_k3s_default}
+    workers:
+      machineDeployments:
+        - class: default-worker
+          name: md-0
+          replicas: 1
 ----
 --
 
