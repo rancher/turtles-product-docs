@@ -67,6 +67,27 @@ When multiple fields are patched simultaneously, CAPI will apply a rollout unles
 Bump the cluster's Kubernetes version as you normally would - `Cluster.spec.topology.version` for ClusterClass clusters, or `RKE2ControlPlane.spec.version` otherwise. No other change is needed: CAPI detects the version diff and drives the in-place flow automatically.
 
 
+== Air-gapped clusters
+
+In-place updates install the new RKE2 version from the `rancher/system-agent-installer-rke2:<version>` image. Air-gapped Machines can't download it from the internet, so they need a private registry that has it.
+
+Set `systemDefaultRegistry` to that registry, next to `airGapped`, in the `RKE2ControlPlane` (`spec.agentConfig`) and the `RKE2ConfigTemplate` (`spec.template.spec.agentConfig`):
+
+[source,yaml]
+----
+agentConfig:
+  airGapped: true
+  systemDefaultRegistry: registry.example.com
+----
+
+The image is then pulled as `registry.example.com/rancher/system-agent-installer-rke2:<version>`. It's part of Rancher's air-gap image list (`rancher-images.txt`).
+
+Things to know:
+
+* If `airGapped` is `true` and `systemDefaultRegistry` is not set, Machines are replaced with a normal rollout instead of updated in place.
+* Adding `systemDefaultRegistry` to an existing cluster replaces its Machines once. Later updates are done in place.
+* If the registry can't be reached, or doesn't have the image, the update fails and the Machine gets an `InPlaceUpdateFailed` event.
+
 == Troubleshooting
 
 === Monitoring progress
@@ -79,7 +100,7 @@ Bump the cluster's Kubernetes version as you normally would - `Cluster.spec.topo
 
 == Limitations
 
-* **Air-gapped clusters are not supported yet.** The extension installs RKE2 by pulling a versioned container image; if the target machine can't reach a registry, the update fails fast with a clear error instead of hanging.
+* **Air-gapped clusters need a private registry** with the upgrade image, set in `systemDefaultRegistry`.
 * **No automatic rollback.** If `system-agent` reports the plan failed, the Machine stays on its previous version; investigate and remediate the Machine manually (or let your `MachineHealthCheck` replace it), same as any other failed update.
 * Only one in-place update extension can be registered per cluster (a Cluster API constraint).
 
