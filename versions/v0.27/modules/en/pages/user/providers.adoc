@@ -104,6 +104,13 @@ Then pass it to the chart:
 ----
 --set providers.infrastructureAWS.variables.AWS_B64ENCODED_CREDENTIALS=${AWS_B64ENCODED_CREDENTIALS}
 ----
+
+*Temporary credentials.* AWS STS credentials, whose access key IDs start with `ASIA`, need a session token. The Secret referenced by an `AWSClusterStaticIdentity` accepts an optional `SessionToken` key, and `clusterawsadm` includes `AWS_SESSION_TOKEN` when it is set. Temporary credentials expire and CAPA does not refresh them, so the provider stops reconciling clusters once the token expires. Rancher AWS Cloud Credentials do not support session tokens; refer to xref:overview/features.adoc#_rancher_credential_translation[Rancher Credential Translation].
+
+For long-lived clusters, use one of the following:
+
+* The long-term access key of an IAM user, whose ID starts with `AKIA`.
+* An `AWSClusterRoleIdentity`, which assumes an IAM role and obtains short-lived credentials automatically. For more information, refer to the https://cluster-api-aws.sigs.k8s.io/topics/multitenancy[CAPA multi-tenancy documentation].
 --
 
 Azure (CAPZ)::

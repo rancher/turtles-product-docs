@@ -1,6 +1,6 @@
 = Features
 :description: Describe the features of SUSE® Rancher Prime Cluster API, including Agent TLS Mode, No Cert Manager, Rancher Credential Translation, and Use CAAPF
-:revdate: 2026-06-22
+:revdate: 2026-11-16
 :page-revdate: {revdate}
 
 This section describes features and feature stages in {product_name}.
@@ -59,6 +59,17 @@ It is possible to disable this feature to restore all provider manifests to the 
 === Rancher Credential Translation
 
 This feature gate instructs {product_name} to watch Rancher Cloud Credentials and automatically translate them into CAPI-specific static identity objects, allowing users to reuse existing Rancher Cloud Credentials when provisioning clusters with CAPI providers. When enabled, {product_name} reconciles cloud credentials stored in the `cattle-global-data` namespace and creates the corresponding provider identity resources. Currently, this feature supports AWS credentials and translates them into `AWSClusterStaticIdentity` objects for use with the Cluster API Provider for AWS (CAPA). This feature is in the beta stage and is enabled by default.
+
+[NOTE]
+====
+The translation copies only the access key ID and the secret access key. Rancher AWS Cloud Credentials have no session token field, so temporary AWS STS credentials, whose access key IDs start with `ASIA`, do not work: CAPA cannot authenticate and cluster provisioning fails. Use the long-term access key of an IAM user, whose ID starts with `AKIA`.
+ifeval::["{build-type}" == "product"]
+To use other credential types, create the identity manually as described in xref:user/providers.adoc#_provider_credentials[Provider credentials].
+endif::[]
+ifeval::["{build-type}" == "community"]
+To use other credential types, create the identity manually as described in xref:user/clusterclass.adoc[Provision a CAPI cluster with ClusterClass].
+endif::[]
+====
 
 === Use CAAPF
 
