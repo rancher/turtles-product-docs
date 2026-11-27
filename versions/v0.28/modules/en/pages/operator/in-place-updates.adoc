@@ -87,7 +87,7 @@ Bump the cluster's Kubernetes version as you normally would - `Cluster.spec.topo
 
 === Disabling the feature
 
-Disabling the in-place updates feature in the `rancher-turtles-providers` chart values after it was enabled removes the RKE2 runtime extension, but doesn't remove the corresponding `ExtensionConfig` object. This remaining object causes errors in the core Cluster API provider and prevents the extension from being enabled again. To fix this issue, manually delete the `ExtensionConfig` object after disabling the in-place updates feature:
+Disabling the in-place updates feature in the `rancher-turtles-providers` chart values after it was enabled removes the RKE2 runtime extension, but doesn't remove the corresponding `ExtensionConfig` object due to how Cluster API handles providers that bundle an https://github.com/kubernetes-sigs/cluster-api/issues/14582[`ExtensionConfig`]. This remaining object causes errors in the core Cluster API provider and prevents the extension from being enabled again. To work around this issue, manually delete the `ExtensionConfig` object after disabling the in-place updates feature:
 
 [source,bash]
 ----
