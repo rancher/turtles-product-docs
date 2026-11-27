@@ -376,26 +376,12 @@ Azure RKE2::
 +
 --
 * An Azure ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
-+
-[tabs]
-=======
-CLI::
-+
-An Azure RKE2 ClusterClass and associated applications can be applied using the examples tool:
-+
-[source,bash, subs="attributes"]
-----
-go run github.com/rancher/turtles/examples@{turtles_version} -r azure-rke2 | kubectl apply -f -
-----
-kubectl::
-+
-* Alternatively, you can apply the Azure RKE2 ClusterClass directly using kubectl:
+* Apply the Azure RKE2 ClusterClass using kubectl:
 +
 [source,bash, subs="attributes"]
 ----
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/clusterclasses/azure/rke2/clusterclass-rke2-example.yaml
 ----
-=======
 
 * Additionally, the https://capz.sigs.k8s.io/self-managed/cloud-provider-config[Azure Cloud Provider] will need to be installed on each downstream Cluster, for the nodes to be initialized correctly.
 +
@@ -484,26 +470,12 @@ Azure AKS::
 +
 --
 * An Azure AKS ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
-+
-[tabs]
-=======
-CLI::
-+
-An Azure AKS ClusterClass can be applied using the examples tool:
-+
-[source,bash, subs="attributes"]
-----
-go run github.com/rancher/turtles/examples@{turtles_version} -r azure-aks | kubectl apply -f -
-----
-kubectl::
-+
-* Alternatively, you can apply the Azure AKS ClusterClass directly using kubectl:
+* Apply the Azure AKS ClusterClass using kubectl:
 +
 [source,bash, subs="attributes"]
 ----
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/clusterclasses/azure/aks/clusterclass-aks-example.yaml
 ----
-=======
 
 * Create the Azure AKS Cluster from the example ClusterClass.
 +
@@ -564,27 +536,12 @@ Azure Kubeadm::
 +
 --
 * An Azure ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
-+
-[tabs]
-=======
-CLI::
-+
-An Azure Kubeadm ClusterClass can be applied using the examples tool:
-+
-[source,bash, subs="attributes"]
-----
-go run github.com/rancher/turtles/examples@{turtles_version} -r azure-rke2 | kubectl apply -f -
-----
-
-kubectl::
-+
-* Alternatively, you can apply the Azure RKE2 ClusterClass directly using kubectl:
+* Apply the Azure Kubeadm ClusterClass using kubectl:
 +
 [source,bash, subs="attributes"]
 ----
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/clusterclasses/azure/kubeadm/clusterclass-kubeadm-example.yaml
 ----
-=======
 
 * Create the Azure Cluster from the example ClusterClass. 
 +
@@ -633,29 +590,13 @@ AWS EKS::
 +
 --
 * An AWS EKS ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
+* Apply the AWS EKS ClusterClass using kubectl:
 +
-[tabs]
-=======
-
-CLI::
-+
-An AWS EKS ClusterClass and associated applications can be applied using the examples tool:
-+
-[source,bash]
-----
-go run github.com/rancher/turtles/examples@main -r aws-eks | kubectl apply -f -
-----
-
-kubectl::
-+
-* Alternatively, you can apply the AWS EKS ClusterClass directly using kubectl:
-+
-[source,bash]
+[source,bash, subs="attributes"]
 ----
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/clusterclasses/aws/eks/clusterclass-eks-example.yaml
 ----
-=======
-+
+
 * Create the AWS Cluster from the example ClusterClass +
 +
 Note that some variables are left to the user to substitute. +
@@ -696,22 +637,7 @@ AWS Kubeadm::
 +
 --
 * An AWS Kubeadm ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
-+
-[tabs]
-=======
-
-CLI::
-+
-An AWS Kubeadm ClusterClass and associated applications can be applied using the examples tool:
-+
-[source,bash, subs="attributes"]
-----
-go run github.com/rancher/turtles/examples@{turtles_version} -r aws-kubeadm | kubectl apply -f -
-----
-
-kubectl::
-+
-* Alternatively, you can apply the AWS Kubeadm ClusterClass directly using kubectl:
+* Apply the AWS Kubeadm ClusterClass using kubectl:
 +
 [source,bash, subs="attributes"]
 ----
@@ -731,7 +657,6 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{tu
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/cni/aws/calico/helm-chart.yaml
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/ccm/aws/helm-chart.yaml
 ----
-=======
 
 * Create the AWS Cluster from the example ClusterClass.
 +
@@ -788,27 +713,12 @@ You can follow the steps in the https://github.com/rancher/cluster-api-provider-
 ====
 
 * An AWS RKE2 ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
-+
-[tabs]
-=======
-CLI::
-+
-An AWS RKE2 ClusterClass and associated applications can be applied using the examples tool:
-+
-[source,bash, subs="attributes"]
-----
-go run github.com/rancher/turtles/examples@{turtles_version} -r aws-rke2 | kubectl apply -f -
-----
-
-kubectl::
-+
-* Alternatively, you can apply the AWS RKE2 ClusterClass directly using kubectl:
+* Apply the AWS RKE2 ClusterClass using kubectl:
 +
 [source,bash, subs="attributes"]
 ----
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/clusterclasses/aws/rke2/clusterclass-ec2-rke2-example.yaml
 ----
-=======
 
 * For this example we are also going to install https://docs.tigera.io/calico/latest/about/[Calico] as the default CNI.
 * The https://github.com/kubernetes/cloud-provider-aws[AWS Cloud Controller Manager] will need to be installed on each downstream Cluster for the nodes to be functional.
@@ -877,29 +787,13 @@ GCP GKE::
 +
 --
 * A GCP GKE ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
+* Apply the GCP GKE ClusterClass using kubectl:
 +
-[tabs]
-=======
-
-CLI::
-+
-A GCP GKE ClusterClass and associated applications can be applied using the examples tool:
-+
-[source,bash]
-----
-go run github.com/rancher/turtles/examples@main -r gcp-gke | kubectl apply -f -
-----
-
-kubectl::
-+
-* Alternatively, you can apply the GCP GKE ClusterClass directly using kubectl:
-+
-[source,bash]
+[source,bash, subs="attributes"]
 ----
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/clusterclasses/gcp/gke/clusterclass-gke-example.yaml
 ----
-=======
-+
+
 * Create the GCP Cluster from the example ClusterClass +
 +
 Note that some variables are left to the user to substitute. +
@@ -949,28 +843,13 @@ You can follow the steps in the https://image-builder.sigs.k8s.io/capi/providers
 ====
 
 * A GCP Kubeadm ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
-+
-[tabs]
-=======
-CLI::
-+
-A GCP Kubeadm ClusterClass can be applied using the examples tool:
-+
-[source,bash, subs="attributes"]
-----
-go run github.com/rancher/turtles/examples@{turtles_version} -r gcp-kubeadm | kubectl apply -f -
-----
-
-kubectl::
-+
-* Alternatively, you can apply the GCP Kubeadm ClusterClass directly using kubectl:
+* Apply the GCP Kubeadm ClusterClass using kubectl:
 +
 [source,bash, subs="attributes"]
 ----
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/clusterclasses/gcp/kubeadm/clusterclass-kubeadm-example.yaml
 ----
-=======
-+
+
 * Create the GCP Cluster from the example ClusterClass
 + 
 Note that some variables are left to the user to substitute.
@@ -1024,27 +903,12 @@ Docker Kubeadm::
 +
 --
 * A Docker Kubeadm ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
-+
-[tabs]
-=======
-CLI::
-+
-A Docker Kubeadm ClusterClass can be applied using the examples tool:
-+
-[source,bash, subs="attributes"]
-----
-go run github.com/rancher/turtles/examples@{turtles_version} -r docker-kubeadm | kubectl apply -f -
-----
-
-kubectl::
-+
-* Alternatively, you can apply the Docker Kubeadm ClusterClass directly using kubectl:
+* Apply the Docker Kubeadm ClusterClass using kubectl:
 +
 [source,bash, subs="attributes"]
 ----
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/clusterclasses/docker/kubeadm/clusterclass-docker-kubeadm.yaml
 ----
-=======
 
 * Create the Docker Kubeadm Cluster from the example ClusterClass.
 +
@@ -1088,21 +952,7 @@ Docker RKE2::
 * A Docker RKE2 ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
 +
 In this example, no CNI is being defined so RKE2 installs Canal by default.
-+
-[tabs]
-=======
-CLI::
-+
-A Docker RKE2 ClusterClass and associated applications can be applied using the examples tool:
-+
-[source,bash, subs="attributes"]
-----
-go run github.com/rancher/turtles/examples@{turtles_version} -r docker-rke2 | kubectl apply -f -
-----
-
-kubectl::
-+
-* Alternatively, you can apply the Docker RKE2 ClusterClass directly using kubectl:
+* Apply the Docker RKE2 ClusterClass using kubectl:
 +
 [source,bash, subs="attributes"]
 ----
@@ -1115,7 +965,6 @@ kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{tu
 ----
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/applications/lb/docker/configmap.yaml
 ----
-=======
 
 * Create the Docker RKE2 Cluster from the example ClusterClass.
 +
@@ -1125,8 +974,6 @@ apiVersion: cluster.x-k8s.io/v1beta2
 kind: Cluster 
 metadata:
   name: docker-rke2-example
-  labels:
-    cni: calico
   annotations:
     cluster-api.cattle.io/upstream-system-agent: "true"
 spec:
@@ -1144,8 +991,6 @@ spec:
     controlPlane:
       replicas: 1
     variables:
-    - name: rke2CNI
-      value: none
     - name: dockerImage
       value: kindest/node:v1.35.0
     version: {k8s_rke2_default}
@@ -1161,27 +1006,12 @@ vSphere Kubeadm::
 +
 --
 * A vSphere ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
-+
-[tabs]
-=======
-CLI::
-+
-A vSphere Kubeadm ClusterClass and associated applications can be applied using the examples tool:
-+
-[source,bash, subs="attributes"]
-----
-go run github.com/rancher/turtles/examples@{turtles_version} -r vsphere-kubeadm | kubectl apply -f -
-----
-
-kubectl::
-+
-* Alternatively, you can apply the vSphere Kubeadm ClusterClass directly using kubectl:
+* Apply the vSphere Kubeadm ClusterClass using kubectl:
 +
 [source,bash, subs="attributes"]
 ----
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/clusterclasses/vsphere/kubeadm/clusterclass-kubeadm-example.yaml
 ----
-=======
 
 * Create the vSphere Cluster from the example ClusterClass
 +
@@ -1251,28 +1081,12 @@ vSphere RKE2::
 +
 --
 * A vSphere ClusterClass can be found among the https://github.com/rancher/turtles/tree/main/examples/clusterclasses[Turtles examples].
-+
-[tabs]
-=======
-
-CLI::
-+
-A vSphere RKE2 ClusterClass can be applied using the examples tool:
-+
-[source,bash, subs="attributes"]
-----
-go run github.com/rancher/turtles/examples@{turtles_version} -r vsphere-rke2 | kubectl apply -f -
-----
-
-kubectl::
-+
-* Alternatively, you can apply the vSphere RKE2 ClusterClass directly using kubectl:
+* Apply the vSphere RKE2 ClusterClass using kubectl:
 +
 [source,bash, subs="attributes"]
 ----
 kubectl apply -f https://raw.githubusercontent.com/rancher/turtles/refs/tags/{turtles_version}/examples/clusterclasses/vsphere/rke2/clusterclass-rke2-example.yaml
 ----
-=======
 
 * Cluster configuration
 +
